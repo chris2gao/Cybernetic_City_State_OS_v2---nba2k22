@@ -7,7 +7,12 @@ task_packet:
   exact_branch_base: cdb2a3b2b9f9de79fe068b1644c6ba147d05d8e5
   calendar_reference: ada6f30051eb9a2f17193af6985497eeb789ea1c
   branch: codex/nba2k22-full-factor-engineering
+  save_binding:
+    experiment_slot: MyLEAGUE0005
+    cold_backup_slot: MyLEAGUE0003
+    source_baseline: ../run-20261108-nba2k22-full-factor-plan-001/0005_baseline_manifest.json
   scope: [I0, I1, I2, I3, I4, I5, I6]
+  affected_module_ids: [P02, P04, P09, P10]
   allowed_changed_paths:
     - 01_os/07_content/_runs/run-20261108-nba2k22-full-factor-plan-001/
     - 01_os/07_content/_runs/run-20261108-nba2k22-full-factor-engineering-001/

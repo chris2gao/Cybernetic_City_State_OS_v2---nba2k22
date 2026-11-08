@@ -644,7 +644,9 @@ function executeAction() {{
 
         const currentVal = call('player.get_stat_ui', player, item.native_index);
 
-        if (currentVal !== item.expected_before) {{
+        const targetOffsetIn156 = item.offset - 0x41f;
+        if (currentVal !== item.expected_before ||
+            (!item.is_attribute && beforeBytes[targetOffsetIn156] !== currentVal)) {{
           results.push({{
             intent_id: item.intent_id,
             team_id: CHUNK_PAYLOAD.team_id,
@@ -684,7 +686,6 @@ function executeAction() {{
           const afterVal = call('player.get_stat_ui', player, item.native_index);
           const rawByte = u8(read(player.add(item.offset), 1));
           const expectedRaw = item.is_attribute ? (item.value * 3 - 75) : item.value;
-          const targetOffsetIn156 = item.offset - 0x41f;
 
           let untouchedPreserved = true;
           for (let bIdx = 0; bIdx < 156; bIdx++) {{

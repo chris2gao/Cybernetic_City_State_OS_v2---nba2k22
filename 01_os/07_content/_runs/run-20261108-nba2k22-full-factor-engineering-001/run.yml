@@ -1,5 +1,21 @@
 task_id: NBA2K22-VAE-FULL-FACTOR-ENGINEERING-20261108-001
 run_id: run-20261108-nba2k22-full-factor-engineering-001
 stage: I0_I6_ENGINEERING
-lifecycle: in_progress
+lifecycle: candidate_ready_for_independent_review
 task_packet: task_packet.yml
+base: cdb2a3b2b9f9de79fe068b1644c6ba147d05d8e5
+branch: codex/nba2k22-full-factor-engineering
+ownership: execution
+purpose: Full-factor NBA2K22 experiment engineering candidate under Issue 40
+experiment_slot: MyLEAGUE0005
+cold_backup_slot: MyLEAGUE0003
+outputs:
+  - IMPLEMENTATION_COVERAGE.md
+  - MODULE_DIFF_AND_TESTS.md
+  - GAME_ID_EXPERIMENT_PLAN.json
+  - FIELD_PROTOCOL_SAMPLES.json
+  - HUMAN_LIVE_TEST_APPROVAL.md
+verification:
+  offline_regression: 146 tests and 15 subtests passed
+  historical_worlddata_replay: 43 qualified and 6 excluded of 49
+  new_live_actions: 0

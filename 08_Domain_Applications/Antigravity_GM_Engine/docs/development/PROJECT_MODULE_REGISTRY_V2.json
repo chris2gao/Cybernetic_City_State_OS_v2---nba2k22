@@ -81,7 +81,8 @@
         "src/gm_data_access/",
         "published/index.json",
         "world_data_prototype/cli.py",
-        "world_data_prototype/calendar_reader.py"
+        "world_data_prototype/calendar_reader.py",
+        "world_data_prototype/factor_readback.py"
       ],
       "notes": "Legacy ingestion remains available alongside PR #26 WorldData and Calendar sources. Initialization and runtime acceptance are separate.",
       "last_verified_evidence": null,
@@ -134,7 +135,9 @@
       ],
       "artifacts": [
         "docs/game_mechanics/guides/",
-        "docs/game_mechanics/catalogs/"
+        "docs/game_mechanics/catalogs/",
+        "research/rea_native_control/factor_progress.py",
+        "research/rea_native_control/factor_analysis.py"
       ],
       "notes": [
         "40 groups and 694 heterogeneous trace records; not 694 verified setters."
@@ -259,7 +262,9 @@
       "artifacts": [
         "research/rea_core_profile/",
         "research/rea_native_control/facade.py",
-        "research/rea_native_control/season_cycle_host.py"
+        "research/rea_native_control/season_cycle_host.py",
+        "research/rea_native_control/native_factor_slots.py",
+        "research/rea_native_control/factor_runner.py"
       ],
       "notes": [
         "Facade, Bulk, Outbox and SeasonCycleHost are already in master via PR #26. Profile inputs remain pinned to the original PR #18 and PR #26 objects."
@@ -320,7 +325,8 @@
       "artifacts": [
         "research/rea_native_control/role_batches.py",
         "research/rea_native_control/bulk_executor.py",
-        "research/rea_native_control/decision_outbox.py"
+        "research/rea_native_control/decision_outbox.py",
+        "research/rea_native_control/factor_adapters.py"
       ],
       "notes": [
         "183 initial heterogeneous actions/requests/world controls, 50 mapped, 133 not explicit matched.",

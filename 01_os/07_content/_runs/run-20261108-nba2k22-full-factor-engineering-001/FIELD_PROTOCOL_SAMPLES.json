@@ -1,0 +1,864 @@
+{
+  "mode": "FIXTURE",
+  "experiment_slot": "MyLEAGUE0005",
+  "actual_game_actions": 0,
+  "player_slots": [
+    {
+      "name": "SHOT_THREE_TENDENCY",
+      "factor_id": "TENDENCY_NATIVE_027",
+      "index": 83,
+      "offset": "0x472",
+      "before": 50,
+      "target": 55,
+      "neighbor_count": 98,
+      "verification": "VERIFIED"
+    },
+    {
+      "name": "TOUCHES_TENDENCY",
+      "factor_id": "TENDENCY_NATIVE_066",
+      "index": 122,
+      "offset": "0x499",
+      "before": 50,
+      "target": 55,
+      "neighbor_count": 98,
+      "verification": "VERIFIED"
+    },
+    {
+      "name": "UNKNOWN_RAW_BYTE_016",
+      "factor_id": "TENDENCY_NATIVE_016",
+      "index": 72,
+      "offset": "0x467",
+      "before": 50,
+      "target": 55,
+      "neighbor_count": 98,
+      "verification": "VERIFIED"
+    }
+  ],
+  "window": {
+    "status": "ANALYSIS_RECORDED",
+    "mode": "FIXTURE",
+    "setter_attempts": 6,
+    "setter_success": 6,
+    "setter_unreturned": 0,
+    "calendar_attempts": 2,
+    "calendar_unreturned": 0,
+    "analysis": {
+      "mode": "FIXTURE",
+      "worldline_id": "FIXTURE",
+      "factors": {
+        "TENDENCY_NATIVE_027": {
+          "status": "UNDERPOWERED",
+          "metrics": {
+            "FGA": {
+              "estimates": {
+                "H_minus_C": null,
+                "L_minus_C": -2
+              },
+              "team_clusters": {
+                "H": 0,
+                "L": 1,
+                "C": 1
+              },
+              "confidence_interval": null,
+              "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+            },
+            "MIN": {
+              "estimates": {
+                "H_minus_C": null,
+                "L_minus_C": 0
+              },
+              "team_clusters": {
+                "H": 0,
+                "L": 1,
+                "C": 1
+              },
+              "confidence_interval": null,
+              "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+            }
+          },
+          "observations": [
+            {
+              "game_id": 4,
+              "unit": "fixture-4",
+              "team_id": 2,
+              "uid": 102,
+              "arm": "L",
+              "dose": 45,
+              "metrics": {
+                "FGA": 8,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_027",
+                "team_id": 3,
+                "uid": 103,
+                "arm": "C",
+                "baseline": 50,
+                "target": 50,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            },
+            {
+              "game_id": 4,
+              "unit": "fixture-4",
+              "team_id": 3,
+              "uid": 103,
+              "arm": "C",
+              "dose": null,
+              "metrics": {
+                "FGA": 10,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_027",
+                "team_id": 2,
+                "uid": 102,
+                "arm": "L",
+                "baseline": 50,
+                "target": 45,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            }
+          ],
+          "planned_opportunities": 2
+        },
+        "TENDENCY_NATIVE_066": {
+          "status": "UNDERPOWERED",
+          "metrics": {
+            "FGA": {
+              "estimates": {
+                "H_minus_C": 2,
+                "L_minus_C": -2
+              },
+              "team_clusters": {
+                "H": 1,
+                "L": 1,
+                "C": 1
+              },
+              "confidence_interval": null,
+              "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+            },
+            "MIN": {
+              "estimates": {
+                "H_minus_C": 0,
+                "L_minus_C": 0
+              },
+              "team_clusters": {
+                "H": 1,
+                "L": 1,
+                "C": 1
+              },
+              "confidence_interval": null,
+              "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+            }
+          },
+          "observations": [
+            {
+              "game_id": 2,
+              "unit": "fixture-2",
+              "team_id": 4,
+              "uid": 104,
+              "arm": "H",
+              "dose": 55,
+              "metrics": {
+                "FGA": 12,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_066",
+                "team_id": 6,
+                "uid": 106,
+                "arm": "C",
+                "baseline": 50,
+                "target": 50,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            },
+            {
+              "game_id": 2,
+              "unit": "fixture-2",
+              "team_id": 6,
+              "uid": 106,
+              "arm": "C",
+              "dose": null,
+              "metrics": {
+                "FGA": 10,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_066",
+                "team_id": 4,
+                "uid": 104,
+                "arm": "H",
+                "baseline": 50,
+                "target": 55,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            },
+            {
+              "game_id": 5,
+              "unit": "fixture-5",
+              "team_id": 5,
+              "uid": 105,
+              "arm": "L",
+              "dose": 45,
+              "metrics": {
+                "FGA": 8,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_066",
+                "team_id": 6,
+                "uid": 106,
+                "arm": "C",
+                "baseline": 50,
+                "target": 50,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            },
+            {
+              "game_id": 5,
+              "unit": "fixture-5",
+              "team_id": 6,
+              "uid": 106,
+              "arm": "C",
+              "dose": null,
+              "metrics": {
+                "FGA": 10,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_066",
+                "team_id": 5,
+                "uid": 105,
+                "arm": "L",
+                "baseline": 50,
+                "target": 45,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            }
+          ],
+          "planned_opportunities": 2
+        },
+        "TENDENCY_NATIVE_016": {
+          "status": "UNDERPOWERED",
+          "metrics": {
+            "FGA": {
+              "estimates": {
+                "H_minus_C": 2,
+                "L_minus_C": -2
+              },
+              "team_clusters": {
+                "H": 1,
+                "L": 1,
+                "C": 1
+              },
+              "confidence_interval": null,
+              "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+            },
+            "MIN": {
+              "estimates": {
+                "H_minus_C": 0,
+                "L_minus_C": 0
+              },
+              "team_clusters": {
+                "H": 1,
+                "L": 1,
+                "C": 1
+              },
+              "confidence_interval": null,
+              "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+            }
+          },
+          "observations": [
+            {
+              "game_id": 3,
+              "unit": "fixture-3",
+              "team_id": 7,
+              "uid": 107,
+              "arm": "H",
+              "dose": 55,
+              "metrics": {
+                "FGA": 12,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_016",
+                "team_id": 9,
+                "uid": 109,
+                "arm": "C",
+                "baseline": 50,
+                "target": 50,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            },
+            {
+              "game_id": 3,
+              "unit": "fixture-3",
+              "team_id": 9,
+              "uid": 109,
+              "arm": "C",
+              "dose": null,
+              "metrics": {
+                "FGA": 10,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_016",
+                "team_id": 7,
+                "uid": 107,
+                "arm": "H",
+                "baseline": 50,
+                "target": 55,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            },
+            {
+              "game_id": 6,
+              "unit": "fixture-6",
+              "team_id": 8,
+              "uid": 108,
+              "arm": "L",
+              "dose": 45,
+              "metrics": {
+                "FGA": 8,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_016",
+                "team_id": 9,
+                "uid": 109,
+                "arm": "C",
+                "baseline": 50,
+                "target": 50,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            },
+            {
+              "game_id": 6,
+              "unit": "fixture-6",
+              "team_id": 9,
+              "uid": 109,
+              "arm": "C",
+              "dose": null,
+              "metrics": {
+                "FGA": 10,
+                "MIN": 24
+              },
+              "disposition": "PLAYED",
+              "opponent": {
+                "factor_id": "TENDENCY_NATIVE_016",
+                "team_id": 8,
+                "uid": 108,
+                "arm": "L",
+                "baseline": 50,
+                "target": 45,
+                "live_writer_qualified": false
+              },
+              "previous_home_treatments": [],
+              "previous_away_treatments": []
+            }
+          ],
+          "planned_opportunities": 2
+        }
+      },
+      "qualified_game_count": 5,
+      "missing_game_ids": [
+        1
+      ],
+      "excluded_game_ids": []
+    },
+    "applied_exposures": [
+      {
+        "factor_id": "TENDENCY_NATIVE_027",
+        "team_id": 1,
+        "uid": 101,
+        "expected_before": 50,
+        "target": 55,
+        "live_writer_qualified": false,
+        "source_ref": "vae-8e1e0640b42b9d4c7258-setter-000",
+        "worldline_id": "FIXTURE",
+        "effective_on": "2022-01-01",
+        "applied": 55
+      },
+      {
+        "factor_id": "TENDENCY_NATIVE_027",
+        "team_id": 2,
+        "uid": 102,
+        "expected_before": 50,
+        "target": 45,
+        "live_writer_qualified": false,
+        "source_ref": "vae-8e1e0640b42b9d4c7258-setter-001",
+        "worldline_id": "FIXTURE",
+        "effective_on": "2022-01-01",
+        "applied": 45
+      },
+      {
+        "factor_id": "TENDENCY_NATIVE_066",
+        "team_id": 4,
+        "uid": 104,
+        "expected_before": 50,
+        "target": 55,
+        "live_writer_qualified": false,
+        "source_ref": "vae-8e1e0640b42b9d4c7258-setter-002",
+        "worldline_id": "FIXTURE",
+        "effective_on": "2022-01-01",
+        "applied": 55
+      },
+      {
+        "factor_id": "TENDENCY_NATIVE_066",
+        "team_id": 5,
+        "uid": 105,
+        "expected_before": 50,
+        "target": 45,
+        "live_writer_qualified": false,
+        "source_ref": "vae-8e1e0640b42b9d4c7258-setter-003",
+        "worldline_id": "FIXTURE",
+        "effective_on": "2022-01-01",
+        "applied": 45
+      },
+      {
+        "factor_id": "TENDENCY_NATIVE_016",
+        "team_id": 7,
+        "uid": 107,
+        "expected_before": 50,
+        "target": 55,
+        "live_writer_qualified": false,
+        "source_ref": "vae-8e1e0640b42b9d4c7258-setter-004",
+        "worldline_id": "FIXTURE",
+        "effective_on": "2022-01-01",
+        "applied": 55
+      },
+      {
+        "factor_id": "TENDENCY_NATIVE_016",
+        "team_id": 8,
+        "uid": 108,
+        "expected_before": 50,
+        "target": 45,
+        "live_writer_qualified": false,
+        "source_ref": "vae-8e1e0640b42b9d4c7258-setter-005",
+        "worldline_id": "FIXTURE",
+        "effective_on": "2022-01-01",
+        "applied": 45
+      }
+    ]
+  },
+  "coach": {
+    "mode": "FIXTURE",
+    "payload": {
+      "team_id": 1,
+      "values": {
+        "POEDefense": 13
+      },
+      "expected_before": {
+        "POEDefense": 0
+      }
+    },
+    "neighbor_319_unchanged": true
+  },
+  "training": {
+    "mode": "FIXTURE",
+    "payload": {
+      "team_id": 1,
+      "date": "2022-01-01",
+      "focus_values_raw": [
+        10.0,
+        22.0,
+        30.0
+      ]
+    },
+    "tail_unchanged": true
+  },
+  "world": {
+    "mode": "STATIC_CONTRACT",
+    "contract": {
+      "factor_id": "WORLD/sim_quarter_length",
+      "object_kind": "WORLD_OR_MODE_SETTINGS",
+      "unit": "WORLDLINE",
+      "action": null,
+      "endpoint": "INDEPENDENT_WORLDLINE_SAME_GAME_IDS",
+      "qualification": "NOT_S4_LIVE_QUALIFIED",
+      "engineering_gap": "Locate exact setter and GLOBAL_CALENDAR consumer before comparing independent worldlines",
+      "layout": {
+        "cells": [
+          {
+            "max": 12,
+            "min": 1,
+            "offset": "0xb4",
+            "root_rva": "0x632b498",
+            "side": null,
+            "type": "uint32"
+          },
+          {
+            "max": null,
+            "min": null,
+            "offset": "0xb4",
+            "root_rva": "0x632b498",
+            "side": null,
+            "type": "uint32"
+          }
+        ]
+      }
+    },
+    "candidate_arms": [
+      "A",
+      "B"
+    ],
+    "live_writer": "UNVERIFIED"
+  },
+  "settlement_samples": {
+    "COACH_DEFAULT_004": {
+      "plan": {
+        "factor_id": "COACH_DEFAULT_004",
+        "protocol": "COACH",
+        "event_refs": {
+          "fixture-1": {
+            "event_id": "fixture-COACH_GAMEPLAN-1",
+            "event_date": "2022-01-02",
+            "source_unit": "fixture-1/settlement"
+          },
+          "fixture-2": {
+            "event_id": "fixture-COACH_GAMEPLAN-2",
+            "event_date": "2022-01-02",
+            "source_unit": "fixture-2/settlement"
+          },
+          "fixture-3": {
+            "event_id": "fixture-COACH_GAMEPLAN-3",
+            "event_date": "2022-01-02",
+            "source_unit": "fixture-3/settlement"
+          }
+        },
+        "classification": "EVENT_BOUND_REFERENCE",
+        "live_authorized": false
+      },
+      "observations": [
+        {
+          "event_id": "fixture-COACH_GAMEPLAN-1",
+          "event_date": "2022-01-02",
+          "source_unit": "fixture-1/settlement",
+          "mode": "FIXTURE",
+          "worldline_id": "fixture-1",
+          "arm": "C",
+          "factor_id": "COACH_DEFAULT_004",
+          "origin_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "before_source": "fixture-1/before",
+          "after_source": "fixture-1/after",
+          "before_identity": "team-1",
+          "after_identity": "team-1",
+          "opportunity": true,
+          "setter_verified": true,
+          "requested_value": 14,
+          "observed_value": 14,
+          "action_payload": {
+            "team_id": 1,
+            "values": {
+              "POEDefense": 14
+            },
+            "expected_before": {
+              "POEDefense": 14
+            }
+          },
+          "before": {
+            "team_FGA": 20
+          },
+          "after": {
+            "team_FGA": 20
+          }
+        },
+        {
+          "event_id": "fixture-COACH_GAMEPLAN-2",
+          "event_date": "2022-01-02",
+          "source_unit": "fixture-2/settlement",
+          "mode": "FIXTURE",
+          "worldline_id": "fixture-2",
+          "arm": "H",
+          "factor_id": "COACH_DEFAULT_004",
+          "origin_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "before_source": "fixture-2/before",
+          "after_source": "fixture-2/after",
+          "before_identity": "team-2",
+          "after_identity": "team-2",
+          "opportunity": true,
+          "setter_verified": true,
+          "requested_value": 13,
+          "observed_value": 13,
+          "action_payload": {
+            "team_id": 2,
+            "values": {
+              "POEDefense": 13
+            },
+            "expected_before": {
+              "POEDefense": 14
+            }
+          },
+          "before": {
+            "team_FGA": 20
+          },
+          "after": {
+            "team_FGA": 22
+          }
+        },
+        {
+          "event_id": "fixture-COACH_GAMEPLAN-3",
+          "event_date": "2022-01-02",
+          "source_unit": "fixture-3/settlement",
+          "mode": "FIXTURE",
+          "worldline_id": "fixture-3",
+          "arm": "L",
+          "factor_id": "COACH_DEFAULT_004",
+          "origin_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "before_source": "fixture-3/before",
+          "after_source": "fixture-3/after",
+          "before_identity": "team-3",
+          "after_identity": "team-3",
+          "opportunity": true,
+          "setter_verified": true,
+          "requested_value": 15,
+          "observed_value": 15,
+          "action_payload": {
+            "team_id": 3,
+            "values": {
+              "POEDefense": 15
+            },
+            "expected_before": {
+              "POEDefense": 14
+            }
+          },
+          "before": {
+            "team_FGA": 20
+          },
+          "after": {
+            "team_FGA": 19
+          }
+        }
+      ],
+      "endpoint": "team_FGA",
+      "analysis": {
+        "effects": {
+          "H_minus_C": 2,
+          "L_minus_C": -1
+        },
+        "worldline_counts": {
+          "C": 1,
+          "H": 1,
+          "L": 1
+        },
+        "status": "UNDERPOWERED",
+        "confidence_interval": null,
+        "classifications": {
+          "H_minus_C": "UNDERPOWERED",
+          "L_minus_C": "UNDERPOWERED"
+        },
+        "mode": "FIXTURE",
+        "event_protocol": "COACH",
+        "excluded": {}
+      }
+    },
+    "TRAIN_DAILY/focus_01": {
+      "plan": {
+        "factor_id": "TRAIN_DAILY/focus_01",
+        "protocol": "TRAINING",
+        "event_refs": {
+          "fixture-1": {
+            "event_id": "fixture-TEAM_DAILY_TRAINING-1",
+            "event_date": "2022-01-02",
+            "source_unit": "fixture-1/settlement"
+          },
+          "fixture-2": {
+            "event_id": "fixture-TEAM_DAILY_TRAINING-2",
+            "event_date": "2022-01-02",
+            "source_unit": "fixture-2/settlement"
+          },
+          "fixture-3": {
+            "event_id": "fixture-TEAM_DAILY_TRAINING-3",
+            "event_date": "2022-01-02",
+            "source_unit": "fixture-3/settlement"
+          }
+        },
+        "classification": "EVENT_BOUND_REFERENCE",
+        "live_authorized": false
+      },
+      "observations": [
+        {
+          "event_id": "fixture-TEAM_DAILY_TRAINING-1",
+          "event_date": "2022-01-02",
+          "source_unit": "fixture-1/settlement",
+          "mode": "FIXTURE",
+          "worldline_id": "fixture-1",
+          "arm": "C",
+          "factor_id": "TRAIN_DAILY/focus_01",
+          "origin_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "before_source": "fixture-1/before",
+          "after_source": "fixture-1/after",
+          "before_identity": "team-1",
+          "after_identity": "team-1",
+          "opportunity": true,
+          "setter_verified": true,
+          "requested_value": 20,
+          "observed_value": 20.0,
+          "action_payload": {
+            "team_id": 1,
+            "date": "2022-01-02",
+            "focus_values_raw": [
+              10.0,
+              20.0,
+              30.0
+            ]
+          },
+          "before": {
+            "fatigue": 20
+          },
+          "after": {
+            "fatigue": 20
+          }
+        },
+        {
+          "event_id": "fixture-TEAM_DAILY_TRAINING-2",
+          "event_date": "2022-01-02",
+          "source_unit": "fixture-2/settlement",
+          "mode": "FIXTURE",
+          "worldline_id": "fixture-2",
+          "arm": "H",
+          "factor_id": "TRAIN_DAILY/focus_01",
+          "origin_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "before_source": "fixture-2/before",
+          "after_source": "fixture-2/after",
+          "before_identity": "team-2",
+          "after_identity": "team-2",
+          "opportunity": true,
+          "setter_verified": true,
+          "requested_value": 22,
+          "observed_value": 22.0,
+          "action_payload": {
+            "team_id": 2,
+            "date": "2022-01-02",
+            "focus_values_raw": [
+              10.0,
+              22.0,
+              30.0
+            ]
+          },
+          "before": {
+            "fatigue": 20
+          },
+          "after": {
+            "fatigue": 22
+          }
+        },
+        {
+          "event_id": "fixture-TEAM_DAILY_TRAINING-3",
+          "event_date": "2022-01-02",
+          "source_unit": "fixture-3/settlement",
+          "mode": "FIXTURE",
+          "worldline_id": "fixture-3",
+          "arm": "L",
+          "factor_id": "TRAIN_DAILY/focus_01",
+          "origin_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "before_source": "fixture-3/before",
+          "after_source": "fixture-3/after",
+          "before_identity": "team-3",
+          "after_identity": "team-3",
+          "opportunity": true,
+          "setter_verified": true,
+          "requested_value": 18,
+          "observed_value": 18.0,
+          "action_payload": {
+            "team_id": 3,
+            "date": "2022-01-02",
+            "focus_values_raw": [
+              10.0,
+              18.0,
+              30.0
+            ]
+          },
+          "before": {
+            "fatigue": 20
+          },
+          "after": {
+            "fatigue": 19
+          }
+        }
+      ],
+      "endpoint": "fatigue",
+      "analysis": {
+        "effects": {
+          "H_minus_C": 2,
+          "L_minus_C": -1
+        },
+        "worldline_counts": {
+          "C": 1,
+          "H": 1,
+          "L": 1
+        },
+        "status": "UNDERPOWERED",
+        "confidence_interval": null,
+        "classifications": {
+          "H_minus_C": "UNDERPOWERED",
+          "L_minus_C": "UNDERPOWERED"
+        },
+        "mode": "FIXTURE",
+        "event_protocol": "TRAINING",
+        "excluded": {}
+      }
+    }
+  },
+  "knowledge_query_fixture": {
+    "factor_id": "TENDENCY_NATIVE_027",
+    "role": "COACH",
+    "action": "SHOT_THREE_TENDENCY",
+    "context": "TENDENCY_NAMED",
+    "source": "128f4d0f260a7147079c94375653f98f641dacaa57b18bd1247fdf790896d652",
+    "expected_effect_range": null,
+    "reliability": "UNDERPOWERED",
+    "tradeoff": null,
+    "contraindications": [
+      "PARTIAL_FIXTURE"
+    ],
+    "contradictions": [],
+    "evidence_mode": "FIXTURE",
+    "decision_usable": false,
+    "execution_authorized": false
+  },
+  "knowledge_query_live": {
+    "factor_id": "TENDENCY_NATIVE_027",
+    "role": "COACH",
+    "action": "SHOT_THREE_TENDENCY",
+    "context": "TENDENCY_NAMED",
+    "source": null,
+    "expected_effect_range": null,
+    "reliability": "UNCONFIRMED",
+    "tradeoff": null,
+    "contraindications": null,
+    "contradictions": [],
+    "evidence_mode": "LIVE",
+    "decision_usable": false,
+    "execution_authorized": false
+  }
+}

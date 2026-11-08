@@ -31,6 +31,7 @@ sys.path.insert(0, str(_DIR))
 sys.path.insert(0, str(_PROTOTYPE_DIR))
 
 import contracts
+from native_factor_slots import require_s4_live_tendency
 from bulk_executor import (
     BulkBatch,
     BulkIntentItem,
@@ -636,6 +637,7 @@ class SeasonCycleHost:
         if derived is None and digest != self.approved_role_manifest_sha256:
             raise ValueError("APPROVED_ROLE_MANIFEST_HASH_MISMATCH")
         grant = json.loads(raw)
+        field = require_s4_live_tendency(grant.get("field_id")).native_key
         roles = grant.get("roles")
         player_ids = grant.get("player_ids")
         if (not isinstance(roles, list) or len(roles) != 1
@@ -648,7 +650,6 @@ class SeasonCycleHost:
                 or grant.get("authorized_worldlines") or grant.get("authorized_databases")
                 or grant.get("allow_wildcard_scope")
                 or grant.get("action_id") != "PLAYER_PATCH_TENDENCIES"
-                or grant.get("field_id") != "SHOT_TENDENCY"
                 or not grant.get("human_authorization_ref")):
             raise ValueError("LIVE_DELEGATION_SCOPE_INVALID")
         now = datetime.now(timezone.utc)
@@ -666,10 +667,14 @@ class SeasonCycleHost:
         context = _context(pid)
         if self.research_delegation is not None:
             self.research_delegation.check_scene(context, self.state["loaded_filename"], binding_sha)
-        return {"role_manifest_sha256": digest, "binding_sha256": binding_sha, "epoch": context["epoch"],
+        scope = {"role_manifest_sha256": digest, "binding_sha256": binding_sha, "epoch": context["epoch"],
                 "game_progress": context["game_progress"], "team_id": parse_team_numeric_id(roles[0].get("team_id")),
                 "actor_uid": roles[0].get("actor_uid"), "role_type": str(roles[0].get("role_type", "")).upper(),
                 "player_ids": player_ids}
+        # The existing exact-approval format already implies the original field.
+        if field != "SHOT_TENDENCY":
+            scope["field_id"] = field
+        return scope
 
     def _make_context(self, cycle_id: str) -> BatchContext:
         season_id = "2021-22"
@@ -706,11 +711,15 @@ class SeasonCycleHost:
     def _get_fresh_live_getter(
         self, expected_pid: Optional[int] = None, *, expected_team: Optional[int] = None,
         expected_players: Optional[Set[int]] = None, expected_creation_filetime: Optional[int] = None,
+        tendency_field: Optional[str] = None,
     ) -> Optional[Any]:
         """Read fresh values, optionally bound to the actual Native roster and process epoch."""
         try:
             from refresh import resolve_pid
-            from player_skill_reader import collect_player_skills
+            from player_skill_reader import collect_player_skills, read_tendency_neighborhood
+            tendency_slot = require_s4_live_tendency(tendency_field) if tendency_field is not None else None
+            if tendency_slot is not None and (expected_team is None or not expected_players):
+                raise ValueError("TENDENCY_RAW_READBACK_REQUIRES_BOUND_ROSTER_UID")
             actual_pid = resolve_pid("auto")
             if expected_pid is not None and actual_pid != expected_pid:
                 raise RuntimeError(f"PID_MISMATCH_FRESH_GETTER: expected {expected_pid}, found {actual_pid}")
@@ -719,13 +728,13 @@ class SeasonCycleHost:
                 if expected_creation_filetime is not None and reader.creation_filetime != expected_creation_filetime:
                     return None
                 m, _ = collect_player_skills(reader)
+                player_pool = m["descriptors"][1] if expected_team is not None else None
                 if expected_team is not None:
                     team_pointers = [address for address, tid in m["core_team_pointer_map"].items()
                                      if type(tid) is int and tid == expected_team]
                     if len(team_pointers) != 1:
                         return None
                     team_pointer = team_pointers[0]
-                    player_pool = m["descriptors"][1]
                 player_tendencies = {}
                 seen = set()
                 for p in m["players"]:
@@ -740,10 +749,10 @@ class SeasonCycleHost:
                         continue
                     s_idx = p["source_player_index"]
                     if expected_team is not None:
-                        slot = p["current_roster_slot"]
+                        roster_slot = p["current_roster_slot"]
                         team_id = p["native_team_id"]
                         if (type(team_id) is not int or team_id != expected_team
-                                or type(slot) is not int or not 0 <= slot < 15):
+                                or type(roster_slot) is not int or not 0 <= roster_slot < 15):
                             continue
                         # The reader already verified reciprocal current-team membership.
                         # Match Native rosterPlayer's additional contract-team guard.
@@ -751,7 +760,11 @@ class SeasonCycleHost:
                         contract_team = int.from_bytes(reader.read(address + 0xa8, 8, "S4_CONTRACT_TEAM"), "little")
                         if contract_team != team_pointer:
                             continue
-                    player_tendencies[uid] = m["skill_rows"][s_idx]["tendencies"]
+                    values = dict(m["skill_rows"][s_idx]["tendencies"])
+                    if tendency_slot is not None:
+                        values[tendency_slot.native_key.lower() + "_raw"] = tendency_slot.decode(
+                            read_tendency_neighborhood(reader, player_pool, s_idx))
+                    player_tendencies[uid] = values
 
                 def fresh_getter(player_id: int, field_id: str) -> Optional[int]:
                     tdict = player_tendencies.get(int(player_id), {})
@@ -1572,10 +1585,11 @@ class SeasonCycleHost:
 
         native_plan_digest = plan_digest
         if live_context:
+            field = require_s4_live_tendency(live_context.get("field_id", "SHOT_TENDENCY")).native_key
             if (not 1 <= executable_count <= 3 or unsupported_count or len(sealed_batch.intents) != executable_count
                     or any(i.issuer_uid != live_context["actor_uid"] for i in sealed_batch.intents)
                     or any(i.team_id != live_context["team_id"] or i.action_id != "PLAYER_PATCH_TENDENCIES"
-                           or i.field_id != "SHOT_TENDENCY" or i.player_id not in live_context["player_ids"]
+                           or i.field_id != field or i.player_id not in live_context["player_ids"]
                            for i in bridge_res.bulk_batch.intents)):
                 raise ValueError("LIVE_SCOPE_VIOLATION: sealed batch exceeds the approved S4 delegation")
             plan_digest = sha256_digest({"native_plan_digest": native_plan_digest, "live_context": live_context})
@@ -1712,13 +1726,14 @@ class SeasonCycleHost:
 
         # Enforce certified live scope allowlist (P0-C)
         if not is_mock:
+            field = require_s4_live_tendency(live_context.get("field_id", "SHOT_TENDENCY")).native_key
             for it in bulk_batch.intents:
                 act = str(it.action_id).upper()
-                fid = str(it.field_id).upper()
+                fid = str(it.field_id)
                 if act not in ("PLAYER.EDIT.TENDENCY_BATCH", "PLAYER_PATCH_TENDENCIES"):
                     raise ValueError(f"LIVE_SCOPE_VIOLATION: action '{it.action_id}' is not in certified live allowlist (PLAYER_PATCH_TENDENCIES only)")
-                if fid != "SHOT_TENDENCY":
-                    raise ValueError(f"LIVE_SCOPE_VIOLATION: field '{it.field_id}' is not in certified live allowlist (SHOT_TENDENCY only)")
+                if fid != field:
+                    raise ValueError(f"LIVE_SCOPE_VIOLATION: field '{it.field_id}' is not in the bound S4 slot grant")
             if (not 1 <= len(bulk_batch.intents) <= 3
                     or len({it.player_id for it in bulk_batch.intents}) != len(bulk_batch.intents)
                     or any(it.team_id != live_context["team_id"] or it.player_id not in live_context["player_ids"]
@@ -1745,6 +1760,7 @@ class SeasonCycleHost:
                 expected_pid=expected_pid, expected_team=live_context["team_id"],
                 expected_players={item.player_id for item in bulk_batch.intents},
                 expected_creation_filetime=live_context["epoch"]["creation_filetime"],
+                **({"tendency_field": live_context["field_id"]} if "field_id" in live_context else {}),
             )
             if getter_before is None or any(
                 getter_before(item.player_id, item.field_id) != item.expected_before for item in bulk_batch.intents
@@ -1794,6 +1810,16 @@ class SeasonCycleHost:
                 self.outbox.record_execution_receipts(cycle_id, uncertain, evidence_ref=f"evidence-{cycle_id}")
             raise
 
+    def exclude_research_cas_cycle(self, cycle_id, plan_digest):
+        """Close a confirmed pre-dispatch CAS rejection without bypassing a claim."""
+        active = self.state.get("active_plan") or {}
+        if (self.research_delegation is None or active.get("cycle_id") != cycle_id
+                or active.get("plan_digest") != plan_digest):
+            raise ValueError("RESEARCH_CAS_EXCLUSION_SCOPE_MISMATCH")
+        self.outbox.exclude_unclaimed_cas_cycle(cycle_id, plan_digest)
+        self.state.update(status=HostState.WAITING_CALENDAR_ADVANCE, active_plan=None)
+        self._save_state()
+
     @staticmethod
     def _verify_live_batch_approval(path, approved_sha, cycle_id, plan_digest, batch, context):
         """Check the private receipt against a digest provided by the Human operator.
@@ -1840,6 +1866,7 @@ class SeasonCycleHost:
                 expected_pid=expected_pid, expected_team=live_context["team_id"],
                 expected_players={item.player_id for item in bulk_batch.intents},
                 expected_creation_filetime=live_context["epoch"]["creation_filetime"],
+                **({"tendency_field": live_context["field_id"]} if "field_id" in live_context else {}),
             )
             if self._approved_live_context(expected_pid) != live_context:
                 raise RuntimeError("LIVE_CONTEXT_CHANGED_DURING_EXECUTION")

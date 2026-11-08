@@ -858,6 +858,31 @@ class DecisionOutbox:
                   time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())))
             conn.commit()
 
+    def exclude_unclaimed_cas_cycle(self, cycle_id, plan_digest):
+        """Close a singleton research plan that failed CAS before any execution claim."""
+        with self._get_connection() as conn:
+            conn.execute("BEGIN IMMEDIATE")
+            cycle = conn.execute("SELECT status, revision FROM decision_cycles WHERE cycle_id=?", (cycle_id,)).fetchone()
+            intents = conn.execute("SELECT intent_id,status FROM decision_intents WHERE cycle_id=?", (cycle_id,)).fetchall()
+            claim = conn.execute("""
+                SELECT 1 FROM outbox_events WHERE cycle_id=? AND event_type='EXECUTION_CLAIMED'
+            """, (cycle_id,)).fetchone()
+            if not cycle or cycle["status"] != "SEALED" or len(intents) != 1 or intents[0]["status"] != "SEALED" or claim:
+                raise ValueError("RESEARCH_CAS_EXCLUSION_REQUIRES_UNCLAIMED_SEALED_CYCLE")
+            stamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
+            revision = cycle["revision"] + 1
+            conn.execute("""
+                UPDATE decision_intents SET status='NOT_EXECUTED', outcome_reason='CAS_PREFLIGHT_MISMATCH', updated_at=?
+                WHERE cycle_id=?
+            """, (stamp, cycle_id))
+            conn.execute("""
+                UPDATE decision_cycles SET status='STOPPED_PARTIAL', revision=?, updated_at=? WHERE cycle_id=?
+            """, (revision, stamp, cycle_id))
+            conn.execute("""
+                INSERT INTO outbox_events(cycle_id,intent_id,event_type,prev_state,new_state,revision,payload_json,timestamp)
+                VALUES(?,?,'CAS_EXCLUDED_NO_DISPATCH','SEALED','STOPPED_PARTIAL',?,?,?)
+            """, (cycle_id, intents[0]["intent_id"], revision, json.dumps({"plan_digest": plan_digest}), stamp))
+
     def record_execution_receipts(
         self,
         cycle_id: str,

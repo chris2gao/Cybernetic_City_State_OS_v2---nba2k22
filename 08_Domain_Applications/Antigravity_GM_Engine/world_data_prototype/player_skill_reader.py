@@ -11,6 +11,17 @@ from live_world import _AcquisitionReceipt,_json,read_binding,bound_database,RES
 from player_detail_reader import collect_public_player_pool,reconstruct_projection
 from player_skill_codec import PROFILE,PROFILE_PATH,LAYOUT,decode_skills,play_label
 
+
+def read_tendency_neighborhood(reader, descriptor, source_player_index):
+    """Read only the contiguous public tendency bytes on a validated PLAYER descriptor."""
+    start, stop = 0x458, 0x4bb
+    if (type(source_player_index) is not int or not 0 <= source_player_index < descriptor["count"]
+            or descriptor["stride"] < stop
+            or any(start < high and low < stop for low, high in RESTRICTED_PLAYER_RANGES)):
+        raise ValueError("PLAYER_TENDENCY_DESCRIPTOR_OR_RANGE_MISMATCH")
+    address = descriptor["address"] + source_player_index * descriptor["stride"]
+    return reader.read(address + start, stop - start, "PUBLIC_PLAYER_TENDENCY_NEIGHBORHOOD")
+
 def skill_fields():
     return [(group,name,f) for group in ('attributes','tendencies','play_types') for name,f in PROFILE[group].items()]+[('tendencies','is_play_initiator_raw',PROFILE['initiator'])]
 
