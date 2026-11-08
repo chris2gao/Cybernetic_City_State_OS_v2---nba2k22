@@ -99,7 +99,9 @@ def validate_plan(plan, *, observe=False):
             "Observation window outside 15–120 seconds")
     games = plan["games"]
     ids = [game["id"] for game in games]
-    require(2 <= len(games) <= 45 and ids == sorted(set(ids)), "Canonical exact Game ID set required")
+    transit = plan.get("empty_transit") is True
+    require((0 if transit else 2) <= len(games) <= 45 and ids == sorted(set(ids)),
+            "Canonical exact Game ID set required")
     days = []
     for game in games:
         day = civil(game["day"])
@@ -107,7 +109,8 @@ def validate_plan(plan, *, observe=False):
                 and all(type(game[key]) is int and 0 <= game[key] <= 65535 for key in ("home", "away"))
                 and game["home"] != game["away"], "Invalid scheduled matchup")
         days.append(day)
-    require(any(day < end for day in days) and end in days, "Expected finals and next-day controls required")
+    require(all(day == end for day in days) if transit else (any(day < end for day in days) and end in days),
+            "Expected finals and next-day controls required")
 
 
 def load_approval(plan, path, approved_sha, now):
@@ -202,7 +205,7 @@ def audit_native_result(raw, plan):
     observed = by_event("NEXT_DAY_PENDING")
     require(len(observed) == 1 and sorted(observed[0]["ids"]) == pending, "Next-day pending set differs")
     boxes = by_event("REA_POST_SIM_BOX_UNIT")
-    require(bool(boxes) and all(unit["part"] == index and unit["total"] == len(boxes)
+    require(bool(boxes) == bool(finals) and all(unit["part"] == index and unit["total"] == len(boxes)
             and unit["pid"] == result["pid"] and unit["today_raw"] == next_word
             for index, unit in enumerate(boxes)), "Missing or mismatched Box capture unit")
     seen = set()
