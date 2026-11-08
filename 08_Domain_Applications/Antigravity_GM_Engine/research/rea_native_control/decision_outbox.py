@@ -168,8 +168,16 @@ class DecisionOutbox:
                 status TEXT NOT NULL CHECK(status IN ('CLAIMED','UNKNOWN','VERIFIED_IN_MEMORY','NOT_EXECUTED')),
                 receipt_ref TEXT
             );
-            CREATE UNIQUE INDEX IF NOT EXISTS idx_calendar_scene_once
-                ON test_calendar_claims(save_instance_id, epoch, start_day) WHERE status != 'NOT_EXECUTED';
+            CREATE TABLE IF NOT EXISTS test_calendar_reconciliations (
+                plan_digest TEXT PRIMARY KEY REFERENCES test_calendar_claims(plan_digest),
+                prior_receipt_ref TEXT NOT NULL,
+                proof_ref TEXT NOT NULL,
+                disposition TEXT NOT NULL CHECK(disposition = 'INTERRUPTED_NO_CALENDAR_EFFECT')
+            );
+            DROP INDEX IF EXISTS idx_calendar_scene_once;
+            CREATE UNIQUE INDEX IF NOT EXISTS idx_calendar_active_scene_once
+                ON test_calendar_claims(save_instance_id, epoch, start_day)
+                WHERE status IN ('CLAIMED','VERIFIED_IN_MEMORY');
             """)
 
     def claim_test_calendar(self, plan_digest, world_id, save_instance_id, epoch, start_day):
@@ -177,9 +185,9 @@ class DecisionOutbox:
         with closing(self._get_connection()) as conn, conn:
             conn.execute("BEGIN IMMEDIATE")
             if conn.execute("""
-                SELECT 1 FROM test_calendar_claims
-                 WHERE (world_id = ? OR save_instance_id = ?)
-                   AND status IN ('CLAIMED', 'UNKNOWN')
+                SELECT 1 FROM test_calendar_claims c
+                 WHERE (world_id = ? OR save_instance_id = ?) AND status IN ('CLAIMED','UNKNOWN')
+                   AND NOT EXISTS (SELECT 1 FROM test_calendar_reconciliations r WHERE r.plan_digest=c.plan_digest)
             """, (world_id, save_instance_id)).fetchone():
                 raise ValueError("TEST_CALENDAR_UNRESOLVED_NO_REPLAY")
             if conn.execute("""
@@ -208,6 +216,19 @@ class DecisionOutbox:
                  WHERE plan_digest = ? AND status = 'CLAIMED'
             """, (status, receipt_ref, plan_digest)).rowcount != 1:
                 raise ValueError("TEST_CALENDAR_CLAIM_NOT_OPEN")
+
+    def record_test_calendar_no_effect(self, plan_digest, prior_receipt_ref, proof_ref):
+        """Keep the consumed request locked and record verified interruption without calendar effect."""
+        if not proof_ref or not prior_receipt_ref:
+            raise ValueError("TEST_CALENDAR_RECONCILIATION_EVIDENCE_REQUIRED")
+        with closing(self._get_connection()) as conn, conn:
+            conn.execute("BEGIN IMMEDIATE")
+            if conn.execute("""
+                INSERT INTO test_calendar_reconciliations
+                SELECT plan_digest, receipt_ref, ?, 'INTERRUPTED_NO_CALENDAR_EFFECT'
+                FROM test_calendar_claims WHERE plan_digest=? AND status='UNKNOWN' AND receipt_ref=?
+            """, (proof_ref, plan_digest, prior_receipt_ref)).rowcount != 1:
+                raise ValueError("TEST_CALENDAR_UNKNOWN_RECEIPT_CHANGED")
 
     @staticmethod
     def inspect_test_calendar(db_path, plan_digest):
@@ -735,9 +756,10 @@ class DecisionOutbox:
                 raise ValueError("EXECUTION_ALREADY_CLAIMED_NO_REPLAY")
             context = json.loads(cycle["context_json"])
             if conn.execute("""
-                SELECT 1 FROM test_calendar_claims
+                SELECT 1 FROM test_calendar_claims c
                  WHERE (world_id = ? OR save_instance_id = ?)
                    AND status IN ('CLAIMED','UNKNOWN')
+                   AND NOT EXISTS (SELECT 1 FROM test_calendar_reconciliations r WHERE r.plan_digest=c.plan_digest)
             """, (context["world_id"], context["save_instance_id"])).fetchone():
                 raise ValueError("TEST_CALENDAR_UNRESOLVED")
             resources = set()

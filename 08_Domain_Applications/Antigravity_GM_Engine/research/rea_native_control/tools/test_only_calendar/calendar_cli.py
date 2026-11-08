@@ -255,20 +255,31 @@ def read_native_today(args):
                      "binding_sha256": before["binding_sha256"], "epoch": epoch}
 
 
-def simulate_to_native_date(args, plan):
-    require(args.execute_once and args.approval and args.approved_sha, "TEST_ONLY_SIM_DISABLED")
+def simulate_to_native_date(args, plan, *, research_delegation=None):
+    require(args.execute_once, "TEST_ONLY_SIM_DISABLED")
+    if research_delegation is None:
+        require(args.approval and args.approved_sha, "TEST_ONLY_SIM_DISABLED")
+    else:
+        require(not args.approval and not args.approved_sha, "Mixed calendar authority")
     validate_plan(plan)
     require(Path(args.outbox).resolve(strict=True) == Path(plan["outbox_db"]).resolve(strict=True),
             "Use the approved shared Host Outbox")
-    grant = load_approval(plan, args.approval, args.approved_sha, datetime.now(timezone.utc))
+    def check_approval():
+        if research_delegation is not None:
+            return research_delegation.verify_calendar(plan)
+        return load_approval(plan, args.approval, args.approved_sha, datetime.now(timezone.utc))
+
+    grant = check_approval()
     script = render(plan, dispatch=True, expires=utc(grant["expires_at"]))
     preflight(plan)
     plan_digest = digest(plan)
     outbox = DecisionOutbox(args.outbox)
+    if research_delegation is not None:
+        research_delegation.reserve_calendar(plan)
     outbox.claim_test_calendar(plan_digest, plan["worldline_id"], plan["loaded_filename"],
                                digest(plan["epoch"]), plan["start"])
     try:
-        load_approval(plan, args.approval, args.approved_sha, datetime.now(timezone.utc))
+        check_approval()
         preflight(plan)
     except Exception as error:
         outbox.finish_test_calendar(plan_digest, "NOT_EXECUTED", "POST_CLAIM_PREFLIGHT_REJECTED")
