@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from hashlib import sha256
 import json
 from pathlib import Path
@@ -15,13 +15,15 @@ from factor_assignment import Exposure, allocate_window, event_study, windows_fo
 from factor_inventory import StudyInputs
 from factor_lab_cli import report
 from factor_progress import ProgressEvent, ProgressLedger
-from factor_runner import LiveEnvelope, WindowRunner, digest, window_operations
+from factor_runner import (LiveEnvelope, NativeCalendarPort, QualificationDelegation, QualificationEnvelope,
+                           WindowRunner, digest, window_operations)
 from native_factor_slots import resolve_tendency_slot, require_s4_live_tendency, tendency_slots
 from bulk_executor import BulkBatch, BulkBatchHeader, BulkBatchPlanner, BulkFridaScriptCompiler, BulkIntentItem
 from contracts import BUILD
 import season_cycle_host
 from season_cycle_host import SeasonCycleHost
 import factor_readback
+import factor_runner
 import player_skill_reader
 import refresh
 
@@ -75,7 +77,8 @@ def test_unknown_slot_read_only_qualification_binds_roster_and_epoch(tmp_path, m
     host.state = dict(binding, save_directory=str(tmp_path), loaded_filename="MyLEAGUE0005",
                       database_file=str(database))
     epoch = {"pid": 1, "creation_filetime": 10}
-    progress = {"mode_raw": 1, "period_raw": 29, "today_native_iso_date": "2022-01-01"}
+    progress = {"mode_raw": 1, "period_raw": 29, "today_native_iso_date": "2022-01-01",
+                "today_minutes_since_midnight_raw": 0}
     monkeypatch.setattr(season_cycle_host, "read_binding", lambda *_: (binding, SHA))
     monkeypatch.setattr(season_cycle_host, "bound_database", lambda *_: database)
     monkeypatch.setattr(refresh, "_context", lambda _: {"epoch": epoch, "game_progress": dict(progress)})
@@ -142,6 +145,129 @@ def test_worlddata_port_routes_host_state_through_calendar_orchestrator(tmp_path
     orchestrator.binding_hash = "b" * 64
     with pytest.raises(ValueError, match="FACTOR_CAPTURE_HOST_SAVE_BINDING_MISMATCH"):
         port("pre", {}, [])
+
+
+def qualification_fixture(tmp_path):
+    save = tmp_path / "MyLEAGUE0005"
+    backup = tmp_path / "MyLEAGUE0003"
+    save.write_bytes(b"fixture save")
+    backup.write_bytes(b"fixture backup")
+    binding = {"save_id": "save", "worldline_id": "world", "loaded_filename": save.name, "binding_sha256": SHA,
+               "today": "2022-01-01", "minutes": 0, "epoch": {"pid": 1, "creation_filetime": 10}, "pid": 1,
+               "loaded_slot_attestation_ref": "fixture",
+               "outbox_db": str(tmp_path / "outbox.sqlite"), "journal_root": str(tmp_path / "journal"),
+               "build_sha256": BUILD, "bound_database_file": "world.sqlite", "disk_save": str(save),
+               "cold_backup": str(backup), "disk_sha256": sha256(save.read_bytes()).hexdigest(),
+               "cold_backup_sha256": sha256(backup.read_bytes()).hexdigest()}
+    operations = []
+    image = bytes([50] * 99)
+    for index, field in enumerate(("SHOT_THREE_TENDENCY", "TOUCHES_TENDENCY", "UNKNOWN_RAW_BYTE_016"), 1):
+        slot = resolve_tendency_slot(field)
+        before = {key: binding[key] for key in ("save_id", "worldline_id", "loaded_filename", "binding_sha256",
+                                               "epoch", "today", "minutes")}
+        before.update(status="READ_ONLY_SLOT_OBSERVED", profile_build_sha256=BUILD, write_qualified=False,
+                      factor_id=slot.factor_id, native_key=slot.native_key, index=slot.index, offset=slot.offset,
+                      width_bits=8, legal_domain=[slot.minimum, slot.maximum], uid=100 + index, team_id=index,
+                      raw_value=50, neighborhood_hex=image.hex(), neighborhood_sha256=sha256(image).hexdigest())
+        operations.append(dict(factor_id=slot.factor_id, team_id=index, uid=100 + index, expected_before=50,
+                               target=51, before=before))
+    now = datetime.now(timezone.utc)
+    grant = dict(schema="nba2k22.vae.write_qualification.v1", revoked=False, human_decision_ref="fixture",
+                 binding=binding, operation_digests=[digest(op) for op in operations],
+                 maximum_setters=3, maximum_calendar=0, valid_from=(now - timedelta(minutes=1)).isoformat(),
+                 expires_at=(now + timedelta(minutes=1)).isoformat())
+    raw = json.dumps(grant).encode()
+    delegation = QualificationDelegation(QualificationEnvelope(raw, sha256(raw).hexdigest()), binding,
+                                          operations, tmp_path / "journal")
+    return delegation, operations
+
+
+@pytest.mark.parametrize("neighbor_drift", [False, True])
+def test_bounded_qualification_scope_and_no_replay(tmp_path, monkeypatch, neighbor_drift):
+    delegation, operations = qualification_fixture(tmp_path)
+    claims = []
+    by_uid = {op["uid"]: op for op in operations}
+    host = SimpleNamespace(research_delegation=delegation, state={}, outbox_db=Path(delegation.binding["outbox_db"]))
+
+    def observe(**request):
+        op = by_uid[request["uid"]]
+        snapshot = dict(op["before"])
+        if op["uid"] in claims:
+            slot = delegation.slot_for(op)
+            image = slot.expected_image(bytes.fromhex(snapshot["neighborhood_hex"]), 50, 51)
+            if neighbor_drift:
+                image = bytes([42]) + image[1:]
+            snapshot.update(raw_value=51, neighborhood_hex=image.hex(), neighborhood_sha256=sha256(image).hexdigest())
+        return snapshot
+
+    def execute(owner, key, operation, binding):
+        assert owner is host and binding is delegation.binding
+        delegation.bind(operation)
+        slot = delegation.slot_for(operation)
+        manifest = delegation.role_manifest()
+        assert manifest["field_id"] == slot.native_key and manifest["player_ids"] == [operation["uid"]]
+        item = BulkIntentItem("fixture", "PLAYER_PATCH_TENDENCIES", operation["team_id"], slot.native_key,
+                              50, 51, player_id=operation["uid"])
+        base = BulkBatch(BulkBatchHeader(key, "fixture", BUILD, "fixture", "fixture"), (item,))
+        context = {"epoch": delegation.epoch,
+                   "qualification_neighborhood_hex": delegation.approved_neighborhood(slot.native_key)}
+        batch = SeasonCycleHost._bind_qualification_neighborhood(base, context)
+        assert batch.plan_digest != base.plan_digest
+        chunks = BulkBatchPlanner().plan(batch)
+        script = BulkFridaScriptCompiler().compile_chunk(chunks[0], batch.header)
+        assert "QUALIFICATION_NEIGHBORHOOD_CHANGED" in script
+        assert batch.intents[0].plan_record()["expected_tendency_hex"] == operation["before"]["neighborhood_hex"]
+        delegation.verify_setter(key, batch.plan_digest, batch, context)
+        delegation.reserve_setter(key, batch.plan_digest)
+        delegation.check_readback(host, after=False)
+        claims.append(operation["uid"])
+        delegation.check_readback(host, after=True)
+        return {"status": "APPLIED", "source_ref": batch.plan_digest}
+
+    host.read_factor_qualification_snapshot = observe
+    monkeypatch.setattr(factor_runner, "_execute_host_setter", execute)
+    wrong_host = SimpleNamespace(research_delegation=delegation, state={}, outbox_db=tmp_path / "other.sqlite")
+    with pytest.raises(PermissionError, match="QUALIFICATION_LOCK_STORAGE_MISMATCH"):
+        delegation.run(wrong_host)
+    if neighbor_drift:
+        with pytest.raises(RuntimeError, match="QUALIFICATION_INDEPENDENT_NEIGHBORHOOD_MISMATCH"):
+            delegation.run(host)
+        assert claims == [101]
+    else:
+        result = delegation.run(host)
+        assert result["status"] == "QUALIFICATION_EVIDENCE_RECORDED"
+        assert len(result["receipts"]) == 3 and result["calendar_calls"] == 0
+        assert claims == [101, 102, 103]
+    with pytest.raises(FileExistsError):
+        delegation.run(host)
+    with pytest.raises(PermissionError, match="NATIVE_CALENDAR_REQUIRES_WINDOW_AUTHORITY"):
+        NativeCalendarPort(delegation, {}, None, tmp_path).verify_calendar({})
+
+
+def test_qualification_envelope_rejects_changed_operation_and_backup(tmp_path):
+    delegation, operations = qualification_fixture(tmp_path)
+    operations[0]["target"] = 52
+    with pytest.raises(PermissionError, match="QUALIFICATION_HUMAN_SCOPE_OR_TIME_MISMATCH"):
+        delegation.approval()
+    operations[0]["target"] = 51
+    Path(delegation.binding["cold_backup"]).write_bytes(b"changed fixture backup")
+    with pytest.raises(ValueError, match="QUALIFICATION_SAVE_FINGERPRINT_CHANGED"):
+        delegation._check_disk()
+
+
+def test_matching_raw_value_cannot_hide_unknown_native_result(tmp_path):
+    delegation, (operation, *_) = qualification_fixture(tmp_path)
+    host = SimpleNamespace(
+        research_delegation=delegation,
+        _get_fresh_live_getter=lambda **_: lambda uid, field: 50,
+        start_cycle=lambda *_, **__: {"intents_added_count": 1},
+        seal_cycle_decisions=lambda *_, **__: {"status": "PLAN_PREFLIGHTED_WAITING_AUTH", "plan_digest": SHA},
+        authorize_and_execute=lambda *_, **__: {"status": "STOPPED_VALIDATION_FAILED", "readback_verified": True,
+                                                "batch_validation_passed": False, "success_count": 1},
+    )
+    assert factor_runner._execute_host_setter(host, "fixture-cycle", operation, delegation.binding) == {
+        "status": "UNKNOWN", "source_ref": SHA,
+    }
 
 
 def test_real_windows_and_two_sided_multi_factor_plan(study):

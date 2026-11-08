@@ -46,7 +46,7 @@ def validate_batch_execution(
     # 1. Normalize batch data
     if isinstance(batch, BulkBatch):
         batch_header = asdict(batch.header)
-        batch_intents = [asdict(i) for i in batch.intents]
+        batch_intents = [item.plan_record() for item in batch.intents]
         plan_digest = batch.plan_digest
     elif isinstance(batch, dict):
         batch_header = {k: v for k, v in batch.items() if k != "intents"}
@@ -81,7 +81,8 @@ def validate_batch_execution(
                     value=it["value"],
                     player_id=it.get("player_id"),
                     source_justification=it.get("source_justification", ""),
-                    dependencies=tuple(it.get("dependencies", ()))
+                    dependencies=tuple(it.get("dependencies", ())),
+                    expected_tendency_hex=it.get("expected_tendency_hex"),
                 )
                 for it in batch_intents
             )

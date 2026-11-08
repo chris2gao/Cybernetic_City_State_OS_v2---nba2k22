@@ -87,13 +87,16 @@ class WindowDelegation:
         if self._active is None:
             raise PermissionError("NO_ACTIVE_SETTER_SUBPLAN")
         op = self._active
-        slot = require_s4_live_tendency(resolve_tendency_slot(op["factor_id"]).native_key)
+        slot = self.slot_for(op)
         return {"save_id": self.binding["save_id"], "worldline_id": self.binding["worldline_id"],
                 "bound_database_file": self.binding["bound_database_file"], "binding_sha256": self.binding["binding_sha256"],
                 "human_authorization_ref": root["human_decision_ref"], "authorized_at": root["valid_from"],
                 "expires_at": root["expires_at"], "action_id": "PLAYER_PATCH_TENDENCIES", "field_id": slot.native_key,
                 "player_ids": [op["uid"]],
                 "roles": [{"role_type": "GM", "team_id": op["team_id"], "actor_uid": f"vae-factor-{op['team_id']}"}]}
+
+    def slot_for(self, operation):
+        return require_s4_live_tendency(resolve_tendency_slot(operation["factor_id"]).native_key)
 
     @property
     def epoch(self):
@@ -128,6 +131,167 @@ class WindowDelegation:
                     {"cycle": cycle, "plan_digest": plan_digest})
 
 
+@dataclass(frozen=True)
+class QualificationEnvelope:
+    raw: bytes
+    approved_sha256: str
+
+    def verify(self, binding, operations):
+        if hashlib.sha256(self.raw).hexdigest() != self.approved_sha256:
+            raise PermissionError("QUALIFICATION_HUMAN_PIN_MISMATCH")
+        approval = json.loads(self.raw)
+        now = datetime.now(timezone.utc)
+        if (approval["schema"] != "nba2k22.vae.write_qualification.v1" or approval["revoked"] is not False
+                or not approval["human_decision_ref"] or approval["binding"] != binding
+                or approval["operation_digests"] != [digest(op) for op in operations]
+                or type(approval["maximum_setters"]) is not int or approval["maximum_setters"] != len(operations)
+                or not 1 <= len(operations) <= 3
+                or type(approval["maximum_calendar"]) is not int or approval["maximum_calendar"] != 0
+                or not datetime.fromisoformat(approval["valid_from"]) <= now < datetime.fromisoformat(approval["expires_at"])
+                or binding["loaded_filename"] != EXPERIMENT_SAVE_SLOT or binding["build_sha256"] != BUILD
+                or not binding.get("loaded_slot_attestation_ref")
+                or type(binding["pid"]) is not int or binding["pid"] != binding["epoch"]["pid"]
+                or len({op["factor_id"] for op in operations}) != len(operations)
+                or len({op["uid"] for op in operations}) != len(operations)):
+            raise PermissionError("QUALIFICATION_HUMAN_SCOPE_OR_TIME_MISMATCH")
+        return approval
+
+
+class QualificationDelegation(WindowDelegation):
+    """One-to-three exact raw slots with no calendar or research qualification promotion."""
+    def __init__(self, envelope, binding, operations, journal):
+        self.envelope = envelope
+        self.binding = binding
+        self._operations = tuple(operations)
+        self.journal = journal
+        self.plan = {"binding": binding, "operations": self._operations}
+        self._active = None
+        self._verified = None
+
+    def approval(self):
+        if (self.journal / "REVOKED").exists():
+            raise PermissionError("HUMAN_ENVELOPE_REVOKED")
+        return self.envelope.verify(self.binding, self._operations)
+
+    def slot_for(self, operation):
+        if operation not in self._operations:
+            raise PermissionError("QUALIFICATION_OPERATION_OUTSIDE_GRANT")
+        slot = resolve_tendency_slot(operation["factor_id"])
+        before = operation["before"]
+        image = bytes.fromhex(before["neighborhood_hex"])
+        if (type(operation["team_id"]) is not int or not 0 <= operation["team_id"] <= 29
+                or type(operation["uid"]) is not int or not 1 <= operation["uid"] <= 65535
+                or before["status"] != "READ_ONLY_SLOT_OBSERVED" or before["write_qualified"] is not False
+                or any(before[key] != self.binding[key] for key in ("save_id", "worldline_id", "loaded_filename",
+                                                                   "binding_sha256", "epoch", "today", "minutes"))
+                or (before["factor_id"], before["uid"], before["team_id"], before["raw_value"])
+                   != (slot.factor_id, operation["uid"], operation["team_id"], operation["expected_before"])
+                or before["profile_build_sha256"] != BUILD
+                or (before["native_key"], before["index"], before["offset"], before["width_bits"], before["legal_domain"])
+                   != (slot.native_key, slot.index, slot.offset, 8, [slot.minimum, slot.maximum])
+                or hashlib.sha256(image).hexdigest() != before["neighborhood_sha256"]
+                or slot.expected_image(image, operation["expected_before"], operation["target"]) == image
+                or abs(operation["target"] - operation["expected_before"]) != 1):
+            raise ValueError("QUALIFICATION_FROZEN_NEIGHBORHOOD_OR_SCOPE_MISMATCH")
+        return slot
+
+    def bind(self, operation):
+        self.approval()
+        self.slot_for(operation)
+        self._active = dict(operation)
+        self._verified = None
+
+    def check_scene(self, scene, filename, binding_sha256):
+        self.approval()
+        progress = scene["game_progress"]
+        if (filename != self.binding["loaded_filename"] or binding_sha256 != self.binding["binding_sha256"]
+                or scene["epoch"] != self.epoch or progress["mode_raw"] != 1 or progress["period_raw"] != 29
+                or progress["today_native_iso_date"] != self.binding["today"]
+                or progress["today_minutes_since_midnight_raw"] != self.binding["minutes"]):
+            raise ValueError("QUALIFICATION_WORLDLINE_EPOCH_OR_SCENE_CHANGED")
+
+    def approved_neighborhood(self, field):
+        self.approval()
+        if self._active is None or self.slot_for(self._active).native_key != field:
+            raise PermissionError("QUALIFICATION_FIELD_NOT_ACTIVE")
+        return self._active["before"]["neighborhood_hex"]
+
+    def _check_disk(self):
+        save = Path(self.binding["disk_save"]).resolve(strict=True)
+        backup = Path(self.binding["cold_backup"]).resolve(strict=True)
+        if (save.name != EXPERIMENT_SAVE_SLOT or backup.name != "MyLEAGUE0003"
+                or save.parent != backup.parent or save.samefile(backup)):
+            raise ValueError("QUALIFICATION_DISPOSABLE_AND_BACKUP_REQUIRED")
+        for path, key in ((save, "disk_sha256"), (backup, "cold_backup_sha256")):
+            with path.open("rb") as stream:
+                if hashlib.file_digest(stream, "sha256").hexdigest() != self.binding[key]:
+                    raise ValueError("QUALIFICATION_SAVE_FINGERPRINT_CHANGED")
+
+    def check_readback(self, host, *, after):
+        self.approval()
+        self._check_lock_storage(host)
+        if not (self._claim / "plan.json").is_file():
+            raise PermissionError("QUALIFICATION_REQUIRES_PERSISTED_GRANT_CLAIM")
+        op = self._active
+        slot = self.slot_for(op)
+        observed = host.read_factor_qualification_snapshot(
+            pid=self.binding["pid"], epoch=self.epoch, team_id=op["team_id"], uid=op["uid"],
+            field=slot.native_key, binding_sha256=self.binding["binding_sha256"])
+        expected = dict(op["before"])
+        if after:
+            image = slot.expected_image(bytes.fromhex(expected["neighborhood_hex"]), op["expected_before"], op["target"])
+            expected.update(raw_value=op["target"], neighborhood_hex=image.hex(),
+                            neighborhood_sha256=hashlib.sha256(image).hexdigest())
+        if observed != expected:
+            reason = ("QUALIFICATION_INDEPENDENT_NEIGHBORHOOD_MISMATCH" if after
+                      else "LIVE_CAS_CHANGED_SINCE_APPROVAL: qualification neighborhood differs")
+            raise RuntimeError(reason)
+        self._check_disk()
+        return observed
+
+    def _check_lock_storage(self, host):
+        if (Path(self.binding["outbox_db"]).resolve() != host.outbox_db.resolve()
+                or Path(self.binding["journal_root"]).resolve() != self.journal.resolve()):
+            raise PermissionError("QUALIFICATION_LOCK_STORAGE_MISMATCH")
+
+    @property
+    def _claim(self):
+        return self.journal / f"qualification-{self.envelope.approved_sha256}"
+
+    def run(self, host):
+        if host.research_delegation is not self or host.state.get("is_offline_mock") or host.state.get("is_mock"):
+            raise PermissionError("QUALIFICATION_REQUIRES_BOUND_NATIVE_HOST")
+        self.approval()
+        self._check_lock_storage(host)
+        for operation in self._operations:
+            self.slot_for(operation)
+        self._check_disk()
+        self.journal.mkdir(parents=True, exist_ok=True)
+        claim = self._claim
+        claim.mkdir()
+        record_once(claim / "plan.json", self.plan)
+        receipts = []
+        try:
+            for operation in self._operations:
+                self.bind(operation)
+                self.check_readback(host, after=False)
+            for index, operation in enumerate(self._operations):
+                key = f"vae-qualification-{self.envelope.approved_sha256[:20]}-{index}"
+                receipt = _execute_host_setter(host, key, operation, self.binding)
+                record_once(claim / f"receipt-{index}.json", receipt)
+                receipts.append(receipt)
+                if receipt["status"] != "APPLIED":
+                    break
+        except Exception as error:
+            record_once(claim / "stop.json", {"status": "STOPPED_RECONCILIATION_REQUIRED",
+                                              "exception_type": type(error).__name__,
+                                              "completed_receipts": len(receipts)})
+            raise
+        return {"status": ("QUALIFICATION_EVIDENCE_RECORDED"
+                           if len(receipts) == len(self._operations) and receipts[-1]["status"] == "APPLIED"
+                           else "QUALIFICATION_STOPPED"), "receipts": receipts, "calendar_calls": 0}
+
+
 class NativeCalendarPort:
     """Use the archived calendar primitive and the shared Outbox for exact approved plans."""
     def __init__(self, delegation, native_plans, outbox_db, runtime):
@@ -138,6 +302,8 @@ class NativeCalendarPort:
 
     def verify_calendar(self, plan):
         from tools.test_only_calendar import calendar_cli
+        if type(self.delegation) is not WindowDelegation:
+            raise PermissionError("NATIVE_CALENDAR_REQUIRES_WINDOW_AUTHORITY")
         source = self.delegation.approval()
         binding = self.delegation.binding
         pin = calendar_cli.digest(plan)
@@ -182,41 +348,44 @@ class NativeWindowPort:
         self.binding = binding
 
     def setter(self, key, operation):
-        slot = resolve_tendency_slot(operation["factor_id"])
-        require_s4_live_tendency(slot.native_key)
-        self.host.research_delegation.bind(operation)
-        team = operation["team_id"]
-        getter = self.host._get_fresh_live_getter(expected_pid=self.binding["pid"], expected_team=team,
-                                                  expected_players={operation["uid"]},
-                                                  expected_creation_filetime=self.binding["epoch"]["creation_filetime"],
-                                                  tendency_field=slot.native_key)
-        if getter is None:
-            return {"status": "NOT_EXECUTED", "source_ref": key}
-        if getter(operation["uid"], slot.native_key) != operation["expected_before"]:
-            return {"status": "CAS_MISMATCH", "source_ref": key}
-        opened = self.host.start_cycle(key, candidate_intents=[{
-            "issuer_role": "GM", "parameters": {"team_id": team, "player_id": operation["uid"],
-            "field_id": slot.native_key, "expected_before": operation["expected_before"],
-            "value": operation["target"]}}])
-        if opened["intents_added_count"] != 1:
-            return {"status": "UNKNOWN", "source_ref": key}
-        seal = self.host.seal_cycle_decisions(key, getter_func=getter, expected_pid=self.binding["pid"])
-        if seal["status"] != "PLAN_PREFLIGHTED_WAITING_AUTH":
-            return {"status": "UNKNOWN", "source_ref": key}
-        try:
-            result = self.host.authorize_and_execute(key, seal["plan_digest"], expected_pid=self.binding["pid"])
-        except RuntimeError as error:
-            if not str(error).startswith("LIVE_CAS_CHANGED_SINCE_APPROVAL"):
-                raise
-            self.host.exclude_research_cas_cycle(key, seal["plan_digest"])
-            return {"status": "CAS_MISMATCH", "source_ref": seal["plan_digest"]}
-        if not result.get("readback_verified"):
-            return {"status": "UNKNOWN", "source_ref": seal["plan_digest"]}
-        return {"status": "APPLIED" if result["success_count"] == 1 else "NOOP",
-                "source_ref": seal["plan_digest"], "value": operation["target"]}
+        return _execute_host_setter(self.host, key, operation, self.binding)
 
     def simulate(self, key, window):
         return self.calendar_dispatch(key, window)
+
+
+def _execute_host_setter(host, key, operation, binding):
+    delegation = host.research_delegation
+    delegation.bind(operation)
+    slot = delegation.slot_for(operation)
+    team, uid = operation["team_id"], operation["uid"]
+    getter = host._get_fresh_live_getter(expected_pid=binding["pid"], expected_team=team,
+                                         expected_players={uid}, expected_creation_filetime=binding["epoch"]["creation_filetime"],
+                                         tendency_field=slot.native_key)
+    if getter is None:
+        return {"status": "NOT_EXECUTED", "source_ref": key}
+    if getter(uid, slot.native_key) != operation["expected_before"]:
+        return {"status": "CAS_MISMATCH", "source_ref": key}
+    opened = host.start_cycle(key, candidate_intents=[{
+        "issuer_role": "GM", "parameters": {"team_id": team, "player_id": uid,
+        "field_id": slot.native_key, "expected_before": operation["expected_before"], "value": operation["target"]}}])
+    if opened["intents_added_count"] != 1:
+        return {"status": "UNKNOWN", "source_ref": key}
+    seal = host.seal_cycle_decisions(key, getter_func=getter, expected_pid=binding["pid"])
+    if seal["status"] != "PLAN_PREFLIGHTED_WAITING_AUTH":
+        return {"status": "UNKNOWN", "source_ref": key}
+    try:
+        result = host.authorize_and_execute(key, seal["plan_digest"], expected_pid=binding["pid"])
+    except RuntimeError as error:
+        if not str(error).startswith("LIVE_CAS_CHANGED_SINCE_APPROVAL"):
+            raise
+        host.exclude_research_cas_cycle(key, seal["plan_digest"])
+        return {"status": "CAS_MISMATCH", "source_ref": seal["plan_digest"]}
+    if (result.get("status") != "EXECUTED_AND_READBACK_RECORDED"
+            or result.get("readback_verified") is not True or result.get("batch_validation_passed") is not True):
+        return {"status": "UNKNOWN", "source_ref": seal["plan_digest"]}
+    return {"status": "APPLIED" if result["success_count"] == 1 else "NOOP",
+            "source_ref": seal["plan_digest"], "value": operation["target"]}
 
 
 class WindowRunner:
@@ -237,7 +406,7 @@ class WindowRunner:
             from factor_readback import FactorWorldDataPort
             delegation = self.port.host.research_delegation if isinstance(self.port, NativeWindowPort) else None
             if (self.live_envelope is None or not isinstance(self.port, NativeWindowPort)
-                    or not isinstance(delegation, WindowDelegation) or delegation.envelope is not self.live_envelope
+                    or type(delegation) is not WindowDelegation or delegation.envelope is not self.live_envelope
                     or delegation.binding != self.port.binding or digest(delegation.plan) != digest(plan)
                     or not isinstance(self.port.calendar_dispatch, NativeCalendarPort)
                     or self.port.calendar_dispatch.delegation is not delegation

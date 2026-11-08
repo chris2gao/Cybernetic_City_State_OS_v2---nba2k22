@@ -7,7 +7,7 @@ and independent readback.
 """
 
 from contextlib import closing
-from dataclasses import asdict
+from dataclasses import asdict, replace
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -32,6 +32,7 @@ sys.path.insert(0, str(_PROTOTYPE_DIR))
 
 import contracts
 from factor_inventory import EXPERIMENT_SAVE_SLOT
+from factor_runner import QualificationDelegation
 from native_factor_slots import require_s4_live_tendency, resolve_tendency_slot
 from bulk_executor import (
     BulkBatch,
@@ -638,7 +639,9 @@ class SeasonCycleHost:
         if derived is None and digest != self.approved_role_manifest_sha256:
             raise ValueError("APPROVED_ROLE_MANIFEST_HASH_MISMATCH")
         grant = json.loads(raw)
-        field = require_s4_live_tendency(grant.get("field_id")).native_key
+        qualification = type(self.research_delegation) is QualificationDelegation
+        field = (resolve_tendency_slot(grant.get("field_id")) if qualification
+                 else require_s4_live_tendency(grant.get("field_id"))).native_key
         roles = grant.get("roles")
         player_ids = grant.get("player_ids")
         if (not isinstance(roles, list) or len(roles) != 1
@@ -675,7 +678,19 @@ class SeasonCycleHost:
         # The existing exact-approval format already implies the original field.
         if field != "SHOT_TENDENCY":
             scope["field_id"] = field
+        if qualification:
+            scope["field_id"] = field
+            scope["qualification_neighborhood_hex"] = self.research_delegation.approved_neighborhood(field)
         return scope
+
+    @staticmethod
+    def _bind_qualification_neighborhood(batch, live_context):
+        if not live_context or "qualification_neighborhood_hex" not in live_context:
+            return batch
+        if len(batch.intents) != 1:
+            raise ValueError("QUALIFICATION_REQUIRES_A_SINGLE_INTENT")
+        item, = batch.intents
+        return BulkBatch(batch.header, (replace(item, expected_tendency_hex=live_context["qualification_neighborhood_hex"]),))
 
     def _make_context(self, cycle_id: str) -> BatchContext:
         season_id = "2021-22"
@@ -715,7 +730,7 @@ class SeasonCycleHost:
         tendency_field: Optional[str] = None,
     ) -> Optional[Any]:
         """Read fresh values, optionally bound to the actual Native roster and process epoch."""
-        slot = require_s4_live_tendency(tendency_field) if tendency_field is not None else None
+        slot = resolve_tendency_slot(tendency_field) if tendency_field is not None else None
         result = self._read_fresh_tendency_roster(expected_pid, expected_team, expected_players,
                                                   expected_creation_filetime, slot)
         if result is not None:
@@ -755,6 +770,7 @@ class SeasonCycleHost:
         return {"status": "READ_ONLY_SLOT_OBSERVED", "profile_build_sha256": contracts.BUILD,
                 "save_id": binding["save_id"], "loaded_filename": filename, "binding_sha256": binding_sha,
                 "worldline_id": binding["worldline_id"], "epoch": epoch, "today": progress["today_native_iso_date"],
+                "minutes": progress["today_minutes_since_midnight_raw"],
                 "factor_id": slot.factor_id, "native_key": slot.native_key, "uid": uid, "team_id": team_id,
                 "index": slot.index, "offset": slot.offset, "width_bits": 8, "legal_domain": [slot.minimum, slot.maximum],
                 "raw_value": value, "neighborhood_hex": neighborhood.hex(),
@@ -1625,8 +1641,9 @@ class SeasonCycleHost:
         plan_digest = ""
         executable_count = 0
         if bridge_res.has_executable_batch and bridge_res.bulk_batch:
-            plan_digest = bridge_res.bulk_batch.plan_digest
-            executable_count = len(bridge_res.bulk_batch.intents)
+            bulk_batch = self._bind_qualification_neighborhood(bridge_res.bulk_batch, live_context)
+            plan_digest = bulk_batch.plan_digest
+            executable_count = len(bulk_batch.intents)
         else:
             plan_digest = sha256_digest(f"NO_EXECUTABLE_INTENTS_{cycle_id}".encode("utf-8"))
 
@@ -1634,7 +1651,7 @@ class SeasonCycleHost:
 
         native_plan_digest = plan_digest
         if live_context:
-            field = require_s4_live_tendency(live_context.get("field_id", "SHOT_TENDENCY")).native_key
+            field = live_context.get("field_id", "SHOT_TENDENCY")
             if (not 1 <= executable_count <= 3 or unsupported_count or len(sealed_batch.intents) != executable_count
                     or any(i.issuer_uid != live_context["actor_uid"] for i in sealed_batch.intents)
                     or any(i.team_id != live_context["team_id"] or i.action_id != "PLAYER_PATCH_TENDENCIES"
@@ -1667,7 +1684,7 @@ class SeasonCycleHost:
         }
         if live_context:
             result.update(live_context=live_context, native_plan_digest=native_plan_digest,
-                          items=[asdict(i) for i in bridge_res.bulk_batch.intents])
+                          items=[item.plan_record() for item in bulk_batch.intents])
         self._append_ledger({"action": "SEAL_CYCLE", **result})
         return result
 
@@ -1772,10 +1789,11 @@ class SeasonCycleHost:
         bulk_batch = bridge_res.bulk_batch
         if bulk_batch is None:
             raise ValueError("SEALED_EXECUTABLE_BATCH_MISSING")
+        bulk_batch = self._bind_qualification_neighborhood(bulk_batch, live_context)
 
         # Enforce certified live scope allowlist (P0-C)
         if not is_mock:
-            field = require_s4_live_tendency(live_context.get("field_id", "SHOT_TENDENCY")).native_key
+            field = live_context.get("field_id", "SHOT_TENDENCY")
             for it in bulk_batch.intents:
                 act = str(it.action_id).upper()
                 fid = str(it.field_id)
@@ -1817,6 +1835,8 @@ class SeasonCycleHost:
                 raise RuntimeError("LIVE_CAS_CHANGED_SINCE_APPROVAL: Native UID, roster, contract team or value differs")
             if self._approved_live_context(expected_pid) != live_context:
                 raise RuntimeError("LIVE_CONTEXT_CHANGED_DURING_CAS")
+            if "qualification_neighborhood_hex" in live_context:
+                self.research_delegation.check_readback(self, after=False)
 
         # 3. Execute via BoundedSessionExecutor
         native_context = None
@@ -1886,7 +1906,7 @@ class SeasonCycleHost:
             "plan_digest": plan_digest,
             "native_plan_digest": batch.plan_digest,
             "live_context": context,
-            "items": json.loads(canonical_encode([asdict(item) for item in batch.intents])),
+            "items": json.loads(canonical_encode([item.plan_record() for item in batch.intents])),
         }
         if canonical_encode({key: approval.get(key) for key in expected}) != canonical_encode(expected):
             raise ValueError("LIVE_BATCH_APPROVAL_SCOPE_MISMATCH")
@@ -1962,6 +1982,9 @@ class SeasonCycleHost:
                 for d in readback_details
             ]
         }
+        if live_context and "qualification_neighborhood_hex" in live_context:
+            independent_readback_report["qualification_snapshot"] = self.research_delegation.check_readback(
+                self, after=True)
 
         # 5. Multi-layer batch validation (P0-B)
         planned_chunks = executor.planner.plan(bulk_batch, max_chunk_size=50)

@@ -14,4 +14,6 @@
 
 只读入口 `SeasonCycleHost.read_factor_qualification_snapshot` 可读取上述三槽，包括 WorldData 命名视图未覆盖的未知槽。入口检查存档绑定、进程 epoch、前后日期与模式、Native UID 和球队归属，返回 99 字节邻域和指纹。该入口已用替身测试，尚未在游戏进程调用。
 
-新字段目前被 S4 实机资格门拒绝。上述范围供后续审议，仍需独立的有界写资格入口与绑定到确切计划和来源的 Human 授权。通过资格验证也只说明字段读写与邻域一致性。
+新增的独立入口是 `QualificationDelegation.run`。调用者需从 Human 交接获得 `nba2k22.vae.write_qualification.v1` 授权原始字节及可信 SHA-256。封套固定加载槽声明来源、进程和游戏日期、工作线绑定、两份磁盘指纹、Outbox 与日志位置、逐操作摘要和有效期。每个操作绑定一次新的完整邻域读数，仅允许一步剂量。批次先核对所有基线，然后经同一 SeasonCycleHost、Native Bulk 和 DecisionOutbox 逐个执行。Native setter 前有 99 字节比较，执行后用独立读回再次检查仅目标字节变化。异常或未验证回执终止该封套。日历上限固定为零。
+
+普通实验窗口对新字段仍关闭。资格入口仅写入单次验证证据，正式资格需要后续独立接纳。当前样本和测试为离线验证，实机资格依然 `NOT_AUTHORIZED / NOT_RUN`。磁盘指纹与内存读回分别记录，持久化和篮球效果需要独立证据。
