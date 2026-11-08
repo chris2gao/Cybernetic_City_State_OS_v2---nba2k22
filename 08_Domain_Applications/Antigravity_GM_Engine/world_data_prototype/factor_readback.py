@@ -43,9 +43,9 @@ class FactorWorldDataPort:
         return capture_game_outcomes(orchestrator, directory, report_sha, plan, self.binding)
 
 
-def _source_units(conn, report, season):
+def _source_units(conn, report, season, families=("schedule", "game-mode", "player-skills")):
     units = {}
-    for family in ("schedule", "game-mode", "player-skills"):
+    for family in families:
         candidates = [row["unit"] for row in report["sources"] if row["family"] == family
                       and row["status"] == "ACQUIRED" and row["commit_status"] == "COMMITTED_SUCCESS_VERIFIED"]
         if len(candidates) != 1:

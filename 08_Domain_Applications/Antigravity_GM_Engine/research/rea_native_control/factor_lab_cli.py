@@ -71,6 +71,9 @@ def report(plan_dir, retained_path):
                    getter=study.factors[key].native["getter"], legal_boundary=study.factors[key].native["legal_boundary"],
                    engine_scope=study.factors[key].native["calendar"],
                    actual_runnable=False)
+        if study.factors[key].protocol in ("TRAINING", "PROGRESSION"):
+            row["settlement_reader"] = "capture_development_event"
+            row["settlement_evidence"] = "INDEPENDENT_NATIVE_SETTLEMENT_NOT_YET_VERIFIED"
     seats = [item for window in reference for item in window["team_assignments"].values() if item["arm"] in ("H", "L")]
     unique = len({row["uid"] for row in seats})
     return {"reference_save": {"experiment_slot": study.baseline["loaded_slot"],

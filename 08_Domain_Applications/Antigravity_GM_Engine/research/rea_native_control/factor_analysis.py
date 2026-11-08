@@ -113,6 +113,8 @@ def screen_settled_events(study_plan, rows, endpoint, *, mode, minimum_effect=No
     worlds = [row["worldline_id"] for row in rows]
     if len(worlds) != len(set(worlds)) or set(worlds) != set(refs):
         raise ValueError("EVENT_ROWS_MUST_MATCH_FROZEN_WORLDLINES")
+    if len({proof["source_unit"] for proof in refs.values()}) != len(refs):
+        raise ValueError("EVENT_WORLDLINES_REQUIRE_DISTINCT_SETTLEMENT_SOURCES")
     qualified, excluded = [], {}
     for row in rows:
         world = row["worldline_id"]
