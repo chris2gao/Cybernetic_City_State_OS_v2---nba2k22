@@ -2,10 +2,12 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 from collections import Counter
 from copy import deepcopy
 
 from build_ledger import build
+from analyze_bound_round import exposure_readback, screen
 from build_observed_round import FEATURES, assign_blocks
 from experiment_round import analyze, fixture, plan
 from read_observed_window import player_opportunity
@@ -16,6 +18,46 @@ HERE = Path(__file__).resolve().parent
 
 
 class LongrunTests(unittest.TestCase):
+    def test_pre_window_requires_observed_doses_and_untouched_controls(self):
+        frozen = plan(fixture(), 20261107)
+        rows = [{"team_id": row["team_id"], "uid": row["uid"], "value": row["planned_value"]}
+                for row in frozen["assignments"]]
+        applied = [{**row, "observed_after": row["target"]} for row in frozen["write_candidates"]]
+        self.assertEqual(exposure_readback(frozen, rows, applied), 30)
+        control = next(index for index, row in enumerate(frozen["assignments"]) if row["arm"] == "C")
+        drifted = deepcopy(rows)
+        drifted[control]["value"] += 1
+        with self.assertRaisesRegex(ValueError, "drifted"):
+            exposure_readback(frozen, drifted, applied)
+        with self.assertRaisesRegex(ValueError, "duplicate"):
+            exposure_readback(frozen, rows + rows[:1], applied)
+        with self.assertRaisesRegex(ValueError, "Missing exact"):
+            exposure_readback(frozen, rows, applied[:-1])
+
+    def test_screen_blocks_partial_readback_and_reversed_capture_order(self):
+        frozen = plan(fixture(), 20261107)
+        pins = {"treatment_sha256": "s4", "pre_sha256": "pre", "post_sha256": "post"}
+        pre = {"verified_players": 30, "last_observed_at": "2026-11-07T20:01:00+00:00"}
+        treatment = {"status": "EXACT_TREATMENT_READBACK_RECORDED"}
+        with patch("analyze_bound_round.read_bundle", return_value=treatment), \
+                patch("analyze_bound_round.read_pre_window", return_value=pre), \
+                patch("analyze_bound_round.readback") as readback, \
+                patch("analyze_bound_round.pinned_json") as post, \
+                patch("analyze_bound_round.analyze") as estimator:
+            readback.return_value = ({"status": "PARTIAL_READBACK_BLOCKS_ANALYSIS"}, {})
+            self.assertEqual(screen(frozen, Path("."), pins, Path("."), "fixture")["status"],
+                             "STOPPED_PARTIAL_READBACK")
+            readback.return_value = ({"status": "COMPLETE_READBACK"}, {})
+            post.return_value = {"started_at": "2026-11-07T20:00:00+00:00"}
+            with self.assertRaisesRegex(ValueError, "does not follow"):
+                screen(frozen, Path("."), pins, Path("."), "fixture")
+            estimator.assert_not_called()
+            post.return_value = {"started_at": "2026-11-07T20:02:00+00:00"}
+            estimator.return_value = {"classification": "UNDERPOWERED_SCREENING_ONLY"}
+            outcome = screen(frozen, Path("."), pins, Path("."), "fixture")
+            self.assertEqual(outcome["analysis"]["classification"], "UNDERPOWERED_SCREENING_ONLY")
+            estimator.assert_called_once()
+
     def test_s4_result_requires_exact_native_getter(self):
         from experiment_round import digest
 
