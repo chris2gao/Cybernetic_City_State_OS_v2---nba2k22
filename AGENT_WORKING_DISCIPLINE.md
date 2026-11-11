@@ -63,6 +63,20 @@ authorization mechanism.
   requirement just to reach a metric. A scope or authority blocker is a
   concrete finding, not permission to create paperwork indefinitely.
 
+**Sender → receiver priority binding (reuse existing slots, no new form):**
+The sender states the **primary business outcome**, the **shortest real executable
+loop**, and the **actual boundary**. Put the outcome in the existing task
+packet `objective`; put first execution and supporting conditions in the existing
+message `content` / `requested_action` or the ordinary task handoff. The receiver
+must restate internally which action produces the first observable outcome and
+which checks are merely supporting. A supporting action earns priority only
+when it is essential to an authorized step or repairs an observed blocker.
+At each internal Loop iteration, ask **what actual business result changed?**
+If the answer is only "more tests, files, hashes, approvals or qualifiers", then
+reassess the next action against the primary objective before investing further.
+The receiver must not silently promote a prerequisite into the task's completion
+criterion, nor quietly reduce the scope of the primary objective.
+
 The operative test is: **would a competent Human operator, with the existing
 tools, perform these steps to obtain the requested result?** If not, justify the
 extra step by a demonstrated risk or remove it. This rule applies to planning,
