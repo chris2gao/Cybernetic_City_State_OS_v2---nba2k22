@@ -79,7 +79,7 @@ def windows_for_schedule(fixtures, teams, first, final_regular_day):
         for path in search(date.fromisoformat(first))]
 
 
-def allocate_window(study, window, factor_ids, values, history, *, worldline, seed, qualifications=None):
+def allocate_window(study, window, factor_ids, values, history, *, worldline, seed, qualifications=None, coach_doses=None):
     """Allocate distinct same-family factors; qualified amounts and actual exposure remain separate."""
     factors = [study.factors[key] for key in factor_ids]
     if not 1 <= len(factors) <= 5 or len(set(factor_ids)) != len(factors):
@@ -129,6 +129,13 @@ def allocate_window(study, window, factor_ids, values, history, *, worldline, se
                 proposal = value + (5 if arm == "H" else -5)
                 if arm != "C" and limits[0] <= proposal <= limits[1]:
                     target = proposal
+            elif category == "coach" and coach_doses is not None:
+                from factor_adapters import adapter_contract, coach_field
+                domain = coach_field(adapter_contract(factor)).legal
+                dose = coach_doses[factor.factor_id][arm]
+                if type(value) is int and type(dose) is int and value in domain and dose in domain:
+                    if (arm == "C" and dose == value) or (arm != "C" and dose != value):
+                        target = dose
             score = (arm != "C" and target is None, treated_uids[uid],
                      -float(player["mean_minutes_recent_10min"] or 0) if player else 0,
                      rank(factor.factor_id, team, uid))

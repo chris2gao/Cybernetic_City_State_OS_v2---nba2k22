@@ -79,6 +79,9 @@ def report(plan_dir, retained_path):
             row["settlement_scope"] = ("PLAYER_TRADE_ONLY_DRAFT_UNBOUND" if study.factors[key].protocol == "TRADE_DRAFT"
                                        else "RECORDED_CONTRACT_CHANGE_WITH_CURRENT_ROSTER_IDENTITY")
             row["settlement_evidence"] = "INDEPENDENT_NATIVE_TRANSACTION_SEMANTICS_NOT_YET_VERIFIED"
+        elif study.factors[key].category == "coach":
+            row["exposure_reader"] = "capture_coach_exposure" if contract.layout else None
+            row["exposure_evidence"] = "CURRENT_PROJECTION_STORED_PLAN_AND_CONSUMER_REQUIRE_SEPARATE_VERIFICATION"
     seats = [item for window in reference for item in window["team_assignments"].values() if item["arm"] in ("H", "L")]
     unique = len({row["uid"] for row in seats})
     return {"reference_save": {"experiment_slot": study.baseline["loaded_slot"],

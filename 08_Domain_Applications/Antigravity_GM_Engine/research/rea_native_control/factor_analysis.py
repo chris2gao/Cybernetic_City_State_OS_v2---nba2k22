@@ -9,7 +9,7 @@ def _real(value):
     return type(value) in (int, float) and isfinite(value)
 
 
-def screen_game_window(plan, operations, setter_receipts, capture):
+def screen_game_window(plan, operations, setter_receipts, capture, *, qualified_team_games=None):
     if capture["worldline_id"] != plan["worldline_id"] or capture["today"] != plan["stop_exclusive"]:
         raise ValueError("ANALYSIS_CAPTURE_WORLD_OR_DATE_MISMATCH")
     planned = {row["game_id"]: row for row in plan["games"]}
@@ -51,6 +51,8 @@ def screen_game_window(plan, operations, setter_receipts, capture):
         for side in ("home", "away"):
             target = expected[side]
             if target is None:
+                continue
+            if qualified_team_games is not None and (game_id, target["team_id"]) not in qualified_team_games:
                 continue
             row = by_team[target["team_id"]]
             key = (target["factor_id"], target["team_id"], target["uid"])
@@ -103,6 +105,34 @@ def screen_game_window(plan, operations, setter_receipts, capture):
     return {"mode": capture["mode"], "worldline_id": plan["worldline_id"], "factors": results,
             "qualified_game_count": len(supplied) - len(invalid_games), "missing_game_ids": sorted(missing_games),
             "excluded_game_ids": sorted(invalid_games)}
+
+
+def screen_coach_window(plan, operations, setter_receipts, capture, exposure):
+    """Require accepted game-consumer evidence for each included Coach/team observation."""
+    if (exposure["mode"] != capture["mode"] or exposure["worldline_id"] != plan["worldline_id"]
+            or exposure["start"] != plan["start"] or exposure["stop_exclusive"] != plan["stop_exclusive"]
+            or not exposure["proof_sha256"] or not exposure["planning_report_sha256"]):
+        raise ValueError("COACH_ANALYSIS_EXPOSURE_SCOPE_MISMATCH")
+    expected = {(game["game_id"], game[side]["team_id"]): game[side]
+                for game in plan["games"] for side in ("home", "away") if game[side] is not None}
+    evidence = {(row["game_id"], row["team_id"]): row for row in exposure["exposures"]}
+    if len(evidence) != len(exposure["exposures"]) or evidence.keys() != expected.keys():
+        raise ValueError("COACH_ANALYSIS_EXPOSURE_GAME_SET_MISMATCH")
+    qualified = set()
+    for key, row in evidence.items():
+        target = expected[key]
+        if (target["uid"] is not None or row["factor_id"] != target["factor_id"]
+                or row["applied_value"] != target["target"]):
+            raise ValueError("COACH_ANALYSIS_EXPOSURE_ASSIGNMENT_MISMATCH")
+        if row["qualified"] is True and row["status"] == "CONSUMER_VERIFIED" and row["consumer_source"]:
+            qualified.add(key)
+    analysis = screen_game_window(plan, operations, setter_receipts, capture, qualified_team_games=qualified)
+    for factor, result in analysis["factors"].items():
+        relevant = {key for key, target in expected.items() if target["factor_id"] == factor}
+        result["unqualified_consumer_games"] = sorted({key[0] for key in relevant - qualified})
+        if not relevant & qualified:
+            result["status"] = "CONSUMER_UNVERIFIED"
+    return dict(analysis, coach_exposure_sha256=exposure["proof_sha256"])
 
 
 def screen_settled_events(study_plan, rows, endpoint, *, mode, minimum_effect=None, seed=0):

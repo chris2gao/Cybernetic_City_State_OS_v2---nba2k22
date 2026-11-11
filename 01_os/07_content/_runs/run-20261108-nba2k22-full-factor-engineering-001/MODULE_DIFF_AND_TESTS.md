@@ -26,4 +26,6 @@ Draft 后追加的接线核对覆盖两处。未知槽走同一份公开 PLAYER 
 
 I6 的 `ProgressLedger` 支持独立 SQLite 持久化，以 223 项固定库存指纹绑定数据库。进度事件只追加，批次写入原子提交。`factor_progress.py` 提供 `coverage`、`queue`、`history`、`query`、`ingest-qualifications` 和 `ingest-window`。导入普通窗口需要外部固定的结果 SHA，并逐项核对计划、setter、日历、前后采集及分析重放。同一计划的失败尝试留在队列，已核验重复导入幂等，缺少前置资格时不会推进阶段。LIVE 和 FIXTURE 分开计数。实机复证只有绑定独立审核和 Human 接纳才进入可供角色决策的状态。全因素与分类结算回归通过 38 项，CLI 查询确认新库的未知槽 016 为 `UNCONFIRMED`。
 
+Coach 接入 `capture_coach_exposure` 与 `screen_coach_window`。读取器使用既有 `READ_COACH_CURRENT` 的具名投影结构和 WorldData 对手计划，逐 GameID 核对独立接受的消费证据。没有消费证据时输出 `CONSUMER_UNVERIFIED`，保留计划与当前投影差异。分配器采用显式合法策略剂量，单位为球队。修复了类型适配器允许字段名与布局不一致的问题。全因素与分类 SQL 回归通过 41 项，历史同源 Box 回放仍为 49 场中 43 场通过。
+
 固定日历依赖为 PR #42 的 `ada6f30051eb9a2f17193af6985497eeb789ea1c`，用于测试入口。主工作线固定为 PR #41 的 `cdb2a3b2b9f9de79fe068b1644c6ba147d05d8e5`。本候选需要独立工程审核与后续实机资格裁决。

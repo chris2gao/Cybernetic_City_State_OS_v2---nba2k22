@@ -12,6 +12,11 @@ WORLDDATA = Path(__file__).resolve().parents[1]
 sys.path[:0] = [str(WORLDDATA), str(WORLDDATA.parent / "research/rea_native_control")]
 from factor_analysis import screen_settled_events
 from factor_assignment import event_study
+from factor_adapters import adapter_contract, prepare_coach_patch
+from factor_analysis import screen_coach_window
+from factor_coach import COACH_CAPTURE_FAMILIES, capture_coach_exposure
+from factor_inventory import StudyInputs
+from factor_runner import window_operations
 from factor_management import MANAGEMENT_CAPTURE_FAMILIES, _TERMS, capture_management_event
 from factor_settlement import DEVELOPMENT_CAPTURE_FAMILIES, capture_development_event
 
@@ -236,4 +241,88 @@ def test_management_rejects_reused_transaction_and_owner_disagreement(tmp_path):
     with closing(sqlite3.connect(host.database)) as conn, conn:
         conn.execute("UPDATE player_contract_observations SET native_contract_team_id_raw=4 WHERE unit_id='world-1-player-details'")
     with pytest.raises(ValueError, match="MANAGEMENT_CONTRACT_OWNER_AND_ROSTER_DISAGREE"):
+        capture()
+
+
+def coach_fixture(tmp_path):
+    inputs = WORLDDATA.parents[2] / "01_os/07_content/_runs/run-20261108-nba2k22-full-factor-plan-001"
+    study = StudyInputs.load(inputs)
+    binding = {"save_id": "save", "worldline_id": "world", "loaded_filename": "MyLEAGUE0005", "binding_sha256": SHA,
+               "epoch": {"pid": 7}, "season_id": "2021-22"}
+    host = SimpleNamespace(save_id="save", loaded_filename="MyLEAGUE0005", binding_hash=SHA, binding=binding,
+                           database=tmp_path / "world.sqlite")
+    directory = tmp_path / "pre"
+    targets = {1: 13, 2: 15, 3: 14}
+    assignments = {team: {"factor_id": "COACH_DEFAULT_004", "team_id": team, "uid": None,
+                          "arm": arm, "baseline": 14, "target": targets[team], "live_writer_qualified": False}
+                   for team, arm in zip((1, 2, 3), "HLC", strict=True)}
+    games = [{"game_id": game, "date": "2022-01-02", "home_team": team, "away_team": 3,
+              "home": assignments[team], "away": assignments[3]} for game, team in ((10, 1), (11, 2))]
+    plan = {"worldline_id": "world", "start": "2022-01-01", "stop_exclusive": "2022-01-03",
+            "teams": assignments, "factors": ["COACH_DEFAULT_004"], "games": games}
+    with closing(sqlite3.connect(host.database)) as conn, conn:
+        conn.executescript(SCHEMA + """
+            CREATE TABLE teams(team_id,native_team_id);
+            CREATE TABLE gameplan_observations(plan_id,team_id,opponent_team_id,unit_id,
+                 poe_defense_1_raw,is_in_use_raw,is_tainted_raw);
+        """)
+        report_sha, units = write_source_report(conn, directory, binding, 0, COACH_CAPTURE_FAMILIES)
+        conn.execute("INSERT INTO game_mode_observations VALUES (?,?,?,?,?)",
+                     (units["game-mode"], "2022-01-01", 0, "FRANCHISE", "NBA"))
+        conn.executemany("INSERT INTO teams VALUES (?,?)", [(f"team-{team}", team) for team in targets])
+        for game in games:
+            for team, opponent in ((game["home_team"], 3), (3, game["home_team"])):
+                conn.execute("INSERT INTO gameplan_observations VALUES (?,?,?,?,?,?,?)",
+                             (f"plan-{team}-{opponent}", f"team-{team}", f"team-{opponent}", units["planning"], 14, 1, 0))
+    proof = {"schema": "nba2k22.vae.coach_exposure.v1", "mode": "LIVE",
+             "binding": {key: binding[key] for key in ("save_id", "worldline_id", "loaded_filename", "binding_sha256", "epoch")},
+             "planning_report_sha256": report_sha, "independent_review_ref": "synthetic test",
+             "current_projection": [{"team_id": team, "read_action": "READ_COACH_CURRENT", "read_only": True,
+                                     "source_sha256": SHA, "data": {"team_id": team, "reciprocal_owner_matches": True,
+                                      "known_current_settings": {"POEDefense": value}}} for team, value in targets.items()],
+             "consumers": [{"game_id": game["game_id"], "team_id": team, "opponent_team_id": opponent,
+                            "factor_id": "COACH_DEFAULT_004", "value": targets[team], "game_date": game["date"],
+                            "verified": True, "source_sha256": SHA}
+                           for game in games for team, opponent in ((game["home_team"], 3), (3, game["home_team"]))]}
+    def capture():
+        raw = json.dumps(proof).encode()
+        return capture_coach_exposure(host, study, plan, directory=directory, report_sha256=report_sha, binding=binding,
+                                       proof_raw=raw, approved_proof_sha256=sha256(raw).hexdigest())
+    outcome = {"mode": "LIVE", "worldline_id": "world", "today": plan["stop_exclusive"], "games": [
+        dict(game, unit=f"unit-{game['game_id']}", team_box_unit=f"unit-{game['game_id']}",
+             player_box_unit=f"unit-{game['game_id']}", score_conserved=True, final=True, was_simulated=True,
+             team_boxes=[{"team_id": team, "uid": None, "disposition": "PLAYED",
+                          "metrics": {"FGA": {1: 12, 2: 8, 3: 10}[team], "MIN": 240}}
+                         for team in (game["home_team"], 3)])
+        for game in games]}
+    return study, proof, plan, capture, outcome
+
+
+def test_coach_effect_requires_consumed_projection_and_team_units(tmp_path):
+    study, proof, plan, capture, outcome = coach_fixture(tmp_path)
+    exposure = capture()
+    assert any(not row["stored_matches_projection"] and row["qualified"] for row in exposure["exposures"])
+    operations = window_operations(plan)
+    setters = [{"status": "APPLIED", "source_ref": SHA, "value": op["target"]} for op in operations]
+    analysis = screen_coach_window(plan, operations, setters, outcome, exposure)
+    result = analysis["factors"]["COACH_DEFAULT_004"]
+    assert result["metrics"]["FGA"]["estimates"] == {"H_minus_C": 2, "L_minus_C": -2}
+    assert result["status"] == "UNDERPOWERED"
+    proof["consumers"] = []
+    unknown = screen_coach_window(plan, operations, setters, outcome, capture())["factors"]["COACH_DEFAULT_004"]
+    assert unknown["status"] == "CONSUMER_UNVERIFIED" and not unknown["observations"]
+    assert unknown["unqualified_consumer_games"] == [10, 11]
+    contract = adapter_contract(study.factors["COACH_DEFAULT_004"])
+    with pytest.raises(ValueError, match="COACH_NATIVE_TEAM_AND_FIELD_REQUIRED"):
+        prepare_coach_patch(contract, "BenchDepth", 1, bytes(352), 0, 13)
+
+
+def test_coach_projection_and_game_consumer_mismatches_stop(tmp_path):
+    _, proof, _, capture, _ = coach_fixture(tmp_path)
+    proof["consumers"][0]["value"] = 14
+    with pytest.raises(ValueError, match="COACH_GAME_CONSUMER_ASSIGNMENT_MISMATCH"):
+        capture()
+    proof["consumers"][0]["value"] = 13
+    proof["current_projection"][0]["data"]["reciprocal_owner_matches"] = False
+    with pytest.raises(ValueError, match="COACH_CURRENT_PROJECTION_READBACK_MISMATCH"):
         capture()

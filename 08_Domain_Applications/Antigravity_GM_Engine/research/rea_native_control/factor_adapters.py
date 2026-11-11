@@ -76,7 +76,7 @@ def adapter_contract(factor):
                                if not factor.live_qualified else "New operator grant required",
                                {"key": slot.native_key, "index": slot.index, "offset": slot.offset, "width": 8})
     if factor.category == "coach":
-        layout = raw["physical_layout"]
+        layout = dict(raw["physical_layout"], native_key=raw["name"]) if raw["physical_layout"] else None
         return AdapterContract(factor.factor_id, "COACH_GAMEPLAN", "TEAM",
                                "COACH_SET_KNOWN_CURRENT_SETTINGS" if layout else None, "TEAM_GAMEPLAN_AND_GAME_BOX",
                                factor.adapter_state, "Reconcile default and opponent-specific active projection"
@@ -112,7 +112,7 @@ def coach_field(contract):
 
 def prepare_coach_patch(contract, native_key, team_id, record, expected, requested):
     field = coach_field(contract)
-    if type(team_id) is not int or not 0 <= team_id <= 29 or not native_key:
+    if type(team_id) is not int or not 0 <= team_id <= 29 or native_key != contract.layout["native_key"]:
         raise ValueError("COACH_NATIVE_TEAM_AND_FIELD_REQUIRED")
     if contract.layout["gameplan_offset"] < 0:
         raise ValueError("COACH_ACTIVE_PROJECTION_REQUIRED")

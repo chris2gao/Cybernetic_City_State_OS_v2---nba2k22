@@ -495,7 +495,277 @@
         "POEDefense": 0
       }
     },
-    "neighbor_319_unchanged": true
+    "neighbor_319_unchanged": true,
+    "projection_and_opponent_plan_fixture": {
+      "mode": "FIXTURE",
+      "exposure": {
+        "mode": "FIXTURE",
+        "worldline_id": "world",
+        "start": "2022-01-01",
+        "stop_exclusive": "2022-01-03",
+        "planning_report_sha256": "4dee7205a7f92a5dec9927fd086022ca546755c332c32b4d0ce3ec459baeff56",
+        "proof_sha256": "85ee07a5a632f2d2d058c7e1e4032069d33fc940bfeef7aca9def0f7304f8b5c",
+        "planning_unit": "world-0-planning",
+        "exposures": [
+          {
+            "game_id": 10,
+            "team_id": 1,
+            "opponent_team_id": 3,
+            "factor_id": "COACH_DEFAULT_004",
+            "native_key": "POEDefense",
+            "applied_value": 13,
+            "current_projection_source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "stored_plan_id": "plan-1-3",
+            "stored_plan_value": 14,
+            "stored_in_use": 1,
+            "stored_tainted": 0,
+            "stored_matches_projection": false,
+            "consumer_source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "qualified": true,
+            "status": "CONSUMER_VERIFIED"
+          },
+          {
+            "game_id": 11,
+            "team_id": 2,
+            "opponent_team_id": 3,
+            "factor_id": "COACH_DEFAULT_004",
+            "native_key": "POEDefense",
+            "applied_value": 15,
+            "current_projection_source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "stored_plan_id": "plan-2-3",
+            "stored_plan_value": 14,
+            "stored_in_use": 1,
+            "stored_tainted": 0,
+            "stored_matches_projection": false,
+            "consumer_source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "qualified": true,
+            "status": "CONSUMER_VERIFIED"
+          },
+          {
+            "game_id": 10,
+            "team_id": 3,
+            "opponent_team_id": 1,
+            "factor_id": "COACH_DEFAULT_004",
+            "native_key": "POEDefense",
+            "applied_value": 14,
+            "current_projection_source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "stored_plan_id": "plan-3-1",
+            "stored_plan_value": 14,
+            "stored_in_use": 1,
+            "stored_tainted": 0,
+            "stored_matches_projection": true,
+            "consumer_source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "qualified": true,
+            "status": "CONSUMER_VERIFIED"
+          },
+          {
+            "game_id": 11,
+            "team_id": 3,
+            "opponent_team_id": 2,
+            "factor_id": "COACH_DEFAULT_004",
+            "native_key": "POEDefense",
+            "applied_value": 14,
+            "current_projection_source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "stored_plan_id": "plan-3-2",
+            "stored_plan_value": 14,
+            "stored_in_use": 1,
+            "stored_tainted": 0,
+            "stored_matches_projection": true,
+            "consumer_source": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "qualified": true,
+            "status": "CONSUMER_VERIFIED"
+          }
+        ]
+      },
+      "confirmed_consumer_analysis": {
+        "mode": "FIXTURE",
+        "worldline_id": "world",
+        "factors": {
+          "COACH_DEFAULT_004": {
+            "status": "UNDERPOWERED",
+            "metrics": {
+              "FGA": {
+                "estimates": {
+                  "H_minus_C": 2,
+                  "L_minus_C": -2
+                },
+                "team_clusters": {
+                  "H": 1,
+                  "L": 1,
+                  "C": 1
+                },
+                "confidence_interval": null,
+                "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+              },
+              "MIN": {
+                "estimates": {
+                  "H_minus_C": 0,
+                  "L_minus_C": 0
+                },
+                "team_clusters": {
+                  "H": 1,
+                  "L": 1,
+                  "C": 1
+                },
+                "confidence_interval": null,
+                "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+              }
+            },
+            "observations": [
+              {
+                "game_id": 10,
+                "unit": "unit-10",
+                "team_id": 1,
+                "uid": null,
+                "arm": "H",
+                "dose": 13,
+                "metrics": {
+                  "FGA": 12,
+                  "MIN": 240
+                },
+                "disposition": "PLAYED",
+                "opponent": {
+                  "factor_id": "COACH_DEFAULT_004",
+                  "team_id": 3,
+                  "uid": null,
+                  "arm": "C",
+                  "baseline": 14,
+                  "target": 14,
+                  "live_writer_qualified": false
+                },
+                "previous_home_treatments": [],
+                "previous_away_treatments": []
+              },
+              {
+                "game_id": 10,
+                "unit": "unit-10",
+                "team_id": 3,
+                "uid": null,
+                "arm": "C",
+                "dose": null,
+                "metrics": {
+                  "FGA": 10,
+                  "MIN": 240
+                },
+                "disposition": "PLAYED",
+                "opponent": {
+                  "factor_id": "COACH_DEFAULT_004",
+                  "team_id": 1,
+                  "uid": null,
+                  "arm": "H",
+                  "baseline": 14,
+                  "target": 13,
+                  "live_writer_qualified": false
+                },
+                "previous_home_treatments": [],
+                "previous_away_treatments": []
+              },
+              {
+                "game_id": 11,
+                "unit": "unit-11",
+                "team_id": 2,
+                "uid": null,
+                "arm": "L",
+                "dose": 15,
+                "metrics": {
+                  "FGA": 8,
+                  "MIN": 240
+                },
+                "disposition": "PLAYED",
+                "opponent": {
+                  "factor_id": "COACH_DEFAULT_004",
+                  "team_id": 3,
+                  "uid": null,
+                  "arm": "C",
+                  "baseline": 14,
+                  "target": 14,
+                  "live_writer_qualified": false
+                },
+                "previous_home_treatments": [],
+                "previous_away_treatments": []
+              },
+              {
+                "game_id": 11,
+                "unit": "unit-11",
+                "team_id": 3,
+                "uid": null,
+                "arm": "C",
+                "dose": null,
+                "metrics": {
+                  "FGA": 10,
+                  "MIN": 240
+                },
+                "disposition": "PLAYED",
+                "opponent": {
+                  "factor_id": "COACH_DEFAULT_004",
+                  "team_id": 2,
+                  "uid": null,
+                  "arm": "L",
+                  "baseline": 14,
+                  "target": 15,
+                  "live_writer_qualified": false
+                },
+                "previous_home_treatments": [],
+                "previous_away_treatments": []
+              }
+            ],
+            "planned_opportunities": 2,
+            "unqualified_consumer_games": []
+          }
+        },
+        "qualified_game_count": 2,
+        "missing_game_ids": [],
+        "excluded_game_ids": [],
+        "coach_exposure_sha256": "85ee07a5a632f2d2d058c7e1e4032069d33fc940bfeef7aca9def0f7304f8b5c"
+      },
+      "unverified_consumer_analysis": {
+        "mode": "FIXTURE",
+        "worldline_id": "world",
+        "factors": {
+          "COACH_DEFAULT_004": {
+            "status": "CONSUMER_UNVERIFIED",
+            "metrics": {
+              "FGA": {
+                "estimates": {
+                  "H_minus_C": null,
+                  "L_minus_C": null
+                },
+                "team_clusters": {
+                  "H": 0,
+                  "L": 0,
+                  "C": 0
+                },
+                "confidence_interval": null,
+                "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+              },
+              "MIN": {
+                "estimates": {
+                  "H_minus_C": null,
+                  "L_minus_C": null
+                },
+                "team_clusters": {
+                  "H": 0,
+                  "L": 0,
+                  "C": 0
+                },
+                "confidence_interval": null,
+                "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"
+              }
+            },
+            "observations": [],
+            "planned_opportunities": 2,
+            "unqualified_consumer_games": [
+              10,
+              11
+            ]
+          }
+        },
+        "qualified_game_count": 2,
+        "missing_game_ids": [],
+        "excluded_game_ids": [],
+        "coach_exposure_sha256": "df35d45d66a67d76e6f7f0ea254a108c9fca6e3b65896d365310f501e92de46b"
+      }
+    }
   },
   "training": {
     "mode": "FIXTURE",
@@ -511,7 +781,7 @@
     "tail_unchanged": true
   },
   "world": {
-    "mode": "STATIC_CONTRACT",
+    "mode": "FIXTURE",
     "contract": {
       "factor_id": "WORLD/sim_quarter_length",
       "object_kind": "WORLD_OR_MODE_SETTINGS",
@@ -545,7 +815,31 @@
       "A",
       "B"
     ],
-    "live_writer": "UNVERIFIED"
+    "live_writer": "UNVERIFIED",
+    "input_hex": "0c000000",
+    "readback": {
+      "value": 12,
+      "raw_word": 12,
+      "encoding": "uint32",
+      "status": "OBSERVED_RAW_WORD_ONLY"
+    },
+    "independent_worldline_analysis": {
+      "effects": {
+        "H_minus_C": 2,
+        "L_minus_C": -2
+      },
+      "worldline_counts": {
+        "C": 1,
+        "H": 1,
+        "L": 1
+      },
+      "status": "UNDERPOWERED",
+      "confidence_interval": null,
+      "classifications": {
+        "H_minus_C": "UNDERPOWERED",
+        "L_minus_C": "UNDERPOWERED"
+      }
+    }
   },
   "settlement_samples": {
     "COACH_DEFAULT_004": {

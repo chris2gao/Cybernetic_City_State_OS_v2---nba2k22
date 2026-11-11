@@ -210,5 +210,9 @@ def _game(conn, host, units, season, fixture, headers):
                 metrics = {key: candidate[column] for key, column in _BOX_METRICS.items()}
                 metrics["TEAM_FGA"] = team_box["fg_attempted"]
         boxes.append({"team_id": native_team, "uid": uid, "disposition": disposition, "metrics": metrics})
+    for index, box in enumerate(boxes):
+        other = boxes[1 - index]["metrics"]
+        if box["uid"] is None:
+            box["metrics"].update({f"OPPONENT_{key}": other.get(key) for key in ("FGA", "FG3A", "PTS")})
     return {**fixture, "unit": unit, "team_box_unit": unit, "player_box_unit": unit, "team_boxes": boxes,
             "score_conserved": True, "final": True, "was_simulated": True}

@@ -726,3 +726,21 @@ def test_progress_qualification_import_pins_source_and_restores_physical_evidenc
     assert not other_view.query(factor, "PLAYER")["decision_usable"]
     with pytest.raises(PermissionError, match="ACCEPTED_QUALIFICATION_PIN_MISMATCH"):
         ledger.ingest_qualifications(raw + b" ", pin)
+
+
+def test_coach_allocation_uses_explicit_strategy_doses_and_team_identity(study):
+    fields = [factor for factor in study.factors.values() if factor.category == "coach" and factor.native["physical_layout"]][:5]
+    reference = study.reference["windows"][0]
+    teams = {int(row["native_team_id"]) for row in study.players if row["eligible_now"] == "True"}
+    values, doses = {}, {}
+    for factor in fields:
+        domain = coach_field(adapter_contract(factor)).legal
+        baseline = domain[len(domain) // 2]
+        alternatives = [value for value in domain if value != baseline]
+        doses[factor.factor_id] = {"C": baseline, "H": alternatives[0], "L": alternatives[-1]}
+        values.update({(factor.factor_id, team): baseline for team in teams})
+    plan = allocate_window(study, reference, [factor.factor_id for factor in fields], values, (),
+                           worldline="WC-fixture", seed=1, coach_doses=doses)
+    assert len(plan["teams"]) == 30 and plan["treatment_slots"] == 20
+    for row in plan["teams"].values():
+        assert row["uid"] is None and row["target"] == doses[row["factor_id"]][row["arm"]]
