@@ -12,8 +12,11 @@ subsection rather than in the general rules.
 Startup uses the repository-wide always-on bootstrap below. Nothing beyond the
 task-triggered steps loads by default.
 
-1. **The current remote `master` 40-character SHA, read fresh.** Never carry a SHA
-   forward from chat, a report, or a document.
+1. **Identify the current repository, Human objective and working branch.**
+   Do not make a remote 40-character SHA read an unconditional startup tax.
+   Read the precise current master/base/head when material repository mutation,
+   immutable source evidence or a protected/publication action actually needs it;
+   do not reuse an old SHA at that boundary.
 2. `AGENT_WORKING_DISCIPLINE.md`. Short, applies to every model in this project
    regardless of vendor, and is where the recurring failure modes are written down
    with the incident that produced each one.
@@ -61,6 +64,10 @@ its content or substituting a nearby file.
 These apply to every backend executor in this repository — Codex, Antigravity, or
 any other — because every one of them loads this file.
 
+- **Deliver the Human's shortest real business loop first.** Apply
+  `AGENT_WORKING_DISCIPLINE.md` section 0 before adding preparation,
+  verification wrappers or new architecture. Genuine safety and authority
+  boundaries still apply.
 - Use the existing repository structure and naming conventions.
 - Prefer narrow, factual edits over broad rewrites.
 - Use PowerShell commands in this Windows workspace.
@@ -172,9 +179,10 @@ current task scope.
 2. Choose the simplest implementation that fully satisfies the current
    requirements. Do not add speculative abstractions, extension points, or
    configuration layers.
-3. In a layered system, establish the smallest working end-to-end path first, then
-   add layers incrementally. Never dismantle a working slice merely to accommodate
-   incomplete complexity.
+3. In a layered system, run the smallest *real business* end-to-end path first,
+   preferably using existing commands, then add layers only for observed gaps.
+   A fixture, qualification or documentation cycle is not an end-to-end domain
+   result. Never dismantle a working slice to accommodate incomplete complexity.
 4. Keep components modular, with clear boundaries and separation of concerns.
 5. Prefer mature, actively maintained libraries. Do not reimplement an available
    capability without a concrete, task-relevant reason.
@@ -198,6 +206,10 @@ current task scope.
 
 ## Git Workflow
 
+- Ordinary work is organized by the actual branch name and working tree; do not
+  repeatedly resolve a SHA or run publication checks for every command. Exact
+  commit identity is required when the existing material-write, publication or
+  protected-action gate actually needs it, not as a proxy for task progress.
 - Active work branch is task-specific; do not infer it from historical documentation.
 - Remotes differ per repository in the core/domain fork family. Read them with
   `git remote -v` instead of trusting a name written here; a hardcoded remote in a
