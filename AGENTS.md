@@ -85,6 +85,15 @@ Vendor-specific mechanics, and nothing else, belong here:
 
 ## Formal Cross-Model Handoffs
 
+**Goal-first handoff and reception.** Preserve the existing task packet
+`objective` and message `content` / `requested_action` slots. The sender must
+make the observable business outcome and first real executable loop prominent,
+with preparation, checks, and documents explicitly subordinate. The receiver
+must recognize that hierarchy on entry and keep it through the internal Loop;
+it must not turn the handoff's preparation steps into a substitute objective.
+No additional mandatory communication fields, proof package, acknowledgment or
+Human approval is created by this rule. See `AGENT_WORKING_DISCIPLINE.md` §0.
+
 When the current task already supplies a valid communication context or exact
 communication pointer, a formal cross-model handoff uses the canonical safe-subset
 YAML defined by `01_os/03_mechanisms/communication_system/消息契约_v1.yml`.
