@@ -9,6 +9,29 @@ def _real(value):
     return type(value) in (int, float) and isfinite(value)
 
 
+def dose_response(rows, endpoint):
+    """Descriptive raw-dose slope with one mean per assigned team."""
+    grouped = defaultdict(list)
+    doses = defaultdict(set)
+    for row in rows:
+        dose, value = row["dose"], row["metrics"].get(endpoint)
+        if _real(dose) and _real(value):
+            doses[row["team_id"]].add(dose)
+            grouped[row["team_id"], dose].append(value)
+    if any(len(values) != 1 for values in doses.values()):
+        raise ValueError("DOSE_RESPONSE_TEAM_HAS_MULTIPLE_WINDOW_DOSES")
+    points = [(dose, mean(values)) for (_, dose), values in grouped.items()]
+    result = {"status": "UNDERPOWERED", "team_clusters": len(points), "slope_per_raw_step": None,
+              "confidence_interval": None, "scope": "DESCRIPTIVE_TEAM_MEANS_WITH_OPPONENT_AND_BASELINE_CONFOUNDING"}
+    if len(points) < 3 or len({dose for dose, _ in points}) < 2:
+        return result
+    center_x, center_y = mean(point[0] for point in points), mean(point[1] for point in points)
+    result.update(slope_per_raw_step=sum((x - center_x) * (y - center_y) for x, y in points) /
+                                     sum((x - center_x) ** 2 for x, _ in points),
+                  dose_range=[min(x for x, _ in points), max(x for x, _ in points)])
+    return result
+
+
 def screen_game_window(plan, operations, setter_receipts, capture, *, qualified_team_games=None):
     if capture["worldline_id"] != plan["worldline_id"] or capture["today"] != plan["stop_exclusive"]:
         raise ValueError("ANALYSIS_CAPTURE_WORLD_OR_DATE_MISMATCH")
@@ -91,6 +114,8 @@ def screen_game_window(plan, operations, setter_receipts, capture, *, qualified_
                                        "team_clusters": {arm: len(arm_values[arm]) for arm in "HLC"},
                                        "confidence_interval": None,
                                        "limitation": "SINGLE_WORLDLINE_TEAM_AND_OPPONENT_DEPENDENCE"}
+            if factor_id in plan.get("dose_response_factors", ()):
+                metric_results[endpoint]["dose_response"] = dose_response(rows, endpoint)
         has_endpoint = any(value is not None for row in metric_results.values() for value in row["estimates"].values())
         if not opportunities[factor_id]:
             status = "NO_OPPORTUNITY"

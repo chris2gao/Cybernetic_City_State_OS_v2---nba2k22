@@ -28,4 +28,6 @@ I6 的 `ProgressLedger` 支持独立 SQLite 持久化，以 223 项固定库存�
 
 Coach 接入 `capture_coach_exposure` 与 `screen_coach_window`。读取器使用既有 `READ_COACH_CURRENT` 的具名投影结构和 WorldData 对手计划，逐 GameID 核对独立接受的消费证据。没有消费证据时输出 `CONSUMER_UNVERIFIED`，保留计划与当前投影差异。分配器采用显式合法策略剂量，单位为球队。修复了类型适配器允许字段名与布局不一致的问题。全因素与分类 SQL 回归通过 41 项，历史同源 Box 回放仍为 49 场中 43 场通过。
 
+最终组合回归通过 206 项测试及 15 项子测试。范围包含 Host、Bulk、Outbox、bounded session、训练、回执校验、TEST_ONLY Calendar、分类结算、planning 和已批准交易的离线替身。未选入一次 1k/10k Outbox 性能用例，该用例会改写旧组的基准结果。原始剂量响应按每队均值拟合描述性斜率，只对明确注册为数值剂量的因素启用，并保留队伍/对手和基线混杂限制。I0–I6 的逐项完成门核对见 [交付回执](DEVELOPMENT_DELIVERY.md)。
+
 固定日历依赖为 PR #42 的 `ada6f30051eb9a2f17193af6985497eeb789ea1c`，用于测试入口。主工作线固定为 PR #41 的 `cdb2a3b2b9f9de79fe068b1644c6ba147d05d8e5`。本候选需要独立工程审核与后续实机资格裁决。

@@ -11,7 +11,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from factor_adapters import adapter_contract, coach_field, prepare_coach_patch, prepare_training_patch
-from factor_analysis import adjust_fdr, compare_independent_worldlines, screen_game_window, screen_settled_events
+from factor_analysis import adjust_fdr, compare_independent_worldlines, dose_response, screen_game_window, screen_settled_events
 from factor_assignment import Exposure, allocate_window, event_study, windows_for_schedule
 from factor_inventory import StudyInputs
 from factor_lab_cli import report
@@ -744,3 +744,14 @@ def test_coach_allocation_uses_explicit_strategy_doses_and_team_identity(study):
     assert len(plan["teams"]) == 30 and plan["treatment_slots"] == 20
     for row in plan["teams"].values():
         assert row["uid"] is None and row["target"] == doses[row["factor_id"]][row["arm"]]
+
+
+def test_dose_response_counts_teams_and_preserves_exploratory_scope():
+    rows = [{"team_id": team, "dose": dose, "metrics": {"FGA": value}}
+            for team, dose, value in ((1, 45, 8), (2, 50, 10), (3, 55, 12)) for _ in range(2)]
+    result = dose_response(rows, "FGA")
+    assert result["team_clusters"] == 3 and result["slope_per_raw_step"] == pytest.approx(.4)
+    assert result["confidence_interval"] is None and result["status"] == "UNDERPOWERED"
+    rows.append({"team_id": 1, "dose": 46, "metrics": {"FGA": 8}})
+    with pytest.raises(ValueError, match="MULTIPLE_WINDOW_DOSES"):
+        dose_response(rows, "FGA")

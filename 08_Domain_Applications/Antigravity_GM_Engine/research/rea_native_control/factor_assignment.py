@@ -193,6 +193,8 @@ def allocate_window(study, window, factor_ids, values, history, *, worldline, se
             "live_authorized": False}
     if qualifications is not None:
         result["qualification_sha256"] = qualifications.sha256
+    if category == "player_tendency":
+        result["dose_response_factors"] = list(factor_ids)
     return result
 
 
