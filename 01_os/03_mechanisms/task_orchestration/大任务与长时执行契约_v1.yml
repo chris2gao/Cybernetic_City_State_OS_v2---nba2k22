@@ -74,6 +74,11 @@ not_a_stop_condition:
 # remained pending, and Human later limited the accepted delivery scope.
 # This is a DEFAULT PROCESS PATTERN, not permission to loop indefinitely.
 evidence_driven_iteration:
+  task_node_semantics_ref: 01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md
+  node_priority: first_ready_unfinished_business_node_and_actual_done
+  node_completion: actual_consumer_outcome_not_preparation_receipt
+  parent_completion: own_business_done_not_merely_child_pass_count
+  chain_optimization: preserve_goal_done_authority_and_required_dependencies
   scope: development_phase_only
   meaning: >-
     This is an internal engineering/research development cadence, not a new
