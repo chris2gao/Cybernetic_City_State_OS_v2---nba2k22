@@ -144,6 +144,14 @@ always-on file.
 
 ## Default Task Orchestration
 
+**Atomic task first:** interpret the Human's execution chain as meaningful
+Goal / Ready / Action / Done nodes. When a node is ready and authorized, run
+its real action rather than improving unrelated scaffolding; only observed
+business output completes it. A composite task is complete only on its own
+business Done, not merely because substeps passed. See
+`01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`.
+This adds no per-node permission, Git publication, or handoff ceremony.
+
 Plan and execute coherent work as **one long-horizon task**, not a chain of small
 ones. Deterministic in-scope construction, validation, repair of a failure this
 task caused, evidence updates, private-runtime cleanup, task-branch commit and
