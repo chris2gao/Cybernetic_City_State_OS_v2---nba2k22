@@ -21,6 +21,21 @@
 
 **这不是新执行引擎、审批门、Schema或每次调用都要填报的文件。** 普通运行结果不用为每个节点创建Git提交或正式 MWU 输出；原有真实权限与发布门继续适用。
 
+## 最小可运行参考实现（不接管业务命令）
+
+- `01_os/06_execution/task_orchestration/atomic_tasks.py`：标准库 Python，提供 `Atom`、`Chain`、`Ready`、`Executor.inspect()/advance()/run_available()`。由领域代码注入真实 Ready、Action、Done 函数；Core 不替领域执行 Native、Git 或 Shell，也不授予权限。
+- `01_os/06_execution/task_orchestration/test_atomic_tasks.py`：七项可运行行为测试，覆盖完整五节点闭环、16项资格但零比赛反例、授权缺口、父任务独立 Done、递归组合、重复键与未知副作用禁止自动重放。
+
+从仓库根目录运行：
+
+```powershell
+python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_atomic_tasks.py -v
+```
+
+最短调用方式：创建 `Atom(key, goal, ready, action, done)`，按业务依赖放进 `Chain(key, goal, ready, children, done)`，调用 `Executor(chain).inspect()` 看当前节点，调用 `run_available()` 执行就绪节点。**真实点亮来自 `done()` 对实际业务状态的观察，不来自 Action 的返回值。**
+
+`Executor` 只保证**同一内存实例**中某动作结果未知后不自动重试。进程重启、Native未知副作用、跨会话接续必须由领域已有 Journal 与实际读回处理；此参考实现不是持久化反重放系统，不应直接替换REA或正式七阶段Runner。测试是隔离行为测试，并非NBA2K22实机验证。
+
 ## 为什么存在
 
 碎片化有可测的账单，不是风格偏好：
