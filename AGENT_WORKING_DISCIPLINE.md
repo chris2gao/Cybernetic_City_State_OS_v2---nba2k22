@@ -83,6 +83,14 @@ extra step by a demonstrated risk or remove it. This rule applies to planning,
 execution and review; a reviewer must judge the business outcome before
 mechanical document conformity.
 
+**Atomic-task interpretation:** model the next meaningful business unit as
+Goal / Ready / Action / Done. Mark a node complete only on its actual consumer
+result; parent completion has its own outcome test. A receiver may optimize the
+chain only without weakening the Human's goal, safety or required evidence.
+Use the existing task plan and internal Loop, not a new per-tool-call form.
+Canonical semantics and positive/negative examples:
+`01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`.
+
 ## 1. Land the output; the chat holds nothing
 
 Anything that matters — decisions, verdicts, evidence, contracts — goes into the
