@@ -156,6 +156,13 @@ class BulkIntentItem:
     player_id: Optional[int] = None
     source_justification: str = ""
     dependencies: Tuple[str, ...] = ()
+    expected_tendency_hex: Optional[str] = None
+
+    def plan_record(self):
+        record = asdict(self)
+        if self.expected_tendency_hex is None:
+            del record["expected_tendency_hex"]
+        return record
 
     def validate(self, field_catalog: Dict[str, Any]):
         if not self.intent_id or not isinstance(self.intent_id, str):
@@ -165,6 +172,14 @@ class BulkIntentItem:
 
         canonical_action = resolve_canonical_action(self.action_id)
         expected_family = CANONICAL_ACTIONS[canonical_action]
+        if self.expected_tendency_hex is not None:
+            if expected_family != 'tendencies':
+                raise ValueError("QUALIFICATION_NEIGHBORHOOD_REQUIRES_TENDENCY")
+            from native_factor_slots import resolve_tendency_slot
+            slot = resolve_tendency_slot(self.field_id)
+            before = bytes.fromhex(self.expected_tendency_hex)
+            if slot.expected_image(before, self.expected_before, self.value) == before:
+                raise ValueError("QUALIFICATION_REQUIRES_A_REAL_CHANGE")
 
         if expected_family == 'tendencies':
             if self.field_id not in field_catalog['tendencies']:
@@ -218,7 +233,7 @@ class BulkBatch:
         if not self.plan_digest:
             d = sha256_digest({
                 'header': asdict(self.header),
-                'intents': [asdict(i) for i in self.intents]
+                'intents': [item.plan_record() for item in self.intents]
             })
             object.__setattr__(self, 'plan_digest', d)
 
@@ -267,12 +282,7 @@ class BulkBatch:
                 deps = tuple(item_data.pop('dependencies', []))
                 intents.append(BulkIntentItem(dependencies=deps, **item_data))
 
-        batch = cls(header=header, intents=tuple(intents))
-        digest = sha256_digest({
-            'header': asdict(batch.header),
-            'intents': [asdict(i) for i in batch.intents]
-        })
-        return cls(header=batch.header, intents=batch.intents, plan_digest=digest)
+        return cls(header=header, intents=tuple(intents))
 
 
 class FieldCatalogLoader:
@@ -337,6 +347,8 @@ class BulkBatchPlanner:
 
         seen_intents = set()
         entity_field_targets = {}
+        if len(batch.intents) != 1 and any(item.expected_tendency_hex is not None for item in batch.intents):
+            issues.append("QUALIFICATION_REQUIRES_A_SINGLE_INTENT")
 
         for item in batch.intents:
             if item.intent_id in seen_intents:
@@ -419,7 +431,7 @@ class BulkBatchPlanner:
                         'team_id': team_id,
                         'action_id': c_act,
                         'plan_digest': batch.plan_digest,
-                        'intents': [asdict(item) for item in sub_slice]
+                        'intents': [item.plan_record() for item in sub_slice]
                     })
                     raw_chunks.append(PlannedChunk(
                         chunk_id=cid,
@@ -499,7 +511,9 @@ class BulkFridaScriptCompiler:
                     'value': item.value,
                     'is_attribute': is_attr,
                     'native_index': n_idx,
-                    'offset': offset
+                    'offset': offset,
+                    'expected_tendency': (list(bytes.fromhex(item.expected_tendency_hex))
+                                          if item.expected_tendency_hex is not None else None)
                 })
             else:
                 c_field = self.catalog['coach'].get(item.field_id, {})
@@ -644,7 +658,12 @@ function executeAction() {{
 
         const currentVal = call('player.get_stat_ui', player, item.native_index);
 
-        if (currentVal !== item.expected_before) {{
+        const targetOffsetIn156 = item.offset - 0x41f;
+        const neighborhoodMismatch = item.expected_tendency !== null &&
+          item.expected_tendency.some((byte, index) => byte !== beforeBytes[0x458 - 0x41f + index]);
+        if (currentVal !== item.expected_before ||
+            neighborhoodMismatch ||
+            (!item.is_attribute && beforeBytes[targetOffsetIn156] !== currentVal)) {{
           results.push({{
             intent_id: item.intent_id,
             team_id: CHUNK_PAYLOAD.team_id,
@@ -654,7 +673,8 @@ function executeAction() {{
             getter_before: currentVal,
             requested: item.value,
             outcome: 'CAS_EXPECTED_BEFORE_MISMATCH',
-            reason: 'Expected ' + item.expected_before + ', observed ' + currentVal
+            reason: neighborhoodMismatch ? 'QUALIFICATION_NEIGHBORHOOD_CHANGED' :
+              'Expected ' + item.expected_before + ', observed ' + currentVal
           }});
           chunkHalted = true;
           haltReason = 'CAS_MISMATCH';
@@ -684,7 +704,6 @@ function executeAction() {{
           const afterVal = call('player.get_stat_ui', player, item.native_index);
           const rawByte = u8(read(player.add(item.offset), 1));
           const expectedRaw = item.is_attribute ? (item.value * 3 - 75) : item.value;
-          const targetOffsetIn156 = item.offset - 0x41f;
 
           let untouchedPreserved = true;
           for (let bIdx = 0; bIdx < 156; bIdx++) {{
@@ -1438,7 +1457,7 @@ class BulkExecutorService:
                         'team_id': chunk.team_id,
                         'action_id': chunk.action_id,
                         'plan_digest': batch.plan_digest,
-                        'intents': [asdict(item) for item in chunk_to_execute_intents]
+                        'intents': [item.plan_record() for item in chunk_to_execute_intents]
                     })
                 else:
                     sub_chunk_digest = chunk.chunk_digest
@@ -1581,7 +1600,7 @@ class BulkExecutorService:
                     'team_id': chunk.team_id,
                     'action_id': chunk.action_id,
                     'plan_digest': batch.plan_digest,
-                    'intents': [asdict(item) for item in chunk_to_execute_intents]
+                    'intents': [item.plan_record() for item in chunk_to_execute_intents]
                 })
             else:
                 sub_chunk_digest = chunk.chunk_digest

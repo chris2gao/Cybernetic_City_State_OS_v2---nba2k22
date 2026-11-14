@@ -1,0 +1,380 @@
+diff --git a/01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/run.yml b/01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/run.yml
+index b504c77c..2a35c964 100644
+--- a/01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/run.yml
++++ b/01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/run.yml
+@@ -6,9 +6,9 @@ branch: codex/nba2k22-full-factor-engineering
+ ownership: execution
+ purpose: Live research continuation; failed to deliver a simulation-analysis loop; Human-requested audit
+ lifecycle: deferred
+-closure_record: README.md
+-outputs: [REAL_LIVE_RESEARCH_RUNBOOK.md, FAILURE_REVIEW_FOR_GPT.md, FAILURE_EVIDENCE_INDEX.json]
+-verification:
++closure_record: GE01_EXECUTION_AUDIT.md
++outputs: [REAL_LIVE_RESEARCH_RUNBOOK.md, FAILURE_REVIEW_FOR_GPT.md, FAILURE_EVIDENCE_INDEX.json, GE01_EXECUTION_AUDIT.md, evidence/ge01-audit/MANIFEST.json]
++historical_verification_20261111:
+   native_writes: 16
+   calendar_dispatches: 0
+   completed_simulated_games: 0
+@@ -17,3 +17,18 @@ verification:
+   regression_tests: 34_passed
+   research_goal_achieved: false
+   next_action: Human-requested failure audit; no new runtime batch started
++ge01_verification_20261114:
++  engineering_base: 5a1d270d82196fb78fb4f64e7a832813e1b9a6b5
++  baseline: Human_adopted_current_0005_as_new_T0_including_prior_16_offsets
++  human_envelope_sha256: f539bdbef71c324dbecb427933a549c114629699302c5605a40b07dcc7e3d5cb
++  native_setters: 0
++  new_qualification_writes: 0
++  calendar_attempts: 2
++  actual_calendar_dispatches: 0
++  completed_simulated_games: 0
++  complete_experiment_loops: 0
++  repair_attempts_after_limit: 1
++  stop_reason: Human_required_stop_after_single_unsuccessful_repair
++  final_native_error: Schedule_fixture_differs_before_dispatch
++  further_runtime_work: stopped_by_Human
++  research_goal_achieved: false
+diff --git a/01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/task_packet.yml b/01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/task_packet.yml
+index d8014449..f633fa72 100644
+--- a/01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/task_packet.yml
++++ b/01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/task_packet.yml
+@@ -2,30 +2,39 @@ task_packet:
+   task_id: NBA2K22-LIVE-RESEARCH-CONTINUATION-20261111-001
+   role: execution
+   task_type: LIVE_RESEARCH_CONTINUATION
+-  authority: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/40#issuecomment-6794780940
+-  engineering_base: 1372d1b62467dbd6fa51a9db24f0c4feaff40a1c
++  authority: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/24#issuecomment-6873776739
++  engineering_base: 5a1d270d82196fb78fb4f64e7a832813e1b9a6b5
+   remote_master: bb73a06e710158c538caf809a771eca291eee028
+   branch: codex/nba2k22-full-factor-engineering
+   affected_module_ids: [P02, P03, P04, P09, P10]
+   experiment_slot: MyLEAGUE0005
+   cold_backup_slot: MyLEAGUE0003
+-  initial_operation: qualification_native_setters
+-  human_write_envelope: QUALIFICATION_ONLY_16_SETTERS_ZERO_CALENDAR
+-  human_direct_start_instruction: 直接开始，不用做检查，就是给你准备的。
+-  formal_research_envelope: PENDING_RELOADED_BASELINE_AND_NOV15_TRANSITION_RESOLUTION
+-  first_batch_caps:
++  current_phase: GE-01_W01
++  objective: Fresh bound W01 collection, exact approved H/L Native treatment, calendar simulation, postgame WorldData and H/L/C analysis.
++  initial_operation: fresh_read_only_W01_binding
++  human_write_envelope: APPROVED_f539bdbef71c324dbecb427933a549c114629699302c5605a40b07dcc7e3d5cb_THEN_STOPPED_BY_HUMAN_CONDITION
++  current_human_slot_confirmation: '0005'
++  current_human_slot_confirmation_source: Current Human reply to the loaded-slot question in this Codex chat
++  formal_research_envelope: APPROVED_GE01_W01_20_SETTERS_5_CALENDAR_NO_SAVE_RESTORE
++  historical_first_batch_caps:
+     qualification_setters: 16
+     research_setters: 60
+     calendar_dispatches: 12
+     historical_reference_games: 153
+   allowed_changed_paths:
+     - 01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/
++    - 01_os/07_content/_runs/run-20261107-nba2k22-vae-longrun-40-001/
+     - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/
+     - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/
+     - 08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md
+     - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PROJECT_MODULE_REGISTRY_V2.json
+-  publication: draft_only_failure_audit_documents
+-  current_research_status: paused_by_Human
+-  current_publication_authority: Human requested all prepared failure documents on this task GitHub without ZIP
++  publication: ordinary_PR43_task_branch_delivery_with_current_Core_transport_gate
++  current_research_status: stopped_by_Human_after_single_failed_repair
++  human_stop_condition: 只修复一次，如果没解决就停止任务，并记录当前任务从开始阶段的执行
++  actual_GE01_result: zero_formal_setters_zero_calendar_dispatches_zero_completed_W01_loops
++  stop_evidence: GE01_EXECUTION_AUDIT.md
++  current_publication_authority: Current Human GE-01 execution request and formal contract
++  inherited_local_changes: Six tracked engineering repairs present on entry; preserve and inspect before use
++  approved_access: Necessary read-only game access with administrator privileges when required
+   protected_before_explicit_batch_approval: [native_setter, native_calendar_simulation]
+   prohibited: [computer_use, game_save_restore, cold_backup_write, master_merge]
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/factor_assignment.py b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/factor_assignment.py
+index 534eca5f..383b1b57 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/factor_assignment.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/factor_assignment.py
+@@ -5,6 +5,7 @@ from datetime import date, timedelta
+ from functools import lru_cache
+ from hashlib import sha256
+ from itertools import combinations
++from native_factor_slots import resolve_tendency_slot
+ 
+ 
+ @dataclass(frozen=True)
+@@ -124,6 +125,9 @@ def allocate_window(study, window, factor_ids, values, history, *, worldline, se
+             unit_id = uid if uid is not None else team
+             value = values.get((factor.factor_id, unit_id))
+             limits = factor.native.get("legal_boundary")
++            if category == "player_tendency":
++                slot = resolve_tendency_slot(factor.factor_id)
++                limits = (slot.minimum, slot.maximum)
+             target = value if arm == "C" else None
+             if category == "player_tendency" and type(value) is int and limits:
+                 proposal = value + (5 if arm == "H" else -5)
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/factor_runner.py b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/factor_runner.py
+index 75a1c08b..e546c6f8 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/factor_runner.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/factor_runner.py
+@@ -388,7 +388,7 @@ def _execute_host_setter(host, key, operation, binding):
+         return {"status": "CAS_MISMATCH", "source_ref": key}
+     opened = host.start_cycle(key, candidate_intents=[{
+         "issuer_role": "GM", "parameters": {"team_id": team, "player_id": uid,
+-        "field_id": slot.native_key, "expected_before": operation["expected_before"], "value": operation["target"]}}])
++        "expected_before": operation["expected_before"], "values": {slot.native_key: operation["target"]}}}])
+     if opened["intents_added_count"] != 1:
+         return {"status": "UNKNOWN", "source_ref": key}
+     seal = host.seal_cycle_decisions(key, getter_func=getter, expected_pid=binding["pid"])
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_batches.py b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_batches.py
+index 6be87788..362700fe 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_batches.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_batches.py
+@@ -339,7 +339,9 @@ class ExecutionAggregator:
+                 raise PermissionError('PLAYER_STAT_REQUIREMENT_SCOPE_ESCAPE')
+             values = validate_values(self.service.player_stat_fields, native['action_id'], p)
+             fields = allowed_fields(self.service.player_stat_fields, family, profile.role_type)
+-            if set(values) - set(fields):
++            extra = set(values) - set(fields)
++            if extra and (family != 'tendencies' or any(
++                    (p['player_id'], key) not in profile.native_tendency_write_grants for key in extra)):
+                 raise PermissionError('PLAYER_STAT_FIELD_OUTSIDE_ROLE_SCOPE')
+             if profile.role_type == 'PLAYER' and p['player_id'] not in profile.player_scope:
+                 raise PermissionError('PLAYER_EDIT_IDENTITY_OUTSIDE_ROLE_SCOPE')
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_capabilities.py b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_capabilities.py
+index bba20ecc..24e3ca18 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_capabilities.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/role_capabilities.py
+@@ -31,12 +31,18 @@ class RoleCapabilityProfile:
+     # Explicit dataset -> public field allowlist from the trusted host.
+     read_grants: tuple[tuple[str, tuple[str, ...]], ...] = ()
+     player_scope: tuple[int, ...] = ()
++    native_tendency_write_grants: tuple[tuple[int, str], ...] = ()
+ 
+     def __post_init__(self):
+         object.__setattr__(self, 'team_scope', tuple(self.team_scope))
+         object.__setattr__(self, 'allowed_actions', frozenset(self.allowed_actions))
+         object.__setattr__(self, 'player_scope', tuple(self.player_scope))
+         object.__setattr__(self, 'read_grants', tuple((k, tuple(v)) for k, v in self.read_grants))
++        object.__setattr__(self, 'native_tendency_write_grants', tuple(tuple(grant) for grant in self.native_tendency_write_grants))
++        if (len(self.native_tendency_write_grants) > 3 or
++                any(len(grant) != 2 or type(grant[0]) is not int or not 1 <= grant[0] <= 65535
++                    or type(grant[1]) is not str or not grant[1] for grant in self.native_tendency_write_grants)):
++            raise ValueError('Exact bounded Native tendency grants required')
+         if self.role_type not in {'GM', 'COACH', 'PLAYER', 'WORLD_ADMIN'}:
+             raise ValueError('Unknown role')
+         for key in ('actor_uid', 'world_id', 'save_instance_id', 'generation_id', 'season_id', 'phase', 'snapshot_ref'):
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py
+index f0b67084..63a1e8e3 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py
+@@ -853,7 +853,13 @@ class SeasonCycleHost:
+             return None
+ 
+     def _make_profiles(self, ctx: BatchContext) -> Tuple[RoleCapabilityProfile, RoleCapabilityProfile]:
+-        return self.role_registry.get_profiles(ctx)
++        gm, coach = self.role_registry.get_profiles(ctx)
++        if type(self.research_delegation) in (WindowDelegation, QualificationDelegation):
++            grant = self.research_delegation.role_manifest()
++            slot = self.research_delegation.active_slot(grant["field_id"])
++            if not slot.named:
++                gm = replace(gm, native_tendency_write_grants=tuple((uid, slot.native_key) for uid in grant["player_ids"]))
++        return gm, coach
+ 
+     def inspect_worldline(
+         self,
+@@ -995,6 +1001,58 @@ class SeasonCycleHost:
+             "active_worldline_id": manifest.get("active_worldline_id")
+         }
+ 
++    def bind_verified_live_capture(self, save_directory, loaded_filename, capture_directory, report_sha256, epoch):
++        """Bind an already acquired live baseline after exact source and fresh scene readback."""
++        from refresh import _context
++        if self.state["status"] != HostState.UNBOUND:
++            raise ValueError("VERIFIED_CAPTURE_BIND_REQUIRES_UNBOUND_HOST")
++        save_dir = Path(save_directory).resolve()
++        raw = (Path(capture_directory) / "refresh-report.json").read_bytes()
++        if hashlib.sha256(raw).hexdigest() != report_sha256:
++            raise ValueError("VERIFIED_CAPTURE_REPORT_HASH_MISMATCH")
++        report = json.loads(raw)
++        binding, binding_sha = read_binding(save_dir, loaded_filename)
++        database = bound_database(save_dir, binding)
++        CalendarSimOrchestrator(save_dir, loaded_filename, database_path=database)
++        if (report["status"] != "COMPLETED_REQUESTED_SOURCES" or report["game_writes"] is not False
++                or report["save_id"] != binding["save_id"] or report["binding_sha256"] != binding_sha
++                or report["native_save_filename"] != loaded_filename or report["process_epoch"] != epoch
++                or not binding.get("worldline_id")):
++            raise ValueError("VERIFIED_CAPTURE_BINDING_OR_EPOCH_MISMATCH")
++        with closing(connect(database, True)) as conn:
++            units = {}
++            for family in ("schedule", "game-mode", "player-skills"):
++                sources = [row["unit"] for row in report["sources"] if row["family"] == family
++                           and row["status"] == "ACQUIRED" and row["commit_status"] == "COMMITTED_SUCCESS_VERIFIED"]
++                if len(sources) != 1:
++                    raise ValueError("VERIFIED_CAPTURE_SOURCE_MISSING")
++                unit, = sources
++                row = conn.execute("""SELECT u.unit_id,u.payload_sha256,u.unit_status,u.observed_at,u.source_key,
++                                      r.source_grade,r.season_id FROM capture_units u JOIN capture_runs r USING(run_id)
++                                      WHERE u.unit_id=?""", (unit["unit_id"],)).fetchone()
++                if (row is None or row["source_grade"] != "LIVE_READ" or row["unit_status"] != "success"
++                        or any(row[key] != unit[key] for key in row.keys())):
++                    raise ValueError("VERIFIED_CAPTURE_SOURCE_RECEIPT_MISMATCH")
++                units[family] = unit["unit_id"]
++            modes = conn.execute("""SELECT today_native_iso_date,today_minutes_since_midnight_raw,mode_raw,period_raw,league_raw
++                                    FROM game_mode_observations WHERE unit_id=?""", (units["game-mode"],)).fetchall()
++        scene = _context(epoch["pid"])
++        progress = scene["game_progress"]
++        expected = (progress["today_native_iso_date"], progress["today_minutes_since_midnight_raw"],
++                    progress["mode_raw"], progress["period_raw"], progress["league_raw"])
++        if (len(modes) != 1 or tuple(modes[0]) != expected or scene["epoch"] != epoch
++                or expected[2:] != (1, 29, 0) or read_binding(save_dir, loaded_filename)[1] != binding_sha):
++            raise ValueError("VERIFIED_CAPTURE_FRESH_SCENE_MISMATCH")
++        self.state.update(status=HostState.BASELINE_CAPTURED, save_directory=str(save_dir), loaded_filename=loaded_filename,
++                          save_id=binding["save_id"], worldline_id=binding["worldline_id"], database_file=str(database),
++                          current_game_date=expected[0], current_cycle_id=None, active_plan=None, is_offline_mock=False,
++                          baseline_report_sha256=report_sha256)
++        self._save_state()
++        result = {"status": "VERIFIED_BASELINE_BOUND_AUTHORIZATION_PENDING", "source_report_sha256": report_sha256,
++                  "binding_sha256": binding_sha, "epoch": epoch, "native_writes": 0}
++        self._append_ledger({"action": "BIND_VERIFIED_LIVE_CAPTURE", **result})
++        return result
++
+     def initialize_season(
+         self,
+         save_directory: str,
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_full_factor_engineering.py b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_full_factor_engineering.py
+index b09ef399..39e6acbd 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_full_factor_engineering.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tests/test_full_factor_engineering.py
+@@ -755,3 +755,78 @@ def test_dose_response_counts_teams_and_preserves_exploratory_scope():
+     rows.append({"team_id": 1, "dose": 46, "metrics": {"FGA": 8}})
+     with pytest.raises(ValueError, match="MULTIPLE_WINDOW_DOSES"):
+         dose_response(rows, "FGA")
++
++
++def test_unknown_slot_dose_uses_physical_descriptor_without_semantic_range(study):
++    fields = ["TENDENCY_NATIVE_004", "TENDENCY_NATIVE_017", "TENDENCY_NATIVE_005",
++              "TENDENCY_NATIVE_018", "TENDENCY_NATIVE_006"]
++    assert study.factors["TENDENCY_NATIVE_018"].native["legal_boundary"] is None
++    reference = next(window for window in study.reference["windows"]
++                     if window["worldline_id"] == "WL-TENDENCY-01" and window["fields"] == fields)
++    values = {(factor, int(row["native_uid"])): 50 for factor in fields
++              for row in study.players if row["eligible_now"] == "True"}
++    plan = allocate_window(study, reference, fields, values, (), worldline="unknown-slot-fixture", seed=1)
++    assert all(row["baseline"] == 50 and row["target"] in (45, 50, 55) for row in plan["teams"].values())
++
++
++def test_bind_verified_capture_requires_exact_sources_and_fresh_native_clock(tmp_path, monkeypatch):
++    db = tmp_path / "world.sqlite"
++    epoch = {"pid": 7}
++    binding = {"save_id": "save", "worldline_id": "world"}
++    sources = []
++    with sqlite3.connect(db) as conn:
++        conn.executescript("""
++            CREATE TABLE capture_runs(run_id,source_grade,season_id);
++            CREATE TABLE capture_units(unit_id,payload_sha256,unit_status,observed_at,source_key,run_id);
++            CREATE TABLE game_mode_observations(unit_id,today_native_iso_date,today_minutes_since_midnight_raw,mode_raw,period_raw,league_raw);
++        """)
++        for family in ("schedule", "game-mode", "player-skills"):
++            unit = {"unit_id": family, "payload_sha256": SHA, "unit_status": "success", "observed_at": "now",
++                    "source_key": family, "source_grade": "LIVE_READ", "season_id": "2021-22"}
++            conn.execute("INSERT INTO capture_runs VALUES (?,?,?)", (family, "LIVE_READ", "2021-22"))
++            conn.execute("INSERT INTO capture_units VALUES (?,?,?,?,?,?)", (family, SHA, "success", "now", family, family))
++            sources.append({"family": family, "status": "ACQUIRED", "commit_status": "COMMITTED_SUCCESS_VERIFIED", "unit": unit})
++        conn.execute("INSERT INTO game_mode_observations VALUES (?,?,?,?,?,?)", ("game-mode", "2021-11-15", 1170, 1, 29, 0))
++    report = {"status": "COMPLETED_REQUESTED_SOURCES", "game_writes": False, "save_id": "save",
++              "binding_sha256": SHA, "native_save_filename": "MyLEAGUE0005", "process_epoch": epoch, "sources": sources}
++    raw = json.dumps(report).encode()
++    (tmp_path / "refresh-report.json").write_bytes(raw)
++    monkeypatch.setattr(season_cycle_host, "read_binding", lambda *_: (binding, SHA))
++    monkeypatch.setattr(season_cycle_host, "bound_database", lambda *_: db)
++    monkeypatch.setattr(season_cycle_host, "CalendarSimOrchestrator", lambda *_, **__: None)
++    progress = {"today_native_iso_date": "2021-11-15", "today_minutes_since_midnight_raw": 1170,
++                "mode_raw": 1, "period_raw": 29, "league_raw": 0}
++    monkeypatch.setattr(refresh, "_context", lambda _: {"epoch": epoch, "game_progress": progress})
++    host = SeasonCycleHost.__new__(SeasonCycleHost)
++    host.state = {"status": season_cycle_host.HostState.UNBOUND}
++    host._save_state = lambda: None
++    host._append_ledger = lambda _: None
++    pin = sha256(raw).hexdigest()
++    result = host.bind_verified_live_capture(tmp_path, "MyLEAGUE0005", tmp_path, pin, epoch)
++    assert result["status"] == "VERIFIED_BASELINE_BOUND_AUTHORIZATION_PENDING"
++    assert host.state["is_offline_mock"] is False and host.state["baseline_report_sha256"] == pin
++    host.state["status"] = season_cycle_host.HostState.UNBOUND
++    progress["today_minutes_since_midnight_raw"] = 1171
++    with pytest.raises(ValueError, match="VERIFIED_CAPTURE_FRESH_SCENE_MISMATCH"):
++        host.bind_verified_live_capture(tmp_path, "MyLEAGUE0005", tmp_path, pin, epoch)
++
++
++@pytest.mark.parametrize("field", ["SHOT_TENDENCY", "UNKNOWN_RAW_BYTE_016"])
++def test_research_role_payload_reaches_real_bridge_with_exact_unknown_grant(field):
++    from decision_batch_bridge import DecisionBatchBridge
++    from role_batches import ActionIntent, BatchContext, RoleActionBatch
++    from role_capabilities import RoleCapabilityProfile
++    slot = resolve_tendency_slot(field)
++    bridge = DecisionBatchBridge()
++    context = BatchContext("world", "MyLEAGUE0005", "generation", "2021-22", "REGULARSEASON", "snapshot", bridge.service.version)
++    granted = ((101, slot.native_key),) if not slot.named else ()
++    profile = RoleCapabilityProfile("GM", "actor", (1,), "world", "MyLEAGUE0005", "generation", "2021-22",
++                                    "REGULARSEASON", "snapshot", allowed_actions=frozenset({"PLAYER.EDIT.TENDENCY_BATCH"}),
++                                    native_tendency_write_grants=granted)
++    intent = ActionIntent.decided("intent", "actor", "PLAYER.EDIT.TENDENCY_BATCH",
++                                   {"team_id":1,"player_id":101,"expected_before":50,"values":{slot.native_key:51}})
++    batch = RoleActionBatch("batch", context, (intent,))
++    result = bridge.bridge_batch(batch, profiles=(profile,), phase_grants={("actor",intent.action_id)}, expected_pid=7)
++    assert not result.unsupported_intents and result.has_executable_batch
++    assert result.bulk_batch.intents[0].field_id == slot.native_key
++    assert result.bulk_batch.intents[0].expected_before == 50
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/calendar_cli.py b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/calendar_cli.py
+index 73f49911..fcd33cf8 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/calendar_cli.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/calendar_cli.py
+@@ -77,8 +77,12 @@ def validate_plan(plan, *, observe=False):
+     start, end, season_stop = (civil(plan[name]) for name in ("start", "stop_exclusive", "season_stop_exclusive"))
+     require(1 <= (end - start).days <= 2 and end < season_stop, "Short regular-season window required")
+     raw = plan["today_raw"]
++    entry_minutes = plan.get("entry_minutes", 0)
++    require(type(entry_minutes) is int and 0 <= entry_minutes < 1440
++            and (entry_minutes == 0 or (plan.get("entry_transition") is True and (end - start).days == 1)),
++            "Non-midnight entry requires an explicit one-day transition")
+     require(type(raw) is int and 0 <= raw <= 0xffffffff
+-            and raw & 0xffff0000 == word(start) and ((raw >> 5) & 2047) == 0, "Frozen midnight Today differs")
++            and raw & 0xffff0000 == word(start) and ((raw >> 5) & 2047) == entry_minutes, "Frozen Today differs")
+     for key in ("save_id", "worldline_id", "authorization_scope"):
+         require(isinstance(plan[key], str) and 0 < len(plan[key]) <= 128, f"Missing {key}")
+     require(re.fullmatch(r"MyLEAGUE\d{4}", plan["loaded_filename"]) is not None,
+@@ -135,7 +139,7 @@ def ensure_scene(plan, scene, *, after=False):
+     facts = scene["game_progress"]
+     require(facts["mode_raw"] == 1 and facts["period_raw"] == 29
+             and facts["today_native_iso_date"] == plan["stop_exclusive" if after else "start"]
+-            and facts["today_minutes_since_midnight_raw"] == 0,
++            and facts["today_minutes_since_midnight_raw"] == (0 if after else plan.get("entry_minutes", 0)),
+             "WorldData progress no longer matches the plan")
+ 
+ 
+diff --git a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/test_calendar_cli.py b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/test_calendar_cli.py
+index d9e316dc..b3ecd07b 100644
+--- a/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/test_calendar_cli.py
++++ b/08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/test_calendar_cli.py
+@@ -59,6 +59,24 @@ def receipt(frozen):
+ 
+ 
+ class CalendarTests(unittest.TestCase):
++    def test_explicit_non_midnight_entry_and_exact_readback(self):
++        frozen = plan() | {"entry_transition": True, "entry_minutes": 1170,
++                           "today_raw": cli.word(cli.civil(plan()["start"])) | (1170 << 5) | 2}
++        cli.validate_plan(frozen)
++        scene = {"epoch": frozen["epoch"], "game_progress": {
++            "mode_raw": 1, "period_raw": 29, "today_native_iso_date": frozen["start"],
++            "today_minutes_since_midnight_raw": 1170}}
++        cli.ensure_scene(frozen, scene)
++        scene["game_progress"]["today_minutes_since_midnight_raw"] = 1169
++        with self.assertRaises(ValueError):
++            cli.ensure_scene(frozen, scene)
++        scene["game_progress"].update(today_native_iso_date=frozen["stop_exclusive"], today_minutes_since_midnight_raw=0)
++        cli.ensure_scene(frozen, scene, after=True)
++        with self.assertRaises(ValueError):
++            cli.validate_plan(frozen | {"entry_transition": False})
++        with self.assertRaises(ValueError):
++            cli.validate_plan(frozen | {"entry_minutes": 1440})
++
+     def test_worlddata_imports_resolve_to_worlddata(self):
+         import live_world
+         import readers

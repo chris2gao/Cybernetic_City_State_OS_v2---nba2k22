@@ -1,0 +1,40 @@
+task_packet:
+  task_id: NBA2K22-LIVE-RESEARCH-CONTINUATION-20261111-001
+  role: execution
+  task_type: LIVE_RESEARCH_CONTINUATION
+  authority: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/24#issuecomment-6873776739
+  engineering_base: 5a1d270d82196fb78fb4f64e7a832813e1b9a6b5
+  remote_master: bb73a06e710158c538caf809a771eca291eee028
+  branch: codex/nba2k22-full-factor-engineering
+  affected_module_ids: [P02, P03, P04, P09, P10]
+  experiment_slot: MyLEAGUE0005
+  cold_backup_slot: MyLEAGUE0003
+  current_phase: GE-01_W01
+  objective: Fresh bound W01 collection, exact approved H/L Native treatment, calendar simulation, postgame WorldData and H/L/C analysis.
+  initial_operation: fresh_read_only_W01_binding
+  human_write_envelope: APPROVED_f539bdbef71c324dbecb427933a549c114629699302c5605a40b07dcc7e3d5cb_THEN_STOPPED_BY_HUMAN_CONDITION
+  current_human_slot_confirmation: '0005'
+  current_human_slot_confirmation_source: Current Human reply to the loaded-slot question in this Codex chat
+  formal_research_envelope: APPROVED_GE01_W01_20_SETTERS_5_CALENDAR_NO_SAVE_RESTORE
+  historical_first_batch_caps:
+    qualification_setters: 16
+    research_setters: 60
+    calendar_dispatches: 12
+    historical_reference_games: 153
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/
+    - 01_os/07_content/_runs/run-20261107-nba2k22-vae-longrun-40-001/
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/
+    - 08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PROJECT_MODULE_REGISTRY_V2.json
+  publication: ordinary_PR43_task_branch_delivery_with_current_Core_transport_gate
+  current_research_status: stopped_by_Human_after_single_failed_repair
+  human_stop_condition: 只修复一次，如果没解决就停止任务，并记录当前任务从开始阶段的执行
+  actual_GE01_result: zero_formal_setters_zero_calendar_dispatches_zero_completed_W01_loops
+  stop_evidence: GE01_EXECUTION_AUDIT.md
+  current_publication_authority: Current Human GE-01 execution request and formal contract
+  inherited_local_changes: Six tracked engineering repairs present on entry; preserve and inspect before use
+  approved_access: Necessary read-only game access with administrator privileges when required
+  protected_before_explicit_batch_approval: [native_setter, native_calendar_simulation]
+  prohibited: [computer_use, game_save_restore, cold_backup_write, master_merge]

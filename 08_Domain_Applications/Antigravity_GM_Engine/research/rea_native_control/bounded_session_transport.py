@@ -9,7 +9,7 @@ Implements S2 architecture:
 - Preserves all native contracts: Player 156-byte integrity verification, attribute
   flags, CAS expected_before matching, and individual chunk-level receipts.
 """
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 import hashlib
 import json
 import os
@@ -773,7 +773,7 @@ class BoundedSessionExecutor:
                         'team_id': chunk.team_id,
                         'action_id': chunk.action_id,
                         'plan_digest': batch.plan_digest,
-                        'intents': [asdict(it) for it in chunk_executable_intents]
+                        'intents': [it.plan_record() for it in chunk_executable_intents]
                     })
                 )
                 # PERSIST CLAIM BEFORE ANY EXECUTION! (Claim-before-Setter Hard Invariant)

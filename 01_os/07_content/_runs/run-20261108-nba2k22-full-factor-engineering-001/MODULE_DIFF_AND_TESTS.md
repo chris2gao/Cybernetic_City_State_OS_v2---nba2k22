@@ -1,0 +1,33 @@
+# 模块变更与验证
+
+| 批次 | 工程入口 | 证据边界 |
+| --- | --- | --- |
+| I0 | 固定输入提交 `839086ae86758ff29b5321edafd6c25d99915672`，`factor_inventory.py` | 逐输入 SHA-256、原始来源交叉映射、GameID 集合和未分配事件集合均检查。 |
+| I1 | `native_factor_slots.py`、SeasonCycleHost、Bulk、Outbox | 描述符分别记录物理偏移和 Native 参数索引。离线编译不同槽，核对类型、CAS、邻域和锁。真实 S4 资格继承原有单字段。 |
+| I2 | `factor_adapters.py` | Coach 位域和训练日记录按类型生成现有动作参数。世界全局读取精确注册单元。保留管理、成长和缺少真实命令的待开发项。 |
+| I3 | `factor_assignment.py`、`factor_lab_cli.py` | 从固定 0005 来源重编逐 GameID 和双方处理历史。独立恢复线的身份和正式事件仍需绑定。 |
+| I4 | `factor_runner.py`、TEST_ONLY Calendar | 复用授权、Outbox、收据和原生日历入口。保存执行前声明，遇不确定停止。跨窗口同时检查日期与世界线。多类别真实事件 writer 未启用。 |
+| I5 | `world_data_prototype/factor_readback.py`、`factor_analysis.py` | 游戏样本核对同源 Box、比赛状态和比分/FGA。结算对照检查独立世界、身份和来源。真实训练、成长、经营事件采集仍需逐类别绑定。 |
+| I6 | `factor_progress.py` | GM、Coach、Player 可查询来源、区间、可靠性和限制。离线样本与实机进度分账。 |
+
+离线回归 146 项测试及 15 项子测试通过，覆盖 Host、Bulk、Outbox、训练、会话和归档日历。多字段 fixture 覆盖三种倾向槽、6 个 setter、2 个短窗、6 场模拟安排以及其中 1 场缺失赛果。验证了拒绝重放、邻域异常停机和 0003 冷备拒绝。Coach 和训练样本独立记录类型化动作、设置读回、事件来源和分类对照。一次 Coach fixture 因选了未注册枚举而被拒绝，样本改用注册的中性、防守内线、防守外线枚举后重跑通过。
+
+留存 WorldData 历史回放固定到源报告 SHA-256 `cb3813edea21c8f1444ae4d6ba084ad08b230b5b3a83beee64235971e4f0f8e6`。49 场进入只读检查，43 场符合本次同源 Box 检查，6 场排除。工程阶段没有新增游戏进程访问、setter、日历调用或存档改动。历史单字段证据不计为本次新字段资格。
+
+Draft 后追加的接线核对覆盖两处。未知槽走同一份公开 PLAYER 邻域读取器，读取前后核对进程、日期、存档绑定并拒绝重复 Native UID。WorldData 从 Host 的绑定状态构造现有 CalendarSimOrchestrator，校验其数据库归属，再走采集与结算读回。接线后重跑 Host 和全因素测试共 78 项通过。追加五字段确切剂量校验后，全因素测试单独重跑 19 项通过。历史同源 SQL 回放单独核验真实数据。
+
+独立写资格入口复用 Host 的封存、Outbox 原生资源锁与回执。资格批次将完整邻域纳入原生计划摘要和实际 setter 前比较。独立读回另检查完整邻域、原对象身份及磁盘指纹。普通 S4 与 Calendar 各自保留既有授权路径，资格封套的日历预算固定为 0。Host、Bulk 和传输回归通过 108 项。补齐锁存储绑定与未知结果拦截后，全因素与回执校验通过 38 项。资格测试使用离线替身，未生成真实资格回执。
+
+普通窗口从独立接受的资格清单解析新槽，分配计划和单独的 Human 窗口授权固定同一清单 SHA。Host 对每个子批重新检查当前字段。预窗读回沿用 WorldData 的 48 个命名 SQL 列。51 个未知槽使用同源 SQL 球员归属加同进程、同日期的独立原始读数，分别保留两项来源。接线后 Host、全因素及回执校验通过 100 项，补齐新槽角色门和快照验证后复跑全因素与回执校验通过 40 项。当前没有新增真实资格清单。
+
+训练和成长接入 `capture_development_event`。58 项研究条目可从现有 WorldData 的 `game-mode`、`player-skills` 和 `player-state` 源读取事件前后快照，再交给独立世界线对照。每条记录固定两份采集报告的 SHA、Native UID、球队、采集单元、来源游戏时间以及单独审核的原生结算证据。日历或配置变动不能证明结算。SQLite 测试覆盖技能变化差、疲劳缺测、同进程跨季、复用来源拒绝和事件落在观测窗外。仍缺实际训练及成长结算回执。交易原始记录的项目参数和日期语义尚未独立接受，保留事件缺口。
+
+经营事件接入 `capture_management_event`。它将经独立解码的事件与 `news` 事务的原始类型、日期字和参数序列逐一比对，要求匹配在前快照不存在、后快照唯一，并从 `player-details` 验证球员 Native UID、名单归属与合同归属。合同观察保留原始字段尺度，交易使用归属变化指标。适配器覆盖已结算且可绑定名单球员的记录，未成交机会、选秀、无名单身份的签约和原始字段语义仍需补证。全因素、SQLite 结算和交易替身组合回归通过 49 项。
+
+I6 的 `ProgressLedger` 支持独立 SQLite 持久化，以 223 项固定库存指纹绑定数据库。进度事件只追加，批次写入原子提交。`factor_progress.py` 提供 `coverage`、`queue`、`history`、`query`、`ingest-qualifications` 和 `ingest-window`。导入普通窗口需要外部固定的结果 SHA，并逐项核对计划、setter、日历、前后采集及分析重放。同一计划的失败尝试留在队列，已核验重复导入幂等，缺少前置资格时不会推进阶段。LIVE 和 FIXTURE 分开计数。实机复证只有绑定独立审核和 Human 接纳才进入可供角色决策的状态。全因素与分类结算回归通过 38 项，CLI 查询确认新库的未知槽 016 为 `UNCONFIRMED`。
+
+Coach 接入 `capture_coach_exposure` 与 `screen_coach_window`。读取器使用既有 `READ_COACH_CURRENT` 的具名投影结构和 WorldData 对手计划，逐 GameID 核对独立接受的消费证据。没有消费证据时输出 `CONSUMER_UNVERIFIED`，保留计划与当前投影差异。分配器采用显式合法策略剂量，单位为球队。修复了类型适配器允许字段名与布局不一致的问题。全因素与分类 SQL 回归通过 41 项，历史同源 Box 回放仍为 49 场中 43 场通过。
+
+最终组合回归通过 206 项测试及 15 项子测试。范围包含 Host、Bulk、Outbox、bounded session、训练、回执校验、TEST_ONLY Calendar、分类结算、planning 和已批准交易的离线替身。未选入一次 1k/10k Outbox 性能用例，该用例会改写旧组的基准结果。原始剂量响应按每队均值拟合描述性斜率，只对明确注册为数值剂量的因素启用，并保留队伍/对手和基线混杂限制。I0–I6 的逐项完成门核对见 [交付回执](DEVELOPMENT_DELIVERY.md)。
+
+固定日历依赖为 PR #42 的 `ada6f30051eb9a2f17193af6985497eeb789ea1c`，用于测试入口。主工作线固定为 PR #41 的 `cdb2a3b2b9f9de79fe068b1644c6ba147d05d8e5`。本候选需要独立工程审核与后续实机资格裁决。
