@@ -6,9 +6,9 @@ branch: codex/nba2k22-full-factor-engineering
 ownership: execution
 purpose: Live research continuation; failed to deliver a simulation-analysis loop; Human-requested audit
 lifecycle: deferred
-closure_record: README.md
-outputs: [REAL_LIVE_RESEARCH_RUNBOOK.md, FAILURE_REVIEW_FOR_GPT.md, FAILURE_EVIDENCE_INDEX.json]
-verification:
+closure_record: GE01_EXECUTION_AUDIT.md
+outputs: [REAL_LIVE_RESEARCH_RUNBOOK.md, FAILURE_REVIEW_FOR_GPT.md, FAILURE_EVIDENCE_INDEX.json, GE01_EXECUTION_AUDIT.md, evidence/ge01-audit/MANIFEST.json]
+historical_verification_20261111:
   native_writes: 16
   calendar_dispatches: 0
   completed_simulated_games: 0
@@ -17,3 +17,18 @@ verification:
   regression_tests: 34_passed
   research_goal_achieved: false
   next_action: Human-requested failure audit; no new runtime batch started
+ge01_verification_20261114:
+  engineering_base: 5a1d270d82196fb78fb4f64e7a832813e1b9a6b5
+  baseline: Human_adopted_current_0005_as_new_T0_including_prior_16_offsets
+  human_envelope_sha256: f539bdbef71c324dbecb427933a549c114629699302c5605a40b07dcc7e3d5cb
+  native_setters: 0
+  new_qualification_writes: 0
+  calendar_attempts: 2
+  actual_calendar_dispatches: 0
+  completed_simulated_games: 0
+  complete_experiment_loops: 0
+  repair_attempts_after_limit: 1
+  stop_reason: Human_required_stop_after_single_unsuccessful_repair
+  final_native_error: Schedule_fixture_differs_before_dispatch
+  further_runtime_work: stopped_by_Human
+  research_goal_achieved: false

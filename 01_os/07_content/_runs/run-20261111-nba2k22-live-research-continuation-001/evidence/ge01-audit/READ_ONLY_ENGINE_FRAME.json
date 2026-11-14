@@ -1,0 +1,72 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\"evidence_id\":\"ev_fa45e7b3d610284bb6de7fa4921496f1db4987beb62cb588c2fc7d1b77457439\",\"subject\":null,\"provider\":{\"id\":\"frida\",\"name\":\"Frida\",\"version\":null},\"analysis_profile\":null,\"predicate_type\":\"rea.frida.instrumentation-observation\",\"operation\":\"instrument_with_frida\",\"parameters\":{\"session_id\":\"7b5626e5-d84e-481a-a40c-273639ae5873\",\"device_id\":\"local\",\"mode\":\"attach\",\"pid\":6964},\"raw_result\":null,\"normalized_result\":{\"session_id\":\"7b5626e5-d84e-481a-a40c-273639ae5873\",\"device_id\":\"local\",\"state\":\"running\",\"target\":\"pid 6964\",\"pid\":6964,\"mode\":\"attach\",\"scripts\":[{\"script_id\":\"dc14b857-0779-4c2a-bc8d-b664e4dcc473\",\"name\":\"rea-dc14b857-0779-4c2a-bc8d-b664e4dcc473\"}],\"messages\":[{\"script_id\":\"dc14b857-0779-4c2a-bc8d-b664e4dcc473\",\"type\":\"send\",\"payload\":{\"event\":\"GE01_READ_ONLY_IDLE_FRAME\",\"pid\":6964,\"thread\":8244,\"caller\":\"0x17bcb95\",\"frame\":\"0xbad3c0\",\"idle\":true,\"game_calls\":0,\"game_writes\":0}}],\"messages_truncated\":false,\"source_kind\":\"file\",\"source_path\":\"C:/Users/gk/Documents/ChatGPT/nba2k22/ge01-runtime/read_engine_frame.js\",\"source_sha256\":\"e552f4df6443dba04f72007813d2bfd5e84cef25f4df2e9bb3db78f7f1ad0c5a\",\"cleanup_error\":null},\"confidence\":\"observed\",\"authority\":\"external-service\",\"environment\":null,\"limitations\":[\"Artifact identity is unavailable for this observation.\",\"The target operating system and architecture were not reported by this observation.\"],\"relationship_coverage\":null,\"locations\":[],\"evidence_links\":[]}"
+    }
+  ],
+  "structuredContent": {
+    "evidence_id": "ev_fa45e7b3d610284bb6de7fa4921496f1db4987beb62cb588c2fc7d1b77457439",
+    "subject": null,
+    "provider": {
+      "id": "frida",
+      "name": "Frida",
+      "version": null
+    },
+    "analysis_profile": null,
+    "predicate_type": "rea.frida.instrumentation-observation",
+    "operation": "instrument_with_frida",
+    "parameters": {
+      "session_id": "7b5626e5-d84e-481a-a40c-273639ae5873",
+      "device_id": "local",
+      "mode": "attach",
+      "pid": 6964
+    },
+    "raw_result": null,
+    "normalized_result": {
+      "session_id": "7b5626e5-d84e-481a-a40c-273639ae5873",
+      "device_id": "local",
+      "state": "running",
+      "target": "pid 6964",
+      "pid": 6964,
+      "mode": "attach",
+      "scripts": [
+        {
+          "script_id": "dc14b857-0779-4c2a-bc8d-b664e4dcc473",
+          "name": "rea-dc14b857-0779-4c2a-bc8d-b664e4dcc473"
+        }
+      ],
+      "messages": [
+        {
+          "script_id": "dc14b857-0779-4c2a-bc8d-b664e4dcc473",
+          "type": "send",
+          "payload": {
+            "event": "GE01_READ_ONLY_IDLE_FRAME",
+            "pid": 6964,
+            "thread": 8244,
+            "caller": "0x17bcb95",
+            "frame": "0xbad3c0",
+            "idle": true,
+            "game_calls": 0,
+            "game_writes": 0
+          }
+        }
+      ],
+      "messages_truncated": false,
+      "source_kind": "file",
+      "source_path": "C:/Users/gk/Documents/ChatGPT/nba2k22/ge01-runtime/read_engine_frame.js",
+      "source_sha256": "e552f4df6443dba04f72007813d2bfd5e84cef25f4df2e9bb3db78f7f1ad0c5a",
+      "cleanup_error": null
+    },
+    "confidence": "observed",
+    "authority": "external-service",
+    "environment": null,
+    "limitations": [
+      "Artifact identity is unavailable for this observation.",
+      "The target operating system and architecture were not reported by this observation."
+    ],
+    "relationship_coverage": null,
+    "locations": [],
+    "evidence_links": []
+  }
+}
