@@ -248,6 +248,25 @@ activation, relay to another independent model, or evidence that cannot carry th
 claim. Size is not one of them — an empty protected-action set is a valid answer,
 and a task branch push is section 6 normal flow, not a gate.
 
+**Minimum Ready × Minimum Sufficient Completion.** Once necessary inputs,
+authorization and actual dependencies are satisfied, execute real business work.
+Optimize implementation without expanding the Human Goal, approved Done or
+required validation. Continue or add work only to advance unfinished Goal/Done,
+meet an existing contract/safety/verification/publication requirement, or address
+an observed failure, relevant state/source change or reproducible evidence gap.
+"More complete/professional/safe" alone creates no obligation; no per-action
+classification is required. Reuse valid checks while relevant inputs, candidate,
+environment and authority remain unchanged; uncertainty or change still triggers
+existing fail-closed rechecks. Once approved Done and applicable required
+verification, safety and publication conditions are met, give the minimum
+sufficient handoff and stop adding preparation, checks, tests, logs or reports.
+Preserve necessary raw evidence once through existing durable mechanisms and
+cite exact sources/hashes instead of duplicating evidence packs, except for
+explicit Human or existing format/log requirements. This never waives necessary
+positive/negative tests, managed verification, independent review, scope,
+protected-action confirmation or UNKNOWN-effect reconciliation.
+([Issue #31](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/31))
+
 **End on the declared enum.** Section 5 of
 `01_os/开发入口与单窗口任务规范_v1.md` lists the seven legal run lifecycle values.
 Write one of them into `run.yml`'s `lifecycle` field. A free-text status is
