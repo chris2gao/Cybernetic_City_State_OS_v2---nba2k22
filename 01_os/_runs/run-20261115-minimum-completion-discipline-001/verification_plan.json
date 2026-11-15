@@ -1,0 +1,12 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/_runs/run-20261115-minimum-completion-discipline-001/task_packet.yml",
+  "checks": [
+    {
+      "id": "diff-check",
+      "argv": ["git", "diff", "--check", "3f645d3048b32835dd5430da2780bd99939b3f8e", "HEAD"],
+      "timeout_seconds": 20,
+      "expected_exit_code": 0
+    }
+  ]
+}
