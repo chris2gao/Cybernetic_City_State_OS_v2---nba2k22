@@ -25,10 +25,11 @@ class ObservationScope:
     save_id:str
     schema_version:int
     unit_ids:tuple[str,...]
+    capture_sources:tuple[tuple[str,str,str,str],...]
 
     @property
     def fingerprint(self):
-        raw=json.dumps([self.save_id,self.schema_version,self.observed_through,self.unit_ids],separators=(',',':')).encode();return hashlib.sha256(raw).hexdigest()
+        raw=json.dumps([self.save_id,self.schema_version,self.observed_through,self.unit_ids,self.capture_sources],separators=(',',':')).encode();return hashlib.sha256(raw).hexdigest()
 
     def metadata(self):return {'time_basis':'CAPTURE_OBSERVED_AT_NOT_GAME_DATE','observed_through':self.observed_through,'save_id':self.save_id,'schema_version':self.schema_version,'committed_success_units':len(self.unit_ids),'scope_sha256':self.fingerprint}
 
@@ -36,13 +37,14 @@ def current_scope():return _CURRENT.get()
 
 @contextmanager
 def observed_as_of(database,observed_through):
-    """Freeze eligible committed unit IDs once, including nested query calls."""
+    """Freeze eligible committed IDs and source digests once, including nested calls."""
     database=Path(database).resolve();cutoff=utc_stamp(observed_through)
     with closing(open_database(database,True)) as conn:
         conn.execute('BEGIN');header=conn.execute('SELECT save_id,schema_version FROM saves WHERE singleton=1').fetchone()
         if header is None or header['schema_version']!=VERSION:raise ValueError('copy-upgrade facts to the current schema before historical queries')
-        units=tuple(sorted(row['unit_id'] for row in conn.execute("SELECT unit_id,observed_at FROM capture_units WHERE unit_status='success'") if utc_stamp(row['observed_at'])<=cutoff))
-        scope=ObservationScope(database,cutoff,header['save_id'],header['schema_version'],units)
+        sources=tuple(sorted((row['unit_id'],row['payload_sha256'],utc_stamp(row['observed_at']),row['source_key']) for row in conn.execute("SELECT unit_id,payload_sha256,observed_at,source_key FROM capture_units WHERE unit_status='success'") if utc_stamp(row['observed_at'])<=cutoff))
+        units=tuple(row[0] for row in sources)
+        scope=ObservationScope(database,cutoff,header['save_id'],header['schema_version'],units,sources)
     token=_CURRENT.set(scope)
     try:yield scope
     finally:_CURRENT.reset(token)
