@@ -83,6 +83,9 @@ exposed corrupted Chinese Python stdout and passed after selecting UTF-8. The
 initial task packet used an unsupported lifecycle field name and was corrected
 to the existing `terminal_lifecycle_state`. These development failures preceded
 the measured comparison and are not hidden in its zero-error count.
+The first managed-verification invocation rejected slash-ended directory rules.
+The packet now uses the runner's existing `/**` syntax for the same bounded
+directories; the candidate is re-committed and verified with that correction.
 
 Independent final review is pending. Before master integration or authoritative
 adoption, a fresh reviewer should verify the fixed source, reproduce the

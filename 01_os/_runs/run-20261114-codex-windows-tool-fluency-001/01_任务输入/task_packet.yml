@@ -19,10 +19,10 @@ task_packet:
     - 01_os/06_execution/tools/rea/adapter.py
   allowed_changed_paths:
     - AGENTS.md
-    - 01_os/04_skills_and_tools/
+    - 01_os/04_skills_and_tools/**
     - 01_os/05_registry/skills_and_tools_v1.yml
-    - 01_os/06_execution/tools/rea/
-    - 01_os/_runs/run-20261114-codex-windows-tool-fluency-001/
+    - 01_os/06_execution/tools/rea/**
+    - 01_os/_runs/run-20261114-codex-windows-tool-fluency-001/**
   implementation_scope:
     - Limit AGENTS edits to the Codex-specific subsection.
     - Extend existing static REA adapter diagnostics where reproduced evidence requires it.
