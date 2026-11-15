@@ -51,9 +51,10 @@ the regression uses one temporary parameterized caller per suite to test
 in-session state restoration. Existing fixtures remain read-only. No generic
 tool runner, Registry or per-operation OS tasks were created.
 
-Two repair events are explicit: the packet initially omitted the preflight's
+Three repair events are explicit: the packet initially omitted the preflight's
 expected-master field, and the first implementation restored an absent value as
-empty. Each was repaired from the actual failure and rechecked. Bounded tool
+empty, and the first managed plan named an absent test file instead of the actual
+Run-scoped regression. Each was repaired from the actual failure and rechecked. Bounded tool
 discovery was reused; no identical search was repeated.
 
 The runtime retained earlier conversation context. Human explicitly confirmed in

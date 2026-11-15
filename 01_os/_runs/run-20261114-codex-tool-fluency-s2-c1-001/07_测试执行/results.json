@@ -83,6 +83,22 @@
     "raw_native_stdout_stderr_bytes": "Available in boundary probe and managed logs; not estimated from truncated model output."
   },
   "context_limit": "Earlier conversation context is present. Human explicitly confirmed that this window may execute and the window choice belongs to Human. Timing is not an isolated fresh-window benchmark.",
+  "managed_plan_repair": {
+    "failed_candidate": "b5491fb809911275a2ac86f5240c104690f290a6",
+    "signature": "Python exit 2: verification plan named an absent canonical test file",
+    "repair": "Point the same required check to the actual run-scoped verify_unicode.py; preserve the failed attempt and reverify the final candidate.",
+    "attempts": 1
+  },
+  "minimum_work_unit_output": {
+    "role": "execution",
+    "work_performed_or_requested": "修复现有 Schema wrapper 返回中文错误路径乱码，保持真实校验语义、通道和退出码，并交付独立审核候选。",
+    "implementation_or_review_method": "对实际 CLI 与 PowerShell 子进程进行 CP936 和 UTF-8 原始字节比较；仅在 wrapper 调用期间设置并恢复 PYTHONIOENCODING，用真实 CLI 运行针对性回归。",
+    "supportability_rationale": "相同非法枚举输入修复后返回准确中文路径和退出码 1，五个真实 CLI 参考调用逐字节比较两通道；闭包、版本、文件与工具缺失门保持拒绝，六种成功或失败状态恢复检查通过。",
+    "feasibility_rationale": "当前宿主已有 PowerShell 7.6.4 与绑定版本 CLI，只新增十五行生产代码和五行说明，无需安装或全局配置；测试保留在 Run 内，精确候选由既有受管验证执行，独立审核仍待新窗口。",
+    "exact_result_or_candidate_ref": "Wrapper SHA256 dd34c5f203aa8bdf97d9b6e07140fbb51e31b1b7c4cb6f2e169d3edafd8aeeff; final commit is supplied by the delivery PR.",
+    "verification_evidence": "This results.json, verify_unicode.py, exact-candidate managed attempt and delivery PR.",
+    "residual_risk_or_unproved_limits": "当前窗口含历史上下文，Human 已允许在此执行；未独立证明 RDC 修复后显示及跨宿主性能，工程候选待隔离审核。"
+  },
   "scope": {
     "master_integration": false,
     "game_or_domain_operations": false,
