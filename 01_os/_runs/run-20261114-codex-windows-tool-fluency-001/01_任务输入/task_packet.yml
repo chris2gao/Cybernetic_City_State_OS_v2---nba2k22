@@ -1,0 +1,78 @@
+task_packet:
+  task_id: OS-CORE-CODEX-WINDOWS-TOOL-FLUENCY-20261114-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: 953b3e34d5432b93f05cdff7215da49fe7f87833
+  branch: codex/windows-tool-fluency-20261114
+  objective: Improve W1 shell invocation, W2 reuse, W3 diagnostics and W4 measured offline execution cost.
+  human_instruction_source: Current chat goal, Core OS × Codex Windows Tool Fluency, 2026-11-14.
+  human_scope:
+    - Core engineering and offline verification only.
+    - Use existing tools and keep wrappers only when measured benefit warrants them.
+    - GE-01 historical evidence may be read for offline comparison.
+    - Domain execution and cross-repository code changes require separate scope.
+  source_evidence:
+    - AGENTS.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/04_skills_and_tools/rea/README.md
+    - 01_os/06_execution/task_discipline/preflight/preflight_task_context.py
+    - 01_os/06_execution/tools/rea/adapter.py
+  allowed_changed_paths:
+    - AGENTS.md
+    - 01_os/04_skills_and_tools/
+    - 01_os/05_registry/skills_and_tools_v1.yml
+    - 01_os/06_execution/tools/rea/
+    - 01_os/_runs/run-20261114-codex-windows-tool-fluency-001/
+  implementation_scope:
+    - Limit AGENTS edits to the Codex-specific subsection.
+    - Extend existing static REA adapter diagnostics where reproduced evidence requires it.
+    - Use run-scoped replay scripts for measurements, without adding a generic command runner.
+    - Existing preflight, managed verification, PRMS and task lifecycle retain their owners.
+  verification_plan: 01_os/_runs/run-20261114-codex-windows-tool-fluency-001/01_任务输入/verification_plan.json
+  required_tests: [rea-regression, windows-replay]
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - game_or_save_access
+    - domain_code_changes
+    - global_PATH_ExecutionPolicy_or_permission_changes
+    - secret_or_credential_access
+    - runtime_or_scheduler_activation
+  required_completion_pointer: Task branch exact commit, managed evidence, results, gaps and review boundary.
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  big_task: true
+  development_loop:
+    mode: iterative_development
+    progress_evidence: 07_测试执行 and 08_结论/COMPLETION.md
+    convergence_condition: Equal offline outputs, actionable diagnostics and measured lower invocation cost.
+    series_id: OS-CORE-CODEX-WINDOWS-TOOL-FLUENCY
+    review_mode: deferred_to_series
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 953b3e34d5432b93f05cdff7215da49fe7f87833
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Codex
+    surface: codex_desktop
+    model: runtime_not_exposed
+    reasoning_effort: runtime_not_exposed
+    mode: standard
+    routing_basis: Human assigned Codex for bounded Windows Core engineering, with local execution evidence.
+    authority: routing_only
+    limitations:
+      - Registered model labels do not attest the current session model or reasoning setting.
+      - Model-routing static validation passed at startup; no cross-endpoint dispatch is performed.
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: fresh_isolated_session_before_authoritative_adoption
+    different_model_family: preferred
+    different_measurement_tool: true

@@ -1,0 +1,18 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/_runs/run-20261114-codex-windows-tool-fluency-001/01_任务输入/task_packet.yml",
+  "checks": [
+    {
+      "id": "rea-regression",
+      "argv": ["@python", "-B", "01_os/06_execution/tools/rea/test_adapter.py"],
+      "timeout_seconds": 90,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "windows-replay",
+      "argv": ["@python", "-B", "01_os/_runs/run-20261114-codex-windows-tool-fluency-001/07_测试执行/verify_windows.py"],
+      "timeout_seconds": 180,
+      "expected_exit_code": 0
+    }
+  ]
+}
