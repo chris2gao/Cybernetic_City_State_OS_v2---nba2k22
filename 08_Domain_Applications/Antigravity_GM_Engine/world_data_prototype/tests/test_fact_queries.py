@@ -1,5 +1,5 @@
 """Public typed filters, fixed-ledger paging and complete exclusive exports."""
-import hashlib,json,subprocess,sys,unittest
+import hashlib,json,shutil,subprocess,sys,unittest
 from pathlib import Path
 from tempfile import TemporaryDirectory
 from unittest.mock import patch
@@ -54,6 +54,24 @@ class FactQueryTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError,'cutoff'):query_at(self.db,T1,'query_facts','player_attribute_snapshots',cursor=cursor)
         self.put('backfilled',T0,[('p1',65)])
         with self.assertRaisesRegex(ValueError,'ledger'):query_facts(self.db,'player_attribute_snapshots',cursor=cursor)
+    def test_cursor_rejects_different_payload_with_same_scope_identifiers(self):
+        first=query_at(self.db,T0,'query_facts','player_attribute_snapshots',limit=1)['result']
+        original=self.db;other=Path(self.tmp.name)/'different.sqlite';create_database(other,'save')
+        try:
+            self.db=other;self.put('old',T0,[('p1',61),('p2',70),('p3',None),('p4',90)])
+        finally:self.db=original
+        with connect(original) as a,connect(other) as b:
+            ledger=lambda conn:[tuple(row) for row in conn.execute('SELECT unit_id,payload_sha256 FROM capture_units WHERE unit_id=\'old\'')]
+            self.assertEqual(ledger(a)[0][0],ledger(b)[0][0]);self.assertNotEqual(ledger(a)[0][1],ledger(b)[0][1])
+        with self.assertRaisesRegex(ValueError,'ledger'):query_at(other,T0,'query_facts','player_attribute_snapshots',cursor=first['next_cursor'])
+        same=query_at(original,T0,'query_facts','player_attribute_snapshots',cursor=first['next_cursor'])['result']
+        self.assertEqual(len(same['records']),3)
+    def test_cursor_accepts_identical_backup_at_different_path(self):
+        first=query_at(self.db,T0,'query_facts','player_attribute_snapshots',limit=1)['result']
+        backup=Path(self.tmp.name)/'restored.sqlite';shutil.copyfile(self.db,backup)
+        same=query_at(self.db,T0,'query_facts','player_attribute_snapshots',cursor=first['next_cursor'])['result']
+        restored=query_at(backup,T0,'query_facts','player_attribute_snapshots',cursor=first['next_cursor'])['result']
+        self.assertEqual(same,restored)
     def test_later_observation_does_not_change_pinned_cutoff(self):
         first=query_at(self.db,T0,'query_facts','player_attribute_snapshots',limit=1)['result'];self.put('later',T1,[('p4',95)])
         rest=query_facts(self.db,'player_attribute_snapshots',cursor=first['next_cursor']);self.assertEqual(len(rest['records']),3);self.assertEqual(rest['observation_scope'],first['observation_scope'])

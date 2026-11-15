@@ -1,0 +1,59 @@
+{
+  "schema_version": "citystate.verification_attempt.v1",
+  "candidate": "528448bd93fd80d082e8a3aa1cda5a324f792d70",
+  "plan_path": "01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/verification_plan.json",
+  "plan_sha256": "cef043f08a8296c0181b006130ce7a8eae7796c45ca4b4cb530b05e7f50f8c3f",
+  "runner_blob_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997",
+  "plan": {
+    "schema_version": "citystate.verification_plan.v1",
+    "task_packet": "01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/task_packet.yml",
+    "checks": [
+      {
+        "id": "source_binding_probe",
+        "argv": [
+          "python",
+          "01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/probe.py",
+          "--require-rejection"
+        ],
+        "timeout_seconds": 60,
+        "expected_exit_code": 0
+      },
+      {
+        "id": "paging_scope",
+        "argv": [
+          "python",
+          "-m",
+          "pytest",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_fact_queries.py",
+          "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_observation_scope.py",
+          "-q"
+        ],
+        "timeout_seconds": 120,
+        "expected_exit_code": 0
+      }
+    ]
+  },
+  "task_id": "NBA2K22-WORLDDATA-CURSOR-SOURCE-BINDING-20261115-001",
+  "task_packet_sha256": "35050048e75f68782917afed44fcbc64a8363bd0e1765a580d43b30fbf336e4d",
+  "source_base": "bb73a06e710158c538caf809a771eca291eee028",
+  "changed_paths": [
+    "01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/original.json",
+    "01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/probe.py",
+    "01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/run.yml",
+    "01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/task_packet.yml",
+    "01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/verification_plan.json",
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py",
+    "08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_fact_queries.py"
+  ],
+  "source_before": {
+    "head": "528448bd93fd80d082e8a3aa1cda5a324f792d70",
+    "tree": "f3437ea4cecbfa200218650a52383f49f68fc423",
+    "clean": true
+  },
+  "runtime": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "executable": "C:\\Users\\gk\\AppData\\Local\\Python\\pythoncore-3.14-64\\python.exe",
+    "runner_file_sha256": "5d3d8f085df681ea3b4bde0c9743342097ea7a1527a3481455d0e5b6170d3997"
+  }
+}

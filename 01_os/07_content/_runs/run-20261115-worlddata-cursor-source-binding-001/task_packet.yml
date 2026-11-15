@@ -1,0 +1,37 @@
+task_packet:
+  task_id: NBA2K22-WORLDDATA-CURSOR-SOURCE-BINDING-20261115-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T1_standard
+  exact_base_sha: bb73a06e710158c538caf809a771eca291eee028
+  branch: task/worlddata-cursor-source-binding-20261115
+  objective: Bind historical pagination to eligible capture payloads after synthetic reproduction.
+  source_evidence: [https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/44, 'Core 043ac4864bdc871b03929faafd8bc6bd47d4ee2f AGENT_WORKING_DISCIPLINE.md section 8; task-level guidance only']
+  allowed_changed_paths:
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/observation_scope.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/test_fact_queries.py
+    - 01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/**
+  verification_plan: 01_os/07_content/_runs/run-20261115-worlddata-cursor-source-binding-001/verification_plan.json
+  required_tests: [source_binding_probe, paging_scope]
+  prohibitions: [master_integration, force_push, game_access, native_access, real_history_access, schema_changes]
+  required_completion_pointer: completion.md
+  big_task: false
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: bb73a06e710158c538caf809a771eca291eee028
+  executor_profile:
+    provider: Codex
+    surface: Codex desktop execution
+    model: GPT-6
+    reasoning_effort: runtime_default
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: Human explicitly dispatched this fresh execution window for bounded Python work.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: planner_to_organize
+    different_model_family: false
+    different_measurement_tool: false
