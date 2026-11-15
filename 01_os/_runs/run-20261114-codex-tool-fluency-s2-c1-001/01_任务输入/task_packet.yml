@@ -1,0 +1,43 @@
+task_packet:
+  task_id: OS-CORE-CODEX-TOOL-FLUENCY-S2-C1-20261114-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T1_standard
+  exact_base_sha: 3f645d3048b32835dd5430da2780bd99939b3f8e
+  branch: codex/tool-fluency-s2-c1-unicode
+  objective: Preserve readable Chinese error paths through the existing Schema wrapper without changing validation or exit semantics.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/28
+    - 01_os/05_registry/skills_and_tools_v1.yml
+    - 01_os/06_execution/tools/check_jsonschema/README.md
+    - 01_os/06_execution/tools/check_jsonschema/invoke.ps1
+  allowed_changed_paths:
+    - 01_os/06_execution/tools/check_jsonschema/**
+    - 01_os/04_skills_and_tools/check-jsonschema/README.md
+    - 01_os/04_skills_and_tools/windows/README.md
+    - 01_os/05_registry/skills_and_tools_v1.yml
+    - 01_os/_runs/run-20261114-codex-tool-fluency-s2-c1-001/**
+  verification_plan: 01_os/_runs/run-20261114-codex-tool-fluency-s2-c1-001/01_任务输入/verification_plan.json
+  required_tests: [schema-unicode-regression]
+  prohibitions: [modify_master_without_required_Human_confirmation, force_push, rebase, squash, installation, global_environment_changes, domain_or_game_operations]
+  required_completion_pointer: Exact task commit, managed verification, real output, timing and independent-review handoff.
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  big_task: false
+  development_loop:
+    mode: iterative_development
+    progress_evidence: 08_结论/COMPLETION.md
+    convergence_condition: Real Unicode diagnostics are readable and existing validation gates and exits are retained.
+    series_id: OS-CORE-CODEX-TOOL-FLUENCY-S2
+    review_mode: deferred_to_series
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 3f645d3048b32835dd5430da2780bd99939b3f8e
+  affected_module_ids: []
+  source_refs_read:
+    - repository: chris2gao/Cybernetic_City_State_OS_v2---core
+      commit: 3f645d3048b32835dd5430da2780bd99939b3f8e
+      path: 01_os/06_execution/tools/check_jsonschema/invoke.ps1
+      publication_state: master
+  context_limit: The runtime retained earlier conversation context. This execution cannot establish a fresh-window cold-context benchmark.
