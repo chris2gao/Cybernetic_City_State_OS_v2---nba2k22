@@ -1,0 +1,39 @@
+task_id: OS-CORE-MINIMUM-SUFFICIENT-COMPLETION-DISCIPLINE-20261115-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T1_standard
+base: 3f645d3048b32835dd5430da2780bd99939b3f8e
+exact_base_sha: 3f645d3048b32835dd5430da2780bd99939b3f8e
+branch: codex/minimum-sufficient-completion-20261115
+ownership: core_owned
+purpose: Add one bounded default execution-discipline paragraph under Issue 31.
+objective: Minimum Ready and Minimum Sufficient Completion without expanding Human Goal, Done or required verification.
+lifecycle: candidate_ready_for_independent_review
+source_evidence:
+  - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/31
+  - AGENT_WORKING_DISCIPLINE.md
+human_scope_extension: Human explicitly allowed minimal task-packet and managed-plan files in this task's chat.
+allowed_changed_paths:
+  - AGENT_WORKING_DISCIPLINE.md
+  - 01_os/_runs/run-20261115-minimum-completion-discipline-001/run.yml
+  - 01_os/_runs/run-20261115-minimum-completion-discipline-001/verification_plan.json
+outputs: [AGENT_WORKING_DISCIPLINE.md, run.yml, verification_plan.json]
+verification_plan: 01_os/_runs/run-20261115-minimum-completion-discipline-001/verification_plan.json
+required_tests: [diff-check]
+verification: verification_plan.json
+scenario_review: Issue30 completed delivery stops expansion; real failure or unmet safety gate requires continuation; unchanged valid checks are reused. Details in delivery PR.
+prohibitions: [modify_master_without_required_Human_confirmation, merge_PR23_or_PR29, force_push, rebase, squash, game_or_save_operations]
+required_completion_pointer: Exact candidate, managed run and inspect receipt, concise PR and independent-review handoff.
+terminal_lifecycle_state: candidate_ready_for_independent_review
+big_task: false
+development_loop:
+  mode: one_step_sufficient
+  progress_evidence: Delivery PR with fixed source references and concise validation.
+  convergence_condition: One discipline paragraph, three scenario review and required checks succeed.
+  series_id: OS-CORE-MINIMUM-SUFFICIENT-COMPLETION
+  review_mode: deferred_to_series
+publisher:
+  principal_binding: local_authenticated
+  publication_transport: local_git
+  source_branch_publication: task_scope_default
+  master_integration_confirmation: not_requested
+  expected_remote_master_head: 3f645d3048b32835dd5430da2780bd99939b3f8e
