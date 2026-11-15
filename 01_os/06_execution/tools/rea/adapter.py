@@ -110,13 +110,27 @@ def read_result(code, raw):
         tool_code = str(error.get("code", "UNKNOWN")) if isinstance(error, dict) else "UNKNOWN"
         hint = tool_code.lower()
         status = "TOOL_FAILED"
-        if "permission" in hint or "access_denied" in hint:
+        if hint in {"validation_error", "invalid_argument", "invalid_arguments", "invalid_request"}:
+            status = "INVALID_REQUEST"
+        elif "permission" in hint or "access_denied" in hint:
             status = "PERMISSION_DENIED"
         elif any(token in hint for token in ("backend", "provider_unavailable", "not_configured", "executable_missing")):
             status = "BACKEND_UNAVAILABLE"
         elif "timeout" in hint or "deadline" in hint:
             status = "TIMEOUT"
-        raise AdapterError(status, "REA returned a failure", exit_code=code, tool_code=tool_code)
+        details = {}
+        if isinstance(error, dict):
+            if isinstance(error.get("message"), str):
+                details["tool_message"] = error["message"][:1024]
+            fields = error.get("fieldErrors", [])
+            if isinstance(fields, list):
+                details["field_errors"] = [
+                    {key: str(row[key])[:512] for key in ("path", "code", "message")
+                     if key in row}
+                    for row in fields[:16] if isinstance(row, dict)
+                ]
+        raise AdapterError(status, "REA returned a failure", exit_code=code,
+                           tool_code=tool_code, **details)
     if result.get("ok") is not True or "data" not in result:
         raise AdapterError("INVALID_TOOL_OUTPUT", "REA success envelope is missing", exit_code=code)
     return result["data"]
@@ -129,16 +143,21 @@ def command_options(command, values):
     for value in values:
         key, separator, arg = value.partition("=")
         if not separator or key in options or key not in STATIC_COMMANDS[command]:
-            raise AdapterError("INVALID_REQUEST", "Unknown, duplicate or malformed operation option")
+            raise AdapterError("INVALID_REQUEST", "Unknown, duplicate or malformed operation option",
+                               option=key, allowed_options=sorted(STATIC_COMMANDS[command]))
         if key == "architecture":
             if arg not in {"x86", "x86_64", "arm", "arm64"}:
-                raise AdapterError("INVALID_REQUEST", "Unsupported architecture")
+                raise AdapterError("INVALID_REQUEST", "Unsupported architecture",
+                                   option=key, received=arg, allowed_values=["x86", "x86_64", "arm", "arm64"])
         elif not re.fullmatch(r"[0-9]{1,10}", arg) or int(arg) > MAX_INPUT:
-            raise AdapterError("INVALID_REQUEST", "Numeric option outside supported range")
+            raise AdapterError("INVALID_REQUEST", "Numeric option outside adapter byte budget",
+                               option=key, received=arg, minimum=0, maximum=MAX_INPUT)
         elif key == "block-size" and (not 256 <= int(arg) <= 65536 or int(arg) & (int(arg) - 1)):
-            raise AdapterError("INVALID_REQUEST", "Block size must be a supported power of two")
+            raise AdapterError("INVALID_REQUEST", "Block size must be a power of two from 256 to 65536",
+                               option=key, received=arg, minimum=256, maximum=65536)
         elif key == "length" and int(arg) == 0:
-            raise AdapterError("INVALID_REQUEST", "Length must be positive")
+            raise AdapterError("INVALID_REQUEST", "Length must be positive",
+                               option=key, received=arg, minimum=1, maximum=MAX_INPUT)
         options[key] = arg
     return options
 
@@ -165,6 +184,7 @@ def execute(args):
               "authority_effect": "none", "evidence_scope": "local_tool_only", "automatic_replay": False}
     deadline = time.monotonic() + args.timeout
     try:
+        options = command_options(args.command, args.option) if args.operation == "invoke" else {}
         prefix = launcher(args.launcher)
         code, version_raw = run_child(prefix, ["--version"], directory, "version", deadline, args.max_output)
         version = version_raw.decode("utf-8", errors="replace").strip()
@@ -192,7 +212,6 @@ def execute(args):
                 result["tools"][name] = {"status": "AVAILABLE_UNVERIFIED", "schema_sha256": schema}
             result.update(status="AVAILABLE_UNVERIFIED", exit_code=0)
         else:
-            options = command_options(args.command, args.option)
             target = artifact(args.artifact)
             source = fingerprint(target, deadline)
             result.update(command=args.command, source=source, parameters=options)
@@ -215,6 +234,8 @@ def execute(args):
         result.update(status=exc.status, message=str(exc), **exc.details)
     except PermissionError:
         result.update(status="PERMISSION_DENIED", message="Host denied a file or process operation")
+    except FileNotFoundError:
+        result.update(status="SOURCE_OR_TOOL_MISSING", message="Selected artifact or launcher is absent")
     except (OSError, KeyError, TypeError) as exc:
         result.update(status="LOCAL_OR_PROTOCOL_FAILURE", error_type=type(exc).__name__)
     result["raw_files"] = [
@@ -232,8 +253,10 @@ def get_schema(prefix, command, directory, deadline, max_output, options=()):
     if code != 0 or "path" not in schema.get("args", {}).get("properties", {}):
         raise AdapterError("SCHEMA_UNAVAILABLE", "Installed REA does not expose the selected static tool schema", exit_code=code)
     available = schema.get("options", {}).get("properties", {})
-    if any(key.replace("-", "_") not in available for key in options):
-        raise AdapterError("SCHEMA_UNAVAILABLE", "Installed REA schema lacks a requested option")
+    schema_keys = {"block-size": "blockSize"}
+    if any(schema_keys.get(key, key) not in available for key in options):
+        raise AdapterError("SCHEMA_UNAVAILABLE", "Installed REA schema lacks a requested option",
+                           requested_options=list(options), available_options=sorted(available))
     return hashlib.sha256(raw).hexdigest()
 
 
@@ -251,7 +274,7 @@ def main():
     parser.add_argument("--max-output", type=int, default=MAX_OUTPUT)
     args = parser.parse_args()
     if not 1 <= args.timeout <= 120 or not 1024 <= args.max_output <= MAX_OUTPUT:
-        parser.error("Timeout or output budget outside supported bounds")
+        parser.error(f"--timeout must be 1..120 seconds; --max-output must be 1024..{MAX_OUTPUT} bytes")
     if args.operation == "invoke" and not all([args.command, args.artifact, args.expected_version]):
         parser.error("invoke requires command, artifact and expected version")
     if args.expected_sha256 and not re.fullmatch(r"[0-9a-f]{64}", args.expected_sha256):

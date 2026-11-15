@@ -75,6 +75,12 @@ any other — because every one of them loads this file.
 Vendor-specific mechanics, and nothing else, belong here:
 
 - Codex: use `apply_patch` for manual file edits.
+- Codex on Windows: measure the running shell once, then use the task's verified
+  PowerShell 7 path with an explicit working directory and profile loading
+  disabled. Read `01_os/04_skills_and_tools/windows/README.md` when Windows
+  quoting, native exit codes, historical source reuse or CLI diagnostics are
+  relevant. Reuse the recorded entry points within that environment, batch
+  independent reads, and keep dependent mutations sequential.
 
 ## Formal Cross-Model Handoffs
 

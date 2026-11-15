@@ -2,6 +2,15 @@ schema_version: citystate.registry.v1
 registry_id: skills_and_tools_v1
 mechanism_version: 1
 entries:
+  - path: 01_os/04_skills_and_tools/windows/README.md
+    purpose: Codex Windows shell selection, bounded reuse and actionable result conventions
+    loader: explicit task-directed Windows tool usage
+    loader_class: external_tool_convention
+    discovery: Codex-specific AGENTS.md subsection and tools index
+    evidence: 01_os/_runs/run-20261114-codex-windows-tool-fluency-001/07_测试执行/results.json
+    cache_dirs: []
+    failure_surfacing: current shell or tool invocation and replay verification
+    deletion_rule: protected
   - path: 01_os/04_skills_and_tools/rea/README.md
     purpose: REA local static tool usage and evidence boundaries
     loader: explicit task-directed tool selection

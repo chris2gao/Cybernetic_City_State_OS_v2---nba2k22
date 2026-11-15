@@ -13,3 +13,9 @@ python -B 01_os/06_execution/tools/rea/adapter.py invoke --command inspect-byte-
 `AVAILABLE_UNVERIFIED` 表示发现入口与 Schema。`VERIFIED_TOOL_CALL` 对应本次静态调用、退出码和输入摘要。现场效果、存档持久性和业务授权由领域证据及其执行层单独处理。当前适配器的命令允许列表只接受本地 PE、ELF 或 Mach-O 静态检查，进程控制与领域动作由各自入口承担。
 
 验证入口为 `01_os/06_execution/tools/rea/test_adapter.py`，实际环境证据见本次工程 Run。其他平台以现场探测为准。
+
+参数失败保留 `INVALID_REQUEST`、原始 `tool_code`、有界
+`tool_message` 和 `field_errors`，包括参数路径和允许范围。适配器自身的
+option 校验先于工具启动，错误给出输入及上下界。Entropy 的
+`--option block-size=256` 对应 REA schema 的 `blockSize`。
+Shell 调用与错误处理见 [Windows 工具调用](../windows/README.md)。

@@ -38,6 +38,10 @@ that check is part of the entry rather than a note beside it.
 
 ## Verified on-demand tools
 
+- [Windows / Codex calling guide](windows/README.md) records measured shell
+  selection, argument handling, existing reuse entry points and error evidence.
+  Its run-scoped replay compares the existing and batched call paths.
+
 - [REA](rea/README.md) offers an explicit local static adapter with runtime version, schema and provider discovery. Tool availability is established per host and operation.
 
 - [check-jsonschema](check-jsonschema/README.md)：`0.37.4`，通过 run-012

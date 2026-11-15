@@ -19,7 +19,7 @@ if args == ['--version']:
     print('6.8.0')
 elif '--schema' in args:
     emit({'args': {'properties': {'path': {'type': 'string'}}},
-          'options': {'properties': {'length': {'type': 'integer'}}}})
+          'options': {'properties': {'length': {'type': 'integer'}, 'blockSize': {'type': 'integer'}}}})
 elif args[0] == 'capabilities':
     emit({'ok': True, 'data': {'analysis_provider_candidates': [
         {'provider': {'id': 'sample'}, 'availability': {'status': 'unavailable', 'code': 'not_configured'}}]}})
@@ -33,6 +33,8 @@ elif mode in ('permission_denied', 'backend_missing'):
     emit({'ok': False, 'error': {'code': mode}})
     raise SystemExit(7)
 else:
+    if mode == 'warning':
+        print('fixture warning', file=sys.stderr)
     emit({'ok': True, 'data': {'evidence': 'synthetic'}})
 """
 
@@ -106,6 +108,42 @@ class AdapterTests(unittest.TestCase):
         self.invoke()
         with self.assertRaises(FileExistsError):
             self.invoke()
+
+    def test_schema_accepts_the_installed_camel_case_block_size_option(self):
+        report = self.invoke(option=["block-size=256", "length=64"])
+        self.assertEqual(report["status"], "VERIFIED_TOOL_CALL")
+        self.assertEqual(report["parameters"]["block-size"], "256")
+
+    def test_invalid_local_options_report_bounds_without_starting_a_tool(self):
+        with patch.object(adapter, "launcher") as launch:
+            report = adapter.execute(self.args(option=["block-size=128"]))
+        launch.assert_not_called()
+        self.assertEqual(report["status"], "INVALID_REQUEST")
+        self.assertEqual((report["minimum"], report["maximum"]), (256, 65536))
+        self.assertEqual(report["received"], "128")
+        self.assertEqual(report["raw_files"], [])
+
+    def test_structured_parameter_errors_preserve_field_diagnostics(self):
+        # GE-01 used a bare validation object. Other REA commands use error envelopes.
+        error = {"code": "VALIDATION_ERROR", "message": "Invalid arguments",
+                 "fieldErrors": [{"path": "durationMs", "code": "too_big",
+                                  "message": "Too big: expected number to be <=60000"}]}
+        for result in (error, {"ok": False, "error": error}):
+            with self.subTest(result=result), self.assertRaises(adapter.AdapterError) as raised:
+                adapter.read_result(1, json.dumps(result).encode())
+            self.assertEqual(raised.exception.status, "INVALID_REQUEST")
+            self.assertIn("60000", raised.exception.details["field_errors"][0]["message"])
+            self.assertEqual(raised.exception.details["exit_code"], 1)
+
+    def test_tool_stderr_with_zero_exit_does_not_become_failure(self):
+        report = self.invoke("warning")
+        self.assertEqual(report["status"], "VERIFIED_TOOL_CALL")
+        self.assertEqual((self.root / "evidence/result.stderr").read_text().strip(), "fixture warning")
+
+    def test_missing_artifact_has_a_specific_result(self):
+        report = self.invoke(artifact=self.root / "missing.exe")
+        self.assertEqual(report["status"], "SOURCE_OR_TOOL_MISSING")
+        self.assertFalse((self.root / "evidence/result.stdout").exists())
 
 
 if __name__ == "__main__":
