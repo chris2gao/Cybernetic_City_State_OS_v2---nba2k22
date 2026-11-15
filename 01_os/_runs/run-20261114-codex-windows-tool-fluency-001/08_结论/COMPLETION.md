@@ -86,6 +86,10 @@ the measured comparison and are not hidden in its zero-error count.
 The first managed-verification invocation rejected slash-ended directory rules.
 The packet now uses the runner's existing `/**` syntax for the same bounded
 directories; the candidate is re-committed and verified with that correction.
+The next managed attempt passed the REA suite and exposed a second encoding
+boundary in nested PowerShell's JSON stdout. The script now selects UTF-8 for
+its own output as well as Python, and the verification plan fixes Python UTF-8
+mode. Both failed managed attempts remain in the local evidence directory.
 
 Independent final review is pending. Before master integration or authoritative
 adoption, a fresh reviewer should verify the fixed source, reproduce the

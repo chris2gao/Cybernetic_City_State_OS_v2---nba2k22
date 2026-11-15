@@ -26,6 +26,11 @@ Use explicit UTF-8 for text and JSON files, and explicit bounds for output.
 For Python Unicode stdout captured by PowerShell, use `python -B -X utf8`.
 This host's default Python pipe encoding corrupted Chinese stdout even while
 native argv preserved the original string. The replay exercises the UTF-8 path.
+When PowerShell itself emits JSON to a captured pipe, set
+`[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)`
+and `$OutputEncoding = [Console]::OutputEncoding` inside that script. A nested
+PowerShell launched by managed verification inherited a different output
+encoding until the script made this explicit.
 
 PowerShell 7's Windows native argument mode handles executable arguments, while
 `.cmd` and `.bat` follow legacy Windows command-line parsing. Check

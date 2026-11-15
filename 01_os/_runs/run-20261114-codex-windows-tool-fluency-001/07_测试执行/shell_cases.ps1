@@ -5,6 +5,8 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false
+[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false)
+$OutputEncoding = [Console]::OutputEncoding
 if ($Case -eq 'probe') {
     $aliasPath = Join-Path $env:LOCALAPPDATA 'Microsoft/WindowsApps/pwsh.exe'
     $candidates = @(Get-Command pwsh.exe -All | ForEach-Object { $_.Source })
