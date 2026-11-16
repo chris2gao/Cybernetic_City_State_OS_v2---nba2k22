@@ -11,6 +11,31 @@
 | `大任务与长时执行契约_v1.yml` | canonical 机器契约：内部 continuation 集合、真停止集合、闭合前检查必填项 |
 | `01_os/06_execution/task_orchestration/big_task/closure_preflight.py` | 校验任务包是否可作为大任务派出；把一次拟停止分类为内部推进或真停止 |
 
+## 原子任务：以真实成果组织执行链
+
+任务的最小语义单元是 **G（Goal）/R（Ready）/A（Action）/D（Done）**。
+业务原子任务以可独立消费的真实成果为边界；组合任务以相同四元素封装子任务链或依赖图，父任务仍须满足自身的 Done。执行者优先寻找当前最早可执行但未完成的业务节点，内部 Loop 只围绕真实阻塞修复；智能优化不能改变 Human 目标或必要授权。
+
+- [原子任务与结果驱动执行模型 v1](原子任务与结果驱动执行模型_v1.md)：最小模型、递归组合、模型优化边界与现有 Workflow/Loop 的关系。
+- [原子任务场景验证 v1](原子任务场景验证_v1.md)：真实实验五步链、16项试写但0模拟的反例，以及权限与父任务验收的反例。
+
+**这不是新执行引擎、审批门、Schema或每次调用都要填报的文件。** 普通运行结果不用为每个节点创建Git提交或正式 MWU 输出；原有真实权限与发布门继续适用。
+
+## 最小可运行参考实现（不接管业务命令）
+
+- `01_os/06_execution/task_orchestration/atomic_tasks.py`：标准库 Python，提供 `Atom`、`Chain`、`Ready`、`Executor.inspect()/advance()/run_available()`。由领域代码注入真实 Ready、Action、Done 函数；Core 不替领域执行 Native、Git 或 Shell，也不授予权限。
+- `01_os/06_execution/task_orchestration/test_atomic_tasks.py`：七项可运行行为测试，覆盖完整五节点闭环、16项资格但零比赛反例、授权缺口、父任务独立 Done、递归组合、重复键与未知副作用禁止自动重放。
+
+从仓库根目录运行：
+
+```powershell
+python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_atomic_tasks.py -v
+```
+
+最短调用方式：创建 `Atom(key, goal, ready, action, done)`，按业务依赖放进 `Chain(key, goal, ready, children, done)`，调用 `Executor(chain).inspect()` 看当前节点，调用 `run_available()` 执行就绪节点。**真实点亮来自 `done()` 对实际业务状态的观察，不来自 Action 的返回值。**
+
+`Executor` 只保证**同一内存实例**中某动作结果未知后不自动重试。进程重启、Native未知副作用、跨会话接续必须由领域已有 Journal 与实际读回处理；此参考实现不是持久化反重放系统，不应直接替换REA或正式七阶段Runner。测试是隔离行为测试，并非NBA2K22实机验证。
+
 ## 为什么存在
 
 碎片化有可测的账单，不是风格偏好：

@@ -12,6 +12,85 @@ protocol. Where it meets `AGENTS.md`, the OS entry
 Every rule below was paid for. The incident is named so the rule is not mistaken
 for style preference.
 
+## 0. Human-scale execution: outcome before infrastructure
+
+*Paid for 2026-11-11, NBA2K22 Issue #40 / PR #43:* after a long
+engineering-preparation task, a further roughly one-hour live-research run
+successfully qualified 16 native fields but performed **zero** calendar
+simulations, post-game captures or mechanism analyses. Its actual script
+explicitly allowed zero calendar calls and ended by requiring a reload. Passing
+code tests and producing correct receipts did not fulfil the Human's research
+objective. [Primary incident and evidence](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/40#issuecomment-6796587612).
+
+This is an execution-priority correction, **not** another gate or a new
+authorization mechanism.
+
+- **Translate the Human's objective into the shortest real business loop.** If
+  five existing commands can acquire -> change -> simulate -> reacquire ->
+  analyze, that loop is the plan. Prefer calling and fixing those commands over
+  designing another orchestration, catalog, receipt scheme or approval layer.
+  Do not confuse implementation completeness with observable domain output.
+- **First obtain one genuine end-to-end result.** An isolated getter success,
+  fixture pass, plan, or qualification is not a substitute for the user-visible
+  result. Prove the complete small loop as early as existing authority and
+  safety allow; then batch and extend it. If a real blocker prevents it, name
+  that blocker, the earliest missing operation and the minimal repair rather
+  than expanding unrelated preparation.
+- **Use human-scale commands.** Choose an existing work branch, call the
+  relevant script, inspect its return value, correct a concrete failure, and
+  continue. For ordinary non-publication work the branch name and current
+  working tree identify the work. Do not request a fresh 40-character SHA,
+  generate a Git receipt, re-read an unchanged remote head, or construct a new
+  task packet *per script call or experiment round*. Obtain exact immutable
+  identities at the existing material-change/publication/protected-action
+  boundary when actually needed; never weaken a publication compare-and-swap.
+- **Keep automatic checks inside the tool.** A native setter should establish
+  the target object and legal value, make the change, and verify its actual
+  readback. A simulator should check its intended date and real results. Reuse
+  these protections without making them new Human-facing phases. Do not add
+  repetitive hashes or approval rituals absent a concrete failure they prevent.
+- **Measure business progress and elapsed cost.** Count successful complete
+  loops, actual modifications, simulated events, usable observations and
+  analyses (or the equivalent actual consumer outcome), not files, tests,
+  field names, hashes or preparation checkpoints. At the first observable
+  absence of business output, reconsider the *execution sequence* before
+  optimizing more internals. Do not claim a task complete when only its
+  prerequisites have succeeded.
+- **Do not solve the incident by removing real safety.** Respect explicit
+  Human scope, protected actions, destructive operations, wrong-target risk,
+  unknown native side effects and irreversible boundaries. Separate a hard
+  blocker from missing optional evidence; do not bypass an actual authorization
+  requirement just to reach a metric. A scope or authority blocker is a
+  concrete finding, not permission to create paperwork indefinitely.
+
+**Sender → receiver priority binding (reuse existing slots, no new form):**
+The sender states the **primary business outcome**, the **shortest real executable
+loop**, and the **actual boundary**. Put the outcome in the existing task
+packet `objective`; put first execution and supporting conditions in the existing
+message `content` / `requested_action` or the ordinary task handoff. The receiver
+must restate internally which action produces the first observable outcome and
+which checks are merely supporting. A supporting action earns priority only
+when it is essential to an authorized step or repairs an observed blocker.
+At each internal Loop iteration, ask **what actual business result changed?**
+If the answer is only "more tests, files, hashes, approvals or qualifiers", then
+reassess the next action against the primary objective before investing further.
+The receiver must not silently promote a prerequisite into the task's completion
+criterion, nor quietly reduce the scope of the primary objective.
+
+The operative test is: **would a competent Human operator, with the existing
+tools, perform these steps to obtain the requested result?** If not, justify the
+extra step by a demonstrated risk or remove it. This rule applies to planning,
+execution and review; a reviewer must judge the business outcome before
+mechanical document conformity.
+
+**Atomic-task interpretation:** model the next meaningful business unit as
+Goal / Ready / Action / Done. Mark a node complete only on its actual consumer
+result; parent completion has its own outcome test. A receiver may optimize the
+chain only without weakening the Human's goal, safety or required evidence.
+Use the existing task plan and internal Loop, not a new per-tool-call form.
+Canonical semantics and positive/negative examples:
+`01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`.
+
 ## 1. Land the output; the chat holds nothing
 
 Anything that matters — decisions, verdicts, evidence, contracts — goes into the

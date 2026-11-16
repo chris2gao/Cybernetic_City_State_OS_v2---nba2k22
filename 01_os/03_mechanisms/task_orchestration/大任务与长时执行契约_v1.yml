@@ -74,6 +74,11 @@ not_a_stop_condition:
 # remained pending, and Human later limited the accepted delivery scope.
 # This is a DEFAULT PROCESS PATTERN, not permission to loop indefinitely.
 evidence_driven_iteration:
+  task_node_semantics_ref: 01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md
+  node_priority: first_ready_unfinished_business_node_and_actual_done
+  node_completion: actual_consumer_outcome_not_preparation_receipt
+  parent_completion: own_business_done_not_merely_child_pass_count
+  chain_optimization: preserve_goal_done_authority_and_required_dependencies
   scope: development_phase_only
   meaning: >-
     This is an internal engineering/research development cadence, not a new
@@ -88,13 +93,16 @@ evidence_driven_iteration:
   cycle:
     - name: diagnose_and_select_increment
       require: >-
-        Compare actual candidate with task objective, tests, primary evidence
-        and known gaps; select one bounded, high-value next increment.
+        Identify the Human's primary observable outcome and shortest executable
+        real business loop using existing task objective and handoff content.
+        Compare actual business output to the objective before selecting the
+        next high-value increment; prerequisites are not the outcome.
     - name: implement_or_research
       require: >-
-        Make a real, in-scope change or source investigation. Do not substitute
-        explanatory prose for an executable deliverable when implementation
-        is the objective.
+        Prefer completing an authorized real end-to-end business step with
+        existing tools. Make a focused code change or investigation only when
+        needed to unlock that step; do not substitute explanatory prose,
+        fixture success, qualification, or new scaffolding for the domain output.
     - name: execute_focused_verification
       require: >-
         Run suitable unit/smoke/negative/boundary/source checks and preserve
@@ -118,7 +126,9 @@ evidence_driven_iteration:
     - objective_met_ready_for_series_review
     - genuine_stop_reached
   progress_measure:
-    use: executed_evidence_and_objective_coverage
+    use: actual_business_output_and_objective_coverage
+    supporting_evidence: checks_and_source_identity_only_when_relevant
+    absence_of_business_output: reconsider_execution_sequence_not_more_preparation
     must_not_use_as_completion_proof:
       - number_of_rounds
       - number_of_commits
@@ -140,10 +150,14 @@ evidence_driven_iteration:
     fixed_round_count_required: false
     infinite_iteration_or_background_autonomy: prohibited
   minimum_increment_checkpoint:
-    - exact_candidate_sha_and_branch
-    - subgoal_and_changed_paths
+    # Candidate identity and changed-path/test receipts apply to actual code
+    # candidates; do not manufacture a Git candidate for each ordinary business
+    # cycle with no source mutation.
+    - candidate_sha_and_branch_when_source_candidate_exists
+    - real_business_step_and_observed_output
+    - changed_paths_when_source_changes
     - source_or_actual_input_evidence
-    - tests_and_counterexamples_with_exit_codes
+    - tests_and_counterexamples_when_relevant
     - before_after_result_and_regression_status
     - remaining_gaps_and_candidate_evidence_grade
     - next_increment_or_stop_reason

@@ -5,8 +5,9 @@ Routing adapter only. This file grants no authority and is not a source of truth
 After Claude Code loads this adapter, enter the repository-wide always-on
 bootstrap in this order:
 
-1. The current remote `master` 40-character SHA, read fresh. Never carry a SHA
-   forward from chat, a report or a document.
+1. Identify the active repository, working branch and Human objective. Read a
+   fresh remote master/base/head SHA when the actual material-write, immutable
+   evidence or publication boundary requires it, not before every routine task.
 2. `AGENT_WORKING_DISCIPLINE.md` — how to work here. Short, shared by every model
    in this project, and each rule names the incident that produced it.
 3. `AGENTS.md` — backend working rules, engineering design principles, Git and

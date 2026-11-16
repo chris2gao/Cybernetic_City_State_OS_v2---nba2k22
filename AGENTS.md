@@ -12,8 +12,11 @@ subsection rather than in the general rules.
 Startup uses the repository-wide always-on bootstrap below. Nothing beyond the
 task-triggered steps loads by default.
 
-1. **The current remote `master` 40-character SHA, read fresh.** Never carry a SHA
-   forward from chat, a report, or a document.
+1. **Identify the current repository, Human objective and working branch.**
+   Do not make a remote 40-character SHA read an unconditional startup tax.
+   Read the precise current master/base/head when material repository mutation,
+   immutable source evidence or a protected/publication action actually needs it;
+   do not reuse an old SHA at that boundary.
 2. `AGENT_WORKING_DISCIPLINE.md`. Short, applies to every model in this project
    regardless of vendor, and is where the recurring failure modes are written down
    with the incident that produced each one.
@@ -61,6 +64,10 @@ its content or substituting a nearby file.
 These apply to every backend executor in this repository — Codex, Antigravity, or
 any other — because every one of them loads this file.
 
+- **Deliver the Human's shortest real business loop first.** Apply
+  `AGENT_WORKING_DISCIPLINE.md` section 0 before adding preparation,
+  verification wrappers or new architecture. Genuine safety and authority
+  boundaries still apply.
 - Use the existing repository structure and naming conventions.
 - Prefer narrow, factual edits over broad rewrites.
 - Use PowerShell commands in this Windows workspace.
@@ -83,6 +90,15 @@ Vendor-specific mechanics, and nothing else, belong here:
   independent reads, and keep dependent mutations sequential.
 
 ## Formal Cross-Model Handoffs
+
+**Goal-first handoff and reception.** Preserve the existing task packet
+`objective` and message `content` / `requested_action` slots. The sender must
+make the observable business outcome and first real executable loop prominent,
+with preparation, checks, and documents explicitly subordinate. The receiver
+must recognize that hierarchy on entry and keep it through the internal Loop;
+it must not turn the handoff's preparation steps into a substitute objective.
+No additional mandatory communication fields, proof package, acknowledgment or
+Human approval is created by this rule. See `AGENT_WORKING_DISCIPLINE.md` §0.
 
 When the current task already supplies a valid communication context or exact
 communication pointer, a formal cross-model handoff uses the canonical safe-subset
@@ -134,6 +150,14 @@ always-on file.
 
 ## Default Task Orchestration
 
+**Atomic task first:** interpret the Human's execution chain as meaningful
+Goal / Ready / Action / Done nodes. When a node is ready and authorized, run
+its real action rather than improving unrelated scaffolding; only observed
+business output completes it. A composite task is complete only on its own
+business Done, not merely because substeps passed. See
+`01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`.
+This adds no per-node permission, Git publication, or handoff ceremony.
+
 Plan and execute coherent work as **one long-horizon task**, not a chain of small
 ones. Deterministic in-scope construction, validation, repair of a failure this
 task caused, evidence updates, private-runtime cleanup, task-branch commit and
@@ -178,9 +202,10 @@ current task scope.
 2. Choose the simplest implementation that fully satisfies the current
    requirements. Do not add speculative abstractions, extension points, or
    configuration layers.
-3. In a layered system, establish the smallest working end-to-end path first, then
-   add layers incrementally. Never dismantle a working slice merely to accommodate
-   incomplete complexity.
+3. In a layered system, run the smallest *real business* end-to-end path first,
+   preferably using existing commands, then add layers only for observed gaps.
+   A fixture, qualification or documentation cycle is not an end-to-end domain
+   result. Never dismantle a working slice to accommodate incomplete complexity.
 4. Keep components modular, with clear boundaries and separation of concerns.
 5. Prefer mature, actively maintained libraries. Do not reimplement an available
    capability without a concrete, task-relevant reason.
@@ -204,6 +229,10 @@ current task scope.
 
 ## Git Workflow
 
+- Ordinary work is organized by the actual branch name and working tree; do not
+  repeatedly resolve a SHA or run publication checks for every command. Exact
+  commit identity is required when the existing material-write, publication or
+  protected-action gate actually needs it, not as a proxy for task progress.
 - Active work branch is task-specific; do not infer it from historical documentation.
 - Remotes differ per repository in the core/domain fork family. Read them with
   `git remote -v` instead of trusting a name written here; a hardcoded remote in a
