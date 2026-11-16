@@ -21,6 +21,7 @@ import argparse
 import json
 import os
 import time
+from datetime import datetime
 
 SCHEMA_VERSION = "execution_fact_monitor.v1"
 
@@ -92,7 +93,8 @@ def parse_line(obj, source):
                 "tool": payload.get("name"),
                 "call_id": payload.get("call_id") or payload.get("id"),
                 "status": payload.get("status"),
-                "params": payload.get("input"),
+                "params": payload.get("arguments") if pt == "function_call" else payload.get("input"),
+                "namespace": payload.get("namespace"),
                 "source": source,
             }
         if pt in TOOL_RESULT_TYPES:
@@ -105,6 +107,8 @@ def parse_line(obj, source):
                 "tool": payload.get("name"),
                 "call_id": payload.get("call_id") or payload.get("id"),
                 "result": normalize_text(payload.get("output")),
+                "status": payload.get("status"),
+                "error": payload.get("error"),
                 "source": source,
             }
         return None
@@ -130,8 +134,10 @@ def parse_line(obj, source):
             "server": item.get("server"),
             "params": item.get("arguments") if itype == "McpToolCall" else None,
             "files": _strip_file_content(item.get("changes")) if itype == "FileChange" else None,
-            "result": normalize_text(item.get("aggregated_output") or item.get("output")),
-            "duration_ms": item.get("duration_ms"),
+            "result": normalize_text(next((item[key] for key in ("aggregated_output", "output", "result", "stdout") if key in item and item[key] is not None), None)),
+            "stderr": item.get("stderr"),
+            "duration_ms": _duration_ms(item),
+            "native_item_id": item.get("id"),
             "source": source,
         }
         # 错误只在可观测时记录：status=failed/error/... 或 exit_code 非 0
@@ -142,10 +148,38 @@ def parse_line(obj, source):
             err = "status=%s" % st
         if ec not in (None, 0):
             err = ("%s " % err if err else "") + "exit_code=%s" % ec
+        result = item.get("result")
+        if isinstance(result, dict):
+            ok = result.get("Ok", result)
+            if "Err" in result:
+                err = normalize_text(result["Err"])
+            elif isinstance(ok, dict) and ok.get("isError") is True:
+                err = "MCP result.isError=true"
         rec["error"] = err
         return rec
 
     return None
+
+
+def _duration_ms(item):
+    if item.get("duration_ms") is not None:
+        return item["duration_ms"]
+    duration = item.get("duration")
+    if isinstance(duration, dict) and isinstance(duration.get("secs"), (int, float)) and isinstance(duration.get("nanos"), (int, float)):
+        return duration["secs"] * 1000 + duration["nanos"] / 1_000_000
+    return None
+
+
+def _gap(source):
+    return {"schema": SCHEMA_VERSION, "kind": "gap", "source": source,
+            "time": None, "error": "INVALID_JSON_UNOBSERVED"}
+
+
+def _guard_source(source, targets):
+    for target in targets:
+        same = os.path.normcase(os.path.realpath(source)) == os.path.normcase(os.path.realpath(target))
+        if same or (os.path.exists(target) and os.path.samefile(source, target)):
+            raise ValueError("output must not overwrite or append to source: %s" % target)
 
 
 def iter_records(path):
@@ -158,6 +192,7 @@ def iter_records(path):
             try:
                 obj = json.loads(line)
             except json.JSONDecodeError:
+                yield _gap({"file": path, "line": line_no})
                 continue
             rec = parse_line(obj, {"file": path, "line": line_no})
             if rec is not None:
@@ -174,10 +209,11 @@ def write_record(out_path, rec):
 # --------------------------------------------------------------------------- #
 
 def cmd_replay(args):
+    _guard_source(args.session, [os.path.join(args.out, name) for name in ("events.jsonl", "report.md")])
     os.makedirs(args.out, exist_ok=True)
     events_path = os.path.join(args.out, "events.jsonl")
-    if os.path.exists(events_path):
-        os.remove(events_path)
+    with open(events_path, "w", encoding="utf-8"):
+        pass
     n = 0
     for rec in iter_records(args.session):
         write_record(events_path, rec)
@@ -187,13 +223,19 @@ def cmd_replay(args):
 
 
 def cmd_watch(args):
+    if args.interval <= 0:
+        raise ValueError("interval must be positive")
+    _guard_source(args.session, [os.path.join(args.out, name) for name in ("events.jsonl", "report.md")])
     os.makedirs(args.out, exist_ok=True)
     events_path = os.path.join(args.out, "events.jsonl")
+    with open(events_path, "a", encoding="utf-8"):
+        pass
     offset = os.path.getsize(args.session)
     interval = args.interval
-    print("watching %s" % args.session)
-    print("  from byte %d, interval %.1fs, Ctrl+C to stop" % (offset, interval))
-    start = time.time()
+    print("watching %s (pid=%d)" % (args.session, os.getpid()), flush=True)
+    print("  from byte %d, interval %.1fs, Ctrl+C to stop" % (offset, interval), flush=True)
+    start = time.monotonic()
+    cpu_start = time.process_time()
     n = 0
     pending = b""
     base_offset = offset
@@ -223,6 +265,7 @@ def cmd_watch(args):
                     try:
                         obj = json.loads(line)
                     except json.JSONDecodeError:
+                        write_record(events_path, _gap({"file": args.session, "offset": line_start}))
                         continue
                     rec = parse_line(obj, {"file": args.session, "offset": line_start})
                     if rec is not None:
@@ -232,8 +275,8 @@ def cmd_watch(args):
             time.sleep(interval)
     except KeyboardInterrupt:
         pass
-    elapsed = time.time() - start
-    print("\nstopped: %d execution records in %.1fs -> %s" % (n, elapsed, events_path))
+    elapsed = time.monotonic() - start
+    print("\nstopped: %d execution records in %.3fs, monitor_cpu_seconds=%.6f, incomplete_tail_bytes=%d -> %s" % (n, elapsed, time.process_time() - cpu_start, len(pending), events_path))
     return events_path
 
 
@@ -247,9 +290,12 @@ def _truncate(s, n=240):
 
 
 def _sort_key(rec):
-    o = rec.get("ordinal")
-    t = rec.get("time") or ""
-    return (o if o is not None else float("inf"), t)
+    try:
+        stamp = datetime.fromisoformat(rec.get("time", "").replace("Z", "+00:00"))
+        timestamp = stamp.timestamp() if stamp.utcoffset() is not None else float("inf")
+    except (ValueError, TypeError, AttributeError):
+        timestamp = float("inf")
+    return timestamp
 
 
 def cmd_report(args):
@@ -266,8 +312,9 @@ def cmd_report(args):
     recs.sort(key=_sort_key)
 
     out_dir = args.out or os.path.dirname(os.path.abspath(args.events))
-    os.makedirs(out_dir, exist_ok=True)
     report_path = os.path.join(out_dir, "report.md")
+    _guard_source(args.events, [report_path])
+    os.makedirs(out_dir, exist_ok=True)
 
     results_by_call = {}
     calls = []
@@ -277,7 +324,7 @@ def cmd_report(args):
         elif rec.get("kind") == "tool_call":
             calls.append(rec)
 
-    matched_call_ids = set(results_by_call.keys())
+    matched_call_ids = {c.get("call_id") for c in calls} & set(results_by_call)
 
     def count(pred):
         return sum(1 for r in recs if pred(r))
@@ -317,12 +364,15 @@ def cmd_report(args):
     L.append("| 失败/错误 | %d |" % n_err)
     L.append("| 无结果匹配的调用 | %d |" % n_no_result)
     L.append("| 时间缺失记录 | %d |" % n_no_time)
+    L.append("| 无调用匹配的结果 | %d |" % sum(r.get("kind") == "tool_result" and r.get("call_id") not in matched_call_ids for r in recs))
+    L.append("| JSON 无法解析的来源缺口 | %d |" % count(lambda r: r.get("kind") == "gap"))
     if times:
         L.append("| 时间范围 | %s → %s |" % (min(times), max(times)))
     L.append("")
     L.append("## 执行事实时间线")
     L.append("")
-    L.append("按来源顺序排列。`UNOBSERVED` 表示源日志未提供可证明的信息。")
+    L.append("按已知事件时间排列；无有效时间的记录保留来源顺序并列于末尾。`UNOBSERVED` 表示源日志未提供信息。")
+    L.append("工具调用记录与实际执行项是不同层级，不能相加当作独立操作数。时间范围不是任务业务耗时；缺失区间不可归因。")
     L.append("")
 
     for rec in recs:
@@ -336,16 +386,21 @@ def cmd_report(args):
         if rec.get("kind") == "tool_call":
             if rec.get("params") is not None:
                 L.append("  - 参数: `%s`" % _truncate(rec["params"]))
+            else:
+                L.append("  - 参数: UNOBSERVED")
             if rec.get("status"):
                 L.append("  - 状态: `%s`" % rec["status"])
             res = results_by_call.get(rec.get("call_id"))
             if res is not None:
-                L.append("  - 结果: %s" % (_truncate(res.get("result")) or "（空）"))
+                L.append("  - 结果: %s" % ("UNOBSERVED" if res.get("result") is None else _truncate(res["result"]) or "（空）"))
+                L.append("  - 结果时间: %s" % (res.get("time") or "UNOBSERVED"))
+                L.append("  - 结果来源: `%s`" % json.dumps(res.get("source"), ensure_ascii=False))
             else:
                 L.append("  - 结果: **UNOBSERVED**（源日志未提供匹配结果）")
         elif rec.get("kind") == "execution":
             if rec.get("command"):
-                L.append("  - 命令: `%s`" % _truncate(" ".join(rec["command"]), 200))
+                command = rec["command"]
+                L.append("  - 命令: `%s`" % _truncate(" ".join(command) if isinstance(command, list) else command, 200))
             if rec.get("server"):
                 L.append("  - MCP server: `%s`" % rec["server"])
             if rec.get("params") is not None:
@@ -365,7 +420,12 @@ def cmd_report(args):
             if rec.get("result"):
                 L.append("  - 输出: %s" % _truncate(rec["result"]))
         elif rec.get("kind") == "tool_result":
-            L.append("  - 结果: %s" % (_truncate(rec.get("result")) or "（空）"))
+            L.append("  - 结果: %s" % ("UNOBSERVED" if rec.get("result") is None else _truncate(rec["result"]) or "（空）"))
+        elif rec.get("kind") == "gap":
+            L.append("  - 来源损坏/不完整：UNOBSERVED；%s" % rec.get("error"))
+        if rec.get("kind") == "execution":
+            L.append("  - 未提供字段: %s" % (", ".join(key for key in ("status", "duration_ms", "result") if rec.get(key) is None) or "无"))
+        L.append("  - 来源: `%s`" % json.dumps(rec.get("source"), ensure_ascii=False))
         L.append("")
 
     L.append("## 说明")

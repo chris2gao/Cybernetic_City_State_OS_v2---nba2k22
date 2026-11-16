@@ -1,0 +1,44 @@
+task_packet:
+  task_id: OS-CORE-CODEX-EXECUTION-FACT-MONITOR-20261115-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T1_standard
+  exact_base_sha: 043ac4864bdc871b03929faafd8bc6bd47d4ee2f
+  branch: task/execution-fact-monitor-20261115
+  objective: Complete Codex-only native event replay, explicit foreground ON/OFF, and factual events.jsonl/report.md.
+  source_evidence:
+    - Human goal-objective.md supplied 2026-11-16; approved G1 -> G2 -> G3 and ordinary branch delivery
+    - f739d4c9b966500c60d7ef84cab2635c368f802b existing Codex-only implementation
+    - NBA44 execution rollout 01a1df5a-4c7c-75b3-9174-cd55b3087c96; read-only local verification
+  allowed_changed_paths:
+    - 01_os/06_execution/task_orchestration/execution_fact_monitor/**
+    - 01_os/05_registry/task_orchestration_v1.yml
+    - 01_os/_runs/run-20261116-codex-execution-fact-monitor-001/**
+  verification_plan: 01_os/_runs/run-20261116-codex-execution-fact-monitor-001/verification_plan.json
+  required_tests: [focused_contracts, real_replay]
+  prohibitions: [master_integration, force_push, rebase, squash, modify_native_logs, capture_reasoning, filesystem_monitoring, deepseek_collector, claude_collector, background_service, behavior_scoring, workflow_redesign]
+  required_completion_pointer: 01_os/_runs/run-20261116-codex-execution-fact-monitor-001/completion.md
+  big_task: false
+  development_loop:
+    mode: iterative_development
+    progress_evidence: One Run, native session log, and directly relevant test results
+    convergence_condition: G1/G2/G3 demonstrated, managed verification passed, ordinary branch published
+    review_mode: deferred_to_series
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 043ac4864bdc871b03929faafd8bc6bd47d4ee2f
+    expected_remote_head: f739d4c9b966500c60d7ef84cab2635c368f802b
+  executor_profile:
+    provider: Codex
+    model: GPT-6
+    reasoning_effort: runtime_unexposed
+    mode: standard
+    routing_basis: Human explicitly selected Codex execution; family from runtime instructions, precise picker unexposed
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: Human_selected_separate_window_before_acceptance
+    different_model_family: false
+    different_measurement_tool: false

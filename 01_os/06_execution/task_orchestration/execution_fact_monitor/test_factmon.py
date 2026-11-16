@@ -14,6 +14,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import factmon
+from types import SimpleNamespace
 
 
 def test_parse_custom_tool_call():
@@ -121,6 +122,92 @@ def test_watch_stops_on_keyboard_interrupt():
         finally:
             factmon.time.sleep = real_sleep
         assert isinstance(events, str) and events.endswith("events.jsonl")
+
+
+def test_native_duration_mcp_result_and_function_arguments():
+    source = {"file": "native.jsonl", "line": 7}
+    item = {"type": "McpToolCall", "server": "test", "tool": "read",
+            "arguments": {"path": "x"}, "status": "completed",
+            "duration": {"secs": 2, "nanos": 500000000},
+            "result": {"Ok": {"isError": True, "content": [{"type": "text", "text": "denied"}]}}}
+    rec = factmon.parse_line({"type": "event_msg", "payload": {"type": "item_completed", "item": item}}, source)
+    assert rec["duration_ms"] == 2500 and 'denied' in rec["result"]
+    assert rec["error"] == "MCP result.isError=true"
+    call = factmon.parse_line({"type": "response_item", "payload": {"type": "function_call", "arguments": '{"cmd":"echo test"}'}}, source)
+    assert call["params"] == '{"cmd":"echo test"}'
+
+
+def test_report_preserves_orphan_result_source_and_timestamp_order():
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        records = [
+            {"kind": "tool_result", "call_id": "orphan", "result": "ORPHAN_RESULT", "time": "2026-01-01T00:00:02Z", "source": {"line": 4}},
+            {"kind": "execution", "subtype": "command", "command": "echo one", "time": "2026-01-01T01:00:00+01:00", "source": {"line": 3}},
+        ]
+        events = td / 'events.jsonl'
+        events.write_text('\n'.join(json.dumps(r) for r in records), encoding='utf-8')
+        report = Path(factmon.cmd_report(SimpleNamespace(events=str(events), out=None))).read_text(encoding='utf-8')
+        assert 'ORPHAN_RESULT' in report and 'echo one' in report
+        assert report.index('echo one') < report.index('ORPHAN_RESULT')
+        assert '"line": 4' in report and '未提供字段' in report
+
+
+def test_output_cannot_modify_source_and_empty_replay_is_usable():
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        source = td / 'events.jsonl'
+        source.write_text('SOURCE_BYTES', encoding='utf-8')
+        args = SimpleNamespace(session=str(source), out=str(td), interval=0.01)
+        for command in (factmon.cmd_replay, factmon.cmd_watch):
+            try:
+                command(args)
+            except ValueError:
+                pass
+            else:
+                raise AssertionError('source alias was accepted')
+            assert source.read_text(encoding='utf-8') == 'SOURCE_BYTES'
+        source.write_text('', encoding='utf-8')
+        args.out = str(td / 'out')
+        events = factmon.cmd_replay(args)
+        assert Path(events).read_bytes() == b''
+        assert Path(factmon.cmd_report(SimpleNamespace(events=events, out=None))).exists()
+
+
+def test_watch_only_new_complete_lines_and_reports_incomplete_tail():
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        source = td / 'source.jsonl'
+        old = {'type': 'response_item', 'payload': {'type': 'custom_tool_call', 'call_id': 'old', 'name': 'exec'}}
+        source.write_text(json.dumps(old) + '\n', encoding='utf-8')
+        new = {'type': 'response_item', 'payload': {'type': 'function_call', 'call_id': 'new', 'name': 'read', 'arguments': '{}'}}
+        raw = (json.dumps(new) + '\n').encode()
+        step = 0
+        def advance(_interval):
+            nonlocal step
+            step += 1
+            if step > 2:
+                raise KeyboardInterrupt
+            with source.open('ab') as fh:
+                fh.write(raw[:20] if step == 1 else raw[20:])
+        real_sleep = factmon.time.sleep
+        factmon.time.sleep = advance
+        try:
+            events = factmon.cmd_watch(SimpleNamespace(session=str(source), out=str(td / 'out'), interval=0.01))
+        finally:
+            factmon.time.sleep = real_sleep
+        rows = [json.loads(line) for line in Path(events).read_text(encoding='utf-8').splitlines()]
+        assert len(rows) == 1 and rows[0]['call_id'] == 'new'
+        offset = rows[0]['source']['offset']
+        assert source.read_bytes()[offset:] == raw
+
+
+def test_corrupt_line_is_an_explicit_gap_not_a_missing_success():
+    with tempfile.TemporaryDirectory() as td:
+        source = Path(td) / 'source.jsonl'
+        source.write_text('{invalid\n', encoding='utf-8')
+        rows = list(factmon.iter_records(str(source)))
+        assert len(rows) == 1 and rows[0]['kind'] == 'gap'
+        assert rows[0]['source']['line'] == 1
 
 
 def _run():

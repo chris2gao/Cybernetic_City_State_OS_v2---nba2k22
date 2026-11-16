@@ -1,0 +1,18 @@
+{
+  "schema_version": "citystate.verification_plan.v1",
+  "task_packet": "01_os/_runs/run-20261116-codex-execution-fact-monitor-001/task_packet.yml",
+  "checks": [
+    {
+      "id": "focused_contracts",
+      "argv": ["@python", "-B", "-X", "utf8", "01_os/06_execution/task_orchestration/execution_fact_monitor/test_factmon.py"],
+      "timeout_seconds": 30,
+      "expected_exit_code": 0
+    },
+    {
+      "id": "real_replay",
+      "argv": ["@python", "-B", "-X", "utf8", "01_os/_runs/run-20261116-codex-execution-fact-monitor-001/verify_real_replay.py", "C:/Users/gk/.codex/sessions/2026/11/15/rollout-2026-11-15T05-16-39-01a1df5a-4c7c-75b3-9174-cd55b3087c96.jsonl", "C:/Users/gk/Documents/ChatGPT/nba2k22/factmon-codex-validation/replay"],
+      "timeout_seconds": 30,
+      "expected_exit_code": 0
+    }
+  ]
+}
