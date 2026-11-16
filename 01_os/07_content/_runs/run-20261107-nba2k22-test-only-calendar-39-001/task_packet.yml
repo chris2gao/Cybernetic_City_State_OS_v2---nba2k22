@@ -1,0 +1,34 @@
+task_packet:
+  task_id: NBA2K22-VAE-REA-TEST-LAB-AUTOMATED-REGULAR-SEASON-20261107-001
+  parent_issue: 40
+  issue: 39
+  branch: task/nba2k22-test-only-calendar-39
+  exact_base_sha: bb73a06e710158c538caf809a771eca291eee028
+  core_reference: 877077c16bad41cfa97c1ebc9862a70ce610ff0b
+  risk_tier: T2_semantic
+  objective: Archive historical native date and simulation paths as bounded test-only tools and prove offline authority and recovery behavior.
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261107-nba2k22-test-only-calendar-39-001/
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/tools/test_only_calendar/
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/decision_outbox.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development/PROJECT_MODULE_REGISTRY_V2.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md
+  affected_module_ids: [P09, P10]
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/39
+    - 80fbd8ba98e86d56fb57ef87c02cf97b83198225
+    - 4daf00017d3742f6c50b218881d961f17f7f4b9d
+  big_task: true
+  big_task_confirmation_closure:
+    covered: []
+    uncovered: [new_native_simulation, save_or_reload, protected_master_integration]
+  required_tests: [native_template_signatures, exact_authority, same_outbox_calendar_lock, no_replay, same_unit_box, offline_window_faults]
+  prohibitions: [unapproved_live_dispatch, save_write, new_production_actions, release_master, publish_raw_capture]
+  development_loop:
+    mode: iterative_development
+    convergence_condition: Archived test-only commands and offline proof with live qualification gaps explicit.
+  publisher:
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: bb73a06e710158c538caf809a771eca291eee028

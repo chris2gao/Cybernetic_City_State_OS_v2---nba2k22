@@ -1,0 +1,55 @@
+{
+  "schema": "nba2k22.test_only_calendar.capability_manifest.v1",
+  "test_only": true,
+  "production_registry": false,
+  "default": "DISABLED",
+  "build_sha256": "1727ad72085fba39e789ee574fc15aab623ad1651cf6879e95e8cd53b6ffbbf5",
+  "source_sha256": {
+    "native_today.js": "d3d9acb7dc056d77309e9a80122af9612254c1e41ac41550961eebc69cc3ba4d",
+    "simulate_to_native_date.js": "11b90983ec70b026175c9ad38ab81a745fc4b61cfa160d3cc83389ed5e58aab3"
+  },
+  "read_native_today": {
+    "historical": "LIVE_READ_VERIFIED",
+    "archive_raw_script": "LIVE_READ_VERIFIED",
+    "bound_cli": "NOT_RUN",
+    "archive_read_evidence": "ev_76458e092cb418a53bf374dbab3e16a6191e8bc52b13479d7847099f55d428a6",
+    "source": "80fbd8ba98e86d56fb57ef87c02cf97b83198225",
+    "source_scope": "Native civil date only; bound CLI requires WorldData and operator declaration"
+  },
+  "simulate_to_native_date": {
+    "historical": "BOUNDED_NATIVE_LIVE_VERIFIED_WITH_GAPS",
+    "archive_runtime": "OFFLINE_CANDIDATE_LIVE_NOT_RUN",
+    "archive_read_only_frame": "LIVE_OBSERVED_WITHOUT_SAVE_BINDING",
+    "archive_frame_evidence": "ev_1c07b3fa019ca0dc951dd10f3a0ce136b3f5eaee827b495df6064ac5d54a3d04",
+    "verified_historical_conditions": [
+      "Win64 pinned PE",
+      "disposable offline MyLEAGUE regular season",
+      "foreground observed",
+      "engine frame entry 0xbad3c0, caller return 0x17bcb95, no active frame",
+      "command 17, typed selected-day payload, 13 and 53 games verified in two historical windows"
+    ],
+    "forbidden_conditions": [
+      "active frame",
+      "unbound save, epoch or window",
+      "production role actions",
+      "unresolved S4 or calendar claim",
+      "background, minimized or lock-screen execution under current policy",
+      "automatic replay or cross-season execution"
+    ],
+    "foreground_required_by_policy": true,
+    "current_max_game_days": 2,
+    "max_dispatches_per_window": 1,
+    "persistence": "NOT_VERIFIED",
+    "unattended_season": "NOT_VERIFIED",
+    "live_evidence_refs": [
+      "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/39#issuecomment-6705566190",
+      "https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/blob/4daf00017d3742f6c50b218881d961f17f7f4b9d/01_os/07_content/_runs/run-20261107-nba2k22-vae-longrun-40-001/native_calendar_receipt_audit.json"
+    ]
+  },
+  "stop_outcomes": [
+    "NOT_EXECUTED",
+    "STOPPED",
+    "UNKNOWN_NO_REPLAY",
+    "VERIFIED_IN_MEMORY"
+  ]
+}

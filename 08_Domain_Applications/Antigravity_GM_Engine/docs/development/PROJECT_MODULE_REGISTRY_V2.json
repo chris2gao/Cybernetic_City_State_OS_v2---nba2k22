@@ -117,9 +117,10 @@
         "WORLD_DATA_ENGINEERING_BASELINE@17ec1cea88c2bb6c36264792f70c94bef9a8bdb4",
         "WORLD_DATA_REVIEW_FIXES@a3927fb150a213201e404cca043ced4f57409bd1",
         "OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001 S4",
-        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001",
+        "Issue#39:TEST_ONLY_CALENDAR_ARCHIVE_CANDIDATE"
       ],
-      "last_update": "2026-11-04",
+      "last_update": "2026-11-07",
       "update_required_on_task_completion": true
     },
     {
@@ -254,12 +255,14 @@
       "domain": "REA_NATIVE_CONTROL",
       "status": "STATIC_PROFILE_INTEGRATION_CANDIDATE",
       "docs": [
-        "research/rea_core_profile/README.md"
+        "research/rea_core_profile/README.md",
+        "research/rea_native_control/tools/test_only_calendar/README.md"
       ],
       "artifacts": [
         "research/rea_core_profile/",
         "research/rea_native_control/facade.py",
-        "research/rea_native_control/season_cycle_host.py"
+        "research/rea_native_control/season_cycle_host.py",
+        "research/rea_native_control/tools/test_only_calendar/capability_manifest.json"
       ],
       "notes": [
         "Facade, Bulk, Outbox and SeasonCycleHost are already in master via PR #26. Profile inputs remain pinned to the original PR #18 and PR #26 objects."
@@ -320,18 +323,21 @@
       "artifacts": [
         "research/rea_native_control/role_batches.py",
         "research/rea_native_control/bulk_executor.py",
-        "research/rea_native_control/decision_outbox.py"
+        "research/rea_native_control/decision_outbox.py",
+        "research/rea_native_control/tools/test_only_calendar/calendar_cli.py"
       ],
       "notes": [
         "183 initial heterogeneous actions/requests/world controls, 50 mapped, 133 not explicit matched.",
-        "PR #26 supplies engineering entry points. Role design and runtime acceptance have their own evidence."
+        "PR #26 supplies engineering entry points. Role design and runtime acceptance have their own evidence.",
+        "Issue #39 candidate uses the same Outbox for test-only calendar and S4 claims. Native write and persistence qualification remain separate."
       ],
       "last_verified_evidence": null,
       "latest_task_refs": [
         "PR#18:ROLE_EXECUTION_REQUIREMENTS_A_v1",
-        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001"
+        "OS-NBA2K22-REA-CORE-PROFILE-INTEGRATION-20261104-001",
+        "Issue#39:SHARED_OUTBOX_TEST_CALENDAR_CLAIM"
       ],
-      "last_update": "2026-11-04",
+      "last_update": "2026-11-07",
       "update_required_on_task_completion": true,
       "external_source_refs": [
         {
