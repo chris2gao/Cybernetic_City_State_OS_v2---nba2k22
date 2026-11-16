@@ -1,4 +1,44 @@
-# 金蛋 Workflow 最小工程候选
+# 金蛋 F01/F02 集中整改
+
+当前任务：`OS-CORE-GOLDEN-EGG-F01-F02-20261116`。在原实现分支继续，基于
+`bd185822822543350e9d3c07a1174285b47b788d`；复核来源为
+`cb61ee8b257e8a4d7291bc1ec3837ae5dc966a92:01_os/_dev/golden_egg_workflow_20261116/GPT_CODE_REVIEW_BD185822_20261116.md`。
+本次只整改 F01/F02；下方原候选记录保留为历史，不当作本轮测试结果。
+
+实现方法：只调整既有 `next_business_action()` 末尾的选择逻辑。Ready 的实际业务先执行；
+无 Ready 业务时，只考虑未完成业务的明确 `depends_on` 前置链。已 Done 前置不再向下
+展开；同 scope 或 diagnostic/preflight 标签本身不构成依赖。没有业务节点、任务本身是
+必需检查时，仍允许检查；必需工作受阻时不自动选择无关 optional。独立必要业务/安全
+动作仍需通过原授权、依赖、停止通道、UNKNOWN 与尝试记录检查。
+
+支撑性：现有有限依赖图已经校验存在性与无环，本次复用它，没有新字段、规划器、
+调度器、状态系统或权限机制。原 Ready 观察、批准矩阵、父 Done、时间统计与 CLI 接线
+保持原实现。T03/T12 只补上真实前置关系，既有断言不变。
+
+可行性与提交前实证：
+
+- 先新增 F01/F02 负例。`--review-before` 直接加载固定旧提交的真实 runner，两个方法
+  覆盖五个场景，得到 **5 个 AssertionError、0 个运行错误，退出 1**，符合负例预期；
+  不是用另写的错误算法替代旧实现。原始日志已保存。
+- 修改后快速检查 **24 tests OK，退出 0**；其中新增五个方法覆盖 F01/F02、传递前置链、
+  局部排障与独立必要安全行动的保护。实际 CLI 选择并启动同一工程测试也 **退出 0**。
+- AST 对照确认原 **19 个测试方法的断言全部未改**，T01/T02/T09 整个方法 AST 相同；
+  原工程候选 v2 字节 SHA256 仍为 `9b871027c2a5898b429e0ee1f900c9c1ebd169f8c91643ecb91f64811ac51b43`。
+- 提交前快速测试 unittest 时间 **3.988 秒**、外层调用 **5.022485 秒**；实际 CLI 练习
+  外层调用 **4.488008 秒**。这些口径不等同模型推理时间或整个任务耗时。
+
+最终固定提交按 `verification_plan.json` 运行 managed verification：原反例、旧提交
+F01/F02 反例、当前工程检查、实际 CLI、**一次完整 Core 回归**，随后同候选 `inspect`。
+完整回归在快速检查通过后集中运行；结果以外部、绑定本提交的 Attempt 为准，不预写 PASS。
+完整原始证据目录：`C:/Users/gk/.codex/tmp/golden-egg-f01-f02-20261116/`。
+
+当前候选继续依赖可信领域输入，不认证权限与事实；T15 仍 NOT_RUN。工程与必要验证结束后
+停在 Human/GPT 对本次差异的复核边界，不代表正式 Stage04/Stage07 或 master 集成已批准。
+
+本轮变更文件：既有 runner、其 README、本 Run 的 `test_business_decisions.py`、
+`task_packet.yml`、`run.yml`、`verification_plan.json`、`RESULT.md`，无新增 Run 或平台。
+
+## 原候选 bd185822 的历史记录
 
 任务：`OS-CORE-GOLDEN-EGG-PATH-EFFICIENCY-CANDIDATE-20261116`。
 状态：工程候选完成，等待当前 Human 指定的 Human/GPT 集中复核。

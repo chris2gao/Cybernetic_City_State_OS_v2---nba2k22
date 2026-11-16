@@ -8,6 +8,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import types
 import unittest
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -19,6 +20,16 @@ spec.loader.exec_module(loop)
 BEFORE = '--before' in sys.argv
 if BEFORE:
     sys.argv.remove('--before')
+REVIEW_BEFORE = '--review-before' in sys.argv
+if REVIEW_BEFORE:
+    sys.argv.remove('--review-before')
+    baseline = subprocess.run(
+        ['git', 'show', 'bd185822822543350e9d3c07a1174285b47b788d:' +
+         RUNNER.relative_to(ROOT).as_posix()], cwd=ROOT,
+        capture_output=True, text=True, encoding='utf-8', check=True).stdout
+    loop = types.ModuleType('reviewed_baseline')
+    loop.__file__ = str(RUNNER)
+    exec(compile(baseline, str(RUNNER), 'exec'), loop.__dict__)
 
 
 def fact(value=True, **bindings):
@@ -53,6 +64,70 @@ def decide(s):
 
 
 class EngineeringCases(unittest.TestCase):
+    def test_F01_ready_business_not_preempted_by_unrelated_preparation(self):
+        for kind in ('diagnostic', 'preflight'):
+            with self.subTest(kind=kind):
+                s = state([step('check_unrelated', kind=kind), step('perform_business')])
+                self.assertEqual(decide(s)['step_id'], 'perform_business')
+
+    def test_F02_blocked_business_does_not_fall_back_to_unrelated_work(self):
+        for kind in ('optional', 'diagnostic', 'preflight'):
+            with self.subTest(kind=kind):
+                unrelated = step('unrelated_docs', kind=kind)
+                unrelated['scope'] = 'docs'
+                s = state([step('main', needs=['permission']), unrelated])
+                s['blockers']['research'] = 'Main business fixture blocker'
+                d = decide(s)
+                self.assertEqual(d['status'], 'BLOCKED')
+                self.assertIsNone(d['step_id'])
+                self.assertIn('Main business fixture blocker', str(d['blocked']['main']))
+
+    def test_required_preflight_transitive_chain_then_real_business(self):
+        action = step('perform_business')
+        action['depends_on'] = ['fixture_check']
+        check = step('fixture_check', kind='preflight', needs=['identity', 'permission'])
+        check['depends_on'] = ['confirm_identity']
+        s = state([step('unrelated_diagnostic', kind='diagnostic'),
+                   step('unrelated_docs', kind='optional'), action, check,
+                   step('confirm_identity', kind='preflight')])
+        self.assertEqual(decide(s)['step_id'], 'confirm_identity')
+        s['facts'].update(confirm_identity_done=fact(True), identity=fact(True), permission=fact(True))
+        self.assertEqual(decide(s)['step_id'], 'fixture_check')
+        s['facts']['fixture_check_done'] = fact(True)
+        self.assertEqual(decide(s)['step_id'], 'perform_business')
+
+    def test_local_diagnostic_requires_an_unfinished_business_dependency(self):
+        action = step('main', needs=['permission'])
+        action['depends_on'] = ['difference_query']
+        unrelated = step('unrelated_diagnostic', kind='diagnostic')
+        unrelated['scope'] = 'docs'
+        s = state([unrelated, action, step('difference_query', kind='diagnostic', needs=['read_authority'])])
+        s['facts']['read_authority'] = fact(True)
+        s['blockers']['research'] = 'Schedule fixture differs'
+        self.assertEqual(decide(s)['step_id'], 'difference_query')
+        s['facts']['difference_query_done'] = fact(True)
+        self.assertEqual(decide(s)['status'], 'BLOCKED')
+        self.assertIsNone(decide(s)['step_id'])
+
+    def test_independent_required_safety_action_preserves_all_guards(self):
+        safe = step('independent_safety_read', needs=['read_authority'], resource='offline')
+        safe['scope'] = 'safety'
+        docs = step('unrelated_docs', kind='optional')
+        docs['scope'] = 'docs'
+        s = state([step('main', resource='save5'), docs, safe])
+        s['unknown_resources'] = ['save5']
+        s['facts']['read_authority'] = fact(True)
+        self.assertEqual(decide(s)['step_id'], 'independent_safety_read')
+        s['facts']['read_authority'] = fact(False)
+        self.assertEqual(decide(s)['status'], 'BLOCKED')
+        s['facts']['read_authority'] = fact(True)
+        s['attempted'] = ['independent_safety_read']
+        self.assertEqual(decide(s)['status'], 'BLOCKED')
+        s['attempted'] = []
+        safe['channel'] = 'computer_use'
+        s['stopped_channels'] = ['computer_use']
+        self.assertEqual(decide(s)['status'], 'BLOCKED')
+
     def test_T01_unavailable_object_no_repeat_and_fetch_refresh(self):
         s = state([step('local_show', needs=['object_available']),
                    step('reachable_source', needs=['remote_available'])])
@@ -79,6 +154,7 @@ class EngineeringCases(unittest.TestCase):
 
     def test_T03_invalidate_only_epoch_dependent_evidence(self):
         s = state([step('native_action', needs=['native']), step('refresh_native', kind='preflight')])
+        s['steps'][0]['depends_on'] = ['refresh_native']
         s['context']['pid'] = 2
         s['facts'].update(native=fact(True, pid=1), provenance=fact(True),
                           approved=fact(True))
@@ -164,6 +240,7 @@ class EngineeringCases(unittest.TestCase):
 
     def test_T12_one_affected_difference_query_then_stop(self):
         s = state([step('sim'), step('difference_query', kind='diagnostic')])
+        s['steps'][0]['depends_on'] = ['difference_query']
         s['blockers']['research'] = 'Schedule fixture differs'
         self.assertEqual(decide(s)['step_id'], 'difference_query')
         s['attempted'] = ['difference_query']
@@ -234,6 +311,13 @@ class EngineeringCases(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    if REVIEW_BEFORE:
+        names = [name for name in unittest.defaultTestLoader.getTestCaseNames(EngineeringCases)
+                 if name.startswith(('test_F01_', 'test_F02_'))]
+        result = unittest.TextTestRunner(verbosity=2).run(
+            unittest.TestSuite(EngineeringCases(name) for name in names))
+        raise SystemExit(1 if len(names) == 2 and len(result.failures) == 5
+                         and not result.errors else 2)
     if BEFORE:
         names = [name for name in unittest.defaultTestLoader.getTestCaseNames(EngineeringCases)
                  if name.startswith(('test_T01_', 'test_T02_', 'test_T09_'))]

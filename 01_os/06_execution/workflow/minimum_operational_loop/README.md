@@ -43,8 +43,12 @@ owner 检查每阶段 plan 与 completion。owner / gate 拒绝通过 runner 退
 
 每步含 `step_id/goal/kind/requires/depends_on/done/scope`，可附
 `resource/channel/choice_ref/proposed_choice`。模型/领域先确定真实必需前提和依赖，
-仅把已证明可执行的决定性检查标成 `preflight`；其顺序优先于业务动作与可选准备。
-`diagnostic` 限定有证据的局部排障，不是通用高优先权。任何优先级均不绕过 Ready/依赖。
+已 Ready 的 `business` 先执行，无关 `diagnostic/preflight` 不得抢占。
+业务受阻时，只选其 `depends_on` 链中尚未 Done 且 Ready 的前置步骤；同 scope 或 kind
+标签不证明依赖。局部排障需明确接入这条链；满足条件的独立必要业务/安全行动仍可继续。
+任务本身只有必需检查时，仍可执行这些检查；必需工作受阻不自动转做无关 optional。
+仅在这个相关集合中按 diagnostic/preflight/business/optional 和输入顺序稳定选择。
+任何优先级均不绕过 Ready、授权、依赖或 UNKNOWN 保护。
 步骤内容仍归模型与领域所有者；此入口不会从命令字符串猜测风险或自动发现依赖。
 
 `approved_choices` 保存批准的业务选择；PID/worldline变化不会改它。引用它的动作不得

@@ -880,8 +880,28 @@ def next_business_action(state:dict)->dict:
             elif "proposed_choice" in step and step["proposed_choice"]!=choices[ref]:reasons.append("Approved business choice changed; do not reseed on runtime rebind")
         if reasons:report["blocked"][key]=reasons
         else:candidates.append((priority[step["kind"]],position,key))
-    if candidates:
-        report.update(status="READY",step_id=min(candidates)[2])
+    # kind alone gives preparation no privilege over real Ready work.
+    eligible=[c for c in candidates if by_id[c[2]]["kind"]=="business"]
+    if not eligible:
+        pending=[k for k,s in by_id.items() if s["kind"]=="business" and not observed(s["done"])]
+        if pending:
+            # Only declared, unfinished predecessors can unblock this business.
+            # A shared scope or a diagnostic/preflight label is not causality.
+            needed=set()
+            while pending:
+                for dep in by_id[pending.pop()]["depends_on"]:
+                    if dep not in needed and not observed(by_id[dep]["done"]):
+                        needed.add(dep);pending.append(dep)
+            eligible=[c for c in candidates if c[2] in needed]
+        else:
+            # A task may itself consist of required checks (e.g. verification).
+            # A blocked required check must not fall back to optional busywork.
+            required=any(s["kind"]!="optional" and not observed(s["done"]) for s in steps)
+            eligible=[c for c in candidates if not required or by_id[c[2]]["kind"]!="optional"]
+        for c in candidates:
+            if c not in eligible:report["blocked"][c[2]]=["Deferred: unrelated to unfinished required work"]
+    if eligible:
+        report.update(status="READY",step_id=min(eligible)[2])
     elif not unfinished:report["status"]="PARENT_INCOMPLETE"
     return report
 
