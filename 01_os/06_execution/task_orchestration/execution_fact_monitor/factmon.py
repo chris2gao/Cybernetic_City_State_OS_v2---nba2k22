@@ -61,15 +61,19 @@ def normalize_text(value):
 
 def _strip_file_content(changes):
     """只保留文件路径与变更类型，丢弃整段内容（事实只到“哪个文件被增改”）。"""
-    if not isinstance(changes, dict):
-        return changes
-    out = {}
-    for path, meta in changes.items():
-        if isinstance(meta, dict):
-            out[path] = {"type": meta.get("type")}
-        else:
-            out[path] = {"type": str(meta)}
-    return out
+    if isinstance(changes, dict):
+        return {path: {"type": _file_type(meta)} for path, meta in changes.items()}
+    if isinstance(changes, list):
+        return [{"path": item.get("path") if isinstance(item.get("path"), str) else None,
+                 "type": _file_type(item)} for item in changes if isinstance(item, dict)]
+    return None
+
+
+def _file_type(meta):
+    kind = meta.get("kind", meta.get("type")) if isinstance(meta, dict) else meta
+    if isinstance(kind, dict):
+        kind = kind.get("type")
+    return kind if isinstance(kind, str) else None
 
 
 def parse_line(obj, source):
@@ -157,6 +161,8 @@ def parse_line(obj, source):
                 err = normalize_text(result["Err"])
             elif isinstance(ok, dict) and ok.get("isError") is True:
                 err = "MCP result.isError=true"
+        if itype == "McpToolCall" and item.get("error") is not None:
+            err = item["error"]  # 原生错误优先；状态和 result 仍分别保留。
         rec["error"] = err
         return rec
 
@@ -322,7 +328,7 @@ def cmd_report(args):
     calls = []
     for rec in recs:
         if rec.get("kind") == "tool_result" and rec.get("call_id"):
-            results_by_call[rec["call_id"]] = rec
+            results_by_call.setdefault(rec["call_id"], []).append(rec)
         elif rec.get("kind") == "tool_call":
             calls.append(rec)
 
@@ -392,11 +398,12 @@ def cmd_report(args):
                 L.append("  - 参数: UNOBSERVED")
             if rec.get("status"):
                 L.append("  - 状态: `%s`" % rec["status"])
-            res = results_by_call.get(rec.get("call_id"))
-            if res is not None:
-                L.append("  - 结果: %s" % ("UNOBSERVED" if res.get("result") is None else _truncate(res["result"]) or "（空）"))
-                L.append("  - 结果时间: %s" % (res.get("time") or "UNOBSERVED"))
-                L.append("  - 结果来源: `%s`" % json.dumps(res.get("source"), ensure_ascii=False))
+            results = results_by_call.get(rec.get("call_id"), [])
+            if results:
+                for res in results:
+                    L.append("  - 结果: %s" % ("UNOBSERVED" if res.get("result") is None else _truncate(res["result"]) or "（空）"))
+                    L.append("  - 结果时间: %s" % (res.get("time") or "UNOBSERVED"))
+                    L.append("  - 结果来源: `%s`" % json.dumps(res.get("source"), ensure_ascii=False))
             else:
                 L.append("  - 结果: **UNOBSERVED**（源日志未提供匹配结果）")
         elif rec.get("kind") == "execution":
@@ -408,7 +415,9 @@ def cmd_report(args):
             if rec.get("params") is not None:
                 L.append("  - 参数: `%s`" % _truncate(rec["params"]))
             if rec.get("files"):
-                L.append("  - 变更文件: `%s`" % _truncate(", ".join(rec["files"].keys()), 200))
+                files = rec["files"]
+                entries = files.items() if isinstance(files, dict) else ((item.get("path"), item) for item in files if isinstance(item, dict))
+                L.append("  - 变更文件: `%s`" % _truncate(", ".join("%s (%s)" % (path or "UNOBSERVED", _file_type(meta) or "UNOBSERVED") for path, meta in entries), 200))
             if rec.get("cwd"):
                 L.append("  - cwd: `%s`" % _truncate(rec["cwd"]))
             if rec.get("status"):
@@ -418,7 +427,7 @@ def cmd_report(args):
             if rec.get("duration_ms") is not None:
                 L.append("  - 耗时: %s ms" % rec["duration_ms"])
             if rec.get("error"):
-                L.append("  - 错误: `%s`" % rec["error"])
+                L.append("  - 错误: `%s`" % normalize_text(rec["error"]))
             if rec.get("result"):
                 L.append("  - 输出: %s" % _truncate(rec["result"]))
         elif rec.get("kind") == "tool_result":

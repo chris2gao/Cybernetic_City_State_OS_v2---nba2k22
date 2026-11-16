@@ -212,6 +212,67 @@ def test_corrupt_line_is_an_explicit_gap_not_a_missing_success():
         assert rows[0]['source']['line'] == 1
 
 
+def test_file_change_array_strips_diff_and_renders_all_paths():
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        changes = [
+            {'path': 'same.txt', 'kind': {'type': 'add'}, 'diff': {'text': 'HIDDEN_NATIVE_DIFF'}, 'content': 'HIDDEN_NATIVE_CONTENT'},
+            {'path': 'same.txt', 'type': 'delete', 'diff': 'HIDDEN_NATIVE_DIFF'},
+        ]
+        obj = {'type': 'event_msg', 'payload': {'type': 'item_completed',
+               'item': {'type': 'FileChange', 'changes': changes, 'status': 'completed'}}}
+        rec = factmon.parse_line(obj, {'file': 'native.jsonl', 'line': 1})
+        assert rec['files'] == [{'path': 'same.txt', 'type': 'add'}, {'path': 'same.txt', 'type': 'delete'}]
+        assert 'HIDDEN_NATIVE' not in json.dumps(rec)
+        events = td / 'events.jsonl'
+        events.write_text(json.dumps(rec), encoding='utf-8')
+        report = Path(factmon.cmd_report(SimpleNamespace(events=str(events), out=None))).read_text(encoding='utf-8')
+        assert 'same.txt (add)' in report and 'same.txt (delete)' in report
+        assert 'HIDDEN_NATIVE' not in report
+
+
+def test_mcp_native_error_is_preserved_in_event_and_report():
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        error = {'message': 'native transport refused', 'code': -32000, 'details': {'stage': 'dispatch'}}
+        item = {'type': 'McpToolCall', 'server': 'test', 'tool': 'read',
+                'status': 'failed', 'error': error, 'result': {'Ok': {'isError': True}}}
+        rec = factmon.parse_line({'type': 'event_msg', 'payload': {'type': 'item_completed', 'item': item}}, {'file': 'native.jsonl', 'line': 2})
+        assert rec['error'] == error and rec['status'] == 'failed'
+        assert json.loads(rec['result'])['Ok']['isError'] is True
+        events = td / 'events.jsonl'
+        events.write_text(json.dumps(rec), encoding='utf-8')
+        report = Path(factmon.cmd_report(SimpleNamespace(events=str(events), out=None))).read_text(encoding='utf-8')
+        assert 'native transport refused' in report and '-32000' in report and 'dispatch' in report
+
+
+def test_multiple_results_keep_every_result_time_and_source():
+    with tempfile.TemporaryDirectory() as td:
+        td = Path(td)
+        native = [
+            {'timestamp': '2026-01-01T00:00:00Z', 'type': 'response_item', 'payload': {'type': 'custom_tool_call', 'call_id': 'shared', 'name': 'read', 'input': 'x'}},
+        ]
+        for index, (call_id, value) in enumerate([('shared', 'FIRST_RESULT'), ('shared', 'SECOND_RESULT'), ('orphan', 'ORPHAN_RESULT'), (None, 'NO_ID_RESULT')], 1):
+            native.append({'timestamp': '2026-01-01T00:00:0%dZ' % index, 'type': 'response_item', 'payload': {'type': 'custom_tool_call_output', 'call_id': call_id, 'output': value}})
+        session = td / 'source.jsonl'
+        original = '\n'.join(json.dumps(obj) for obj in native)
+        session.write_text(original, encoding='utf-8')
+        events = factmon.cmd_replay(SimpleNamespace(session=str(session), out=str(td / 'out')))
+        rows = [json.loads(line) for line in Path(events).read_text(encoding='utf-8').splitlines()]
+        assert len(rows) == 5 and sum(r['kind'] == 'tool_call' for r in rows) == 1
+        assert rows[-1]['call_id'] is None
+        report = Path(factmon.cmd_report(SimpleNamespace(events=events, out=None))).read_text(encoding='utf-8')
+        for value in ('FIRST_RESULT', 'SECOND_RESULT', 'ORPHAN_RESULT', 'NO_ID_RESULT'):
+            assert report.count(value) == 1
+        for line in range(2, 6):
+            assert '"line": %d' % line in report
+        assert '2026-01-01T00:00:01Z' in report and '2026-01-01T00:00:02Z' in report
+        assert report.index('FIRST_RESULT') < report.index('SECOND_RESULT')
+        assert '| 工具调用 (custom/function) | 1 |' in report and '| 工具结果 | 4 |' in report
+        assert '| 无调用匹配的结果 | 2 |' in report
+        assert session.read_text(encoding='utf-8') == original
+
+
 def _run():
     tests = [v for k, v in sorted(globals().items()) if k.startswith("test_") and callable(v)]
     failed = 0

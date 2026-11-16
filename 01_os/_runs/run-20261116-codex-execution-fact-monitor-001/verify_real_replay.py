@@ -18,7 +18,8 @@ def main():
     report = factmon.cmd_report(SimpleNamespace(events=events, out=None))
     rows = [json.loads(line) for line in Path(events).read_text(encoding='utf-8').splitlines()]
     by_line = {r['source'].get('line'): r for r in rows}
-    expected_commands = expected_mcp = 0
+    expected_commands = expected_mcp = native_errors = 0
+    file_change_formats = {}
     for line_no, line in enumerate(source.open(encoding='utf-8'), 1):
         obj = json.loads(line)
         payload = obj.get('payload', {})
@@ -38,12 +39,19 @@ def main():
             expected_mcp += 1
             assert by_line[line_no]['params'] == item.get('arguments')
             assert json.loads(by_line[line_no]['result']) == item.get('result')
+            if item.get('error') is not None:
+                native_errors += 1
+                assert by_line[line_no]['error'] == item['error']
+        elif item.get('type') == 'FileChange':
+            shape = type(item.get('changes')).__name__
+            file_change_formats[shape] = file_change_formats.get(shape, 0) + 1
     assert expected_commands > 0 and expected_mcp > 0
     assert before == hashlib.sha256(source.read_bytes()).hexdigest()
     assert '模型推理' in Path(report).read_text(encoding='utf-8')
     summary = {'source': str(source), 'sha256_before_and_after': before, 'records': len(rows),
                'native_commands_verified': expected_commands, 'native_mcp_verified': expected_mcp,
-               'events': events, 'report': report, 'source_modified': False}
+               'events': events, 'report': report, 'source_modified': False,
+               'native_mcp_errors_verified': native_errors, 'file_change_formats': file_change_formats}
     (out / 'verification.json').write_text(json.dumps(summary, indent=2), encoding='utf-8')
     print(json.dumps(summary))
 
