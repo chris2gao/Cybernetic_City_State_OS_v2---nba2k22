@@ -38,6 +38,30 @@ F01/F02 反例、当前工程检查、实际 CLI、**一次完整 Core 回归**�
 本轮变更文件：既有 runner、其 README、本 Run 的 `test_business_decisions.py`、
 `task_packet.yml`、`run.yml`、`verification_plan.json`、`RESULT.md`，无新增 Run 或平台。
 
+### 本轮固定实现提交的实际结果
+
+实测提交：`dd64b633a3719509841b697cf211b56d0917e822`。
+本段是测试结束后的结果补记，只改本文件；源码、测试、输入、计划与实测提交完全相同。
+managed plan SHA256：`0cdbf9e9fcb62fd26004bb00d00a01f09427f2d764adb36e52d27e6b68973e37`。
+
+| 检查 | 实际退出码 | 实测结果 | managed 记录耗时/秒 |
+| --- | --- | --- | --- |
+| before_counterexamples | 1 | 原 T01/T02/T09 朴素策略三个断言预期失败 | 0.709616 |
+| review_before | 1 | 固定旧提交 F01/F02 两个方法、五个断言预期失败，0 errors | 0.852907 |
+| engineering | 0 | 24 tests OK；原 T01–T14 与新增整改检查均通过 | 3.293548 |
+| actual_decision_path | 0 | CLI 实际选择 engineering 并启动同名检查，24 tests OK | 3.787159 |
+| core_regression | 0 | 53 passed, 161 subtests passed | 578.257358 |
+
+managed `run`（含内部消费者复算）退出 **0**；五项状态均为 success，执行前后和逐步
+源码状态均绑定上述干净提交。完整回归按原计划一次运行
+`test_minimum_operational_loop.py` 与 `test_committed_minimum_loop.py`，不是只抽样几个用例，
+也不声称运行了整个 OS 其他机制的所有测试。pytest 自报 **576.50 秒**；上表是外层调用
+计时，二者口径不同，均不当作模型推理时间。
+
+原始 stdout/stderr、逐步记录、输入与最终结果保存在外部
+`C:/Users/gk/.codex/tmp/golden-egg-f01-f02-20261116/managed-final-001/`；
+精简汇总位于同父目录 `verification_receipt.json`。公共结果是执行者证据，未冒称独立验收。
+
 ## 原候选 bd185822 的历史记录
 
 任务：`OS-CORE-GOLDEN-EGG-PATH-EFFICIENCY-CANDIDATE-20261116`。
