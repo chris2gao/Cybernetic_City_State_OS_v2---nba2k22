@@ -1,0 +1,15 @@
+task_id: OS-CORE-GOLDEN-EGG-PATH-EFFICIENCY-CANDIDATE-20261116
+run_id: run-20261116-golden-egg-path-efficiency-001
+base: 043ac4864bdc871b03929faafd8bc6bd47d4ee2f
+branch: task/core-golden-egg-path-efficiency-20261116
+ownership: core
+purpose: Bounded engineering candidate, not a governed seven-stage Run or formal test freeze
+outputs: [existing_runner_business_decision_path, unchanged_v2_test_input, tests, RESULT.md]
+verification: verification_plan.json
+lifecycle: candidate_ready_for_independent_review
+review_schedule:
+  review_mode: deferred_to_series
+  series_id: golden-egg-workflow-20261116
+  reviewer: Human_and_GPT_per_current_Human_override
+  must_review_before: master_integration_or_real_game_validation
+task_packet_ref: task_packet.yml

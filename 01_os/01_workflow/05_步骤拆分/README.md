@@ -48,3 +48,9 @@
 不能通过削弱测试或无限重试伪造完成。
 
 步骤内容和拆分质量仍由模型判断；runner 只验证控制边界与可停止性。
+
+金蛋工程候选通过现有runner的 `next-business-action` 显式消费有限业务步骤，
+把必要Ready、真实依赖、领域Done和批准业务选择分开表达。决定性且可安全执行的
+preflight先于可选准备；PID/worldline变化只使依赖它的事实失效。候选输入及字段见
+`../../06_execution/workflow/minimum_operational_loop/README.md`。
+这不是新的正式阶段产物schema，不代替冻结测试绑定、三出口或Human签收。
