@@ -22,6 +22,8 @@ def main():
     for line_no, line in enumerate(source.open(encoding='utf-8'), 1):
         obj = json.loads(line)
         payload = obj.get('payload', {})
+        if obj.get('type') == 'response_item' and payload.get('type') in ('function_call', 'custom_tool_call', 'function_call_output', 'custom_tool_call_output'):
+            assert by_line[line_no]['call_id'] == payload.get('call_id')
         if obj.get('type') != 'event_msg' or payload.get('type') != 'item_completed':
             continue
         item = payload.get('item', {})

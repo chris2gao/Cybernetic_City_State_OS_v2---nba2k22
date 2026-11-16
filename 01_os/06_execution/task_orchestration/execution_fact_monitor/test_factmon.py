@@ -135,6 +135,8 @@ def test_native_duration_mcp_result_and_function_arguments():
     assert rec["error"] == "MCP result.isError=true"
     call = factmon.parse_line({"type": "response_item", "payload": {"type": "function_call", "arguments": '{"cmd":"echo test"}'}}, source)
     assert call["params"] == '{"cmd":"echo test"}'
+    orphan = factmon.parse_line({'type': 'response_item', 'payload': {'type': 'function_call_output', 'id': 'item-only', 'output': 'known result'}}, source)
+    assert orphan['call_id'] is None and orphan['native_item_id'] == 'item-only'
 
 
 def test_report_preserves_orphan_result_source_and_timestamp_order():
