@@ -11,11 +11,11 @@ task_packet:
     - a3c4c1b7a80d22300a4644933c8689f423c61807:01_os/_dev/golden_egg_workflow_20261116/OS_CORE_GOLDEN_EGG_ENGINEERING_TEST_CANDIDATE_v2.yml
     - 6d97d2d3e2527f38e688998e9b8de03553046dbe:01_os/06_execution/task_orchestration/atomic_tasks.py
   allowed_changed_paths:
-    - 01_os/06_execution/workflow/minimum_operational_loop/
-    - 01_os/01_workflow/05_步骤拆分/
-    - 01_os/01_workflow/06_执行/
-    - 01_os/01_workflow/07_测试执行/
-    - 01_os/_runs/run-20261116-golden-egg-path-efficiency-001/
+    - 01_os/06_execution/workflow/minimum_operational_loop/**
+    - 01_os/01_workflow/05_步骤拆分/**
+    - 01_os/01_workflow/06_执行/**
+    - 01_os/01_workflow/07_测试执行/**
+    - 01_os/_runs/run-20261116-golden-egg-path-efficiency-001/**
   verification_plan: 01_os/_runs/run-20261116-golden-egg-path-efficiency-001/verification_plan.json
   required_tests: [before_counterexamples, engineering, actual_decision_path, core_regression]
   prohibitions: [modify_master_without_required_Human_confirmation, force_push, rebase, squash, native_operations, change_test_expectations, modify_fact_monitor]

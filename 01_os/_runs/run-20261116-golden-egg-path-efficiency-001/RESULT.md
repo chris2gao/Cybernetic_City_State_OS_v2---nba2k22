@@ -76,6 +76,11 @@ pytest 测量 **569.34 秒**。上次被中断窗口的回归终态未保留，�
 
 固定候选验证入口：
 
+第一次 managed verification 对 `68a5da72fa894d6a8537e6cea35abc383efcd722`
+在启动测试前拒绝：`candidate_outside_packet_allowlist`。原因是任务包使用目录尾 `/`，
+而该验证器要求递归目录显式写成 `/**`。已按同一目录范围修正任务包，未改验证器、
+测试预期或业务源码；该次拒绝不计入测试通过。
+
 ```text
 python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py run --repo-root . --candidate <this-commit> --plan 01_os/_runs/run-20261116-golden-egg-path-efficiency-001/verification_plan.json --attempt <external-evidence-parent/new-attempt>
 python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py inspect --repo-root . --candidate <same-commit> --plan 01_os/_runs/run-20261116-golden-egg-path-efficiency-001/verification_plan.json --attempt <same-attempt>
