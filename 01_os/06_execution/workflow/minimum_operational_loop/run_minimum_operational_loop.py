@@ -815,9 +815,138 @@ def materialize_pilot(repo_root:Path,output_root:Path)->tuple[int,list[str]]:
     (output_root/"workflow_completion.yml").write_text(yaml.safe_dump(completion,allow_unicode=True,sort_keys=False,width=120),encoding="utf-8",newline="\n")
     return 0,[]
 
+def next_business_action(state:dict)->dict:
+    """Choose ONE existing business step from explicit domain observations.
+
+    Opt-in engineering path: no tool execution, polling, permission issuance or
+    durable journal. The domain owns facts, exact scope/CAS, resource reservations
+    and reconciliation across restarts. As in PR23, Done is independent of child
+    flags; unlike its ordered walk, a blocked node does not hide safe siblings.
+    """
+    import copy
+    if not isinstance(state,dict) or not state.get("goal"):
+        raise ValueError("Business goal required")
+    context=state["context"];facts=state["facts"];steps=state["steps"]
+    if not isinstance(context,dict) or not isinstance(facts,dict) or not isinstance(steps,list):
+        raise ValueError("Context/facts mappings and finite steps required")
+    valid={};invalidated={}
+    for key,observation in facts.items():
+        if not isinstance(observation,dict) or not isinstance(observation.get("bindings"),dict) or not observation.get("source_ref"):
+            raise ValueError(f"Fact requires source_ref and explicit validity bindings: {key}")
+        changed=[k for k,v in observation["bindings"].items() if k not in context or context[k]!=v]
+        if changed:invalidated[key]=changed
+        else:valid[key]=observation.get("value")
+    def observed(key):return valid.get(key) is True
+    by_id={}
+    priority={"diagnostic":0,"preflight":1,"business":2,"optional":3}
+    for step in steps:
+        if not isinstance(step,dict) or not step.get("step_id") or not step.get("goal") or step["step_id"] in by_id:
+            raise ValueError("Unique step IDs and business goals required")
+        if step.get("kind") not in priority or not isinstance(step.get("requires"),list) or not isinstance(step.get("depends_on"),list) or not step.get("done"):
+            raise ValueError("Step kind, Ready requirements, dependencies and independent Done required")
+        by_id[step["step_id"]]=step
+    for step in steps:
+        if not set(step["depends_on"]).issubset(by_id):raise ValueError("Unknown step dependency")
+    # Reuse the Stage05 finite dependency invariant, without starting a scheduler.
+    resolved=set()
+    while True:
+        new={k for k,s in by_id.items() if set(s["depends_on"]).issubset(resolved)}-resolved
+        if not new:break
+        resolved.update(new)
+    if resolved!=set(by_id):raise ValueError("Business dependency cycle")
+    choices=copy.deepcopy(state.get("approved_choices",{}))
+    report={"goal":state["goal"],"status":"BLOCKED","step_id":None,
+            "invalidated":invalidated,"reused":sorted(valid),"blocked":{},
+            "approved_choices":choices,"authority_effect":"none"}
+    if observed(state["parent_done"]):
+        report["status"]="DONE"
+        return report
+    candidates=[];unfinished=0
+    for position,step in enumerate(steps):
+        key=step["step_id"]
+        if observed(step["done"]):continue
+        unfinished+=1;reasons=[]
+        if step.get("resource") in state.get("unknown_resources",[]):reasons.append("RECONCILE: domain journal/readback required for resource")
+        if key in state.get("attempted",[]):reasons.append("RECONCILE: attempted without observed Done; no replay")
+        if step.get("channel") in state.get("stopped_channels",[]):reasons.append("Human stopped channel")
+        blocker=state.get("blockers",{}).get(step.get("scope"))
+        if blocker and step["kind"]!="diagnostic":reasons.append(str(blocker))
+        missing=[name for name in step["requires"] if not observed(name)]
+        if missing:reasons.append("Ready missing/false/stale: "+",".join(missing))
+        if any(not observed(by_id[d]["done"]) for d in step["depends_on"]):reasons.append("Unfinished predecessor")
+        if "choice_ref" in step:
+            ref=step["choice_ref"]
+            if ref not in choices:reasons.append("Missing approved business choice")
+            elif "proposed_choice" in step and step["proposed_choice"]!=choices[ref]:reasons.append("Approved business choice changed; do not reseed on runtime rebind")
+        if reasons:report["blocked"][key]=reasons
+        else:candidates.append((priority[step["kind"]],position,key))
+    # kind alone gives preparation no privilege over real Ready work.
+    eligible=[c for c in candidates if by_id[c[2]]["kind"]=="business"]
+    if not eligible:
+        pending=[k for k,s in by_id.items() if s["kind"]=="business" and not observed(s["done"])]
+        if pending:
+            # Only declared, unfinished predecessors can unblock this business.
+            # A shared scope or a diagnostic/preflight label is not causality.
+            needed=set()
+            while pending:
+                for dep in by_id[pending.pop()]["depends_on"]:
+                    if dep not in needed and not observed(by_id[dep]["done"]):
+                        needed.add(dep);pending.append(dep)
+            eligible=[c for c in candidates if c[2] in needed]
+        else:
+            # A task may itself consist of required checks (e.g. verification).
+            # A blocked required check must not fall back to optional busywork.
+            required=any(s["kind"]!="optional" and not observed(s["done"]) for s in steps)
+            eligible=[c for c in candidates if not required or by_id[c[2]]["kind"]!="optional"]
+        for c in candidates:
+            if c not in eligible:report["blocked"][c[2]]=["Deferred: unrelated to unfinished required work"]
+    if eligible:
+        report.update(status="READY",step_id=min(eligible)[2])
+    elif not unfinished:report["status"]="PARENT_INCOMPLETE"
+    return report
+
+
+def business_time_quality(metrics:dict,*,first_event=None,first_blocker=None,capture_end=None)->dict:
+    """Stage07 labels existing evidence; it neither collects nor monitors events.
+
+    Counts/durations come from an existing source report. Reported ON intervals
+    and duration sums are NEVER interpreted as unique wall or reasoning time.
+    """
+    from decimal import Decimal, InvalidOperation
+    from datetime import datetime
+    def seconds(value):
+        try:number=Decimal(str(value))
+        except InvalidOperation as exc:raise ValueError("Numeric time required") from exc
+        if not number.is_finite() or number<0:raise ValueError("Nonnegative finite time required")
+        return number
+    counts={k:metrics.get(k) for k in ("tool_call","tool_result","command","file_change","mcp")}
+    if any(v is not None and (type(v) is not int or v<0) for v in counts.values()):raise ValueError("Nonnegative integer layer counts required")
+    executions=None if any(counts[k] is None for k in ("command","file_change","mcp")) else sum(counts[k] for k in ("command","file_change","mcp"))
+    def supplied_seconds(key):return None if metrics.get(key) is None else str(seconds(metrics[key]))
+    result={"layers":counts,"execution_items":executions,
+            "records":None if any(v is None for v in counts.values()) else sum(counts.values()),
+            "command_seconds_sum":supplied_seconds("command_seconds"),
+            "mcp_seconds_sum":supplied_seconds("mcp_seconds"),
+            "monitor_on_reported_seconds":None if metrics.get("monitor_on_seconds") is None else str(sum((seconds(v) for v in metrics["monitor_on_seconds"]),Decimal(0))),
+            "monitor_on_basis":"REPORTED_SOURCE_INTERVALS_NOT_INDEPENDENT_WALL_MEASUREMENT",
+            "capture_source_seconds":supplied_seconds("capture_seconds"),
+            "off_intervals":metrics.get("off_intervals","UNKNOWN"),
+            "human_wait_seconds":supplied_seconds("human_wait_seconds"),
+            "unique_tool_wall_seconds":None,"unobserved_attribution":"UNKNOWN","safety_effect":"none"}
+    def span(a,b):
+        start=datetime.fromisoformat(a.replace("Z","+00:00"));end=datetime.fromisoformat(b.replace("Z","+00:00"))
+        if start.utcoffset() is None or end.utcoffset() is None:raise ValueError("Evidence timestamps require explicit timezone")
+        delta=end-start
+        value=Decimal(delta.days*86400+delta.seconds)+Decimal(delta.microseconds)/1000000
+        return str(seconds(value))
+    if first_event and first_blocker:result["event_span_to_blocker_seconds"]=span(first_event,first_blocker)
+    if capture_end and first_blocker:result["capture_to_blocker_seconds"]=span(capture_end,first_blocker)
+    return result
+
+
 def main()->int:
     parser=argparse.ArgumentParser()
-    parser.add_argument("command",choices=("static","validate","materialize-pilot","sync-candidate"))
+    parser.add_argument("command",choices=("static","validate","materialize-pilot","sync-candidate","next-business-action","business-time-quality"))
     parser.add_argument("target");parser.add_argument("output",nargs="?")
     parser.add_argument("--json-output",action="store_true");parser.add_argument("--skip-subvalidators",action="store_true",help=argparse.SUPPRESS)
     parser.add_argument("--repo-root",type=Path,default=None)
@@ -827,6 +956,15 @@ def main()->int:
                              "required for full validation, independent of dirty checkout bytes")
     args=parser.parse_args()
     if args.apply and args.command!="sync-candidate":parser.error("--apply requires sync-candidate")
+    if args.command in {"next-business-action","business-time-quality"}:
+        try:
+            source=json.loads(Path(args.target).read_text(encoding="utf-8"))
+            result=next_business_action(source) if args.command=="next-business-action" else business_time_quality(**source)
+        except (KeyError,TypeError,ValueError,OSError) as exc:
+            print(json.dumps({"status":"INPUT_ERROR","reason":str(exc)},ensure_ascii=False))
+            return 33
+        print(json.dumps(result,ensure_ascii=False))
+        return 0
     if args.command=="static":code,findings=validate_static(Path(args.target),not args.skip_subvalidators)
     elif args.command=="validate":code,findings=validate_run(Path(args.target),args.repo_root,args.candidate)
     elif args.command=="sync-candidate":

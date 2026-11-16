@@ -1,0 +1,15 @@
+{
+  "goal": "Verify the bounded Core engineering candidate before discretionary documentation work",
+  "context": {"implementation_generation": 1},
+  "parent_done": "candidate_verified",
+  "facts": {
+    "candidate_verified": {"value": false, "bindings": {}, "source_ref": "managed-verification:not-yet-run"},
+    "candidate_present": {"value": true, "bindings": {"implementation_generation": 1}, "source_ref": "working-implementation-and-v2-input"},
+    "offline_scope": {"value": true, "bindings": {}, "source_ref": "Human:a3c4c1b7a80d22300a4644933c8689f423c61807:bounded-engineering"}
+  },
+  "approved_choices": {},
+  "steps": [
+    {"step_id": "optional_documentation", "goal": "Prepare final prose", "kind": "optional", "requires": [], "depends_on": [], "done": "documentation_done", "scope": "engineering"},
+    {"step_id": "engineering", "goal": "Run the fixed T01-T14 checks", "kind": "preflight", "requires": ["candidate_present", "offline_scope"], "depends_on": [], "done": "engineering_tests_done", "scope": "engineering"}
+  ]
+}
