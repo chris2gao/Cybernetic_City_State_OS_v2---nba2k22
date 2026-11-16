@@ -136,7 +136,8 @@ class TrustedRoleRegistry:
         worldline_id: str,
         database_path: Optional[Path] = None,
         *,
-        is_mock: Optional[bool] = None
+        is_mock: Optional[bool] = None,
+        derived_manifest: Optional[Dict[str, Any]] = None,
     ) -> bool:
         """Binds the registry directly to the active save directory, database, and worldline manifest.
         
@@ -151,7 +152,7 @@ class TrustedRoleRegistry:
             self.is_mock = is_mock
 
         auth_file = self.save_dir / "role_authorizations.json"
-        if not auth_file.is_file():
+        if derived_manifest is None and not auth_file.is_file():
             self._actors.clear()
             self._actor_provenance.clear()
             self._phase_grants.clear()
@@ -186,7 +187,7 @@ class TrustedRoleRegistry:
             return False
 
         try:
-            auth_data = json.loads(auth_file.read_text(encoding="utf-8"))
+            auth_data = derived_manifest if derived_manifest is not None else json.loads(auth_file.read_text(encoding="utf-8"))
         except Exception:
             self._actors.clear()
             self._actor_provenance.clear()
@@ -568,6 +569,7 @@ class SeasonCycleHost:
         outbox_db: Optional[Path] = None,
         *,
         approved_role_manifest_sha256: Optional[str] = None,
+        research_delegation: Optional[Any] = None,
     ):
         self.workspace_root = Path(workspace_root).resolve() if workspace_root else _DIR.parents[3]
         self.state_file = Path(state_file).resolve() if state_file else _DIR / "runtime/season_host_state.json"
@@ -583,6 +585,7 @@ class SeasonCycleHost:
         self.outbox = DecisionOutbox(self.outbox_db, capability_service=self.capability_service)
         self.role_registry = TrustedRoleRegistry()
         self.approved_role_manifest_sha256 = approved_role_manifest_sha256
+        self.research_delegation = research_delegation
 
         self.state: Dict[str, Any] = self._load_state()
 
@@ -625,11 +628,12 @@ class SeasonCycleHost:
         save_dir = Path(self.state["save_directory"])
         db = Path(self.state["database_file"])
         manifest_file = save_dir / "role_authorizations.json"
-        if not self.approved_role_manifest_sha256 or not manifest_file.is_file():
+        derived = self.research_delegation.role_manifest() if self.research_delegation is not None else None
+        if derived is None and (not self.approved_role_manifest_sha256 or not manifest_file.is_file()):
             raise ValueError("AUTHORIZATION_PENDING_HUMAN: require the operator-approved role manifest hash")
-        raw = manifest_file.read_bytes()
+        raw = canonical_encode(derived).encode("utf-8") if derived is not None else manifest_file.read_bytes()
         digest = hashlib.sha256(raw).hexdigest()
-        if digest != self.approved_role_manifest_sha256:
+        if derived is None and digest != self.approved_role_manifest_sha256:
             raise ValueError("APPROVED_ROLE_MANIFEST_HASH_MISMATCH")
         grant = json.loads(raw)
         roles = grant.get("roles")
@@ -656,10 +660,12 @@ class SeasonCycleHost:
                 or grant.get("binding_sha256") != binding_sha):
             raise ValueError("LIVE_SAVE_BINDING_CHANGED")
         if (not self.role_registry.bind_save_context(save_dir, self.state["save_id"], self.state["worldline_id"], db,
-                                                     is_mock=False)
-                or manifest_file.read_bytes() != raw):
+                                                     is_mock=False, derived_manifest=derived)
+                or (derived is None and manifest_file.read_bytes() != raw)):
             raise ValueError("LIVE_DELEGATION_NOT_VERIFIED")
         context = _context(pid)
+        if self.research_delegation is not None:
+            self.research_delegation.check_scene(context, self.state["loaded_filename"], binding_sha)
         return {"role_manifest_sha256": digest, "binding_sha256": binding_sha, "epoch": context["epoch"],
                 "game_progress": context["game_progress"], "team_id": parse_team_numeric_id(roles[0].get("team_id")),
                 "actor_uid": roles[0].get("actor_uid"), "role_type": str(roles[0].get("role_type", "")).upper(),
@@ -1190,6 +1196,11 @@ class SeasonCycleHost:
                         "reason": "Game is currently underway in memory; cannot start cycle."
                     }
                 progress_status = prog.get("status", "DATE_ADVANCED")
+        elif self.research_delegation is not None:
+            # The research runner has already committed this cycle's fresh WorldData.
+            actual_pid = self.research_delegation.epoch["pid"]
+            self._approved_live_context(actual_pid)
+            progress_status = "BOUND_RESEARCH_CAPTURE_REUSED"
         else:
             # LIVE MODE: Connect to live NBA2K22.exe
             try:
@@ -1652,8 +1663,10 @@ class SeasonCycleHost:
             live_context = self._approved_live_context(expected_pid)
             if live_context != active_plan.get("live_context"):
                 raise RuntimeError("LIVE_CONTEXT_CHANGED_SINCE_APPROVAL")
-            if live_batch_approval is None or not approved_live_batch_sha256:
+            if self.research_delegation is None and (live_batch_approval is None or not approved_live_batch_sha256):
                 raise ValueError("EXACT_LIVE_BATCH_AUTHORIZATION_REQUIRED")
+            if self.research_delegation is not None and (live_batch_approval or approved_live_batch_sha256):
+                raise ValueError("EXPLICIT_AND_DELEGATED_APPROVAL_CANNOT_BE_COMBINED")
 
         if expected_pid is None:
             expected_pid = 5720
@@ -1721,9 +1734,13 @@ class SeasonCycleHost:
                 or len(bridge_res.unsupported_intents) != active_plan["unsupported_count"]):
             raise ValueError("REBUILT_BATCH_DOES_NOT_MATCH_APPROVED_PLAN")
         if live_context:
-            live_batch_authorization_ref = self._verify_live_batch_approval(
-                live_batch_approval, approved_live_batch_sha256, cycle_id, plan_digest, bulk_batch, live_context
-            )
+            if self.research_delegation is None:
+                live_batch_authorization_ref = self._verify_live_batch_approval(
+                    live_batch_approval, approved_live_batch_sha256, cycle_id, plan_digest, bulk_batch, live_context
+                )
+            else:
+                live_batch_authorization_ref = self.research_delegation.verify_setter(
+                    cycle_id, plan_digest, bulk_batch, live_context)
             getter_before = self._get_fresh_live_getter(
                 expected_pid=expected_pid, expected_team=live_context["team_id"],
                 expected_players={item.player_id for item in bulk_batch.intents},
@@ -1757,6 +1774,11 @@ class SeasonCycleHost:
             live_context=native_context,
             verifier=verifier,
         )
+        if live_context and self.research_delegation is not None:
+            issues = executor.planner.validate(bulk_batch)
+            if issues:
+                raise ValueError(f"LIVE_RESEARCH_PLANNER_REJECTED_BEFORE_CLAIM: {issues}")
+            self.research_delegation.reserve_setter(cycle_id, plan_digest)
         self.outbox.claim_execution(cycle_id, plan_digest, native_items=bulk_batch.intents if live_context else None)
         self.state["status"] = HostState.UNKNOWN_LOCKED
         self._save_state()

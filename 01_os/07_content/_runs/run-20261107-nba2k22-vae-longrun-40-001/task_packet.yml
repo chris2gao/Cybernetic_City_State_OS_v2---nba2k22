@@ -1,0 +1,34 @@
+task_packet:
+  task_id: NBA2K22-VAE-AUTONOMOUS-MECHANISM-DISCOVERY-LONGRUN-20261107-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  branch: task/nba2k22-vae-longrun-40
+  risk_tier: T2_semantic
+  exact_base_sha: bb73a06e710158c538caf809a771eca291eee028
+  core_reference: 877077c16bad41cfa97c1ebc9862a70ce610ff0b
+  objective: Maintain a cross-season evidence ledger and bounded experiment loop for eligible original NBA2K22 AI mechanisms.
+  first_work_unit: Coverage ledger, experimental rules, reproducible SHOT_TENDENCY round, offline window harness, season delegation proposal.
+  source_evidence:
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/40
+    - https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/39
+  allowed_changed_paths:
+    - 01_os/07_content/_runs/run-20261107-nba2k22-vae-longrun-40-001/
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/season_cycle_host.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/decision_outbox.py
+  current_human_scope: V2 direct active Codex goal for MyLEAGUE0005 current regular season, SHOT_TENDENCY only
+  v2_bounds: {cycles: 14, players_per_cycle: 12, field_writes: 168, calendar_calls: 56, game_days: 98}
+  required_tests: [inventory_source_recompute, deterministic_round, offline_window_faults, native_receipt_readback, scope]
+  known_protected_actions: [season_delegation_activation, master_integration]
+  big_task: true
+  big_task_confirmation_closure:
+    covered: []
+    uncovered: [season_delegation_activation, master_integration]
+  prohibitions: [unapproved_live_write, repeat_unknown_native_action, cross_season_automation, save_restore, public_raw_capture]
+  development_loop:
+    mode: iterative_development
+    convergence_condition: Reproducible first phase plus explicit technical and Human decision gates.
+  publisher:
+    publication_transport: local_git
+    expected_remote_master_head: bb73a06e710158c538caf809a771eca291eee028
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+  required_completion_pointer: CHECKPOINT.md
