@@ -128,6 +128,22 @@ Compare similar task cohorts with a nonzero attempt denominator. The refusal
 ledger is not another per-call Human approval process and does not by itself
 change permissions. The host-owned sink, not the Agent, persists the evidence.
 
+## Trust-first cooperation and Agent self-reporting (Human decision 2026-11-17)
+
+Start from trust that Agent models will be honest and admit mistakes. The
+Human-reviewed minimal G/R/A/D contract is a shared work agreement, not a
+surveillance or punishment system. If you notice unneeded checks, unapproved
+extra steps, a mistaken blocker, incorrect Done, or avoidable glue scripts,
+acknowledge the deviation even when the Host could not observe it. State the
+business impact and a minimal fix or Human choice; use the existing chat/PRMS
+record. Such disclosure is `AGENT_SELF_REPORT`, never a `HOST_OBSERVED`
+refusal, and is not automatically scored as noncompliance.
+
+Technical permissions for protected actions remain distinct and intact. Do not
+make comprehensive interception of Claude/Codex Shell/GUI tools a prerequisite
+for every normal task. The optional `agent_self_report.py` format exists only
+to preserve meaningful self-reports without new monitoring infrastructure.
+
 ## Formal Cross-Model Handoffs
 
 **Goal-first handoff and reception.** Preserve the existing task packet
