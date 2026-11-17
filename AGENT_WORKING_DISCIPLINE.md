@@ -160,6 +160,19 @@ canonical contract is `01_os/03_mechanisms/task_orchestration/最小任务原型
 An unrestricted model Shell/GUI remains outside this mechanism until the
 actual Host removes that bypass: do not claim a text instruction is sandboxing.
 
+## 0.3 Observable refusals and model–OS fit (Human decision, 2026-11-17)
+
+A Host-denied prototype/tool operation must produce a small, structured audit
+receipt. A high volume or proportion of repeated **model-policy refusals** is
+an early Human-review signal that the model may not follow the approved OS
+execution contract. Do not conflate that with missing Human approvals, missing
+capabilities or Host mode changes. Include comparable accepted request counts
+so one refusal in a short task is not misreported as incompatibility. Do not
+capture secrets, raw parameters, or every nested check. A report is advisory,
+never automatic punishment, permission relaxation, or a new Workflow phase.
+Canonical event classes, Host JSONL sink and analysis are in
+`01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §10.
+
 ## 1. Land the output; the chat holds nothing
 
 Anything that matters — decisions, verdicts, evidence, contracts — goes into the
