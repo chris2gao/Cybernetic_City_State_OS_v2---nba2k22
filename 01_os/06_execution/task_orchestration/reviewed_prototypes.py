@@ -34,6 +34,7 @@ class Operation:
     effect: str                    # READ_ONLY or WRITE
     parameters: tuple[str, ...]
     why: str
+    procedure_ref: str = ""          # Reviewed immutable capability documentation, alternative to steps
 
 
 @dataclass(frozen=True)
@@ -74,6 +75,7 @@ class Capability:
     version: str
     effect: str
     invoke: Callable[..., object]
+    procedure_ref: str = ""          # Domain catalog's independently registered documentation reference
 
 
 class NeedsHumanReview(ValueError):
@@ -191,6 +193,15 @@ def compile_approved(
     """
     nodes = _nodes(root)
     _validate_procedure_alignment(nodes)
+    # R1: an approved title and a callable ID are not an approved procedure.
+    # Composite task children are their explicit operation plan; every leaf
+    # must provide its concrete reviewed steps or cite fixed-version capability
+    # documentation. A draft may still be previewed without either.
+    for node in nodes:
+        if node.operation and not node.procedure and not node.operation.procedure_ref.strip():
+            raise NeedsHumanReview(
+                f"{node.key}: concrete ProcedureStep or reviewed pinned capability procedure_ref required"
+            )
     # A compiled instance must not change identity/target if the caller later
     # mutates its original bindings. Use a JSON-compatible immutable snapshot;
     # each callback gets a private copy so callbacks cannot modify the snapshot.
@@ -219,6 +230,12 @@ def compile_approved(
                     or registered.version != op.version or registered.effect != op.effect
                     or not callable(registered.invoke)):
                 raise CapabilityGap(f"{node.key}: pinned callable not available; no script generation allowed")
+            # No model-only document claim: the same immutable reference must
+            # also be declared by the Host-owned capability registration.
+            if op.procedure_ref and registered.procedure_ref != op.procedure_ref:
+                raise CapabilityGap(
+                    f"{node.key}: cited capability procedure not present in trusted catalog"
+                )
             for key in op.parameters:
                 if key not in bound_instance:
                     raise CapabilityGap(f"{node.key}: missing bound parameter {key}")
