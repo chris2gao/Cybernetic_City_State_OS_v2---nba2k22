@@ -7,7 +7,10 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
-from typing import Iterable
+import json
+import os
+from pathlib import Path
+from typing import Callable, Iterable
 from uuid import uuid4
 
 
@@ -39,6 +42,44 @@ class GatewayEvent:
 
     def as_record(self) -> dict:
         return asdict(self)
+
+
+def append_jsonl_sink(path: str | Path) -> Callable[[GatewayEvent], None]:
+    """A Host-side append-only JSONL receipt sink (not an Agent-writable gate).
+
+    Use one Host writer per file. The Host chooses an existing directory with
+    appropriate ACL and owns its lifecycle. No implicit mkdir, remote upload
+    or background worker. fsync makes a recorded admission durable before its
+    registered capability is dispatched.
+    """
+    output = Path(path)
+
+    def append(event: GatewayEvent) -> None:
+        data = (json.dumps(event.as_record(), ensure_ascii=False,
+                           sort_keys=True, separators=(",", ":")) + "\n").encode("utf-8")
+        with output.open("ab") as stream:
+            written = stream.write(data)
+            if written != len(data):
+                raise OSError("Incomplete Host audit record")
+            stream.flush()
+            os.fsync(stream.fileno())
+
+    return append
+
+
+def load_jsonl(path: str | Path) -> tuple[GatewayEvent, ...]:
+    """Strict read-only input for model/OS friction reports."""
+    rows: list[GatewayEvent] = []
+    expected = set(GatewayEvent.__dataclass_fields__)
+    with Path(path).open(encoding="utf-8") as stream:
+        for i, line in enumerate(stream, 1):
+            if not line.strip():
+                raise ValueError(f"Empty audit record at line {i}")
+            record = json.loads(line)
+            if not isinstance(record, dict) or set(record) != expected:
+                raise ValueError(f"Invalid audit record structure at line {i}")
+            rows.append(GatewayEvent(**record))
+    return tuple(rows)
 
 
 def summarize(events: Iterable[GatewayEvent], *, model_ref: str | None = None,
