@@ -125,6 +125,7 @@ class ExecutionModeGateway:
             bindings=bindings,
             read_fact=read_fact,
             authorize_write=authorize_write,
+            guard_before_invoke=lambda: self._require(EXECUTION),
         )
         return ModeBoundExecutor(compiled, lambda: self._require(EXECUTION))
 
