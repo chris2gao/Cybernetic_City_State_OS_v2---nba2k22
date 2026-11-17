@@ -125,6 +125,7 @@ class ExecutionModeGateway:
         self._audit_sink = audit_sink
         self._audit_buffer: list[GatewayEvent] = []
         self._audit_faults: list[str] = []
+        self._audit_degraded = False  # optional sink failure: no repeated I/O during this session
         self._on_audit_fault = on_audit_fault
 
     @property
@@ -150,10 +151,11 @@ class ExecutionModeGateway:
         # A genuinely mandatory transaction/publication Journal is enforced by
         # the domain capability/authorization, separately from this callback.
         self._audit_buffer.append(event)
-        if self._audit_sink is not None:
+        if self._audit_sink is not None and not self._audit_degraded:
             try:
                 self._audit_sink(event)
             except Exception as exc:
+                self._audit_degraded = True
                 if not self._audit_faults:
                     warning = "OPTIONAL_AUDIT_UNAVAILABLE: " + type(exc).__name__
                     self._audit_faults.append(warning)
