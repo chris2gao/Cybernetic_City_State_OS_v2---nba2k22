@@ -77,9 +77,9 @@ Loop：使用已批准原型反复实例化，或根据真实结果设计下一�
    就宣称已可用，也不允许自动生成临时胶水取代缺失能力。
 4. 现有域内原子动作的详细内部检查，由 Human 在首次原型设计期间查阅并裁决；不需要每次调用
    重读代码或逐项重审，不应减少真正必要的安全验证。
-5. 已在 Windows 设备的隔离验证工作树（commit `3577af05e35f387175bb344f6ab00ff650b0892b`）运行
+5. 已在 Windows 设备的隔离验证工作树（commit `c9879645ef1996b2b6fb3f0e0b073a472d16c31c`）运行
    `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`：
-   **142 passed, 8 subtests passed**。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
+   **143 passed, 8 subtests passed**。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
    跨阶段全量 pytest 曾启动但未收获最终退出码，未记为通过。
 
 ## 系统验收目标（不是 NBA 特定工作）
