@@ -91,6 +91,115 @@ Use the existing task plan and internal Loop, not a new per-tool-call form.
 Canonical semantics and positive/negative examples:
 `01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`.
 
+## 0.1 Human-reviewed reusable task prototypes — design once, execute many
+
+*Paid for 2026-11-16, NBA2K22 T15 / GE-01:* a task had a Goal and nominal action
+sequence, but during live execution the model improvised extra checks, foreground
+operations and scripts. A test wrapper's all-Pending assumption was mistakenly
+promoted into a Human-level blocker and the unfinished Goal was not promptly
+returned to Human for decision. Producing code or obeying an overstrong contract
+was not adequate business delivery.
+
+For **every domain and every level of task**, use the existing G/R/A/D model as a
+**reusable task prototype** when the action may recur or be delegated:
+
+- At **first design or material revision**, expose the actual intended procedure to
+  Human: Goal; each minimum Ready and Done criterion with its reason and factual
+  basis; the concrete function/CLI/tool and version; the necessary internal
+  operations/checks; what can be collapsed into a single existing callable;
+  parameters, side effects, exceptions and reuse boundary. Human and model
+  **discuss and decide the implementation steps**, not merely approve a title.
+  Do not treat a model-generated checklist as approved design.
+- Record the Human-approved prototype version and use it for **subsequent task
+  instances** with fresh parameters. Do not require Human to review the same
+  settled capture, simulation or verification design on each Loop iteration;
+  actual protected side-effect authority remains separate and instance-scoped.
+- At Workflow **05→06**, bind each leaf task to a verified, version-pinned existing
+  capability and a minimal observable Done. Routine internal checks stay inside
+  the tool. Do not silently invent a new shell command, glue script, readiness
+  requirement or completion test during approved instance execution.
+- If a capability is missing or a criterion turns out invalid, **stop the affected
+  Action, not the Goal**. Return `INCOMPLETE`, exact reason, evidence and the
+  smallest decision/repair options to Human. Only the changed prototype segment
+  needs re-design; unchanged nodes and proven outputs remain reusable.
+- An unreviewed proposal may be discussed, inspected or implemented as an
+  expressly commissioned **development** task. It must not masquerade as an
+  approved reusable execution contract. Human prototype review is not a Native,
+  credential, destructive-operation or master-publication permission.
+
+This is **not** an instruction to produce a per-command checklist, add a new
+Workflow phase, or delay a ready one-off task with a redundant approval ritual.
+For ordinary scoped implementation choices already delegated to the model, keep
+working within the existing authority. To actually restrict an executor with
+unrestricted Shell/GUI access requires a trusted host/tool boundary, not merely
+these written instructions. Canonical details:
+`01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md`.
+
+## 0.2 Default execution / explicit development mode (Human decision, 2026-11-16)
+
+The **default for delegated business execution is EXECUTION**, regardless of provider.
+Its actions must be instances of Human-reviewed G/R/A/D prototypes compiled to
+pre-existing, version-pinned tools. Runtime improvisation of new scripts, extra
+Ready/Done gates, unbound tool calls, or automatic promotion into coding work is
+not an approved business action. Real Done still comes from the domain.
+
+**DEVELOPMENT is separate**: a Human instruction actually commissioning code or
+new capability work is sufficient development delegation within the existing
+scope. The model can iterate on implementation and tests inside that scope;
+it does not need per-command Human approval. A failed EXECUTION action does not
+itself commission DEVELOPMENT. Report `INCOMPLETE`, the concrete capability gap
+and one minimal Human decision instead of silently switching modes.
+
+A trusted Host, not a model-generated field, owns the active task mode and may
+expose different tools. A mode/scope change invalidates the old execution
+instance; after Human re-authorizes, create a fresh scoped session. Prototype
+design review, development delegation, and protected side-effect authorization
+remain separate decisions. The candidate callable implementation is
+`01_os/06_execution/task_orchestration/execution_mode_gateway.py` and the
+canonical contract is `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §9.
+An unrestricted model Shell/GUI remains outside this mechanism until the
+actual Host removes that bypass: do not claim a text instruction is sandboxing.
+
+## 0.3 Observable refusals and model–OS fit (Human decision, 2026-11-17)
+
+A Host-denied prototype/tool operation must produce a small, structured audit
+receipt. A high volume or proportion of repeated **model-policy refusals** is
+an early Human-review signal that the model may not follow the approved OS
+execution contract. Do not conflate that with missing Human approvals, missing
+capabilities or Host mode changes. Include comparable accepted request counts
+so one refusal in a short task is not misreported as incompatibility. Do not
+capture secrets, raw parameters, or every nested check. A report is advisory,
+never automatic punishment, permission relaxation, or a new Workflow phase.
+Canonical event classes, Host JSONL sink and analysis are in
+`01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §10.
+
+## 0.4 Trust-first Agent discipline and voluntary disclosure (Human decision 2026-11-17)
+
+**Assume Agent honesty and willingness to acknowledge mistakes.** OS task contracts
+are jointly designed ways of working, not measures for treating the model as an
+adversary. Human-reviewed minimum Ready/Action/Done means the Agent commits to
+follow the shared design and raise a concrete correction when reality differs.
+When a deviation is visible only to the Agent (extra checking, repeated glue
+script, mistaken blocker, incorrect Done), report it promptly and candidly:
+what happened, why, effect on actual Goal, correction and any Human choice.
+The absence of Host instrumentation is NOT a reason to build surveillance.
+
+Do not treat an Agent's voluntary correction as a Host denial, as misconduct, or
+as evidence of incompatibility. Keep the source tag `AGENT_SELF_REPORT` distinct
+from actual `HOST_OBSERVED` admissions/refusals. No report is required for
+ordinary successful calls; do not manufacture per-command overhead. Use the
+existing task chat/Run/PRMS checkpoint or optional `agent_self_report.py` JSONL
+for meaningful disclosures. Lack of a writable optional report log never blocks
+otherwise authorized business work. Self-report records are useful evidence of
+what the Agent says, not proof of what a Host independently observed.
+
+Human instruction, existing protected-action permissions, and Native/irreversible
+safety boundaries still apply: trusting an Agent is distinct from granting it
+new permissions. Never claim free Shell/GUI access is safe for all sensitive
+operations or that every Agent tool has already been constrained. **Do not make
+full Shell/GUI capture a prerequisite for ordinary task-prototype adoption.**
+Canonical scope: `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §11.
+
 ## 1. Land the output; the chat holds nothing
 
 Anything that matters — decisions, verdicts, evidence, contracts — goes into the

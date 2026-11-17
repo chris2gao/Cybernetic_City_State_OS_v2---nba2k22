@@ -1,0 +1,159 @@
+# Core OS — 全域通用的 Human 审定任务原型与执行编译
+
+**候选状态：未集成 master，未取得 Human 对任何具体原型的审核结论，未启用真实 Host 强制路由。**
+
+这不是某个 NBA2K22 采集任务。采集、模拟、文件转换、数据分析、系统构建、软件测试、
+Agent 工作流以及任意大/小任务，都按同一原型模型进行设计、审核、实例化和复用。
+正式语义见 [最小任务原型与执行编译契约 v1](../../03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md)。
+
+## 从 Human 的业务目标到真正执行
+
+```text
+Human 提出业务目标
+    ↓ 03 结果建模：真实目标和独立 Done
+05 步骤拆分：分解父子 G/R/A/D；复用已有原型
+    ↓ 若首次设计/负载关键变化：Human + AI 逐项讨论并审核
+    ↓ 确定每一步的必要性、工具内部自动化和真实能力绑定
+05→06 编译：可信审核来源 + 原型版本 + capability + 实例参数 + 必要权限
+    ↓ 未批准/不具备能力：不执行，直接反馈最小理由与选项
+06 执行：仅沿已编译的动作运行，工具内部处理固定细节
+    ↓ 真实 Done / 不明则对账 / 只修实际阻断
+Loop：使用已批准原型反复实例化，或根据真实结果设计下一轮
+```
+
+## 哪些东西 Human 应首次审核？
+
+| 栏位 | Human 与模型要讨论的内容 |
+| --- | --- |
+| Goal | 真正能被使用的结果；父子节点是否有必要分开 |
+| Ready_min | 每项前置条件为什么必要；能否删去；是否与工具内部检查重复 |
+| Action_bound | 一步步要做什么；已有函数/CLI/脚本在哪里，版本、参数和实际副作用是什么 |
+| Procedure | 每个检查/操作由 **能力内部** 完成还是 **Host 单独调用**；为什么这么做；哪些可以自动化、合并或删除 |
+| Done_min | 最小可独立确认的业务结果；是否增加了无关后验检查 |
+| Exception/Scope | 哪些失败可按已批准路径继续，哪些必须停 Action、问 Human；原型适用范围 |
+| Reuse | 同类型任务后续哪些仅改实例参数而无需再审，什么变更使审核失效 |
+
+**讨论的是原型首次设计时的实际工程执行过程**，不是每次运行都重新提供一张形式化表。
+一个已批准的采集类工具内部可以做几十项只读调用，从上层任务看仍是一个已绑定 Atom；
+不应让 Agent 在每轮 Loop 重新展开成多项临时 Shell/胶水步骤。
+
+## 参考实现（opt-in，不能假装已有全局执行控制）
+
+- `atomic_tasks.py`：现有 Core PR #23 的 G/R/A/D 参考 Executor；不自带生产 Host、CAS 或权限。
+- `reviewed_prototypes.py`：原型 / 检查 / Procedure / 可执行能力的类型；
+  `review_packet()` 供 Human 审查每条条件、操作与原因；
+  `compile_approved()` 要求可信 Host 的 `review_lookup` 和版本一致的已有 callable，
+  编译到 **同一** PR #23 Executor，不自动执行。
+- `test_reviewed_prototypes.py`：离线行为测试覆盖修改后原审核失效、跨实例复用、能力缺失、
+  无效步骤、外部写入权限、父任务独立 Done、只尝试一次不盲目重放。
+- 原型编译现在会拒绝**未能对应真实调用图的 Host 步骤**：父节点有显式 Host Procedure 时，顺序必须与直接子任务一致；单个叶节点不得借 Procedure 增加第二次 Host 调用。模型仍可以把未绑定步骤放进候选审核清单供 Human 指出问题，但批准文本本身不会使该操作成为真实 Action。
+- 实例参数使用编译时的独立快照；Ready、写入授权和实际调用观察的是同一个固定目标。外部或回调对象对原始参数字典的修改不会改变已编译实例。
+- `ProcedureStep` 只是设计审阅和摘要的一部分；**不作为逐命令执行器**，工具内部
+  机制的真实正确性仍需要实际测试。若任务包括 Host 单独执行多步操作，应以多个已绑定
+  子任务/既有领域封装表示，不能因为 Procedure 里写了某动作就认为它会自动执行。
+
+## Core 全域默认模式（2026-11-16 Human 已批准）
+
+**默认 `EXECUTION`**：只调用 Human 审定、版本绑定的原型实例；禁止运行时生成临时脚本、
+扩张 Ready/Done 或自动进入开发。`execution_mode_gateway.py` 的 `ExecutionModeGateway`
+在 `compile_execution` 上要求已有原型和 callable，并在调用边界再次检查 Host 模式。
+
+**显式 `DEVELOPMENT`**：当 Human 明确委托软件实现或能力修复时，在原有任务范围内
+可以研究、编程和测试。执行中发现能力缺口不等于获得了这项委托；
+`invoke_development` 仅接受 Host 注册且由真实 Host 按任务/范围授权的工具，没有 Shell 回退。
+每次开发工具调用由 Host 判断已批准的**任务范围**，不是每个命令重新找 Human 审批。
+
+**模式变化**：既有实例失效，不能恢复旧模式就自动复活；从执行转开发必须经过 Human
+授予新的任务范围和会话。父任务保持 `INCOMPLETE`，受影响 Action 停止，保护已有真实成果。
+这一机制在实际 Host 接管所有相关工具前，仍不构成全局强制沙箱。
+
+## 拒绝记录与 Human 适配性判断（2026-11-17 已裁决）
+
+`execution_decision_audit.py` 将经过受控网关的操作准入与拒绝记录为不含原始输入的
+结构化事件；Host 可以使用 `append_jsonl_sink` 将记录追加在现有受控运行目录。
+统计区分模型策略越界（`MODEL_POLICY`）和 Human 待审批、能力缺口、Host 状态变化；
+常规 `Ready=false` 不应计为违规。被拒绝操作的次数与占比持续偏高时，向 Human
+发出**模型–OS 适配性复核建议**，不能直接证明模型无法开发，也不会自动禁用模型。
+
+`summarize()` 的样本量、比例与重复理由阈值目前是示范参数，Human 尚未裁定正式数值。
+**真实 Claude/Codex 工具 Host 接入、日志覆盖率与外部原型审核来源仍待完成。**
+现有本机测试证据只证明网关与持久日志接口的参考行为。
+
+## Human 最新裁决：信任 Agent，自行如实报告（2026-11-17）
+
+Human 已明确：OS 是基于 Human–Agent 互信的执行系统，已审核原型是协作约定而非监视工具。
+Agent 看到自己重复检查、临时写胶水、误认 Done 等偏差时，即便 Host 看不到，也应当
+主动说明发生了什么、对业务结果有何影响、如何纠正。**Agent 自报不是 Host 拒绝事件，**
+也不能自动推断为不服从；自动监测不到的地方无须为此引入全面 Shell/GUI 接管。
+
+`agent_self_report.py` 提供独立的 `AGENT_SELF_REPORT` 数据结构、可选本地
+JSONL 记录和描述性汇总，不与 `execution_decision_audit.py` 的 Host 事件和拒绝率混算。
+这只是已有聊天/PRMS 任务记录的辅助格式，不建立新审批或监督服务；找不到可写日志时，
+可继续在对话/现有检查点自报，不得为此阻断合法工作。**自报不提供额外权限，**
+受保护操作的原有许可仍适用。
+
+当前 Windows 本地隔离测试在固定源码 commit
+`1021bed9de29ab37c740734d455fb0db1b10ab8a` 完成：
+`python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`
+→ **161 passed, 8 subtests passed**。这是离线行为测试；实际 Agent 诚实程度与真实
+任务成功率仍须通过后续任务证据观察，不能仅靠自报或测试数字推定。
+
+## PR #37 · Human 核查后的直接整改（2026-11-17）
+
+**R1 已修：** 预览可保留未完成方案供 Human 讨论，但实际 `compile_approved()`
+必须在每个叶节点看到具体 `ProcedureStep` 或 `Operation.procedure_ref`。
+成熟函数采用文档引用时，Host 能力目录必须提供**完全相同的固定版本引用**，
+不能只靠模型在原型里写“已审”。父节点由真实子任务树表示操作，不需要重复展开。
+测试证据见 `test_reviewed_prototypes.py` 的 `test_r1_*`。
+
+**R2 已修：** 可选网关审计无法落盘，只生成一次脱敏 `OPTIONAL_AUDIT_UNAVAILABLE`
+诊断，并继续已有授权的正常动作。`audit_faults` 和可选 `on_audit_fault`
+让 Host/Agent 可以主动说明故障。Native/发布/事务类独立权限和强制 Journal 仍归领域。
+测试证据见 `test_execution_decision_audit.py` 的 `test_r2_*`。
+
+**R4 部分交付（未冒充最终通过）：** `prms_review_lookup.py` 读取现有 Run 中明确的
+Human 原型审核清单，并匹配原型 digest、任务 scope、Human 决策来源 Markdown 哈希，
+还要求 Host 验证其实际为 Human 裁决。现有 `HUMAN_DECISION_MODE_SEPARATION.md`
+只批准 OS 的执行/开发模式规则，**未批准任何特定叶任务原型**；
+测试确认它不能产生 `HumanReview`。合成审批文件可驱动真实的
+`lookup→compile→invoke→Done` 测试，但这不是 Human 已批准真实原型的证据。
+
+**固定源码证据：** commit `a527cc7f4a96356310635530b45bfabcc24ee5a2`，
+Windows 独立工作树执行 171 项 pytest + 8 subtests 全通过。
+尚缺真实 Human 对首个具体原型逐项审定、独立工程审核与 master 集成授权；
+不以继续增加审计或 Shell 沙箱代替这些未完成的实际交付。
+
+## 必须真实处理的差距
+
+1. 当前代码仅约束**主动调用该编译器的可信 Host**。任何未经路由的 Codex/Claude
+   Shell/GUI 工具仍可绕行，这不是已实现的全局技术访问控制。
+2. `HumanReview` 是通过 Host 信任接口查到的决定，不是模型自行签名、伪造的 token。
+   正式接入需要 Human 授权的可信审批读取，且原型审核与每个有副作用实例的操作权限分离。
+3. 现有 Native/数据/文件等工具必须作为真实、可版本绑定的 Callable 接入。不可因名称匹配
+   就宣称已可用，也不允许自动生成临时胶水取代缺失能力。
+4. 现有域内原子动作的详细内部检查，由 Human 在首次原型设计期间查阅并裁决；不需要每次调用
+   重读代码或逐项重审，不应减少真正必要的安全验证。
+5. 已在 Windows 设备的隔离验证工作树（commit `333dcb28475032c403c5ea43587e25adbda8a35a`）运行
+   `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`：
+   **154 passed, 8 subtests passed**（R1/R2 与 PRMS 回归）。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
+   跨阶段全量 pytest 曾启动但未收获最终退出码，未记为通过。
+
+## 系统验收目标（不是 NBA 特定工作）
+
+- 所有新可复用任务在首次设计时，都让 Human 能逐项质疑真实 Ready、Done 和每个操作的必要性。
+- 已批准原型可以在新参数实例中重复使用，常规操作不再临场编写脚本。
+- 原型语义/能力变化需要审核；普通实例参数变化不重复审批设计。
+- 执行阶段发现能力缺口时，只报 `INCOMPLETE` 和最小 Human 选项，不擅自追加操作或终止父 Goal。
+- **验收真实执行轨迹**，区分工具内部必需检查与 Agent 临时发起的额外步骤。
+- 一个完全未使用这套编译 API 的 Agent，不能因为读过本规范就被认定“已受技术强制约束”。
+
+本次通用 Core OS 改造先保留为 Draft。正式集成及生产使用需 Human 对机制与必要技术控制边界给出裁决；
+不要为了演示而启动已关闭的 NBA2K22 T15。
+
+## 2026-11-17 独立源码审核反馈（新补充，不覆盖历史测试）
+
+一份与施工方分离的固定 SHA 独立工程报告针对 `a527cc7f4a96356310635530b45bfabcc24ee5a2` 给出 **`PASS_WITH_GAPS`**：R1/R2 原 HIGH 问题的源码补丁在既定参考实现范围内关闭；R3 的全域 Host 覆盖仍未发生；R4 的 Human 审核来源读取组件只通过结构/合成夹具测试，尚无真正逐项 Human 批准的具体原型。报告明确声明审阅方未独立运行 pytest，不能虚报独立测试 PASS。
+
+**注意：** 审核报告还指出 `procedure_ref` 目前只是与 Host 目录的精确字符串比较，不直接证明 Human 看过文档正文；`audit_faults` 也不保证用户一定能看到警告（需要 Host 读取或安装回调）。这些是保留的显式使用边界，不能替换成实际部署声明。
+
+原始审核报告与来源摘要及独立核查的限制已登记在本 Run 的 `INDEPENDENT_REVIEW_RESULT_20261117.md`；本文件的历史旧 SHAs 是各个旧测试批次的记录，只有固定修订源码 `a527cc7...` 对应 171 passed + 8 subtests。

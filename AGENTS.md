@@ -89,6 +89,61 @@ Vendor-specific mechanics, and nothing else, belong here:
   relevant. Reuse the recorded entry points within that environment, batch
   independent reads, and keep dependent mutations sequential.
 
+## Reusable task prototypes across models (Core-wide)
+
+All models and all domain tasks inherit the Human-reviewed minimal-task-prototype
+rule in `AGENT_WORKING_DISCIPLINE.md` §0.1. In Workflow 05, review the **actual
+steps, reasons, minimum Ready/Done and existing capability binding** with Human
+when a reusable task is first designed or materially changed. Workflow 06
+receives an approved prototype instantiated with current facts and separately
+required execution permissions. Do not reimplement the same tool from scratch on
+every Loop; do not invent new mandatory checks or new scripts after the step has
+already been approved. A real uncovered gap remains an `INCOMPLETE` Goal and is
+returned for one precise Human choice, not silently declared complete or
+abandoned. Prototype approval is not protected-action approval. The candidate
+adapter is `01_os/06_execution/task_orchestration/reviewed_prototypes.py`;
+only an actual trusted Host integration can enforce tool invocation restrictions.
+
+## Execution-mode routing and development boundaries
+
+**Core-wide Human decision:** the default domain task runtime mode is
+`EXECUTION`, and its actions must be compiled from the Human-reviewed minimum
+G/R/A/D prototype using the version-pinned capability entry. A Human-requested
+coding/architecture task is `DEVELOPMENT` within its existing task scope;
+no additional approval token is required for routine local work. A missing
+capability during `EXECUTION` must not cause an automatic switch to code
+writing. Stop the affected Action, report `INCOMPLETE` and request the
+smallest Human choice. Only a new Host-recognized, Human-authorized development
+session may perform that repair. Do not mistake a model's `mode: DEVELOPMENT`
+text for true authority. The opt-in `execution_mode_gateway.py` implements
+callable-level refusal; actual Shell/GUI restrictions require Host integration.
+
+## Denial receipts as a model–OS fit signal
+
+When an actually mediated operation is refused, preserve the Host's structured
+`DENIED` reason. Repeated `MODEL_POLICY` refusals indicate possible mismatch
+between the model's tool behavior and the Human-reviewed OS plan; contrast with
+`HUMAN_PENDING`, `SYSTEM_GAP` and `HOST_STATE` before blaming the model.
+Compare similar task cohorts with a nonzero attempt denominator. The refusal
+ledger is not another per-call Human approval process and does not by itself
+change permissions. The host-owned sink, not the Agent, persists the evidence.
+
+## Trust-first cooperation and Agent self-reporting (Human decision 2026-11-17)
+
+Start from trust that Agent models will be honest and admit mistakes. The
+Human-reviewed minimal G/R/A/D contract is a shared work agreement, not a
+surveillance or punishment system. If you notice unneeded checks, unapproved
+extra steps, a mistaken blocker, incorrect Done, or avoidable glue scripts,
+acknowledge the deviation even when the Host could not observe it. State the
+business impact and a minimal fix or Human choice; use the existing chat/PRMS
+record. Such disclosure is `AGENT_SELF_REPORT`, never a `HOST_OBSERVED`
+refusal, and is not automatically scored as noncompliance.
+
+Technical permissions for protected actions remain distinct and intact. Do not
+make comprehensive interception of Claude/Codex Shell/GUI tools a prerequisite
+for every normal task. The optional `agent_self_report.py` format exists only
+to preserve meaningful self-reports without new monitoring infrastructure.
+
 ## Formal Cross-Model Handoffs
 
 **Goal-first handoff and reception.** Preserve the existing task packet

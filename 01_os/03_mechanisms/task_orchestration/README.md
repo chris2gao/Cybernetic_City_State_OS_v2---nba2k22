@@ -21,6 +21,46 @@
 
 **这不是新执行引擎、审批门、Schema或每次调用都要填报的文件。** 普通运行结果不用为每个节点创建Git提交或正式 MWU 输出；原有真实权限与发布门继续适用。
 
+## Human 审定的最小任务原型与执行编译（系统级候选）
+
+[统一契约 v1](最小任务原型与执行编译契约_v1.md) 衔接七阶段中的
+03 结果建模、05 步骤拆分、06 执行及既有内部 Loop。它适用于任意领域、
+任意层级任务：新原型由 Human 与模型对每项最小 Ready/Done 和实际步骤进行设计审核；
+已审定原型可大量实例化，复用既有工具，不重复开发、不重复审同一设计。
+任务编译是 05→06 的衔接，不增设第八阶段，也不为每次调用另建 PR/Run。
+
+`01_os/06_execution/task_orchestration/reviewed_prototypes.py` 是供真实 Host 选择接入
+的初版标准库编译适配器：输出可审查的原型清单，验证可信 Human 决策与版本摘要，
+把叶任务绑定到已有领域 callable，并复用 PR #23 Executor，不生成 Shell/脚本。
+当前仍是候选代码，**没有接管所有 Agent 的工具调用，也不授予写入权限**。
+
+## 双模式默认策略（Human 2026-11-16 裁决）
+
+所有任务的日常业务执行**默认 `EXECUTION`**，只调用 Human 审定、已编译的
+原型；明确受 Human 委托的代码开发/能力实现处于独立 `DEVELOPMENT` 会话。
+能力缺口只停止受影响 Action 并返回 `INCOMPLETE`；模型不得自主切换模式。
+`01_os/06_execution/task_orchestration/execution_mode_gateway.py` 是当前
+可调用的最小 Host 适配器，在动作调用处检查模式/范围；**未接管全部外部工具**。
+详见[模式分离裁决](最小任务原型与执行编译契约_v1.md#9-human-裁决执行模式--开发模式分离2026-11-16)。
+
+## 拒绝记录与模型—OS 适配性观测（Human 2026-11-17 裁决）
+
+`execution_decision_audit.py` 为网关的准入、拒绝提供轻量事件、原因分类、Host 管理的
+JSONL 追加存储与只读统计。统计独立区分模型策略越界、Human 未批准、系统能力缺口
+和 Host 状态变更。重复策略拒绝可提示 Human 复核模型—OS 适配性，但**不自动禁用模型**。
+默认示例阈值不是已批准的纪律门槛，生产记录需要真实 Host 导入 sink。
+测试见 `test_execution_decision_audit.py`；正式边界见
+[统一契约第十节](最小任务原型与执行编译契约_v1.md#10-human-补充裁决拒绝事件记录与模型os-适配性2026-11-17)。
+
+## 信任优先的自报补充（Human 2026-11-17 新裁决）
+
+任务纪律基于 Human 与 Agent 的合作与诚实自纠，而非要求全域 Shell/GUI 监视。
+`agent_self_report.py` 提供自愿纠偏记录；它与 `execution_decision_audit.py` 的
+Host 实际拒绝事实**分别保存、分别统计**。Agent 对未被宿主观察的过度操作也可
+主动如实汇报，并记入既有 PRMS/任务讨论。报告不能赋予新权限，也不能代替真实
+Done。缺少可选 JSONL 日志，不得阻塞合法业务执行或制造新的检查前摇。
+详见[统一契约第十一节](最小任务原型与执行编译契约_v1.md)。
+
 ## 最小可运行参考实现（不接管业务命令）
 
 - `01_os/06_execution/task_orchestration/atomic_tasks.py`：标准库 Python，提供 `Atom`、`Chain`、`Ready`、`Executor.inspect()/advance()/run_available()`。由领域代码注入真实 Ready、Action、Done 函数；Core 不替领域执行 Native、Git 或 Shell，也不授予权限。
