@@ -1,7 +1,9 @@
 """Audit evidence for admitted tool attempts and categorized refusals."""
 import unittest
+from pathlib import Path
+import tempfile
 
-from execution_decision_audit import GatewayEvent, summarize
+from execution_decision_audit import GatewayEvent, append_jsonl_sink, load_jsonl, summarize
 from execution_mode_gateway import (
     DEVELOPMENT, DevelopmentAuthorizationRequired, DevelopmentTool,
     ExecutionModeGateway, ModeState, ModeViolation,
@@ -21,6 +23,43 @@ def event(decision, cause="NONE", reason="APPROVED", model="codex",
 
 
 class AuditTests(unittest.TestCase):
+    def test_host_jsonl_sink_persists_events_for_later_read_only_report(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "events.jsonl"
+            state = ModeState(DEVELOPMENT, "T1", "Human-decision", "scope")
+            gate = ExecutionModeGateway(
+                read_mode=lambda: state, model_ref="codex",
+                audit_sink=append_jsonl_sink(path),
+                development_tools={"edit": DevelopmentTool("edit", lambda path: path)},
+                verify_development=lambda *args: True)
+            gate.invoke_development("edit", args={"path": "approved.py"})
+            with self.assertRaises(ModeViolation):
+                gate.invoke_development("unknown", args={"password": "must-not-be-logged"})
+            records = load_jsonl(path)
+            self.assertEqual(len(records), 2)
+            self.assertEqual([e.decision for e in records], ["ADMITTED", "DENIED"])
+            self.assertEqual(records[1].reason_code, "UNREGISTERED_TOOL")
+            self.assertEqual(records[0].model_ref, "codex")
+            self.assertNotIn("must-not-be-logged", path.read_text(encoding="utf-8"))
+            self.assertEqual(summarize(records, model_ref="codex", min_attempts=2,
+                                       conflict_rate_threshold=0.5)["policy_denials"], 1)
+
+    def test_unavailable_durable_sink_prevents_admission_before_tool(self):
+        with tempfile.TemporaryDirectory() as directory:
+            missing_parent = Path(directory) / "nonexistent" / "events.jsonl"
+            calls = []
+            state = ModeState(DEVELOPMENT, "T1", "Human-decision", "scope")
+            gate = ExecutionModeGateway(
+                read_mode=lambda: state, model_ref="codex",
+                audit_sink=append_jsonl_sink(missing_parent),
+                development_tools={"edit": DevelopmentTool(
+                    "edit", lambda **kw: calls.append(kw))},
+                verify_development=lambda *args: True)
+            with self.assertRaises(FileNotFoundError):
+                gate.invoke_development("edit", args={"path": "example.py"})
+            self.assertEqual(calls, [])
+            self.assertFalse(missing_parent.exists())
+
     def test_denied_mode_never_invokes_and_produces_structured_receipt(self):
         calls = []
         saved = []
