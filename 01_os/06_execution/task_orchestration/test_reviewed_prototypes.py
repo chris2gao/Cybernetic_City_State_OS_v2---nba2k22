@@ -1,6 +1,9 @@
 """Offline behavioral tests. No game, shell, network or Native calls."""
 import unittest
 
+# Stable catalog documentation is a TEST FIXTURE; it is not a Human approval.
+FIXTURE_PROCEDURE_REF = "fixture://known-procedure@0000000000000000000000000000000000000000"
+
 from reviewed_prototypes import (
     Capability, CapabilityGap, Criterion, HumanReview, NeedsHumanReview,
     Operation, ProcedureStep, Prototype, compile_approved, digest, review_packet,
@@ -17,7 +20,7 @@ def capture():
         "capture", "Read one bound source unit",
         (check("identity", "save_bound"), check("source", "readable")),
         (check("receipt", "captured"),),
-        Operation("worlddata.capture", "v1", "READ_ONLY", ("save",), "Reuse existing capture"),
+        Operation("worlddata.capture", "v1", "READ_ONLY", ("save",), "Reuse existing capture", procedure_ref=FIXTURE_PROCEDURE_REF),
     )
 
 
@@ -80,7 +83,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
         calls = []
         root = capture()
         cap = {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY",
-                                                 lambda **kwargs: calls.append(kwargs))}
+                                                 lambda **kwargs: calls.append(kwargs), procedure_ref=FIXTURE_PROCEDURE_REF)}
         with self.assertRaises(NeedsHumanReview):
             compile_fixture(root, {}, cap, {"save_bound": True, "readable": True, "captured": False})
         forged = {"capture": HumanReview("capture", "0" * 64, "model-says-approved", True)}
@@ -97,7 +100,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
             def run(save, state=facts):
                 calls.append(save)
                 state["captured"] = True
-            cat = {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY", run)}
+            cat = {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY", run, procedure_ref=FIXTURE_PROCEDURE_REF)}
             e = compile_fixture(root, grant, cat, facts, {"save": filename})
             self.assertEqual(e.inspect().status, "READY")
             self.assertEqual(e.advance().status, "ADVANCED")
@@ -112,7 +115,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
             calls.append(save)
             facts["captured"] = True
         e = compile_fixture(root, reviews_for(root),
-                            {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY", run)},
+                            {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY", run, procedure_ref=FIXTURE_PROCEDURE_REF)},
                             facts)
         self.assertEqual(e.run_available()[-1].status, "DONE")
         self.assertEqual(len(calls), 1)
@@ -124,7 +127,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
                           root.done, root.operation)
         changed = Prototype(root.key, root.goal, root.ready, root.done,
                             Operation("worlddata.capture", "v2", "READ_ONLY", ("save",),
-                                      "new callable"))
+                                      "new callable", procedure_ref=FIXTURE_PROCEDURE_REF))
         for candidate in (extra, changed):
             self.assertNotEqual(digest(candidate), digest(root))
             with self.subTest(candidate=candidate), self.assertRaises(NeedsHumanReview):
@@ -133,9 +136,9 @@ class ReviewedPrototypeTests(unittest.TestCase):
     def test_missing_or_changed_capability_cannot_fall_back_to_script(self):
         root = capture()
         for cap in ({}, {"worlddata.capture": Capability("worlddata.capture", "v2",
-                                                          "READ_ONLY", lambda **kw: None)},
+                                                          "READ_ONLY", lambda **kw: None, procedure_ref=FIXTURE_PROCEDURE_REF)},
                     {"worlddata.capture": Capability("worlddata.capture", "v1",
-                                                          "WRITE", lambda **kw: None)}):
+                                                          "WRITE", lambda **kw: None, procedure_ref=FIXTURE_PROCEDURE_REF)}):
             with self.subTest(cap=cap), self.assertRaises(CapabilityGap):
                 compile_fixture(root, reviews_for(root), cap, {})
 
@@ -146,7 +149,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
             calls.append(save)  # Does NOT set captured: return success is not Done.
         root = capture()
         e = compile_fixture(root, reviews_for(root),
-                            {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY", run)},
+                            {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY", run, procedure_ref=FIXTURE_PROCEDURE_REF)},
                             facts)
         self.assertEqual(e.advance().status, "BLOCKED")
         self.assertEqual(calls, [])
@@ -165,7 +168,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
                  "captured": False, "study_result": False}
         def run(save):
             facts["captured"] = True
-        cat = {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY", run)}
+        cat = {"worlddata.capture": Capability("worlddata.capture", "v1", "READ_ONLY", run, procedure_ref=FIXTURE_PROCEDURE_REF)}
         no_child = {"research": grant["research"]}
         with self.assertRaises(NeedsHumanReview):
             compile_fixture(parent, no_child, cat, facts)
@@ -186,7 +189,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
                          "Repeat external preflight")
         calls = []
         caps = {"worlddata.capture": Capability(
-            "worlddata.capture", "v1", "READ_ONLY", lambda **kwargs: calls.append(kwargs))}
+            "worlddata.capture", "v1", "READ_ONLY", lambda **kwargs: calls.append(kwargs), procedure_ref=FIXTURE_PROCEDURE_REF)}
         with self.assertRaises(CapabilityGap):
             compile_fixture(candidate, reviews_for(candidate), caps,
                             {"save_bound": True, "readable": True, "captured": False})
@@ -207,7 +210,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
             calls.append(save)
             facts["captured"] = True
         cat = {"worlddata.capture": Capability(
-            "worlddata.capture", "v1", "READ_ONLY", captured)}
+            "worlddata.capture", "v1", "READ_ONLY", captured, procedure_ref=FIXTURE_PROCEDURE_REF)}
         valid = compile_fixture(parent, reviews_for(parent), cat, facts)
         self.assertEqual(valid.advance().status, "ADVANCED")
         self.assertEqual(calls, ["MyLEAGUE-test"])
@@ -234,7 +237,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
         facts = {"start_ok": True, "study_result": False, "save_bound": True,
                  "readable": True, "captured": False, "extra_check": True}
         catalog = {"worlddata.capture": Capability("worlddata.capture", "v1",
-                                                    "READ_ONLY", lambda save: None)}
+                                                    "READ_ONLY", lambda save: None, procedure_ref=FIXTURE_PROCEDURE_REF)}
         with self.assertRaises(NeedsHumanReview):
             compile_fixture(updated_parent, approvals, catalog, facts)
         approvals["capture"] = reviews_for(updated_parent)["capture"]
@@ -255,7 +258,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
             seen.append(("invoke", save))
             facts["captured"] = True
         cat = {"worlddata.capture": Capability(
-            "worlddata.capture", "v1", "READ_ONLY", invoke)}
+            "worlddata.capture", "v1", "READ_ONLY", invoke, procedure_ref=FIXTURE_PROCEDURE_REF)}
         compiled = compile_approved(
             base, review_lookup=lambda key, sha: reviews_for(base).get(key),
             capabilities=cat, bindings=bindings, read_fact=read_fact)
@@ -269,7 +272,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
                            (check("ready", "ready"),),
                            (check("verified", "verified"),),
                            Operation("native.setter", "1", "WRITE", ("uid",),
-                                     "Existing versioned callable"))
+                                     "Existing versioned callable", procedure_ref=FIXTURE_PROCEDURE_REF))
         bindings = {"uid": 7}
         facts = {"ready": True, "verified": False}
         authorized = []
@@ -281,7 +284,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
         e = compile_approved(
             action, review_lookup=lambda key, sha: reviews_for(action).get(key),
             capabilities={"native.setter": Capability("native.setter", "1", "WRITE",
-                                                       lambda uid: invocations.append(uid))},
+                                                       lambda uid: invocations.append(uid), procedure_ref=FIXTURE_PROCEDURE_REF)},
             bindings=bindings,
             read_fact=lambda name, args: facts[name],
             authorize_write=permission)
@@ -297,7 +300,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
             compile_approved(
                 base, review_lookup=lambda key, sha: reviews_for(base).get(key),
                 capabilities={"worlddata.capture": Capability(
-                    "worlddata.capture", "v1", "READ_ONLY", lambda save: None)},
+                    "worlddata.capture", "v1", "READ_ONLY", lambda save: None, procedure_ref=FIXTURE_PROCEDURE_REF)},
                 bindings={"save": object()},
                 read_fact=lambda name, args: True)
 
@@ -307,11 +310,11 @@ class ReviewedPrototypeTests(unittest.TestCase):
                            (check("identity", "identity_ok"),),
                            (check("getter", "getter_matches"),),
                            Operation("native.setter", "v1", "WRITE", ("save", "uid"),
-                                     "CAS and readback via existing native capability"))
+                                     "CAS and readback via existing native capability", procedure_ref=FIXTURE_PROCEDURE_REF))
         grant = reviews_for(action)
         facts = {"identity_ok": True, "getter_matches": False}
         catalog = {"native.setter": Capability("native.setter", "v1", "WRITE",
-                                                lambda **kw: calls.append(kw))}
+                                                lambda **kw: calls.append(kw), procedure_ref=FIXTURE_PROCEDURE_REF)}
         permission = {"allowed": False}
         e = compile_fixture(action, grant, catalog, facts,
                             {"save": "test", "uid": 1},
@@ -332,7 +335,7 @@ class ReviewedPrototypeTests(unittest.TestCase):
         root = capture()
         e = compile_fixture(root, reviews_for(root),
                             {"worlddata.capture": Capability("worlddata.capture", "v1",
-                                                             "READ_ONLY", lambda **kw: None)},
+                                                             "READ_ONLY", lambda **kw: None, procedure_ref=FIXTURE_PROCEDURE_REF)},
                             {"save_bound": "true", "readable": True, "captured": False})
         self.assertEqual(e.inspect().status, "OBSERVATION_ERROR")
         self.assertEqual(e.advance().status, "OBSERVATION_ERROR")
