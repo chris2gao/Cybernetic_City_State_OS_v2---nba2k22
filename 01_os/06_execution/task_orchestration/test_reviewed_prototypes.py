@@ -79,6 +79,60 @@ class ReviewedPrototypeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             review_packet(proposed)
 
+    def test_r1_missing_steps_and_missing_pinned_description_block_even_with_review_stub(self):
+        node = Prototype(
+            "undocumented", "Real output",
+            (check("ready", "ready"),), (check("done", "done"),),
+            Operation("known", "1", "READ_ONLY", ("target",), "Call existing tool"))
+        record = HumanReview("undocumented", digest(node), "synthetic-test-only", True)
+        calls = []
+        with self.assertRaisesRegex(NeedsHumanReview, "concrete ProcedureStep"):
+            compile_approved(
+                node, review_lookup=lambda key, sha: record,
+                capabilities={"known": Capability("known", "1", "READ_ONLY",
+                                                   lambda target: calls.append(target))},
+                bindings={"target": "A"}, read_fact=lambda key, args: False)
+        self.assertEqual(calls, [])
+        self.assertEqual(review_packet(node)[0]["procedure"], [])  # Still previewable for co-design
+
+    def test_r1_concrete_bound_step_allows_existing_tool_without_document_pointer(self):
+        node = Prototype(
+            "concrete", "Real output", (), (check("done", "done"),),
+            Operation("known", "1", "READ_ONLY", ("target",), "Use known callable"),
+            procedure=(ProcedureStep("call", "Run known callable exactly once",
+                                     "Required to produce output", "reviewed step",
+                                     "HOST_BINDING", "known"),))
+        facts = {"done": False}
+        seen = []
+        def action(target):
+            seen.append(target)
+            facts["done"] = True
+        record = HumanReview("concrete", digest(node), "fixture-approval", True)
+        compiled = compile_approved(
+            node, review_lookup=lambda key, sha: record,
+            capabilities={"known": Capability("known", "1", "READ_ONLY", action)},
+            bindings={"target": "A"}, read_fact=lambda key, args: facts[key])
+        self.assertEqual(compiled.run_available()[-1].status, "DONE")
+        self.assertEqual(seen, ["A"])
+
+    def test_r1_cited_documentation_must_match_domain_registered_capability(self):
+        node = capture()  # This fixture carries an exact, pinned documentation ref.
+        facts = {"save_bound": True, "readable": True, "captured": False}
+        calls = []
+        mismatched = Capability("worlddata.capture", "v1", "READ_ONLY",
+                                lambda save: calls.append(save),
+                                procedure_ref="fixture://wrong-document@1111111111111111111111111111111111111111")
+        with self.assertRaisesRegex(CapabilityGap, "procedure"):
+            compile_fixture(node, reviews_for(node),
+                            {"worlddata.capture": mismatched}, facts)
+        self.assertEqual(calls, [])
+        self.assertEqual(node.operation.procedure_ref, FIXTURE_PROCEDURE_REF)
+        altered = Prototype(node.key, node.goal, node.ready, node.done,
+                            Operation("worlddata.capture", "v1", "READ_ONLY", ("save",),
+                                      "Reuse existing capture",
+                                      procedure_ref="fixture://different-doc@2222222222222222222222222222222222222222"))
+        self.assertNotEqual(digest(node), digest(altered))
+
     def test_missing_or_fabricated_review_cannot_run(self):
         calls = []
         root = capture()
