@@ -1,0 +1,196 @@
+"""Opt-in Human-reviewed G/R/A/D prototypes bound to existing domain capabilities.
+
+This module never generates a script, grants permission, starts a workflow, or
+runs a side effect on compilation. It reuses the PR23 Atom/Chain/Executor.
+The HOST (not the proposing model) must own review_lookup, capability_catalog,
+domain fact readings and per-instance external write authorization.
+"""
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+import hashlib
+import json
+from typing import Callable, Mapping
+
+from atomic_tasks import Atom, Chain, Executor, Ready
+
+
+@dataclass(frozen=True)
+class Criterion:
+    """One Human-auditable Ready/Done requirement and its rationale."""
+    key: str
+    fact: str
+    why: str
+    basis: str
+
+
+@dataclass(frozen=True)
+class Operation:
+    """One *existing*, version-pinned callable, not steps invented at runtime."""
+    capability_id: str
+    version: str
+    effect: str                    # READ_ONLY or WRITE
+    parameters: tuple[str, ...]
+    why: str
+
+
+@dataclass(frozen=True)
+class Prototype:
+    key: str
+    goal: str
+    ready: tuple[Criterion, ...]
+    done: tuple[Criterion, ...]
+    operation: Operation | None = None
+    children: tuple["Prototype", ...] = ()
+
+
+@dataclass(frozen=True)
+class HumanReview:
+    """Receipt supplied by trusted Human-side storage; not an approval token."""
+    prototype_key: str
+    prototype_digest: str
+    decision_ref: str
+    accepted: bool
+
+
+@dataclass(frozen=True)
+class Capability:
+    """Trusted domain-owned implementation registered outside the task document."""
+    capability_id: str
+    version: str
+    effect: str
+    invoke: Callable[..., object]
+
+
+class NeedsHumanReview(ValueError):
+    pass
+
+
+class CapabilityGap(ValueError):
+    pass
+
+
+def _nodes(root: Prototype) -> tuple[Prototype, ...]:
+    seen: set[str] = set()
+    result: list[Prototype] = []
+
+    def visit(node: Prototype) -> None:
+        if (not node.key or not node.goal or node.key in seen
+                or not node.done or bool(node.operation) == bool(node.children)):
+            raise ValueError("Unique nonempty task, independent Done, and exactly one action/children required")
+        seen.add(node.key)
+        keys = [check.key for check in node.ready + node.done]
+        if len(keys) != len(set(keys)) or any(
+                not all((c.key, c.fact, c.why, c.basis)) for c in node.ready + node.done):
+            raise ValueError("Each minimum criterion needs a unique key, fact, reason and basis")
+        if node.operation:
+            op = node.operation
+            if (not all((op.capability_id, op.version, op.why))
+                    or op.effect not in {"READ_ONLY", "WRITE"}
+                    or len(op.parameters) != len(set(op.parameters))
+                    or any(not p for p in op.parameters)):
+                raise ValueError("Invalid explicitly bound action")
+        result.append(node)
+        for child in node.children:
+            visit(child)
+
+    visit(root)
+    return tuple(result)
+
+
+def digest(prototype: Prototype) -> str:
+    """Canonical SHA256 invalidates approval when any child/check/action changes."""
+    data = json.dumps(asdict(prototype), ensure_ascii=False, sort_keys=True,
+                      separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(data).hexdigest()
+
+
+def review_packet(root: Prototype) -> tuple[dict, ...]:
+    """Inspectable BEFORE execution. Human can challenge every criterion/action."""
+    return tuple({
+        "key": node.key,
+        "goal": node.goal,
+        "digest": digest(node),
+        "ready": [asdict(c) for c in node.ready],
+        "done": [asdict(c) for c in node.done],
+        "action": asdict(node.operation) if node.operation else None,
+        "children": [child.key for child in node.children],
+        "status": "PENDING_HUMAN_REVIEW",
+    } for node in _nodes(root))
+
+
+def compile_approved(
+    root: Prototype,
+    *,
+    review_lookup: Callable[[str, str], HumanReview | None],
+    capabilities: Mapping[str, Capability],
+    bindings: Mapping[str, object],
+    read_fact: Callable[[str, Mapping[str, object]], bool],
+    authorize_write: Callable[[str, Mapping[str, object]], bool] | None = None,
+) -> Executor:
+    """Compile reviewed prototypes into the EXISTING PR23 Executor; no side effects.
+
+    Review is per node/type: approved reusable capture prototype can be bound
+    to different runtime instances without re-review. Write authority remains
+    instance-specific. The returned executor is NEVER automatically advanced.
+    """
+    nodes = _nodes(root)
+    resolved: dict[str, Capability] = {}
+    for node in nodes:
+        sha = digest(node)
+        approval = review_lookup(node.key, sha)
+        if (approval is None or not isinstance(approval, HumanReview)
+                or not approval.accepted or approval.prototype_key != node.key
+                or approval.prototype_digest != sha or not approval.decision_ref):
+            raise NeedsHumanReview(f"{node.key}: Human review for exact prototype digest required")
+        if node.operation:
+            op = node.operation
+            registered = capabilities.get(op.capability_id)
+            if (registered is None or registered.capability_id != op.capability_id
+                    or registered.version != op.version or registered.effect != op.effect
+                    or not callable(registered.invoke)):
+                raise CapabilityGap(f"{node.key}: pinned callable not available; no script generation allowed")
+            for key in op.parameters:
+                if key not in bindings:
+                    raise CapabilityGap(f"{node.key}: missing bound parameter {key}")
+            resolved[node.key] = registered
+
+    def make(node: Prototype) -> Atom | Chain:
+        def check(conditions: tuple[Criterion, ...]) -> bool:
+            for criterion in conditions:
+                actual = read_fact(criterion.fact, bindings)
+                if type(actual) is not bool:
+                    raise TypeError(f"{criterion.fact}: domain fact must be boolean")
+                if not actual:
+                    return False
+            return True
+
+        def ready() -> Ready:
+            if not check(node.ready):
+                return Ready(False, "Reviewed minimum Ready not observed")
+            if node.operation and node.operation.effect == "WRITE":
+                if authorize_write is None or not authorize_write(node.operation.capability_id, bindings):
+                    return Ready(False, "Per-instance external write authority missing")
+            return Ready(True)
+
+        def done() -> bool:
+            return check(node.done)
+
+        if node.children:
+            return Chain(node.key, node.goal, ready,
+                         tuple(make(child) for child in node.children), done)
+        assert node.operation is not None
+        op = node.operation
+        registered = resolved[node.key]
+        kwargs = {key: bindings[key] for key in op.parameters}
+
+        def action() -> object:
+            # Recheck before the side effect; a prototype review is never write consent.
+            if op.effect == "WRITE" and (
+                    authorize_write is None or not authorize_write(op.capability_id, bindings)):
+                raise PermissionError("External write authority expired or revoked")
+            return registered.invoke(**kwargs)
+
+        return Atom(node.key, node.goal, ready, action, done)
+
+    return Executor(make(root))
