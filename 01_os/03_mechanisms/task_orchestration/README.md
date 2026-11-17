@@ -43,6 +43,15 @@
 可调用的最小 Host 适配器，在动作调用处检查模式/范围；**未接管全部外部工具**。
 详见[模式分离裁决](最小任务原型与执行编译契约_v1.md#9-human-裁决执行模式--开发模式分离2026-11-16)。
 
+## 拒绝记录与模型—OS 适配性观测（Human 2026-11-17 裁决）
+
+`execution_decision_audit.py` 为网关的准入、拒绝提供轻量事件、原因分类、Host 管理的
+JSONL 追加存储与只读统计。统计独立区分模型策略越界、Human 未批准、系统能力缺口
+和 Host 状态变更。重复策略拒绝可提示 Human 复核模型—OS 适配性，但**不自动禁用模型**。
+默认示例阈值不是已批准的纪律门槛，生产记录需要真实 Host 导入 sink。
+测试见 `test_execution_decision_audit.py`；正式边界见
+[统一契约第十节](最小任务原型与执行编译契约_v1.md#10-human-补充裁决拒绝事件记录与模型os-适配性2026-11-17)。
+
 ## 最小可运行参考实现（不接管业务命令）
 
 - `01_os/06_execution/task_orchestration/atomic_tasks.py`：标准库 Python，提供 `Atom`、`Chain`、`Ready`、`Executor.inspect()/advance()/run_available()`。由领域代码注入真实 Ready、Action、Done 函数；Core 不替领域执行 Native、Git 或 Shell，也不授予权限。
