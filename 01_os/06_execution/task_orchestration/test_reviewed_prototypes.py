@@ -175,6 +175,30 @@ class ReviewedPrototypeTests(unittest.TestCase):
         facts["study_result"] = True
         self.assertEqual(e.inspect().status, "DONE")
 
+    def test_child_change_only_needs_local_re_review(self):
+        sub = capture()
+        parent = Prototype("research", "Real completed study",
+                           (check("start", "start_ok"),),
+                           (check("result", "study_result"),), children=(sub,))
+        updated_sub = Prototype(sub.key, sub.goal,
+                                sub.ready + (check("extra", "extra_check"),),
+                                sub.done, sub.operation)
+        updated_parent = Prototype(parent.key, parent.goal, parent.ready,
+                                   parent.done, children=(updated_sub,))
+        self.assertNotEqual(digest(sub), digest(updated_sub))
+        self.assertEqual(digest(parent), digest(updated_parent))
+        approvals = reviews_for(parent)
+        facts = {"start_ok": True, "study_result": False, "save_bound": True,
+                 "readable": True, "captured": False, "extra_check": True}
+        catalog = {"worlddata.capture": Capability("worlddata.capture", "v1",
+                                                    "READ_ONLY", lambda save: None)}
+        with self.assertRaises(NeedsHumanReview):
+            compile_fixture(updated_parent, approvals, catalog, facts)
+        approvals["capture"] = reviews_for(updated_parent)["capture"]
+        # An unchanged parent review remains usable after the changed child is approved.
+        self.assertEqual(compile_fixture(updated_parent, approvals, catalog, facts)
+                         .inspect().status, "READY")
+
     def test_write_needs_separate_instance_authority_and_rechecks_on_call(self):
         calls = []
         action = Prototype("setter", "Set one approved attribute",
