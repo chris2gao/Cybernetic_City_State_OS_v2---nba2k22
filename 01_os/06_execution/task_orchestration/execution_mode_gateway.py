@@ -93,12 +93,16 @@ class ExecutionModeGateway:
                     (initial.task_id, initial.human_decision_ref, initial.scope_ref)))):
             raise ModeViolation("Invalid Host mode or missing development decision/scope")
         self._state = initial
+        self._invalidated = False  # a changed Host decision cannot be silently restored
         self._verify_development = verify_development
         self._development_tools = dict(development_tools or {})
 
     def _require(self, expected: str) -> None:
+        if self._invalidated:
+            raise ModeViolation("Host mode/scope changed in this session; a new authorized session is required")
         current = self._read_mode()
         if current != self._state:
+            self._invalidated = True
             raise ModeViolation("Host mode/task/scope changed; recompile or open a new authorized session")
         if current.mode != expected:
             raise ModeViolation(
