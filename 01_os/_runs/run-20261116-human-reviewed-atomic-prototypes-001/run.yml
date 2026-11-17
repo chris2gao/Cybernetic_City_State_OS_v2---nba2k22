@@ -24,16 +24,19 @@ verification:
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_atomic_tasks.py -v
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_reviewed_prototypes.py -v
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_review_prototype_cli.py -v
-  offline_test_commit: c9879645ef1996b2b6fb3f0e0b073a472d16c31c
+  offline_test_commit: 333dcb28475032c403c5ea43587e25adbda8a35a
   offline_test_environment: Windows_10_Python_3_14_6
   offline_test_command: python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1
-  offline_test_result: 143_passed_8_subtests_passed
+  offline_test_result: 154_passed_8_subtests_passed
   cross_stage_regression: NOT_VERIFIED_attempted_no_final_exit
   runtime_execution: NOT_RUN
   remote_file_readback: PERFORMED
   human_architecture_mode_decision: APPROVED_2026_11_16
   specific_prototype_human_review: PENDING
   human_semantic_review: PENDING
+  human_refusal_observability_decision: APPROVED_2026_11_17
+  refusal_audit_jsonl_reference: IMPLEMENTED_TESTED
+  host_live_audit_routing: NOT_IMPLEMENTED
   callable_mode_gateway: IMPLEMENTED_TESTED
   full_tool_boundary: NOT_IMPLEMENTED
   no_domain_native_actions: true
