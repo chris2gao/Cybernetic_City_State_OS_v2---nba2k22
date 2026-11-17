@@ -12,7 +12,7 @@ from reviewed_prototypes import (
 )
 
 
-def event(decision, cause="NONE", reason="APPROVED", model="claude",
+def event(decision, cause="NONE", reason="APPROVED", model="codex",
           route="DEVELOPMENT", task="T1"):
     return GatewayEvent.create(
         model_ref=model, task_id=task, session_ref="session-1",
