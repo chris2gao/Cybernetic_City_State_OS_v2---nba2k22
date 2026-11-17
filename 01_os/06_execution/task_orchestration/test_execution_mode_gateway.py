@@ -108,9 +108,11 @@ class ModeGatewayTests(unittest.TestCase):
         executor = self.compiled(read_fact=read_fact)
         # There is no second model-controlled command between readiness and action.
         # The capability boundary itself must check the Host mode again.
-        result = executor.advance()
-        self.assertNotEqual(result.status, "ADVANCED")
+        with self.assertRaises(ModeViolation):
+            executor.advance()
         self.assertEqual(self.calls, [])
+        self.assertEqual(self.gate.audit_events[-1].decision, "DENIED")
+        self.assertEqual(self.gate.audit_events[-1].cause, "HOST_STATE")
 
     def test_loop_blocks_remaining_children_when_mode_changes_mid_execution(self):
         first = Prototype("first", "First reviewed outcome",
