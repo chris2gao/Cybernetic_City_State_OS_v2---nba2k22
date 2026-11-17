@@ -69,7 +69,9 @@ class AuditTests(unittest.TestCase):
         state = ModeState(DEVELOPMENT, "T1", "Human-decision", "scope")
         warnings = []
         calls = []
+        sink_attempts = []
         def bad_sink(event):
+            sink_attempts.append(event.event_id)
             raise OSError("private-log-path-not-to-expose")
         gate = ExecutionModeGateway(
             read_mode=lambda: state, audit_sink=bad_sink,
@@ -81,6 +83,7 @@ class AuditTests(unittest.TestCase):
         gate.invoke_development("edit", args={"path": "two"})
         self.assertEqual(calls, [{"path": "one"}, {"path": "two"}])
         self.assertEqual(len(warnings), 1)
+        self.assertEqual(len(sink_attempts), 1)  # no repeated optional logging failure per call
         self.assertEqual(len(gate.audit_faults), 1)
         self.assertIn("OPTIONAL_AUDIT_UNAVAILABLE", warnings[0])
         self.assertNotIn("private-log-path", warnings[0])
