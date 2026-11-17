@@ -79,6 +79,25 @@ Loop：使用已批准原型反复实例化，或根据真实结果设计下一�
 **真实 Claude/Codex 工具 Host 接入、日志覆盖率与外部原型审核来源仍待完成。**
 现有本机测试证据只证明网关与持久日志接口的参考行为。
 
+## Human 最新裁决：信任 Agent，自行如实报告（2026-11-17）
+
+Human 已明确：OS 是基于 Human–Agent 互信的执行系统，已审核原型是协作约定而非监视工具。
+Agent 看到自己重复检查、临时写胶水、误认 Done 等偏差时，即便 Host 看不到，也应当
+主动说明发生了什么、对业务结果有何影响、如何纠正。**Agent 自报不是 Host 拒绝事件，**
+也不能自动推断为不服从；自动监测不到的地方无须为此引入全面 Shell/GUI 接管。
+
+`agent_self_report.py` 提供独立的 `AGENT_SELF_REPORT` 数据结构、可选本地
+JSONL 记录和描述性汇总，不与 `execution_decision_audit.py` 的 Host 事件和拒绝率混算。
+这只是已有聊天/PRMS 任务记录的辅助格式，不建立新审批或监督服务；找不到可写日志时，
+可继续在对话/现有检查点自报，不得为此阻断合法工作。**自报不提供额外权限，**
+受保护操作的原有许可仍适用。
+
+当前 Windows 本地隔离测试在固定源码 commit
+`1021bed9de29ab37c740734d455fb0db1b10ab8a` 完成：
+`python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`
+→ **161 passed, 8 subtests passed**。这是离线行为测试；实际 Agent 诚实程度与真实
+任务成功率仍须通过后续任务证据观察，不能仅靠自报或测试数字推定。
+
 ## 必须真实处理的差距
 
 1. 当前代码仅约束**主动调用该编译器的可信 Host**。任何未经路由的 Codex/Claude
@@ -91,7 +110,7 @@ Loop：使用已批准原型反复实例化，或根据真实结果设计下一�
    重读代码或逐项重审，不应减少真正必要的安全验证。
 5. 已在 Windows 设备的隔离验证工作树（commit `333dcb28475032c403c5ea43587e25adbda8a35a`）运行
    `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`：
-   **154 passed, 8 subtests passed**。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
+   **161 passed, 8 subtests passed**（新增自报测试）。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
    跨阶段全量 pytest 曾启动但未收获最终退出码，未记为通过。
 
 ## 系统验收目标（不是 NBA 特定工作）
