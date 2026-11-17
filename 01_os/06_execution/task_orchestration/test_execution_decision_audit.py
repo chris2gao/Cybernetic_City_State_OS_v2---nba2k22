@@ -1,5 +1,8 @@
 """Audit evidence for admitted tool attempts and categorized refusals."""
 import unittest
+
+# Stable catalog documentation is a TEST FIXTURE; it is not a Human approval.
+FIXTURE_PROCEDURE_REF = "fixture://known-procedure@0000000000000000000000000000000000000000"
 from pathlib import Path
 import tempfile
 
@@ -44,7 +47,7 @@ class AuditTests(unittest.TestCase):
             self.assertEqual(summarize(records, model_ref="codex", min_attempts=2,
                                        conflict_rate_threshold=0.5)["policy_denials"], 1)
 
-    def test_unavailable_durable_sink_prevents_admission_before_tool(self):
+    def test_unavailable_optional_sink_reports_once_and_allows_authorized_action(self):
         with tempfile.TemporaryDirectory() as directory:
             missing_parent = Path(directory) / "nonexistent" / "events.jsonl"
             calls = []
@@ -55,9 +58,11 @@ class AuditTests(unittest.TestCase):
                 development_tools={"edit": DevelopmentTool(
                     "edit", lambda **kw: calls.append(kw))},
                 verify_development=lambda *args: True)
-            with self.assertRaises(FileNotFoundError):
-                gate.invoke_development("edit", args={"path": "example.py"})
-            self.assertEqual(calls, [])
+            gate.invoke_development("edit", args={"path": "example.py"})
+            gate.invoke_development("edit", args={"path": "second.py"})
+            self.assertEqual(calls, [{"path": "example.py"}, {"path": "second.py"}])
+            self.assertEqual(len(gate.audit_faults), 1)
+            self.assertIn("OPTIONAL_AUDIT_UNAVAILABLE", gate.audit_faults[0])
             self.assertFalse(missing_parent.exists())
 
     def test_denied_mode_never_invokes_and_produces_structured_receipt(self):
@@ -87,7 +92,7 @@ class AuditTests(unittest.TestCase):
         node = Prototype("read", "Readable artifact",
                          (Criterion("r", "r", "required", "Human"),),
                          (Criterion("d", "d", "required", "Human"),),
-                         Operation("known", "1", "READ_ONLY", (), "existing"))
+                         Operation("known", "1", "READ_ONLY", (), "existing", procedure_ref=FIXTURE_PROCEDURE_REF))
         with self.assertRaises(NeedsHumanReview):
             gate.compile_execution(node, review_lookup=lambda k, v: None,
                                    capabilities={}, bindings={},
@@ -102,7 +107,7 @@ class AuditTests(unittest.TestCase):
                                     model_ref="codex", audit_sink=saved.append)
         node = Prototype("read", "Readable artifact", (),
                          (Criterion("d", "d", "required", "Human"),),
-                         Operation("missing", "1", "READ_ONLY", (), "existing"))
+                         Operation("missing", "1", "READ_ONLY", (), "existing", procedure_ref=FIXTURE_PROCEDURE_REF))
         record = HumanReview("read", digest(node), "human-record", True)
         with self.assertRaises(CapabilityGap):
             gate.compile_execution(node, review_lookup=lambda k, v: record,
@@ -119,14 +124,14 @@ class AuditTests(unittest.TestCase):
         node = Prototype("read", "Real business output",
                          (Criterion("r", "ready", "required", "Human"),),
                          (Criterion("d", "done", "required", "Human"),),
-                         Operation("known", "1", "READ_ONLY", ("target",), "existing"))
+                         Operation("known", "1", "READ_ONLY", ("target",), "existing", procedure_ref=FIXTURE_PROCEDURE_REF))
         record = HumanReview("read", digest(node), "Human-approval", True)
         def run(target):
             calls.append(target)
             facts["done"] = True
         runner = gate.compile_execution(
             node, review_lookup=lambda k, v: record,
-            capabilities={"known": Capability("known", "1", "READ_ONLY", run)},
+            capabilities={"known": Capability("known", "1", "READ_ONLY", run, procedure_ref=FIXTURE_PROCEDURE_REF)},
             bindings={"target": "A"}, read_fact=lambda k, v: facts[k])
         self.assertEqual(runner.inspect().status, "READY")
         self.assertEqual(runner.run_available()[-1].status, "DONE")
@@ -142,7 +147,7 @@ class AuditTests(unittest.TestCase):
         child = Prototype("child", "Get confirmed result",
                           (Criterion("r", "input_ok", "required", "Human"),),
                           (Criterion("d", "output_done", "required", "Human"),),
-                          Operation("known", "1", "READ_ONLY", (), "existing"))
+                          Operation("known", "1", "READ_ONLY", (), "existing", procedure_ref=FIXTURE_PROCEDURE_REF))
         record = HumanReview("child", digest(child), "Human", True)
         def action():
             facts["output_done"] = True
@@ -151,7 +156,7 @@ class AuditTests(unittest.TestCase):
             read_mode=lambda: state[0], audit_sink=events.append, model_ref="codex")
         runner = gate.compile_execution(
             child, review_lookup=lambda key, sha: record,
-            capabilities={"known": Capability("known", "1", "READ_ONLY", action)},
+            capabilities={"known": Capability("known", "1", "READ_ONLY", action, procedure_ref=FIXTURE_PROCEDURE_REF)},
             bindings={}, read_fact=lambda k, args: facts[k])
         self.assertEqual(runner.advance().status, "ADVANCED")
         self.assertTrue(facts["output_done"])
@@ -161,7 +166,7 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(events[-1].reason_code, "SESSION_REVOKED")
         self.assertEqual([e.decision for e in events], ["ADMITTED", "ADMITTED", "DENIED"])
 
-    def test_development_denial_then_allow_and_host_sink_failure_fails_closed(self):
+    def test_development_denial_then_allow_despite_optional_sink_failure(self):
         events = []
         state = ModeState(DEVELOPMENT, "T1", "Human-1", "scope-A")
         calls = []
@@ -181,9 +186,9 @@ class AuditTests(unittest.TestCase):
             audit_sink=lambda event: (_ for _ in ()).throw(OSError("ledger offline")),
             verify_development=lambda *args: True,
             development_tools={"edit": DevelopmentTool("edit", lambda **kw: calls.append(kw))})
-        with self.assertRaises(OSError):
-            broken.invoke_development("edit", args={"path": "two"})
-        self.assertEqual(calls, [{"path": "one"}])
+        broken.invoke_development("edit", args={"path": "two"})
+        self.assertEqual(calls, [{"path": "one"}, {"path": "two"}])
+        self.assertEqual(len(broken.audit_faults), 1)
 
     def test_summary_deduplicates_and_separates_causes_and_models(self):
         events = [
