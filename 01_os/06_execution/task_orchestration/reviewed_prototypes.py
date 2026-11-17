@@ -179,6 +179,7 @@ def compile_approved(
     bindings: Mapping[str, object],
     read_fact: Callable[[str, Mapping[str, object]], bool],
     authorize_write: Callable[[str, Mapping[str, object]], bool] | None = None,
+    guard_before_invoke: Callable[[], None] | None = None,
 ) -> Executor:
     """Compile reviewed prototypes into the EXISTING PR23 Executor; no side effects.
 
@@ -256,6 +257,10 @@ def compile_approved(
             if op.effect == "WRITE" and (
                     authorize_write is None or not authorize_write(op.capability_id, current_bindings())):
                 raise PermissionError("External write authority expired or revoked")
+            # Recheck Host mode immediately at the invocation boundary, even if
+            # a Ready/fact/authorization callback changed it during inspect().
+            if guard_before_invoke is not None:
+                guard_before_invoke()
             return registered.invoke(**deepcopy(kwargs))
 
         return Atom(node.key, node.goal, ready, action, done)
