@@ -8,9 +8,11 @@ domain fact readings and per-instance external write authorization.
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+from copy import deepcopy
 import hashlib
 import json
 from typing import Callable, Mapping
+from types import MappingProxyType
 
 from atomic_tasks import Atom, Chain, Executor, Ready
 
@@ -187,6 +189,19 @@ def compile_approved(
     """
     nodes = _nodes(root)
     _validate_procedure_alignment(nodes)
+    # A compiled instance must not change identity/target if the caller later
+    # mutates its original bindings. Use a JSON-compatible immutable snapshot;
+    # each callback gets a private copy so callbacks cannot modify the snapshot.
+    if any(type(key) is not str for key in bindings):
+        raise ValueError("Instance binding keys must be strings")
+    try:
+        bound_instance = MappingProxyType(json.loads(json.dumps(dict(bindings),
+                                                             allow_nan=False)))
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"Instance bindings must be JSON-compatible: {exc}") from exc
+    def current_bindings() -> dict[str, object]:
+        return deepcopy(dict(bound_instance))
+
     resolved: dict[str, Capability] = {}
     for node in nodes:
         sha = digest(node)
@@ -203,14 +218,14 @@ def compile_approved(
                     or not callable(registered.invoke)):
                 raise CapabilityGap(f"{node.key}: pinned callable not available; no script generation allowed")
             for key in op.parameters:
-                if key not in bindings:
+                if key not in bound_instance:
                     raise CapabilityGap(f"{node.key}: missing bound parameter {key}")
             resolved[node.key] = registered
 
     def make(node: Prototype) -> Atom | Chain:
         def check(conditions: tuple[Criterion, ...]) -> bool:
             for criterion in conditions:
-                actual = read_fact(criterion.fact, bindings)
+                actual = read_fact(criterion.fact, current_bindings())
                 if type(actual) is not bool:
                     raise TypeError(f"{criterion.fact}: domain fact must be boolean")
                 if not actual:
@@ -221,7 +236,7 @@ def compile_approved(
             if not check(node.ready):
                 return Ready(False, "Reviewed minimum Ready not observed")
             if node.operation and node.operation.effect == "WRITE":
-                if authorize_write is None or not authorize_write(node.operation.capability_id, bindings):
+                if authorize_write is None or not authorize_write(node.operation.capability_id, current_bindings()):
                     return Ready(False, "Per-instance external write authority missing")
             return Ready(True)
 
@@ -234,14 +249,14 @@ def compile_approved(
         assert node.operation is not None
         op = node.operation
         registered = resolved[node.key]
-        kwargs = {key: bindings[key] for key in op.parameters}
+        kwargs = {key: bound_instance[key] for key in op.parameters}
 
         def action() -> object:
             # Recheck before the side effect; a prototype review is never write consent.
             if op.effect == "WRITE" and (
-                    authorize_write is None or not authorize_write(op.capability_id, bindings)):
+                    authorize_write is None or not authorize_write(op.capability_id, current_bindings())):
                 raise PermissionError("External write authority expired or revoked")
-            return registered.invoke(**kwargs)
+            return registered.invoke(**deepcopy(kwargs))
 
         return Atom(node.key, node.goal, ready, action, done)
 
