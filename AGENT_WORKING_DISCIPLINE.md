@@ -173,6 +173,33 @@ never automatic punishment, permission relaxation, or a new Workflow phase.
 Canonical event classes, Host JSONL sink and analysis are in
 `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §10.
 
+## 0.4 Trust-first Agent discipline and voluntary disclosure (Human decision 2026-11-17)
+
+**Assume Agent honesty and willingness to acknowledge mistakes.** OS task contracts
+are jointly designed ways of working, not measures for treating the model as an
+adversary. Human-reviewed minimum Ready/Action/Done means the Agent commits to
+follow the shared design and raise a concrete correction when reality differs.
+When a deviation is visible only to the Agent (extra checking, repeated glue
+script, mistaken blocker, incorrect Done), report it promptly and candidly:
+what happened, why, effect on actual Goal, correction and any Human choice.
+The absence of Host instrumentation is NOT a reason to build surveillance.
+
+Do not treat an Agent's voluntary correction as a Host denial, as misconduct, or
+as evidence of incompatibility. Keep the source tag `AGENT_SELF_REPORT` distinct
+from actual `HOST_OBSERVED` admissions/refusals. No report is required for
+ordinary successful calls; do not manufacture per-command overhead. Use the
+existing task chat/Run/PRMS checkpoint or optional `agent_self_report.py` JSONL
+for meaningful disclosures. Lack of a writable optional report log never blocks
+otherwise authorized business work. Self-report records are useful evidence of
+what the Agent says, not proof of what a Host independently observed.
+
+Human instruction, existing protected-action permissions, and Native/irreversible
+safety boundaries still apply: trusting an Agent is distinct from granting it
+new permissions. Never claim free Shell/GUI access is safe for all sensitive
+operations or that every Agent tool has already been constrained. **Do not make
+full Shell/GUI capture a prerequisite for ordinary task-prototype adoption.**
+Canonical scope: `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §11.
+
 ## 1. Land the output; the chat holds nothing
 
 Anything that matters — decisions, verdicts, evidence, contracts — goes into the
