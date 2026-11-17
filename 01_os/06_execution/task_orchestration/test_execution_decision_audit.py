@@ -95,6 +95,33 @@ class AuditTests(unittest.TestCase):
         self.assertEqual([e.route for e in saved], ["COMPILE", "EXECUTE"])
         self.assertEqual([e.decision for e in saved], ["ADMITTED", "ADMITTED"])
 
+    def test_completed_action_does_not_become_denial_after_mode_change(self):
+        from execution_mode_gateway import ModeState
+        state = [ModeState()]
+        events = []
+        facts = {"input_ok": True, "output_done": False}
+        child = Prototype("child", "Get confirmed result",
+                          (Criterion("r", "input_ok", "required", "Human"),),
+                          (Criterion("d", "output_done", "required", "Human"),),
+                          Operation("known", "1", "READ_ONLY", (), "existing"))
+        record = HumanReview("child", digest(child), "Human", True)
+        def action():
+            facts["output_done"] = True
+            state[0] = ModeState(DEVELOPMENT, "new-task", "Human", "new-scope")
+        gate = ExecutionModeGateway(
+            read_mode=lambda: state[0], audit_sink=events.append, model_ref="codex")
+        runner = gate.compile_execution(
+            child, review_lookup=lambda key, sha: record,
+            capabilities={"known": Capability("known", "1", "READ_ONLY", action)},
+            bindings={}, read_fact=lambda k, args: facts[k])
+        self.assertEqual(runner.advance().status, "ADVANCED")
+        self.assertTrue(facts["output_done"])
+        self.assertEqual([e.decision for e in events], ["ADMITTED", "ADMITTED"])
+        with self.assertRaises(ModeViolation):
+            runner.advance()
+        self.assertEqual(events[-1].reason_code, "SESSION_REVOKED")
+        self.assertEqual([e.decision for e in events], ["ADMITTED", "ADMITTED", "DENIED"])
+
     def test_development_denial_then_allow_and_host_sink_failure_fails_closed(self):
         events = []
         state = ModeState(DEVELOPMENT, "T1", "Human-1", "scope-A")
