@@ -35,6 +35,16 @@ class Operation:
 
 
 @dataclass(frozen=True)
+class ProcedureStep:
+    """Human design review of one intended operation/check (not a tool invocation)."""
+    key: str
+    action: str
+    why: str
+    basis: str
+    execution_owner: str            # CAPABILITY_INTERNAL or HOST_BINDING
+
+
+@dataclass(frozen=True)
 class Prototype:
     key: str
     goal: str
@@ -42,6 +52,7 @@ class Prototype:
     done: tuple[Criterion, ...]
     operation: Operation | None = None
     children: tuple["Prototype", ...] = ()
+    procedure: tuple[ProcedureStep, ...] = ()  # Reviewed once, never dispatched by this metadata
 
 
 @dataclass(frozen=True)
@@ -83,6 +94,12 @@ def _nodes(root: Prototype) -> tuple[Prototype, ...]:
         if len(keys) != len(set(keys)) or any(
                 not all((c.key, c.fact, c.why, c.basis)) for c in node.ready + node.done):
             raise ValueError("Each minimum criterion needs a unique key, fact, reason and basis")
+        step_keys = [step.key for step in node.procedure]
+        if (len(step_keys) != len(set(step_keys)) or any(
+                not all((step.key, step.action, step.why, step.basis))
+                or step.execution_owner not in {"CAPABILITY_INTERNAL", "HOST_BINDING"}
+                for step in node.procedure)):
+            raise ValueError("Procedure steps require unique keys, reasons, basis and declared owner")
         if node.operation:
             op = node.operation
             if (not all((op.capability_id, op.version, op.why))
@@ -114,6 +131,7 @@ def review_packet(root: Prototype) -> tuple[dict, ...]:
         "ready": [asdict(c) for c in node.ready],
         "done": [asdict(c) for c in node.done],
         "action": asdict(node.operation) if node.operation else None,
+        "procedure": [asdict(step) for step in node.procedure],
         "children": [child.key for child in node.children],
         "status": "PENDING_HUMAN_REVIEW",
     } for node in _nodes(root))
@@ -130,7 +148,8 @@ def compile_approved(
 ) -> Executor:
     """Compile reviewed prototypes into the EXISTING PR23 Executor; no side effects.
 
-    Review is per node/type: approved reusable capture prototype can be bound
+    Human-visible procedure is design metadata, NOT extra runtime commands.
+    Review is per node/type: approved reusable task prototype can be bound
     to different runtime instances without re-review. Write authority remains
     instance-specific. The returned executor is NEVER automatically advanced.
     """
