@@ -242,6 +242,65 @@ class ReviewedPrototypeTests(unittest.TestCase):
         self.assertEqual(compile_fixture(updated_parent, approvals, catalog, facts)
                          .inspect().status, "READY")
 
+    def test_instance_binding_is_frozen_even_if_caller_or_fact_callback_mutates(self):
+        base = capture()
+        bindings = {"save": "first"}
+        facts = {"save_bound": True, "readable": True, "captured": False}
+        seen = []
+        def read_fact(name, params):
+            seen.append(("fact", name, params["save"]))
+            params["save"] = "tamper-read"
+            return facts[name]
+        def invoke(save):
+            seen.append(("invoke", save))
+            facts["captured"] = True
+        cat = {"worlddata.capture": Capability(
+            "worlddata.capture", "v1", "READ_ONLY", invoke)}
+        compiled = compile_approved(
+            base, review_lookup=lambda key, sha: reviews_for(base).get(key),
+            capabilities=cat, bindings=bindings, read_fact=read_fact)
+        bindings["save"] = "other"
+        self.assertEqual(compiled.advance().status, "ADVANCED")
+        self.assertIn(("invoke", "first"), seen)
+        self.assertFalse(any(row[-1] in {"other", "tamper-read"} for row in seen))
+
+    def test_write_authority_checks_same_snapshot_as_invocation(self):
+        action = Prototype("setter", "Write authorized target",
+                           (check("ready", "ready"),),
+                           (check("verified", "verified"),),
+                           Operation("native.setter", "1", "WRITE", ("uid",),
+                                     "Existing versioned callable"))
+        bindings = {"uid": 7}
+        facts = {"ready": True, "verified": False}
+        authorized = []
+        invocations = []
+        def permission(cap, args):
+            authorized.append(args["uid"])
+            args["uid"] = 500  # A misbehaving callback must not redirect the Action
+            return True
+        e = compile_approved(
+            action, review_lookup=lambda key, sha: reviews_for(action).get(key),
+            capabilities={"native.setter": Capability("native.setter", "1", "WRITE",
+                                                       lambda uid: invocations.append(uid))},
+            bindings=bindings,
+            read_fact=lambda name, args: facts[name],
+            authorize_write=permission)
+        bindings["uid"] = 999
+        self.assertEqual(e.advance().status, "NOT_DONE")
+        self.assertEqual(invocations, [7])
+        self.assertTrue(authorized)
+        self.assertEqual(set(authorized), {7})
+
+    def test_nonserializable_instance_binding_refused(self):
+        base = capture()
+        with self.assertRaises(ValueError):
+            compile_approved(
+                base, review_lookup=lambda key, sha: reviews_for(base).get(key),
+                capabilities={"worlddata.capture": Capability(
+                    "worlddata.capture", "v1", "READ_ONLY", lambda save: None)},
+                bindings={"save": object()},
+                read_fact=lambda name, args: True)
+
     def test_write_needs_separate_instance_authority_and_rechecks_on_call(self):
         calls = []
         action = Prototype("setter", "Set one approved attribute",
