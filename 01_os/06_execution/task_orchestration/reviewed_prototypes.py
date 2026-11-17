@@ -239,6 +239,10 @@ def compile_approved(
             if node.operation and node.operation.effect == "WRITE":
                 if authorize_write is None or not authorize_write(node.operation.capability_id, current_bindings()):
                     return Ready(False, "Per-instance external write authority missing")
+            # If Host mode changed while acquiring Ready, stop before PR23 marks
+            # any Action attempted; no real side effect has occurred at this point.
+            if guard_before_invoke is not None:
+                guard_before_invoke()
             return Ready(True)
 
         def done() -> bool:
