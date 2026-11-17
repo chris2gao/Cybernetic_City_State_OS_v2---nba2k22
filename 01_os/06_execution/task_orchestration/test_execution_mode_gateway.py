@@ -91,8 +91,13 @@ class ModeGatewayTests(unittest.TestCase):
         with self.assertRaises(ModeViolation):
             executor.advance()
         self.assertEqual(self.calls, [])
-        self.mode = ModeState()  # Reinstating mode does not authorize other tools
-        self.assertEqual(executor.advance().status, "ADVANCED")
+        self.mode = ModeState()  # Restoring old mode cannot revive an invalidated session
+        with self.assertRaises(ModeViolation):
+            executor.advance()
+        self.assertEqual(self.calls, [])
+        # A new session may resume safely after a fresh source/approval check.
+        renewed = self.compiled(gate=ExecutionModeGateway(read_mode=lambda: self.mode))
+        self.assertEqual(renewed.advance().status, "ADVANCED")
         self.assertEqual(self.calls, ["A"])
 
     def test_mode_change_within_ready_check_prevents_invocation(self):
