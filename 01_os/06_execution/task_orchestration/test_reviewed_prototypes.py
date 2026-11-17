@@ -175,6 +175,49 @@ class ReviewedPrototypeTests(unittest.TestCase):
         facts["study_result"] = True
         self.assertEqual(e.inspect().status, "DONE")
 
+    def test_unbound_extra_host_action_cannot_be_executed(self):
+        base = capture()
+        additional = ProcedureStep(
+            "probe", "Repeat external preflight", "A supposed improvement",
+            "proposal-only", "HOST_BINDING", "unregistered.probe")
+        candidate = Prototype(base.key, base.goal, base.ready, base.done,
+                              base.operation, procedure=(additional,))
+        self.assertEqual(review_packet(candidate)[0]["procedure"][0]["action"],
+                         "Repeat external preflight")
+        calls = []
+        caps = {"worlddata.capture": Capability(
+            "worlddata.capture", "v1", "READ_ONLY", lambda **kwargs: calls.append(kwargs))}
+        with self.assertRaises(CapabilityGap):
+            compile_fixture(candidate, reviews_for(candidate), caps,
+                            {"save_bound": True, "readable": True, "captured": False})
+        self.assertEqual(calls, [])
+
+    def test_composite_procedure_must_follow_actual_children(self):
+        sub = capture()
+        parent = Prototype("research", "A real final output",
+                           (check("start", "start_ok"),),
+                           (check("result", "study_result"),), children=(sub,),
+                           procedure=(ProcedureStep(
+                               "call-child", "Invoke capture", "Business dependency",
+                               "reviewed design", "HOST_BINDING", "capture"),))
+        facts = {"start_ok": True, "study_result": False, "save_bound": True,
+                 "readable": True, "captured": False}
+        calls = []
+        def captured(save):
+            calls.append(save)
+            facts["captured"] = True
+        cat = {"worlddata.capture": Capability(
+            "worlddata.capture", "v1", "READ_ONLY", captured)}
+        valid = compile_fixture(parent, reviews_for(parent), cat, facts)
+        self.assertEqual(valid.advance().status, "ADVANCED")
+        self.assertEqual(calls, ["MyLEAGUE-test"])
+        bogus = Prototype(parent.key, parent.goal, parent.ready, parent.done,
+                          children=(sub,), procedure=(ProcedureStep(
+                              "other", "Run an unrelated shell check", "Additional",
+                              "proposal-only", "HOST_BINDING", "unrelated"),))
+        with self.assertRaises(CapabilityGap):
+            compile_fixture(bogus, reviews_for(bogus), cat, facts)
+
     def test_child_change_only_needs_local_re_review(self):
         sub = capture()
         parent = Prototype("research", "Real completed study",
