@@ -65,14 +65,14 @@ entries:
     cache_dirs: []
     failure_surfacing: first new/revised prototype review or 05 to 06 execution handoff
     deletion_rule: protected
-  - path: 01_os/06_execution/task_orchestration/{atomic_tasks.py,test_atomic_tasks.py,reviewed_prototypes.py,test_reviewed_prototypes.py,review_prototype_cli.py,test_review_prototype_cli.py,REVIEWED_PROTOTYPES.md}
-    purpose: 标准库 G/R/A/D 参考执行与新增已审核原型编译适配器；只调用可信领域已有函数，不自带Shell权限
+  - path: 01_os/06_execution/task_orchestration/{atomic_tasks.py,test_atomic_tasks.py,reviewed_prototypes.py,test_reviewed_prototypes.py,review_prototype_cli.py,test_review_prototype_cli.py,execution_mode_gateway.py,test_execution_mode_gateway.py,REVIEWED_PROTOTYPES.md}
+    purpose: 标准库 G/R/A/D 参考执行、Human 已审原型编译及 Human 模式裁决路由；EXECUTION/DEVELOPMENT 有独立入口，无通用 Shell 回退
     loader: explicit Human-approved task Host integration and Python unittest
     loader_class: in_repo_program
     discovery: 01_os/03_mechanisms/task_orchestration/README.md
     evidence: 01_os/06_execution/task_orchestration/test_atomic_tasks.py and test_reviewed_prototypes.py
     cache_dirs: []
-    failure_surfacing: compile_approved error or explicit unittest run; no global Host restriction claimed
+    failure_surfacing: compile_approved or ExecutionModeGateway refusal, explicit unittest; independent Host integration not yet demonstrated
     deletion_rule: protected
 
 excluded:
