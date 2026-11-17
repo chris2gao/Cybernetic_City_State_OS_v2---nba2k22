@@ -135,6 +135,31 @@ unrestricted Shell/GUI access requires a trusted host/tool boundary, not merely
 these written instructions. Canonical details:
 `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md`.
 
+## 0.2 Default execution / explicit development mode (Human decision, 2026-11-16)
+
+The **default for delegated business execution is EXECUTION**, regardless of provider.
+Its actions must be instances of Human-reviewed G/R/A/D prototypes compiled to
+pre-existing, version-pinned tools. Runtime improvisation of new scripts, extra
+Ready/Done gates, unbound tool calls, or automatic promotion into coding work is
+not an approved business action. Real Done still comes from the domain.
+
+**DEVELOPMENT is separate**: a Human instruction actually commissioning code or
+new capability work is sufficient development delegation within the existing
+scope. The model can iterate on implementation and tests inside that scope;
+it does not need per-command Human approval. A failed EXECUTION action does not
+itself commission DEVELOPMENT. Report `INCOMPLETE`, the concrete capability gap
+and one minimal Human decision instead of silently switching modes.
+
+A trusted Host, not a model-generated field, owns the active task mode and may
+expose different tools. A mode/scope change invalidates the old execution
+instance; after Human re-authorizes, create a fresh scoped session. Prototype
+design review, development delegation, and protected side-effect authorization
+remain separate decisions. The candidate callable implementation is
+`01_os/06_execution/task_orchestration/execution_mode_gateway.py` and the
+canonical contract is `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §9.
+An unrestricted model Shell/GUI remains outside this mechanism until the
+actual Host removes that bypass: do not claim a text instruction is sandboxing.
+
 ## 1. Land the output; the chat holds nothing
 
 Anything that matters — decisions, verdicts, evidence, contracts — goes into the
