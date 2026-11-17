@@ -3,7 +3,7 @@ import unittest
 
 from reviewed_prototypes import (
     Capability, CapabilityGap, Criterion, HumanReview, NeedsHumanReview,
-    Operation, Prototype, compile_approved, digest, review_packet,
+    Operation, ProcedureStep, Prototype, compile_approved, digest, review_packet,
 )
 
 
@@ -45,6 +45,36 @@ class ReviewedPrototypeTests(unittest.TestCase):
         self.assertEqual(packet[0]["action"]["parameters"], ("save",))
         self.assertTrue(all(x["why"] and x["basis"] for x in packet[0]["done"]))
         self.assertEqual(packet[0]["status"], "PENDING_HUMAN_REVIEW")
+
+    def test_human_can_review_and_remove_unneeded_procedure_steps(self):
+        base = capture()
+        needed = ProcedureStep("call", "Invoke pinned existing capability",
+                               "Produces the actual source data", "existing-tool-doc",
+                               "CAPABILITY_INTERNAL")
+        excessive = ProcedureStep("repeat", "Run a second full source scan",
+                                  "Hypothetical caution", "unsupported-assumption",
+                                  "HOST_BINDING")
+        before = Prototype(base.key, base.goal, base.ready, base.done,
+                           base.operation, procedure=(needed, excessive))
+        proposed = review_packet(before)[0]
+        self.assertEqual(len(proposed["procedure"]), 2)
+        self.assertEqual(proposed["procedure"][1]["execution_owner"], "HOST_BINDING")
+        after = Prototype(base.key, base.goal, base.ready, base.done,
+                          base.operation, procedure=(needed,))
+        self.assertNotEqual(digest(before), digest(after))
+        approvals = reviews_for(before)
+        with self.assertRaises(NeedsHumanReview):
+            compile_fixture(after, approvals, {}, {})
+        # Human reviewing the revised prototype is distinct from runtime dispatch.
+        self.assertEqual(len(review_packet(after)[0]["procedure"]), 1)
+
+    def test_invalid_procedure_metadata_refused_before_execution(self):
+        base = capture()
+        invalid = ProcedureStep("x", "step", "reason", "basis", "FREE_SHELL")
+        proposed = Prototype(base.key, base.goal, base.ready, base.done,
+                             base.operation, procedure=(invalid,))
+        with self.assertRaises(ValueError):
+            review_packet(proposed)
 
     def test_missing_or_fabricated_review_cannot_run(self):
         calls = []
