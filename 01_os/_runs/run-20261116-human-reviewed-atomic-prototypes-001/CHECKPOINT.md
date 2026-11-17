@@ -25,7 +25,8 @@
 - **2026-11-17 R1/R2 remediation:** Both HIGH findings now repaired in source and bounded Windows tests: leaf requires bound ProcedureStep or a Host-matched fixed-version operation document; optional audit failure warns once without blocking otherwise authorized actions. Independent review has NOT yet accepted these changes. [Fixed-source handoff](REMEDIATION_REVIEW_HANDOFF.md).
 - **R4 PRMS source adapter:** `prms_review_lookup.py` + tests check exact key/digest/scope and source SHA, with separate Host human-provenance callback. Synthetic explicit review fixture supports compile→execute→Done; actual Core Human mode decision is not accepted as a concrete prototype approval. First real Human-approved prototype remains PENDING; no positive real-E2E assertion.
 - **Human prototype semantics:** `PENDING` — mechanism architecture discussed, no specific reusable task prototype accepted. Do not invent approvals.
-- **Independent review attempt:** Claude CLI returned OAuth 401; the separate read-only Codex CLI could not read files due to Windows policy and was stopped. No independent verdict exists. [Actual attempt record](INDEPENDENT_REVIEW_ATTEMPT.md).
+- **Earlier CLI review attempts (historic):** Claude CLI OAuth 401; read-only Codex CLI blocked by Windows policy. Those attempts had no review result. [Attempt receipt](INDEPENDENT_REVIEW_ATTEMPT.md).
+- **New independent source review received (2026-11-17):** `PASS_WITH_GAPS` on fixed source `a527cc7f4a96356310635530b45bfabcc24ee5a2`; R1 and R2 closed within the reference-code scope. R3 remains opt-in Host only; R4 real Human-approved prototype and independent Python E2E remain unverified. The reviewer inspected fixed GitHub source/tests but could not run pytest independently. [Received independent review result](INDEPENDENT_REVIEW_RESULT_20261117.md).
 - **Human final acceptance:** `PENDING`.
 - **Completion pointer:** Draft PR #37 and this record. Candidate has passed the bounded task-orchestration offline test set and awaits Host-binding verification, semantic review, **not** a deployed system or proven efficiency improvement.
 
@@ -39,4 +40,4 @@ python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_rev
 
 Also compare changed paths with allowed scope, verify reviewer semantics and approval provenance, test one generic/non-game prototype proposal through the read-only preview, and demand independent Host-mediated evidence before claiming runtime enforcement. A model following an AGENTS.md rule is **not** a substitute for tool-level prevention.
 
-**Status:** `candidate_pending_validation`; `human_acceptance: PENDING`; `completion_pointer: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/pull/37`.
+**Status:** `independent_source_review_PASS_WITH_GAPS`; `human_prototype_acceptance: PENDING`; `master_integration: NOT_AUTHORIZED`; `completion_pointer: https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/pull/37`.
