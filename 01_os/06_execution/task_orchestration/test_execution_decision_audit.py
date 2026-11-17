@@ -134,7 +134,7 @@ class AuditTests(unittest.TestCase):
             event("DENIED", "MODEL_POLICY", "WRONG_MODE", model="other"),
         ]
         events.append(events[0])  # same event replay from two evidence sources
-        outcome = summarize(events, model_ref="claude", min_attempts=2)
+        outcome = summarize(events, model_ref="other", min_attempts=2)
         self.assertEqual(outcome["signal"], "INSUFFICIENT_SAMPLE")
         outcome = summarize(events, model_ref="codex", min_attempts=5,
                             conflict_rate_threshold=0.3, same_reason_threshold=3)
