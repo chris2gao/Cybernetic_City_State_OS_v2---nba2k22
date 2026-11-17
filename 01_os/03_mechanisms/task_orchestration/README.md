@@ -52,6 +52,15 @@ JSONL 追加存储与只读统计。统计独立区分模型策略越界、Human
 测试见 `test_execution_decision_audit.py`；正式边界见
 [统一契约第十节](最小任务原型与执行编译契约_v1.md#10-human-补充裁决拒绝事件记录与模型os-适配性2026-11-17)。
 
+## 信任优先的自报补充（Human 2026-11-17 新裁决）
+
+任务纪律基于 Human 与 Agent 的合作与诚实自纠，而非要求全域 Shell/GUI 监视。
+`agent_self_report.py` 提供自愿纠偏记录；它与 `execution_decision_audit.py` 的
+Host 实际拒绝事实**分别保存、分别统计**。Agent 对未被宿主观察的过度操作也可
+主动如实汇报，并记入既有 PRMS/任务讨论。报告不能赋予新权限，也不能代替真实
+Done。缺少可选 JSONL 日志，不得阻塞合法业务执行或制造新的检查前摇。
+详见[统一契约第十一节](最小任务原型与执行编译契约_v1.md)。
+
 ## 最小可运行参考实现（不接管业务命令）
 
 - `01_os/06_execution/task_orchestration/atomic_tasks.py`：标准库 Python，提供 `Atom`、`Chain`、`Ready`、`Executor.inspect()/advance()/run_available()`。由领域代码注入真实 Ready、Action、Done 函数；Core 不替领域执行 Native、Git 或 Shell，也不授予权限。
