@@ -77,7 +77,7 @@
 - R1 已在 `reviewed_prototypes.py` 添加“实际步骤或与 Host 同版本一致的文档来源”编译门；没有操作明细的候选可以预览讨论但不能执行；相应反例通过。
 - R2 已使可选审计故障只产生一次警告，普通已授权调用继续，领域独立安全许可仍有效；相应反例通过。
 - PRMS 审核来源新增 `prms_review_lookup.py`：合成获批文件能运行正向编译，真实的 OS 架构 Human 裁决不能伪造成具体原型批准；**尚缺第一份真实 Human 逐项批准的具体原型**。
-- 开发侧 Windows 离线测试源码固定 `fd6bac894ee2dc7fff2379ef8ca5c5af02753550`：171 passed、8 subtests passed、退出码 0；不是独立验收或生产 Agent E2E。
+- 开发侧 Windows 离线测试源码固定 `a527cc7f4a96356310635530b45bfabcc24ee5a2`：171 passed、8 subtests passed、退出码 0；不是独立验收或生产 Agent E2E。
 - 独立审核精确合同：[REMEDIATION_REVIEW_HANDOFF.md](REMEDIATION_REVIEW_HANDOFF.md)；此文件追加说明不代表 Human 对新代码自动批准。
 
 **当前：** HIGH R1/R2 开发侧标记 `REMEDIATED_PENDING_INDEPENDENT_REVIEW`，R4 `PRMS_BINDER_TESTED_REAL_PROTO_APPROVAL_PENDING`，Core master 不变。
