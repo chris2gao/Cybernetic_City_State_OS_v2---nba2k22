@@ -118,7 +118,7 @@ Human 原型审核清单，并匹配原型 digest、任务 scope、Human 决策�
 测试确认它不能产生 `HumanReview`。合成审批文件可驱动真实的
 `lookup→compile→invoke→Done` 测试，但这不是 Human 已批准真实原型的证据。
 
-**固定源码证据：** commit `fd6bac894ee2dc7fff2379ef8ca5c5af02753550`，
+**固定源码证据：** commit `a527cc7f4a96356310635530b45bfabcc24ee5a2`，
 Windows 独立工作树执行 171 项 pytest + 8 subtests 全通过。
 尚缺真实 Human 对首个具体原型逐项审定、独立工程审核与 master 集成授权；
 不以继续增加审计或 Shell 沙箱代替这些未完成的实际交付。
