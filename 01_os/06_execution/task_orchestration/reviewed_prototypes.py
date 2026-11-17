@@ -180,6 +180,7 @@ def compile_approved(
     read_fact: Callable[[str, Mapping[str, object]], bool],
     authorize_write: Callable[[str, Mapping[str, object]], bool] | None = None,
     guard_before_invoke: Callable[[], None] | None = None,
+    on_action_admitted: Callable[[str, str], None] | None = None,
 ) -> Executor:
     """Compile reviewed prototypes into the EXISTING PR23 Executor; no side effects.
 
@@ -265,6 +266,8 @@ def compile_approved(
             # a Ready/fact/authorization callback changed it during inspect().
             if guard_before_invoke is not None:
                 guard_before_invoke()
+            if on_action_admitted is not None:
+                on_action_admitted(node.key, op.capability_id)
             return registered.invoke(**deepcopy(kwargs))
 
         return Atom(node.key, node.goal, ready, action, done)
