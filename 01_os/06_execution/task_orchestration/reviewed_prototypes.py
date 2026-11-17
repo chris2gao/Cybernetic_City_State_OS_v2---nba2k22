@@ -42,6 +42,7 @@ class ProcedureStep:
     why: str
     basis: str
     execution_owner: str            # CAPABILITY_INTERNAL or HOST_BINDING
+    binding: str = ""                # Child key or bound capability; reviewed before use
 
 
 @dataclass(frozen=True)
@@ -115,6 +116,31 @@ def _nodes(root: Prototype) -> tuple[Prototype, ...]:
     return tuple(result)
 
 
+def _validate_procedure_alignment(nodes: tuple[Prototype, ...]) -> None:
+    """No procedural Host action can be promised without an actual bound Atom.
+
+    Review may show proposed excessive/unbound operations for Human correction;
+    compilation must reject them, including when a bogus review receipt exists.
+    """
+    for node in nodes:
+        host_steps = [step for step in node.procedure if step.execution_owner == "HOST_BINDING"]
+        internal_steps = [step for step in node.procedure if step.execution_owner == "CAPABILITY_INTERNAL"]
+        if node.children:
+            if internal_steps:
+                raise CapabilityGap(f"{node.key}: composite node has no internal callable for procedure steps")
+            if host_steps and [step.binding for step in host_steps] != [
+                    child.key for child in node.children]:
+                raise CapabilityGap(f"{node.key}: Host steps must match actual child calls and order")
+        else:
+            assert node.operation is not None
+            if len(host_steps) > 1 or (
+                    host_steps and host_steps[0].binding != node.operation.capability_id):
+                raise CapabilityGap(f"{node.key}: unbound extra Host procedure; only existing callable is allowed")
+            if any(step.binding and step.binding != node.operation.capability_id
+                   for step in internal_steps):
+                raise CapabilityGap(f"{node.key}: internal procedure belongs to a different capability")
+
+
 def digest(prototype: Prototype) -> str:
     """Hash this node's reviewed contract and child identities, not descendant internals.
 
@@ -160,6 +186,7 @@ def compile_approved(
     instance-specific. The returned executor is NEVER automatically advanced.
     """
     nodes = _nodes(root)
+    _validate_procedure_alignment(nodes)
     resolved: dict[str, Capability] = {}
     for node in nodes:
         sha = digest(node)
