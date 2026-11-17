@@ -56,6 +56,16 @@
 选择才重新讨论。详情见
 `../../03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md`。
 
+## Human 裁决：模式归属与执行前冻结
+
+任务原型设计可以进行充分的 Human + AI 逐项讨论，但其输出不能把自由脚本
+和临时检查留给阶段 06。已审定的原型直接复用；新能力应作为 Human 授权的
+`DEVELOPMENT` 任务设计实现，而不能由既有 `EXECUTION` 任务自行升格。
+
+阶段 05→06 输出须能够绑定为已有 capability 的版本化调用、真实 Ready/Done、
+当前实例参数和独立权限。默认执行模式 `EXECUTION`，模型没有自行切换模式权。
+当前候选校验入口见 `../../06_execution/task_orchestration/execution_mode_gateway.py`。
+
 ## 最小运行状态
 
 `实现/最小运行schema_v1.yml` 与统一 runner 已实现步骤到冻结测试的绑定、1–3 次重试预算、
