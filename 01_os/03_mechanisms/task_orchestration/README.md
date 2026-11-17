@@ -34,6 +34,15 @@
 把叶任务绑定到已有领域 callable，并复用 PR #23 Executor，不生成 Shell/脚本。
 当前仍是候选代码，**没有接管所有 Agent 的工具调用，也不授予写入权限**。
 
+## 双模式默认策略（Human 2026-11-16 裁决）
+
+所有任务的日常业务执行**默认 `EXECUTION`**，只调用 Human 审定、已编译的
+原型；明确受 Human 委托的代码开发/能力实现处于独立 `DEVELOPMENT` 会话。
+能力缺口只停止受影响 Action 并返回 `INCOMPLETE`；模型不得自主切换模式。
+`01_os/06_execution/task_orchestration/execution_mode_gateway.py` 是当前
+可调用的最小 Host 适配器，在动作调用处检查模式/范围；**未接管全部外部工具**。
+详见[模式分离裁决](最小任务原型与执行编译契约_v1.md#9-human-裁决执行模式--开发模式分离2026-11-16)。
+
 ## 最小可运行参考实现（不接管业务命令）
 
 - `01_os/06_execution/task_orchestration/atomic_tasks.py`：标准库 Python，提供 `Atom`、`Chain`、`Ready`、`Executor.inspect()/advance()/run_available()`。由领域代码注入真实 Ready、Action、Done 函数；Core 不替领域执行 Native、Git 或 Shell，也不授予权限。
