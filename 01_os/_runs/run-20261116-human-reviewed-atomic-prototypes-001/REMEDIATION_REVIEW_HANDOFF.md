@@ -1,7 +1,7 @@
 # Core PR #37 · R1/R2整改后独立工程审核交付
 
 **岗位：** independent_review（须是与开发会话隔离的新模型端点）  
-**对象：** Core PR #37；代码固定测试提交 `fd6bac894ee2dc7fff2379ef8ca5c5af02753550`；本交付文档的后续提交不改变这个已测试源码。  
+**对象：** Core PR #37；代码固定测试提交 `a527cc7f4a96356310635530b45bfabcc24ee5a2`；本交付文档的后续提交不改变这个已测试源码。  
 **权限：** 只读、独立检查；不得修改代码、刷新测试标准、启动任何 NBA 游戏操作或合并 master。
 
 ## 固定需要审什么
@@ -26,7 +26,7 @@
 
 ## 施工侧验证事实（不等于独立审核）
 
-- 授权 Windows 隔离 worktree，git 固定源码 commit `fd6bac894ee2dc7fff2379ef8ca5c5af02753550`。
+- 授权 Windows 隔离 worktree，git 固定源码 commit `a527cc7f4a96356310635530b45bfabcc24ee5a2`。
 - `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`。
 - 结果：**171 passed, 8 subtests passed，进程退出码 0**。
 - 本次尚无完整七阶段回归 PASS；测试夹具的模拟 HumanReview 不构成真实 Human 审批事实。
@@ -35,4 +35,4 @@
 
 `PASS / PASS_WITH_GAPS / FAIL`（对已实现源码行为、R1/R2 高优缺陷与 R4 真实边界分别说明），每项给出固定文件/函数及直接证据，不直接复述开发者总结。明确是否仍有影响主目标或不可接受的逻辑错误。独立审核的结论与 Human 对 master 集成的授权彼此独立。
 
-**当前状态：** R1/R2 开发侧整改与本机测试 PASS；R4 读取机制开发侧测试 PASS，真实 Human 原型审批案例尚无；整体尚未 independent_review PASS，也未获 master 合并授权。
+**外部审核尝试：** Claude 凭据过期、Codex Windows 只读命令被策略阻断，均无有效结论；详见 [INDEPENDENT_REVIEW_ATTEMPT.md](INDEPENDENT_REVIEW_ATTEMPT.md)。\n\n**当前状态：** R1/R2 开发侧整改与本机测试 PASS；R4 读取机制开发侧测试 PASS，真实 Human 原型审批案例尚无；整体尚未 independent_review PASS，也未获 master 合并授权。
