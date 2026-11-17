@@ -89,6 +89,21 @@ Vendor-specific mechanics, and nothing else, belong here:
   relevant. Reuse the recorded entry points within that environment, batch
   independent reads, and keep dependent mutations sequential.
 
+## Reusable task prototypes across models (Core-wide)
+
+All models and all domain tasks inherit the Human-reviewed minimal-task-prototype
+rule in `AGENT_WORKING_DISCIPLINE.md` §0.1. In Workflow 05, review the **actual
+steps, reasons, minimum Ready/Done and existing capability binding** with Human
+when a reusable task is first designed or materially changed. Workflow 06
+receives an approved prototype instantiated with current facts and separately
+required execution permissions. Do not reimplement the same tool from scratch on
+every Loop; do not invent new mandatory checks or new scripts after the step has
+already been approved. A real uncovered gap remains an `INCOMPLETE` Goal and is
+returned for one precise Human choice, not silently declared complete or
+abandoned. Prototype approval is not protected-action approval. The candidate
+adapter is `01_os/06_execution/task_orchestration/reviewed_prototypes.py`;
+only an actual trusted Host integration can enforce tool invocation restrictions.
+
 ## Formal Cross-Model Handoffs
 
 **Goal-first handoff and reception.** Preserve the existing task packet
