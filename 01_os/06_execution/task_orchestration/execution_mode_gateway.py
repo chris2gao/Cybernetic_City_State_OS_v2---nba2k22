@@ -69,13 +69,16 @@ class ModeBoundExecutor:
             self._deny_mode_change("next-action")
             raise
         result = self._executor.advance()
-        # PR23 catches a guard raised by a fact callback; the gateway must still
-        # record it as a Host-state refusal, not as an AI-policy violation.
-        try:
-            self._ensure_execution()
-        except ModeViolation:
-            self._deny_mode_change(result.node)
-            raise
+        # PR23 captures errors raised by Ready / Action internally. If a mode
+        # revocation caused that error, classify the *unexecuted* attempt as
+        # Host-state denial. A completed action must NEVER be retrospectively
+        # counted as denied because mode changed AFTER the real invocation.
+        if result.status in {"OBSERVATION_ERROR", "ACTION_UNCERTAIN"}:
+            try:
+                self._ensure_execution()
+            except ModeViolation:
+                self._deny_mode_change(result.node)
+                raise
         return result
 
     def run_available(self) -> tuple[Advance, ...]:
