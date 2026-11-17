@@ -95,7 +95,7 @@ JSONL 记录和描述性汇总，不与 `execution_decision_audit.py` 的 Host �
 当前 Windows 本地隔离测试在固定源码 commit
 `1021bed9de29ab37c740734d455fb0db1b10ab8a` 完成：
 `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`
-→ **171 passed, 8 subtests passed**。这是离线行为测试；实际 Agent 诚实程度与真实
+→ **161 passed, 8 subtests passed**。这是离线行为测试；实际 Agent 诚实程度与真实
 任务成功率仍须通过后续任务证据观察，不能仅靠自报或测试数字推定。
 
 ## PR #37 · Human 核查后的直接整改（2026-11-17）
@@ -135,7 +135,7 @@ Windows 独立工作树执行 171 项 pytest + 8 subtests 全通过。
    重读代码或逐项重审，不应减少真正必要的安全验证。
 5. 已在 Windows 设备的隔离验证工作树（commit `333dcb28475032c403c5ea43587e25adbda8a35a`）运行
    `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`：
-   **171 passed, 8 subtests passed**（R1/R2 与 PRMS 回归）。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
+   **154 passed, 8 subtests passed**（R1/R2 与 PRMS 回归）。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
    跨阶段全量 pytest 曾启动但未收获最终退出码，未记为通过。
 
 ## 系统验收目标（不是 NBA 特定工作）
@@ -149,3 +149,11 @@ Windows 独立工作树执行 171 项 pytest + 8 subtests 全通过。
 
 本次通用 Core OS 改造先保留为 Draft。正式集成及生产使用需 Human 对机制与必要技术控制边界给出裁决；
 不要为了演示而启动已关闭的 NBA2K22 T15。
+
+## 2026-11-17 独立源码审核反馈（新补充，不覆盖历史测试）
+
+一份与施工方分离的固定 SHA 独立工程报告针对 `a527cc7f4a96356310635530b45bfabcc24ee5a2` 给出 **`PASS_WITH_GAPS`**：R1/R2 原 HIGH 问题的源码补丁在既定参考实现范围内关闭；R3 的全域 Host 覆盖仍未发生；R4 的 Human 审核来源读取组件只通过结构/合成夹具测试，尚无真正逐项 Human 批准的具体原型。报告明确声明审阅方未独立运行 pytest，不能虚报独立测试 PASS。
+
+**注意：** 审核报告还指出 `procedure_ref` 目前只是与 Host 目录的精确字符串比较，不直接证明 Human 看过文档正文；`audit_faults` 也不保证用户一定能看到警告（需要 Host 读取或安装回调）。这些是保留的显式使用边界，不能替换成实际部署声明。
+
+原始审核报告与来源摘要及独立核查的限制已登记在本 Run 的 `INDEPENDENT_REVIEW_RESULT_20261117.md`；本文件的历史旧 SHAs 是各个旧测试批次的记录，只有固定修订源码 `a527cc7...` 对应 171 passed + 8 subtests。
