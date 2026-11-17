@@ -29,7 +29,7 @@ verification:
   offline_test_command: python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1
   offline_test_result: 171_passed_8_subtests_passed
   cross_stage_regression: NOT_VERIFIED_attempted_no_final_exit
-  runtime_execution: NOT_RUN
+  runtime_execution: FIRST_REAL_PRMS_READ_ONLY_LOCAL_E2E_PASS
   remote_file_readback: PERFORMED
   human_architecture_mode_decision: APPROVED_2026_11_16
   high_r1: CLOSED_BY_INDEPENDENT_STATIC_REVIEW
@@ -38,8 +38,20 @@ verification:
   independent_review_type: STATIC_SOURCE_REVIEW_NO_INDEPENDENT_PYTEST
   independent_review_record: INDEPENDENT_REVIEW_RESULT_20261117.md
   independent_review_source_sha: a527cc7f4a96356310635530b45bfabcc24ee5a2
-  prms_review_lookup: OFFLINE_FIXTURE_PASS_REAL_HUMAN_PROTO_PENDING
-  specific_prototype_human_review: PENDING
+  prms_review_lookup: REAL_HUMAN_CHAT_RECORD_LOCAL_E2E_PASS_HOST_IDENTITY_UNVERIFIED
+  specific_prototype_human_review: APPROVED_FIRST_EXACT_DIGEST_2026_11_17
+  first_prototype_key: core-prms-registry-read-v1
+  first_prototype_digest: 5bbfdfd45e75b936933922620a81e0c55b645a212b380256447a5c28ba9ce501
+  first_prototype_human_approval: HUMAN_PROTOTYPE_APPROVAL_20261117.md
+  first_prototype_human_approval_sha256: 3dffd7930523fed0b98dd95666c110a0b5a5444cf318430c74d3b886719cf918
+  first_prototype_approval_manifest: HUMAN_PROTOTYPE_REVIEWS.json
+  first_prototype_e2e_record: FIRST_PRMS_PROTOTYPE_E2E_RESULT_20261117.md
+  first_prototype_e2e_status: LOCAL_READ_ONLY_PASS
+  first_prototype_host_identity_attestation: NOT_IMPLEMENTED
+  first_prototype_action_calls: 1
+  first_prototype_business_done: OBSERVED_TRUE
+  local_20261117_regression: 171_passed_8_subtests_passed_exit_0
+  independent_runtime_test: NOT_RUN
   human_semantic_review: PENDING
   human_refusal_observability_decision: APPROVED_2026_11_17
   refusal_audit_jsonl_reference: IMPLEMENTED_TESTED
