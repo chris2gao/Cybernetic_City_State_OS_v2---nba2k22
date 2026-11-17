@@ -107,6 +107,7 @@ class ExecutionModeGateway:
         development_tools: Mapping[str, DevelopmentTool] | None = None,
         model_ref: str = "UNKNOWN_MODEL",
         audit_sink: Callable[[GatewayEvent], None] | None = None,
+        on_audit_fault: Callable[[str], None] | None = None,
     ):
         self._read_mode = read_mode
         initial = read_mode()
@@ -123,6 +124,13 @@ class ExecutionModeGateway:
         self._session_ref = str(uuid4())
         self._audit_sink = audit_sink
         self._audit_buffer: list[GatewayEvent] = []
+        self._audit_faults: list[str] = []
+        self._on_audit_fault = on_audit_fault
+
+    @property
+    def audit_faults(self) -> tuple[str, ...]:
+        """A single visible warning per failed optional Host sink session."""
+        return tuple(self._audit_faults)
 
     @property
     def audit_events(self) -> tuple[GatewayEvent, ...]:
@@ -137,10 +145,24 @@ class ExecutionModeGateway:
             route=route, operation=operation, decision=decision,
             reason_code=reason_code, cause=cause,
         )
-        # An unavailable durable Host sink must never silently admit an action.
-        if self._audit_sink is not None:
-            self._audit_sink(event)
+        # This is an OPTIONAL diagnostic ledger, not a domain safety Journal.
+        # Its failure must not stop a valid business action or mask a refusal.
+        # A genuinely mandatory transaction/publication Journal is enforced by
+        # the domain capability/authorization, separately from this callback.
         self._audit_buffer.append(event)
+        if self._audit_sink is not None:
+            try:
+                self._audit_sink(event)
+            except Exception as exc:
+                if not self._audit_faults:
+                    warning = "OPTIONAL_AUDIT_UNAVAILABLE: " + type(exc).__name__
+                    self._audit_faults.append(warning)
+                    if self._on_audit_fault is not None:
+                        try:
+                            self._on_audit_fault(warning)
+                        except Exception:
+                            # Reporting a diagnostic failure cannot become a new gate.
+                            pass
 
     def _record_mode_denial(self, route: str, operation: str) -> None:
         self._record(route, operation, "DENIED",
