@@ -11,11 +11,14 @@
 - **Registry:** `task_orchestration_v1.yml` updated for canonical mechanism, source/test/preview.
 - **Scope:** no NBA capture task, no Native Calendar, no T15 restart, no new Core scheduler, no modification to either master.
 - **GitHub verification:** Files created/updated through connector and subsequently to be read back. GitHub commit and text checks are not Python execution.
-- **Local Python tests:** `NOT_RUN` — user's authorized Windows device offline during this interaction. The new tests are **authored**, not validated; independent review not performed.
+- **Local Python tests: PASS on fixed source commit `95d9a0aba385a330f662f9c99eb0c2fdcbf8b29f`.** Windows 10, Python 3.14.6, isolated `E:\\workspace\\_maintenance\\core-pr37-validation` detached validation worktree; command `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1` exited 0 with **129 passed, 5 subtests passed (0.73s)**. Original Core working branch remained unchanged. These are functional **offline** tests; independent review still not performed.
+- **Cross-stage regression:** a wider `minimum_operational_loop` pytest run was attempted but did not yield a final test verdict and was stopped. It is **UNVERIFIED**, not PASS.
+- **New negative path checks:** Review packet displays proposed extras, but `compile_approved` rejects unbound Host operations. Compiled per-instance parameters are held in a copy and cannot be retargeted by external dictionary mutation or a fact/authorization callback.
+
 - **Trusted Host mandatory next gate:** this candidate does not intercept arbitrary model Shell/GUI calls. It can only constrain callers that actually route through `compile_approved` with a trusted Human decision lookup, trustworthy immutable capability mappings, current domain facts and separately scoped permission.
 - **Human prototype semantics:** `PENDING` — mechanism architecture discussed, no specific reusable task prototype accepted. Do not invent approvals.
 - **Human final acceptance:** `PENDING`.
-- **Completion pointer:** Draft PR #37 and this record. Candidate is prepared for verification and architecture review, **not** a deployed system or proven efficiency improvement.
+- **Completion pointer:** Draft PR #37 and this record. Candidate has passed the bounded task-orchestration offline test set and awaits Host-binding verification, semantic review, **not** a deployed system or proven efficiency improvement.
 
 ## Required verification before any merge
 
