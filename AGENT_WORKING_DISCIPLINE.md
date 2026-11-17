@@ -91,6 +91,50 @@ Use the existing task plan and internal Loop, not a new per-tool-call form.
 Canonical semantics and positive/negative examples:
 `01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`.
 
+## 0.1 Human-reviewed reusable task prototypes — design once, execute many
+
+*Paid for 2026-11-16, NBA2K22 T15 / GE-01:* a task had a Goal and nominal action
+sequence, but during live execution the model improvised extra checks, foreground
+operations and scripts. A test wrapper's all-Pending assumption was mistakenly
+promoted into a Human-level blocker and the unfinished Goal was not promptly
+returned to Human for decision. Producing code or obeying an overstrong contract
+was not adequate business delivery.
+
+For **every domain and every level of task**, use the existing G/R/A/D model as a
+**reusable task prototype** when the action may recur or be delegated:
+
+- At **first design or material revision**, expose the actual intended procedure to
+  Human: Goal; each minimum Ready and Done criterion with its reason and factual
+  basis; the concrete function/CLI/tool and version; the necessary internal
+  operations/checks; what can be collapsed into a single existing callable;
+  parameters, side effects, exceptions and reuse boundary. Human and model
+  **discuss and decide the implementation steps**, not merely approve a title.
+  Do not treat a model-generated checklist as approved design.
+- Record the Human-approved prototype version and use it for **subsequent task
+  instances** with fresh parameters. Do not require Human to review the same
+  settled capture, simulation or verification design on each Loop iteration;
+  actual protected side-effect authority remains separate and instance-scoped.
+- At Workflow **05→06**, bind each leaf task to a verified, version-pinned existing
+  capability and a minimal observable Done. Routine internal checks stay inside
+  the tool. Do not silently invent a new shell command, glue script, readiness
+  requirement or completion test during approved instance execution.
+- If a capability is missing or a criterion turns out invalid, **stop the affected
+  Action, not the Goal**. Return `INCOMPLETE`, exact reason, evidence and the
+  smallest decision/repair options to Human. Only the changed prototype segment
+  needs re-design; unchanged nodes and proven outputs remain reusable.
+- An unreviewed proposal may be discussed, inspected or implemented as an
+  expressly commissioned **development** task. It must not masquerade as an
+  approved reusable execution contract. Human prototype review is not a Native,
+  credential, destructive-operation or master-publication permission.
+
+This is **not** an instruction to produce a per-command checklist, add a new
+Workflow phase, or delay a ready one-off task with a redundant approval ritual.
+For ordinary scoped implementation choices already delegated to the model, keep
+working within the existing authority. To actually restrict an executor with
+unrestricted Shell/GUI access requires a trusted host/tool boundary, not merely
+these written instructions. Canonical details:
+`01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md`.
+
 ## 1. Land the output; the chat holds nothing
 
 Anything that matters — decisions, verdicts, evidence, contracts — goes into the
