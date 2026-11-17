@@ -112,6 +112,47 @@ class ModeGatewayTests(unittest.TestCase):
         self.assertNotEqual(result.status, "ADVANCED")
         self.assertEqual(self.calls, [])
 
+    def test_loop_blocks_remaining_children_when_mode_changes_mid_execution(self):
+        first = Prototype("first", "First reviewed outcome",
+                          (fact("input_ok"),), (fact("first_done"),),
+                          Operation("first.cap", "v1", "READ_ONLY", ("target",),
+                                    "Pre-existing first callable"))
+        second = Prototype("second", "Second reviewed outcome",
+                           (fact("first_done"),), (fact("second_done"),),
+                           Operation("second.cap", "v1", "READ_ONLY", ("target",),
+                                     "Pre-existing second callable"))
+        root = Prototype("parent", "Both outcomes",
+                         (fact("input_ok"),), (fact("parent_done"),),
+                         children=(first, second))
+        facts = {"input_ok": True, "first_done": False,
+                 "second_done": False, "parent_done": False}
+        calls = []
+        def first_tool(target):
+            calls.append("first")
+            facts["first_done"] = True
+            self.mode = ModeState(DEVELOPMENT, "new-task", "Human-new", "new-scope")
+        def second_tool(target):
+            calls.append("second")
+            facts["second_done"] = True
+        approvals = {
+            node.key: HumanReview(node.key, digest(node), "reviewed", True)
+            for node in (root, first, second)
+        }
+        runner = self.gate.compile_execution(
+            root, review_lookup=lambda key, sha: approvals[key],
+            capabilities={
+                "first.cap": Capability("first.cap", "v1", "READ_ONLY", first_tool),
+                "second.cap": Capability("second.cap", "v1", "READ_ONLY", second_tool),
+            },
+            bindings={"target": "sample"},
+            read_fact=lambda name, bindings: facts[name],
+        )
+        with self.assertRaises(ModeViolation):
+            runner.run_available()
+        self.assertEqual(calls, ["first"])
+        self.assertFalse(facts["parent_done"])
+        self.assertFalse(facts["second_done"])
+
     def test_invalid_development_mode_without_scoped_human_decision(self):
         for state in (ModeState(DEVELOPMENT), ModeState(DEVELOPMENT, "T1", "", "scope"),
                       ModeState("ARBITRARY", "T1", "a", "scope")):
