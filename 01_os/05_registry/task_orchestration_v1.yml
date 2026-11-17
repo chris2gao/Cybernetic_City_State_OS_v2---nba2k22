@@ -56,6 +56,25 @@ entries:
     failure_surfacing: factmon.py replay/watch/report 非零退出或事件遗漏
     deletion_rule: protected
 
+  - path: 01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md
+    purpose: 跨领域父子任务 Human 逐项审定最小 G/R/A/D、可复用任务原型、能力绑定、05到06编译与有界Loop边界
+    loader: 05_步骤拆分 and 06_执行 read, plus Human design review
+    loader_class: host_application
+    discovery: AGENT_WORKING_DISCIPLINE.md section 0.1 and task_orchestration README
+    evidence: 01_os/06_execution/task_orchestration/test_reviewed_prototypes.py and current Human design review
+    cache_dirs: []
+    failure_surfacing: first new/revised prototype review or 05 to 06 execution handoff
+    deletion_rule: protected
+  - path: 01_os/06_execution/task_orchestration/{atomic_tasks.py,test_atomic_tasks.py,reviewed_prototypes.py,test_reviewed_prototypes.py,REVIEWED_PROTOTYPES.md}
+    purpose: 标准库 G/R/A/D 参考执行与新增已审核原型编译适配器；只调用可信领域已有函数，不自带Shell权限
+    loader: explicit Human-approved task Host integration and Python unittest
+    loader_class: in_repo_program
+    discovery: 01_os/03_mechanisms/task_orchestration/README.md
+    evidence: 01_os/06_execution/task_orchestration/test_atomic_tasks.py and test_reviewed_prototypes.py
+    cache_dirs: []
+    failure_surfacing: compile_approved error or explicit unittest run; no global Host restriction claimed
+    deletion_rule: protected
+
 excluded:
   # 本机制目前没有 01_os/02_boot/ 启动清单：该路径不在产生本机制的任务的
   # allowed_changed_paths 内，执行者不自行扩边界。是否需要 boot manifest 是一条
