@@ -95,8 +95,33 @@ JSONL 记录和描述性汇总，不与 `execution_decision_audit.py` 的 Host �
 当前 Windows 本地隔离测试在固定源码 commit
 `1021bed9de29ab37c740734d455fb0db1b10ab8a` 完成：
 `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`
-→ **161 passed, 8 subtests passed**。这是离线行为测试；实际 Agent 诚实程度与真实
+→ **171 passed, 8 subtests passed**。这是离线行为测试；实际 Agent 诚实程度与真实
 任务成功率仍须通过后续任务证据观察，不能仅靠自报或测试数字推定。
+
+## PR #37 · Human 核查后的直接整改（2026-11-17）
+
+**R1 已修：** 预览可保留未完成方案供 Human 讨论，但实际 `compile_approved()`
+必须在每个叶节点看到具体 `ProcedureStep` 或 `Operation.procedure_ref`。
+成熟函数采用文档引用时，Host 能力目录必须提供**完全相同的固定版本引用**，
+不能只靠模型在原型里写“已审”。父节点由真实子任务树表示操作，不需要重复展开。
+测试证据见 `test_reviewed_prototypes.py` 的 `test_r1_*`。
+
+**R2 已修：** 可选网关审计无法落盘，只生成一次脱敏 `OPTIONAL_AUDIT_UNAVAILABLE`
+诊断，并继续已有授权的正常动作。`audit_faults` 和可选 `on_audit_fault`
+让 Host/Agent 可以主动说明故障。Native/发布/事务类独立权限和强制 Journal 仍归领域。
+测试证据见 `test_execution_decision_audit.py` 的 `test_r2_*`。
+
+**R4 部分交付（未冒充最终通过）：** `prms_review_lookup.py` 读取现有 Run 中明确的
+Human 原型审核清单，并匹配原型 digest、任务 scope、Human 决策来源 Markdown 哈希，
+还要求 Host 验证其实际为 Human 裁决。现有 `HUMAN_DECISION_MODE_SEPARATION.md`
+只批准 OS 的执行/开发模式规则，**未批准任何特定叶任务原型**；
+测试确认它不能产生 `HumanReview`。合成审批文件可驱动真实的
+`lookup→compile→invoke→Done` 测试，但这不是 Human 已批准真实原型的证据。
+
+**固定源码证据：** commit `fd6bac894ee2dc7fff2379ef8ca5c5af02753550`，
+Windows 独立工作树执行 171 项 pytest + 8 subtests 全通过。
+尚缺真实 Human 对首个具体原型逐项审定、独立工程审核与 master 集成授权；
+不以继续增加审计或 Shell 沙箱代替这些未完成的实际交付。
 
 ## 必须真实处理的差距
 
@@ -110,7 +135,7 @@ JSONL 记录和描述性汇总，不与 `execution_decision_audit.py` 的 Host �
    重读代码或逐项重审，不应减少真正必要的安全验证。
 5. 已在 Windows 设备的隔离验证工作树（commit `333dcb28475032c403c5ea43587e25adbda8a35a`）运行
    `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`：
-   **161 passed, 8 subtests passed**（新增自报测试）。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
+   **171 passed, 8 subtests passed**（R1/R2 与 PRMS 回归）。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
    跨阶段全量 pytest 曾启动但未收获最终退出码，未记为通过。
 
 ## 系统验收目标（不是 NBA 特定工作）
