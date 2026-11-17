@@ -21,6 +21,19 @@
 
 **这不是新执行引擎、审批门、Schema或每次调用都要填报的文件。** 普通运行结果不用为每个节点创建Git提交或正式 MWU 输出；原有真实权限与发布门继续适用。
 
+## Human 审定的最小任务原型与执行编译（系统级候选）
+
+[统一契约 v1](最小任务原型与执行编译契约_v1.md) 衔接七阶段中的
+03 结果建模、05 步骤拆分、06 执行及既有内部 Loop。它适用于任意领域、
+任意层级任务：新原型由 Human 与模型对每项最小 Ready/Done 和实际步骤进行设计审核；
+已审定原型可大量实例化，复用既有工具，不重复开发、不重复审同一设计。
+任务编译是 05→06 的衔接，不增设第八阶段，也不为每次调用另建 PR/Run。
+
+`01_os/06_execution/task_orchestration/reviewed_prototypes.py` 是供真实 Host 选择接入
+的初版标准库编译适配器：输出可审查的原型清单，验证可信 Human 决策与版本摘要，
+把叶任务绑定到已有领域 callable，并复用 PR #23 Executor，不生成 Shell/脚本。
+当前仍是候选代码，**没有接管所有 Agent 的工具调用，也不授予写入权限**。
+
 ## 最小可运行参考实现（不接管业务命令）
 
 - `01_os/06_execution/task_orchestration/atomic_tasks.py`：标准库 Python，提供 `Atom`、`Chain`、`Ready`、`Executor.inspect()/advance()/run_available()`。由领域代码注入真实 Ready、Action、Done 函数；Core 不替领域执行 Native、Git 或 Shell，也不授予权限。
