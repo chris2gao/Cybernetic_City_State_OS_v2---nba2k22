@@ -24,6 +24,11 @@ verification:
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_atomic_tasks.py -v
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_reviewed_prototypes.py -v
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_review_prototype_cli.py -v
+  offline_test_commit: 95d9a0aba385a330f662f9c99eb0c2fdcbf8b29f
+  offline_test_environment: Windows_10_Python_3_14_6
+  offline_test_command: python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1
+  offline_test_result: 129_passed_5_subtests_passed
+  cross_stage_regression: NOT_VERIFIED_attempted_no_final_exit
   runtime_execution: NOT_RUN
   remote_file_readback: PERFORMED
   human_semantic_review: PENDING
