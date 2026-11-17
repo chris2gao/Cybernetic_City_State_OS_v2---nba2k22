@@ -1,6 +1,9 @@
 """No shell, game or external side effects: mode gateway positive/negative tests."""
 import unittest
 
+# Stable catalog documentation is a TEST FIXTURE; it is not a Human approval.
+FIXTURE_PROCEDURE_REF = "fixture://known-procedure@0000000000000000000000000000000000000000"
+
 from execution_mode_gateway import (
     DEFAULT_MODE, DEVELOPMENT, EXECUTION, DevelopmentAuthorizationRequired,
     DevelopmentTool, ExecutionModeGateway, ModeState, ModeViolation,
@@ -19,7 +22,7 @@ def prototype(key="capture"):
     return Prototype(
         key, "Produce one actual outcome",
         (fact("input_ok"),), (fact("output_done"),),
-        Operation("known.cap", "v1", "READ_ONLY", ("target",), "Reuse existing function"),
+        Operation("known.cap", "v1", "READ_ONLY", ("target",), "Reuse existing function", procedure_ref=FIXTURE_PROCEDURE_REF),
     )
 
 
@@ -31,7 +34,7 @@ class ModeGatewayTests(unittest.TestCase):
         self.calls = []
         self.root = prototype()
         self.capabilities = {"known.cap": Capability(
-            "known.cap", "v1", "READ_ONLY", self._capture)}
+            "known.cap", "v1", "READ_ONLY", self._capture, procedure_ref=FIXTURE_PROCEDURE_REF)}
         self.reviews = {
             "capture": HumanReview("capture", digest(self.root), "Human-review-1", True)
         }
@@ -77,7 +80,7 @@ class ModeGatewayTests(unittest.TestCase):
         unknown = Prototype("capture", self.root.goal, self.root.ready,
                             self.root.done,
                             Operation("new.shell", "v1", "READ_ONLY", ("target",),
-                                      "Someone added a glue tool"))
+                                      "Someone added a glue tool", procedure_ref=FIXTURE_PROCEDURE_REF))
         approval = {"capture": HumanReview("capture", digest(unknown), "reviewed", True)}
         from reviewed_prototypes import CapabilityGap
         with self.assertRaises(CapabilityGap):
@@ -118,11 +121,11 @@ class ModeGatewayTests(unittest.TestCase):
         first = Prototype("first", "First reviewed outcome",
                           (fact("input_ok"),), (fact("first_done"),),
                           Operation("first.cap", "v1", "READ_ONLY", ("target",),
-                                    "Pre-existing first callable"))
+                                    "Pre-existing first callable", procedure_ref=FIXTURE_PROCEDURE_REF))
         second = Prototype("second", "Second reviewed outcome",
                            (fact("first_done"),), (fact("second_done"),),
                            Operation("second.cap", "v1", "READ_ONLY", ("target",),
-                                     "Pre-existing second callable"))
+                                     "Pre-existing second callable", procedure_ref=FIXTURE_PROCEDURE_REF))
         root = Prototype("parent", "Both outcomes",
                          (fact("input_ok"),), (fact("parent_done"),),
                          children=(first, second))
@@ -143,8 +146,8 @@ class ModeGatewayTests(unittest.TestCase):
         runner = self.gate.compile_execution(
             root, review_lookup=lambda key, sha: approvals[key],
             capabilities={
-                "first.cap": Capability("first.cap", "v1", "READ_ONLY", first_tool),
-                "second.cap": Capability("second.cap", "v1", "READ_ONLY", second_tool),
+                "first.cap": Capability("first.cap", "v1", "READ_ONLY", first_tool, procedure_ref=FIXTURE_PROCEDURE_REF),
+                "second.cap": Capability("second.cap", "v1", "READ_ONLY", second_tool, procedure_ref=FIXTURE_PROCEDURE_REF),
             },
             bindings={"target": "sample"},
             read_fact=lambda name, bindings: facts[name],
