@@ -24,7 +24,7 @@ verification:
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_atomic_tasks.py -v
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_reviewed_prototypes.py -v
     - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_review_prototype_cli.py -v
-  offline_test_commit: fd6bac894ee2dc7fff2379ef8ca5c5af02753550
+  offline_test_commit: a527cc7f4a96356310635530b45bfabcc24ee5a2
   offline_test_environment: Windows_10_Python_3_14_6
   offline_test_command: python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1
   offline_test_result: 171_passed_8_subtests_passed
