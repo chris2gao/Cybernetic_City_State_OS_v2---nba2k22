@@ -104,6 +104,20 @@ abandoned. Prototype approval is not protected-action approval. The candidate
 adapter is `01_os/06_execution/task_orchestration/reviewed_prototypes.py`;
 only an actual trusted Host integration can enforce tool invocation restrictions.
 
+## Execution-mode routing and development boundaries
+
+**Core-wide Human decision:** the default domain task runtime mode is
+`EXECUTION`, and its actions must be compiled from the Human-reviewed minimum
+G/R/A/D prototype using the version-pinned capability entry. A Human-requested
+coding/architecture task is `DEVELOPMENT` within its existing task scope;
+no additional approval token is required for routine local work. A missing
+capability during `EXECUTION` must not cause an automatic switch to code
+writing. Stop the affected Action, report `INCOMPLETE` and request the
+smallest Human choice. Only a new Host-recognized, Human-authorized development
+session may perform that repair. Do not mistake a model's `mode: DEVELOPMENT`
+text for true authority. The opt-in `execution_mode_gateway.py` implements
+callable-level refusal; actual Shell/GUI restrictions require Host integration.
+
 ## Formal Cross-Model Handoffs
 
 **Goal-first handoff and reception.** Preserve the existing task packet
