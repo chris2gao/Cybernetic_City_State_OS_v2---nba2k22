@@ -65,6 +65,49 @@ class AuditTests(unittest.TestCase):
             self.assertIn("OPTIONAL_AUDIT_UNAVAILABLE", gate.audit_faults[0])
             self.assertFalse(missing_parent.exists())
 
+    def test_r2_optional_audit_failure_surfaces_one_warning_without_hidden_repeat(self):
+        state = ModeState(DEVELOPMENT, "T1", "Human-decision", "scope")
+        warnings = []
+        calls = []
+        def bad_sink(event):
+            raise OSError("private-log-path-not-to-expose")
+        gate = ExecutionModeGateway(
+            read_mode=lambda: state, audit_sink=bad_sink,
+            on_audit_fault=warnings.append,
+            verify_development=lambda *args: True,
+            development_tools={"edit": DevelopmentTool(
+                "edit", lambda **kwargs: calls.append(kwargs))})
+        gate.invoke_development("edit", args={"path": "one"})
+        gate.invoke_development("edit", args={"path": "two"})
+        self.assertEqual(calls, [{"path": "one"}, {"path": "two"}])
+        self.assertEqual(len(warnings), 1)
+        self.assertEqual(len(gate.audit_faults), 1)
+        self.assertIn("OPTIONAL_AUDIT_UNAVAILABLE", warnings[0])
+        self.assertNotIn("private-log-path", warnings[0])
+        self.assertEqual(len(gate.audit_events), 2)
+
+    def test_r2_audit_failure_does_not_override_real_write_authorization(self):
+        gate = ExecutionModeGateway(
+            read_mode=lambda: ModeState(),
+            audit_sink=lambda event: (_ for _ in ()).throw(OSError("optional ledger offline")))
+        node = Prototype("write", "Authorized outcome",
+                         (), (Criterion("d", "done", "real readback", "Human review"),),
+                         Operation("native.write", "v1", "WRITE", ("target",),
+                                   "Guarded existing capability",
+                                   procedure_ref=FIXTURE_PROCEDURE_REF))
+        review = HumanReview("write", digest(node), "test-only-review", True)
+        calls = []
+        runner = gate.compile_execution(
+            node, review_lookup=lambda key, sha: review,
+            capabilities={"native.write": Capability("native.write", "v1", "WRITE",
+                                                      lambda target: calls.append(target),
+                                                      procedure_ref=FIXTURE_PROCEDURE_REF)},
+            bindings={"target": "actual"}, read_fact=lambda key, args: False,
+            authorize_write=lambda cap, args: False)
+        self.assertEqual(runner.advance().status, "BLOCKED")
+        self.assertEqual(calls, [])
+        self.assertEqual(len(gate.audit_faults), 1)
+
     def test_denied_mode_never_invokes_and_produces_structured_receipt(self):
         calls = []
         saved = []
