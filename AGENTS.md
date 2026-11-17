@@ -118,6 +118,16 @@ session may perform that repair. Do not mistake a model's `mode: DEVELOPMENT`
 text for true authority. The opt-in `execution_mode_gateway.py` implements
 callable-level refusal; actual Shell/GUI restrictions require Host integration.
 
+## Denial receipts as a model–OS fit signal
+
+When an actually mediated operation is refused, preserve the Host's structured
+`DENIED` reason. Repeated `MODEL_POLICY` refusals indicate possible mismatch
+between the model's tool behavior and the Human-reviewed OS plan; contrast with
+`HUMAN_PENDING`, `SYSTEM_GAP` and `HOST_STATE` before blaming the model.
+Compare similar task cohorts with a nonzero attempt denominator. The refusal
+ledger is not another per-call Human approval process and does not by itself
+change permissions. The host-owned sink, not the Agent, persists the evidence.
+
 ## Formal Cross-Model Handoffs
 
 **Goal-first handoff and reception.** Preserve the existing task packet
