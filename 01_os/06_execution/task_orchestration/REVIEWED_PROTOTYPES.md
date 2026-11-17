@@ -52,6 +52,21 @@ Loop：使用已批准原型反复实例化，或根据真实结果设计下一�
   机制的真实正确性仍需要实际测试。若任务包括 Host 单独执行多步操作，应以多个已绑定
   子任务/既有领域封装表示，不能因为 Procedure 里写了某动作就认为它会自动执行。
 
+## Core 全域默认模式（2026-11-16 Human 已批准）
+
+**默认 `EXECUTION`**：只调用 Human 审定、版本绑定的原型实例；禁止运行时生成临时脚本、
+扩张 Ready/Done 或自动进入开发。`execution_mode_gateway.py` 的 `ExecutionModeGateway`
+在 `compile_execution` 上要求已有原型和 callable，并在调用边界再次检查 Host 模式。
+
+**显式 `DEVELOPMENT`**：当 Human 明确委托软件实现或能力修复时，在原有任务范围内
+可以研究、编程和测试。执行中发现能力缺口不等于获得了这项委托；
+`invoke_development` 仅接受 Host 注册且由真实 Host 按任务/范围授权的工具，没有 Shell 回退。
+每次开发工具调用由 Host 判断已批准的**任务范围**，不是每个命令重新找 Human 审批。
+
+**模式变化**：既有实例失效，不能恢复旧模式就自动复活；从执行转开发必须经过 Human
+授予新的任务范围和会话。父任务保持 `INCOMPLETE`，受影响 Action 停止，保护已有真实成果。
+这一机制在实际 Host 接管所有相关工具前，仍不构成全局强制沙箱。
+
 ## 必须真实处理的差距
 
 1. 当前代码仅约束**主动调用该编译器的可信 Host**。任何未经路由的 Codex/Claude
@@ -64,7 +79,7 @@ Loop：使用已批准原型反复实例化，或根据真实结果设计下一�
    重读代码或逐项重审，不应减少真正必要的安全验证。
 5. 已在 Windows 设备的隔离验证工作树（commit `95d9a0aba385a330f662f9c99eb0c2fdcbf8b29f`）运行
    `python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1`：
-   **129 passed, 5 subtests passed**。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
+   **142 passed, 8 subtests passed**（更新测试于 commit `3577af05e35f387175bb344f6ab00ff650b0892b`）。此为离线实现行为测试，不是 Host 强制接入或生产实际效果证明。
    跨阶段全量 pytest 曾启动但未收获最终退出码，未记为通过。
 
 ## 系统验收目标（不是 NBA 特定工作）
