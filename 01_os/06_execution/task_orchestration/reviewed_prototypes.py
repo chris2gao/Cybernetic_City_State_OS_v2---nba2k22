@@ -116,8 +116,14 @@ def _nodes(root: Prototype) -> tuple[Prototype, ...]:
 
 
 def digest(prototype: Prototype) -> str:
-    """Canonical SHA256 invalidates approval when any child/check/action changes."""
-    data = json.dumps(asdict(prototype), ensure_ascii=False, sort_keys=True,
+    """Hash this node's reviewed contract and child identities, not descendant internals.
+
+    An edited leaf must be re-reviewed; unrelated ancestors whose own G/R/A/D and
+    child ordering remain unchanged must NOT trigger redundant Human approvals.
+    """
+    node = asdict(prototype)
+    node["children"] = [child.key for child in prototype.children]
+    data = json.dumps(node, ensure_ascii=False, sort_keys=True,
                       separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(data).hexdigest()
 
