@@ -1,0 +1,37 @@
+task_id: OS-CORE-HUMAN-REVIEWED-ATOMIC-PROTOTYPES-SYSTEM-UPGRADE-20261116-001
+run_id: run-20261116-human-reviewed-atomic-prototypes-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: 5806c381c599e817106cbdb7c6352f6156b8cdcc
+branch: task/core-human-reviewed-atomic-prototypes-20261116
+ownership: core_system
+objective: >-
+  Upgrade Core OS across all domains and all task levels with Human-reviewed
+  minimal G/R/A/D prototypes, prebound callable execution plans, reusable
+  instances, and bounded Loop correction at the existing Stage05→06 boundary.
+lifecycle: candidate_pending_validation
+allowed_changed_paths:
+  - AGENT_WORKING_DISCIPLINE.md
+  - AGENTS.md
+  - 01_os/01_workflow/05_步骤拆分/README.md
+  - 01_os/01_workflow/06_执行/README.md
+  - 01_os/03_mechanisms/task_orchestration/
+  - 01_os/05_registry/task_orchestration_v1.yml
+  - 01_os/06_execution/task_orchestration/
+  - 01_os/_runs/run-20261116-human-reviewed-atomic-prototypes-001/
+verification:
+  proposed_tests:
+    - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_atomic_tasks.py -v
+    - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_reviewed_prototypes.py -v
+    - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_review_prototype_cli.py -v
+  runtime_execution: NOT_RUN
+  remote_file_readback: PERFORMED
+  human_semantic_review: PENDING
+  full_tool_boundary: NOT_IMPLEMENTED
+  no_domain_native_actions: true
+closure_record: CHECKPOINT.md
+publisher:
+  publication_transport: github_api_connector
+  source_branch_publication: task_scope_default
+  master_integration_confirmation: not_requested
+  expected_remote_master_head: 5806c381c599e817106cbdb7c6352f6156b8cdcc
