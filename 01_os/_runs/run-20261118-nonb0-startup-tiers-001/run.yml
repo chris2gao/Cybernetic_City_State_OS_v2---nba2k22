@@ -1,0 +1,17 @@
+task_id: OS-CORE-NONB0-STARTUP-TIERS-20261118-001
+run_id: run-20261118-nonb0-startup-tiers-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: a85a406ebbac7a7f4994e108f685c6e6b901153e
+branch: task/core-nonb0-startup-tiers-20261118
+ownership: core_system
+objective: >-
+  在不删、不改规则语义的前提下，把非 B0 机制的启动必读按“启动 / 按动作 / 程序”重新分层，
+  继续降低各角色启动读取量（Human 期望 60–80 KB）；读取分层只写在各 boot 的 read_tiers。
+source: 上一任务 run-20261118-b0-split-boot-tiers-001 的 follow_up_candidates；Human 在会话中选择“Do this task here”
+inputs:
+  - 03_方案设计/方案对比_v1.md
+lifecycle: research_only
+remaining:
+  - Human 在方案 A / B / C 之间选择（方案对比_v1.md §5）
+  - 获批后建任务包与验证计划，再施工
