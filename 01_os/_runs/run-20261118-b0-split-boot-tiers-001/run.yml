@@ -12,7 +12,8 @@ task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 03_方案设计/方案对比_v1.md
   - 01_任务输入/Human决策记录_20261118.md
-lifecycle: candidate_ready_for_independent_review
+lifecycle: integrated_and_verified_on_demand
+closure_record: 08_结论/completion_pointer.yml
 candidate: b9a831242e7b77eb6a787cfb06933a7cbfddc290
 reviewed_candidate_round_0: 4655a3342a410cfdf87c48a46563f5feb82e1eb6
 increments:
@@ -73,7 +74,26 @@ findings:
   - 已处置（审核 B1）：PR #40 由 PR #41 取代并已合并（master 0b935671）。修正轮 1 把 origin/master merge 进任务分支（不 rebase），skills_v1.yml、06_execution/skills/README.md、test_skills.py 三处冲突按“读取键只在 boot”解决，`实现/加载与receipt契约_v1.yml` 从 stage_collaborative_deliberation boot 的 program 移到“正式七阶段 run 的阶段计划或完成检查点时”的 on_action，与 PR #41 的生成结果一致。
   - PRMS `catalog.py` / `context.py` 的 B0_PATHS 仍把开发入口当强制读取、不含细则；这是 PRMS 会话计划的口径，不在本任务范围，记为后续候选。
   - 非 B0 启动必读调层（TASK_CONTINUITY.md、task_orchestration/README.md、repository_publisher_authority_v1.yml 等）未做，按 Human 决定另立后续任务。
-remaining:
-  - 独立审核（新的隔离会话；与执行者同为 Claude 模型族，须披露）
-  - 新窗口只说角色的初始化实测：按上一任务 B1 的结论，skill 只在桌面 app 的项目根（主检出）可调用，须在 master 集成后复测
-  - master 集成由 Human 在审核后另行确认
+integration:
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#42 (MERGED 2026-11-18T21:21:57Z)
+  master_before: 0b93567116a53968f98b590eae09431a16a5f6d0
+  pr_head_bound: 09b35ea52a446ee8fe9235b7a763b33910378db2
+  master_after: 7961c5f3b4f2d3e8c2d11003c68109c6cf931657
+  readback: old master is an ancestor; merge tree equals PR head tree; 66 paths changed; no squash, rebase or force
+  confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261118.md
+role_only_init_after_integration:
+  session: b0-role-init-test, new Claude Code session at master 7961c5f3 (main checkout fast-forwarded to 7961c5f3 first)
+  told: 你的角色是审核。
+  skill_list: 19 skills listed as invocable (5 role, citystate-os, 13 os-*)
+  invoked: role-reviewer through the Skill tool, from the main checkout .claude/skills/role-reviewer
+  loaded: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline]
+  startup_read: 13 files, 115,718 bytes (before integration 14 files, 171,457 bytes)
+  validators: 5 run, all exit 0
+  report: 07_测试执行/新窗口角色初始化实测_7961c5f3.md
+  noted_gap: skills load from the app's project root (main checkout), not from a worktree; a worktree on another commit would see a different skill version
+follow_up_candidates:
+  - 非 B0 启动必读调层（各角色合计仍 98–123 KB）
+  - PRMS catalog.py / context.py 的 B0_PATHS 口径（仍把开发入口当强制读取，不含细则）
+  - 复核 R2：skills README 补“同层多条 on_action 共用路径”与 SKILL_TIER_ENTRY_POINT
+  - 复核 N3：DISCIPLINE §2 “What is not worth optimising” 在启动层只剩标题与指针
+remaining: []
