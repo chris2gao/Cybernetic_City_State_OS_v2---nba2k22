@@ -34,9 +34,13 @@ verification_attempts:
     result: 16 of 19 checks success; pytest_mechanism_activation failed at collection (ModuleNotFoundError activation), 2 not_run; inspect exit 1
     cause: verification plan defect - those unittest suites import their sibling module flat and are run with unittest discover -s <dir> (31 tests OK); the directory has __init__.py so pytest imports it as a package. No source in that directory changed in this task.
     correction: the check id keeps its name; argv changed to python -m unittest discover. model_routing (7 passed) and communication_system (84 passed, 6 subtests) pre-checked under pytest before rerun.
+  - attempt: attempt-003
+    candidate: 3b1550b4aea011b7cd082d5134021fba18ada81a
+    result: all 19 required checks success; managed_verify run exit 0 and inspect exit 0
+    test_counts: {skills: 5, task_orchestration: '171 + 8 subtests', task_discipline: '140 + 147 subtests', workflow: '174 + 283 subtests', stage_deliberation: 225, context_management: 121, mechanism_activation: '31 (unittest)', model_routing: 7, communication: '84 + 6 subtests'}
+    raw_attempt: kept outside the repository in the executor's scratch evidence directory; executor evidence, not independently reproduced
 remaining:
   - full pytest run on the working tree: 520 passed, 283 subtests passed (exit 0); superseded by managed verification on the final candidate
-  - verification_plan.json + managed_verify run/inspect
   - PRMS catalog on 3bec129d: CONSISTENT_WITHIN_SCAN_SCOPE, 0 unregistered, 0 missing (was PARTIAL at base)
   - new-window role initialization test (planner, developer, reviewer)
   - push task branch, independent review, completion pointer, Human master confirmation
