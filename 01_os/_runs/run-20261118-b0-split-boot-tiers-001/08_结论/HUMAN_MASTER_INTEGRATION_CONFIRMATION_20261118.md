@@ -7,3 +7,9 @@
 - **合并方式：** 普通 GitHub pull request，用保留历史的 merge commit 合并。绑定预期的 PR head，不 squash、不 rebase、不 force。合并后读回远端 master 与变更路径。
 
 这是对 Human 答复的持久转写，不是新的授权系统。
+
+## 第二次确认：收尾记录 PR #43
+
+- **来源：** 同一会话。被问到“把收尾记录 PR #43 也合并进 master 吗？”时，Human 答复：“合并 #43”。
+- **覆盖的动作：** 把只含本 run 证据的 PR chris2gao/Cybernetic_City_State_OS_v2---core#43 合并进 core `master`，仅此一次。
+- **确认时远端 master：** `7961c5f3b4f2d3e8c2d11003c68109c6cf931657`。合并方式同上：保留历史的 merge commit，绑定预期 head，不 squash、不 rebase、不 force，合并后读回。
