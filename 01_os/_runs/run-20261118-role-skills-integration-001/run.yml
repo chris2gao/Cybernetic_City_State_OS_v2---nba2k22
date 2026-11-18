@@ -25,6 +25,15 @@ boundary_corrections:
     detected_by: managed_verify run on 3bec129d returned candidate_outside_packet_allowlist (exit 3); changed_path_ledger listed .gitignore as the only out-of-scope path of 112
     cause: I16 moves the domain _runtime ignore rule to 08_Domain_Applications/_runs/*/_runtime/; the packet author (this executor) omitted .gitignore from allowed_changed_paths
     resolution: Human chose to add .gitignore to allowed_changed_paths and rerun verification
+verification_attempts:
+  - attempt: attempt-001
+    candidate: 3bec129d9009926912d14ebe64a727d470babfe8
+    result: refused before any check (candidate_outside_packet_allowlist, exit 3); see boundary_corrections
+  - attempt: attempt-002
+    candidate: 07187f1c7e4ad87ad0e4f2431197c2324b16cb56
+    result: 16 of 19 checks success; pytest_mechanism_activation failed at collection (ModuleNotFoundError activation), 2 not_run; inspect exit 1
+    cause: verification plan defect - those unittest suites import their sibling module flat and are run with unittest discover -s <dir> (31 tests OK); the directory has __init__.py so pytest imports it as a package. No source in that directory changed in this task.
+    correction: the check id keeps its name; argv changed to python -m unittest discover. model_routing (7 passed) and communication_system (84 passed, 6 subtests) pre-checked under pytest before rerun.
 remaining:
   - full pytest run on the working tree: 520 passed, 283 subtests passed (exit 0); superseded by managed verification on the final candidate
   - verification_plan.json + managed_verify run/inspect

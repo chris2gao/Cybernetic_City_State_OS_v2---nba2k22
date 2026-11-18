@@ -216,11 +216,12 @@
     "@python",
     "-B",
     "-m",
-    "pytest",
+    "unittest",
+    "discover",
+    "-s",
     "01_os/06_execution/boot/mechanism_activation",
-    "-q",
     "-p",
-    "no:cacheprovider"
+    "test_*.py"
    ],
    "timeout_seconds": 1800,
    "expected_exit_code": 0
