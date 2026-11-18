@@ -12,7 +12,7 @@ task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md
   - 01_os/_runs/run-20261118-role-skills-integration-001/run.yml (review_dispositions R1_subcommand_options, R2_receipt_contract_on_action)
-lifecycle: candidate_pending_validation
+lifecycle: candidate_ready_for_independent_review
 start_record:
   hooks_path: >-
     worktree config core.hooksPath was the main checkout's absolute .githooks path; set
@@ -45,3 +45,27 @@ changes:
       for every role is unchanged (on-action reads are not startup).
   readme: 01_os/06_execution/skills/README.md test_skills.py row describes the subcommand-level check
   generated: .agents/skills/os-stage-deliberation/SKILL.md, .claude/skills/os-stage-deliberation/SKILL.md (generate_skills.py, not hand-edited)
+verification_attempts:
+  - attempt: attempt-001
+    candidate: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
+    plan_sha256: 4d771a8342b0a10ffb1deb44112372c78947b799aa28692c7adb870f2aa91a0a
+    result: all 5 required checks success (skills_static, skills_generate_check, pytest_skills 8 passed, stage_deliberation_guard, stage_deliberation_static); result.json status success; inspect exit 0
+    note: the run command's own exit code was piped through tail and not captured separately; inspect replays the attempt and exited 0
+    raw_attempt: executor scratchpad outside the repository; executor evidence, not independently reproduced
+  changed_path_ledger: 8 paths against base 232345a7, all inside allowed_changed_paths
+self_report:
+  - kind: AGENT_SELF_REPORT
+    deviation: >-
+      R1 and R2 edits were made before the task packet and run record were written; the entry asks for
+      the packet before the first canonical write. Business impact none - packet, candidate commit and
+      verification all bind the same final content; preflight therefore reported worktree_dirty:8 at
+      packet time.
+review_schedule:
+  review_mode: immediate_required
+  series_id: null
+  review_trigger: before master integration
+  must_review_before: master integration (Human confirmation required)
+  candidate_head: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
+  verification_receipt: verification_attempts attempt-001
+  downstream_consumption: candidate_only
+closure_record: 08_结论/completion_pointer.yml

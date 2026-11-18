@@ -1,0 +1,47 @@
+completion_pointer:
+  packet_id: OS-CORE-SKILLS-REVIEW-R1-R2-20261118-001
+  status: ready_for_independent_review
+  source_branch: task/core-skills-review-r1-r2-20261118
+  source_base: 232345a737f06f348ba8e4fb1ec096537d647a70
+  source_head: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
+  source_head_note: >-
+    3039712c is the candidate managed verification ran on; the later commit that adds this
+    pointer only changes run evidence (run.yml and this file).
+  validation:
+    tests: managed_verify attempt-001 on 3039712c - 5 of 5 required checks success, inspect exit 0
+    candidate_caused_failures: none observed
+    diff_scope: passed
+    hook_guard: passed
+  repository:
+    changed_paths:
+      - .agents/skills/os-stage-deliberation/SKILL.md
+      - .claude/skills/os-stage-deliberation/SKILL.md
+      - 01_os/05_registry/skills_v1.yml
+      - 01_os/06_execution/skills/README.md
+      - 01_os/06_execution/skills/test_skills.py
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/01_任务输入/任务包_v1.yml
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/07_测试执行/verification_plan.json
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/run.yml
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/08_结论/completion_pointer.yml
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean: true
+  publication:
+    transport: local_git
+    replacement_gate: not_applicable
+    expected_remote_head: not_applicable (new task branch)
+    resulting_remote_head: read back after the push and reported in the PR description (a pointer cannot contain the commit that contains it)
+    compare_and_swap: not_applicable
+    fast_forward_verified: not_applicable
+    push_performed: true
+    master_modified: false
+    force_push: false
+  next_owner: foreground_independent_review
+  review_schedule:
+    review_mode: immediate_required
+    series_id: null
+    review_trigger: before master integration
+    must_review_before: master integration (Human confirmation required)
+    candidate_head: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
+    verification_receipt: run.yml verification_attempts attempt-001
+    downstream_consumption: candidate_only
