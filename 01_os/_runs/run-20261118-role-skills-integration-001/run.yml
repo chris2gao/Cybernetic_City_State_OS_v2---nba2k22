@@ -75,7 +75,7 @@ review_dispositions:
   F1_task_continuity_single_window: fixed - TASK_CONTINUITY.md now says the window is a workbench and one task vs a series is the Human's call
   F2_startup_reading_load: fixed by Human-approved three-tier loading; startup reading per role before -> after - planner 552 KB -> 174 KB, developer 419 -> 177, reviewer 395 -> 167, content developer 419 -> 177, content user 259 -> 152 (B0 is 124 KB of each); B0 split proposed as a separate task
   F3_command_templates: fixed - publish_message, route_receiver, task_cli, managed_verify templates now carry every required option; test_skills checks this against each script's --help
-  F4_pr37_lifecycle_value: open - needs Human decision
+  F4_pr37_lifecycle_value: fixed by Human decision - PR #37 run lifecycle back to candidate_pending_validation with an integration note
   F5_review_verdict_derivation: plan-vs-actual delta - runner enforces vocabulary and PASS-only completion; PASS vs PASS_WITH_NON_BLOCKING_NOTES is not machine-checked because the stage-07 schema has no findings field; schema also does not declare review_verdict
   F6_existing_domain_catalog_path: fixed in CORE_MANIFEST merge_rule - migrating domains must repoint domain.yml global_mechanism_catalog, content_path and evidence_refs into 08
   F7_skill_blob_pins: plan-vs-actual delta - validate_skills checks paths and tiers, not blob pins; the only pinned boot (stage deliberation) is checked by its own v2 static
@@ -83,8 +83,8 @@ review_dispositions:
   F9_workflow_timeout: fixed - pytest_workflow timeout_seconds 1800 -> 3600
   N1_scaffold_overwrite: fixed (earlier commit e0ea24f8)
   N3_sd09_mapping_location: plan-vs-actual delta - mapping written in the stage-07 README instead of the state contract so the stage-deliberation boot pins did not have to change again
-  N4_commit_author_unknown: open - needs Human decision
-  B1_skill_registration: open - needs Human decision; role tests loaded skills by reading SKILL.md through CLAUDE.md, the app did not list .claude/skills as invocable in worktree sessions
+  N4_commit_author_unknown: accepted by Human decision - commits stay as they are; author name is unset in the local git config
+  B1_skill_registration: accepted by Human decision as passing evidence - role tests loaded the matrix skill sets by reading SKILL.md through the vendor router; registration as invocable skills is unverified in worktree sessions and is retested after master integration in the main checkout
 plan_vs_actual:
   - plan 4.3 put a skill block in each mechanism registry; actual is one registry skills_v1.yml (one source, simpler generator)
   - plan 6 step 5 asked each role window to do a small real task; planner and developer tests did initialization only, the reviewer test did a real review

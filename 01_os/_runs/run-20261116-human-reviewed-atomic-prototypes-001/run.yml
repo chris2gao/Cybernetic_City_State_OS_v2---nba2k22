@@ -9,14 +9,15 @@ objective: >-
   Upgrade Core OS across all domains and all task levels with Human-reviewed
   minimal G/R/A/D prototypes, prebound callable execution plans, reusable
   instances, and bounded Loop correction at the existing Stage05→06 boundary.
-lifecycle: integrated_and_verified_on_demand
-lifecycle_updated: >-
-  2026-11-18 by run-20261118-role-skills-integration-001: PR #37 head 2a06287e is an
-  ancestor of core master; merge commit e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
-  (parents 5806c381 and 2a06287e), read from origin/master on 2026-11-18. The
-  verification gaps recorded below (independent runtime test NOT_RUN, human semantic
-  review PENDING, production Host integration NOT_IMPLEMENTED) remain open; this
-  value states integration, not that those gaps closed.
+lifecycle: candidate_pending_validation
+lifecycle_note: >-
+  2026-11-18 (run-20261118-role-skills-integration-001, Human decision): PR #37 is
+  integrated - head 2a06287e is an ancestor of core master, merge commit
+  e0bdd7fa2ab233bafa4c65644cadce475f66a1c7 (parents 5806c381 and 2a06287e). The
+  lifecycle stays open on purpose: independent runtime test NOT_RUN, human semantic
+  review PENDING and production Host integration NOT_IMPLEMENTED are still open, and a
+  terminal value would hide this run from the default working set and make it
+  archivable. Move it to a terminal value only when those gaps are closed or excluded.
 allowed_changed_paths:
   - AGENT_WORKING_DISCIPLINE.md
   - AGENTS.md
