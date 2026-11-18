@@ -11,7 +11,24 @@ task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 01_任务输入/角色化上下文与OS_Skill化方案_v4.md
   - 01_任务输入/Human决策记录_20261118.md
-lifecycle: candidate_pending_validation
+lifecycle: integrated_and_verified_on_demand
+integration:
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#38 (MERGED 2026-11-18T18:22:54Z)
+  master_before: e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
+  pr_head_bound: 2677dd37a0f305e18087beb14788cdb9171198a9
+  master_after: 32b86057e872377594b991d0f51a910e7e8e0151
+  parents: [e0bdd7fa2ab233bafa4c65644cadce475f66a1c7, 2677dd37a0f305e18087beb14788cdb9171198a9]
+  readback: old master is an ancestor; merge tree equals PR head tree; 119 paths changed; no squash, rebase or force
+  confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261118.md
+b1_retest_after_integration:
+  session: b1-retest-reviewer, new Claude Code session on the main checkout at master 32b86057
+  told: 你的角色是审核。
+  skill_list: role-reviewer, citystate-os, all os-* and role-* skills listed as invocable
+  invoked: role-reviewer through the Skill tool, loaded from the main checkout .claude/skills/role-reviewer
+  loaded: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline]
+  startup_read: 14 files, 171,457 bytes (matches the 167 KB the catalog states for the reviewer role)
+  validators: 5 run, all exit 0
+  result: B1 closed - the app lists and invokes the role skills once they are on the checkout the app treats as the project root; worktree sessions before integration could not see them because that root was still on master without skills
 closure_record: 08_结论/completion_pointer.yml
 increments:
   - commit: b225fb67
@@ -106,8 +123,12 @@ review_dispositions:
 plan_vs_actual:
   - plan 4.3 put a skill block in each mechanism registry; actual is one registry skills_v1.yml (one source, simpler generator)
   - plan 6 step 5 asked each role window to do a small real task; planner and developer tests did initialization only, the reviewer test did a real review
-remaining:
-  - full pytest run on the working tree: 520 passed, 283 subtests passed (exit 0); superseded by managed verification on the final candidate
-  - PRMS catalog on 3bec129d: CONSISTENT_WITHIN_SCAN_SCOPE, 0 unregistered, 0 missing (was PARTIAL at base)
-  - new-window role initialization test (planner, developer, reviewer)
-  - push task branch, independent review, completion pointer, Human master confirmation
+remaining_after_integration:
+  done_in_this_task:
+    - managed verification on the final candidate, PRMS catalog recheck, role tests, independent review and re-review, push, Human-confirmed master integration, B1 retest
+  follow_up_tasks:
+    - R1 check subcommand-level required options in test_command_templates
+    - R2 add 实现/加载与receipt契约_v1.yml to the stage-deliberation on-action read for stage checkpoints
+    - R4 move read tiers into the boot manifests, together with splitting B0 into operating rules and evidence
+    - merge core into each domain repository under the 08-only rule and move domain 01/02/03/09/07_content material into 08
+    - decide whether the local_git hook gate should accept an absolute hooks path equal in content to .githooks (R3)
