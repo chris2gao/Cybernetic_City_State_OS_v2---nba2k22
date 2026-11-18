@@ -2,6 +2,15 @@ schema_version: citystate.registry.v1
 registry_id: task_orchestration_v1
 mechanism_version: 1
 entries:
+  - path: 01_os/02_boot/task_orchestration/启动清单_v1.yml
+    purpose: exact read list of the task_orchestration mechanism for role initialization and skill generation
+    loader: 01_os/06_execution/skills/generate_skills.py and role skills
+    loader_class: in_repo_program
+    discovery: role skills generated into .agents/skills/ and .claude/skills/
+    evidence: 01_os/06_execution/skills/test_skills.py
+    cache_dirs: []
+    failure_surfacing: next validate_skills.py run
+    deletion_rule: protected
   - path: 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
     purpose: 候选绑定、必需检查实际执行、完整证据和消费者复算的前台契约；不授予发布或运行时权限
     loader: Human and task executor read; managed_verify implements this contract

@@ -7,7 +7,7 @@
 3. 清单按序引用的 OS、开发规范、机制入口、生命周期和布局契约
 4. `01_os/03_mechanisms/context_management/实现/verify_context_structure.py`
 
-活动 D2 仅从清单声明的 `01_os/_dev/决定_谁执行_v0.2.md` 加载。
+活动 D2 仅从清单声明的 `01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md` 加载。
 
 ## 注入与排除
 

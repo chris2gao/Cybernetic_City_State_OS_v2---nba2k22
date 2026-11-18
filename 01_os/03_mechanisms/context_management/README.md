@@ -27,7 +27,7 @@
 `archive_group.py`（通用归档搬移，无 force 开关）、
 `validate_working_set.py`（契约与代码的漂移守卫）。
 
-活动执行角色裁决是 `../../_dev/决定_谁执行_v0.2.md`；其 v0.1 仅作历史保留。
+活动执行角色裁决是 `决定_谁执行_v0.2.md`（2026-11-18 从 `_dev/` 移入本机制，活动规则不再放在设计区）；其 v0.1 仍在 `../../_dev/` 仅作历史保留。
 启动入口在 `../../02_boot/context_management/`，加载说明在
 `../../06_execution/boot/context_management/`，注册表在
 `../../05_registry/context_management_v1.yml`。

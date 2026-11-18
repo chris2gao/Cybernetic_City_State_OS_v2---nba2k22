@@ -18,7 +18,7 @@ MECHANISM = REPO / "01_os/03_mechanisms/context_management"
 OLD_PATH = "01_os/01_workflow/context-management-mechanism"
 UNVERSIONED_D2 = "01_os/_dev/决定_谁执行.md"
 D2_V01 = "01_os/_dev/决定_谁执行_v0.1.md"
-D2_V02 = "01_os/_dev/决定_谁执行_v0.2.md"
+D2_V02 = "01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md"
 FINDINGS: list[tuple[str, str]] = []
 
 
@@ -48,7 +48,6 @@ def require_paths() -> None:
         "01_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml",
         "01_os/05_registry/context_management_v1.yml",
         "01_os/06_execution/boot/context_management/README.md",
-        "01_os/_dev/开发产物与文件隔离规范_v1.md",
         D2_V01,
         D2_V02,
         "01_os/_runs/run-008-上下文管理结构迁移/run.yml",
@@ -121,13 +120,13 @@ def check_boot_and_contract() -> None:
         }
         expected = {
             "os_development_run": ("01_os/_runs/<run-id>/", "core"),
-            "domain_runtime_run": ("01_os/07_content/_runs/<run-id>/", "domain"),
+            "domain_runtime_run": ("08_Domain_Applications/_runs/<run-id>/", "domain"),
             "os_development_private_runtime": (
                 "01_os/_runs/<run-id>/_runtime/",
                 "core_runtime_untracked",
             ),
             "domain_private_runtime": (
-                "01_os/07_content/_runs/<run-id>/_runtime/",
+                "08_Domain_Applications/_runs/<run-id>/_runtime/",
                 "domain_runtime_untracked",
             ),
         }
@@ -181,7 +180,6 @@ def check_registry() -> None:
         "01_os/03_mechanisms/context_management/依据材料/requirement/**",
         "01_os/03_mechanisms/context_management/依据材料/evidence/**",
         "01_os/06_execution/boot/context_management/README.md",
-        "01_os/_dev/开发产物与文件隔离规范_v1.md",
         D2_V02,
         "01_os/claude与人类的开发对话日志.md",
         "01_os/01_workflow/02_信息收集与提炼/实现/运行验证补充_v1.md",
@@ -246,7 +244,6 @@ def check_active_text() -> None:
         "01_os/_dev/WORKFLOW_BACKBONE_v0.3.md",
         "01_os/_dev/WORKFLOW_MECHANISM_v0.2.md",
         "01_os/_dev/IMPLEMENTATION_PLAN_v0.2.md",
-        "01_os/_dev/开发产物与文件隔离规范_v1.md",
         D2_V02,
     ]
     false_boundary = [
@@ -278,8 +275,8 @@ def check_active_text() -> None:
 def check_runtime_and_evidence() -> None:
     ignored_paths = {
         "01_os/_runs/*/_runtime/": "01_os/_runs/example/_runtime/private.txt",
-        "01_os/07_content/_runs/*/_runtime/": (
-            "01_os/07_content/_runs/example/_runtime/private.txt"
+        "08_Domain_Applications/_runs/*/_runtime/": (
+            "08_Domain_Applications/_runs/example/_runtime/private.txt"
         ),
     }
     for rule, probe in ignored_paths.items():
@@ -339,18 +336,21 @@ def check_ownership() -> None:
         "01_os/_runs/",
         "01_os/claude与人类的开发对话日志.md",
     }
-    # The domain run root moved under 01_os/07_content/ on 2026-08-10, so it is
+    # Since 2026-11-18 (Human decision) a domain repository differs from core only
+    # in 08_Domain_Applications/. The domain run root lives under it, so it is
     # covered by that entry rather than listed beside it. Listing both would be a
     # prefix overlap and CM024 below would - correctly - report it.
-    expected_domain = {"01_os/07_content/"}
+    expected_domain = {"08_Domain_Applications/"}
     for missing in sorted(expected_core - set(core)):
         finding("CM022_CORE_OWNERSHIP_MISSING", missing)
     for missing in sorted(expected_domain - set(domain)):
         finding("CM023_DOMAIN_OWNERSHIP_MISSING", missing)
     if "01_os/_runs/" in domain:
         finding("CM031_OS_RUN_DOMAIN_OWNED", "01_os/_runs/")
-    if "01_os/07_content/_runs/" in core:
-        finding("CM032_DOMAIN_RUN_CORE_OWNED", "01_os/07_content/_runs/")
+    if "08_Domain_Applications/_runs/" in core:
+        finding("CM032_DOMAIN_RUN_CORE_OWNED", "08_Domain_Applications/_runs/")
+    if set(domain) != expected_domain:
+        finding("CM036_DOMAIN_OWNERSHIP_NOT_08_ONLY", str(sorted(domain)))
     for left in core:
         for right in domain:
             if left.startswith(right) or right.startswith(left):
@@ -358,30 +358,21 @@ def check_ownership() -> None:
 
 
 def check_active_ownership_text() -> None:
+    # The former _dev/开发产物与文件隔离规范_v1.md was a second copy of the mechanism's
+    # own table and had already drifted from the machine contract; it was removed on
+    # 2026-11-18 (Human decision: integrate old and new, latest wins). The mechanism
+    # file below is the single developer-readable entry for the contract.
     required_tokens = {
         "01_os/README.md": {
             "01_os/_runs/",
             "core-owned",
-            "01_os/07_content/_runs/",
+            "08_Domain_Applications/_runs/",
             "domain-owned",
         },
         "01_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md": {
             "01_os/_runs/",
             "core-owned",
-            "01_os/07_content/_runs/",
-            "domain-owned",
-        },
-        # Restored 2026-08-10 after independent review. It was dropped earlier that
-        # day on the reasoning that _dev is historical - but 01_os/README.md defines
-        # _dev as holding active design AND superseded versions, and this file is the
-        # current developer-readable entry for the machine contract, carrying no
-        # supersession marker. Directory membership never established its status; the
-        # per-file marker does. It has been updated to the current run root and is
-        # checked again.
-        "01_os/_dev/开发产物与文件隔离规范_v1.md": {
-            "01_os/_runs/",
-            "core-owned",
-            "01_os/07_content/_runs/",
+            "08_Domain_Applications/_runs/",
             "domain-owned",
         },
     }

@@ -17,11 +17,11 @@ def git(root, *args):
 
 
 def test_new_domain_empty_catalog_identity_and_no_core_copy(tmp_path):
-    (tmp_path / "CORE_MANIFEST.yml").write_text("domain_owned_paths: [09_Domain_Global_Mechanisms/]\n")
+    (tmp_path / "CORE_MANIFEST.yml").write_text("domain_owned_paths: [08_Domain_Applications/]\n")
     receipt = scaffold_domain(tmp_path, "maths2.0", "example/maths", "a" * 40)
     assert receipt["status"] == "DOMAIN_CATALOG_INITIALIZED_EMPTY"
     git(tmp_path, "init", "-q")
-    git(tmp_path, "add", "--", "CORE_MANIFEST.yml", "08_Domain_Applications/domain.yml", "09_Domain_Global_Mechanisms/")
+    git(tmp_path, "add", "--", "CORE_MANIFEST.yml", "08_Domain_Applications/")
     git(tmp_path, "-c", "user.name=PRMS test", "-c", "user.email=test@example.invalid", "commit", "-qm", "isolated domain fixture")
     sha = git(tmp_path, "rev-parse", "HEAD")
     source = GitSource(tmp_path, sha, "example/maths")
@@ -45,16 +45,16 @@ def test_missing_catalog_remains_uninitialized(tmp_path):
 
 
 def test_formal_g2_uses_frozen_domain_body_and_matching_publication_evidence(tmp_path):
-    (tmp_path / "CORE_MANIFEST.yml").write_text("domain_owned_paths: [09_Domain_Global_Mechanisms/]\n")
+    (tmp_path / "CORE_MANIFEST.yml").write_text("domain_owned_paths: [08_Domain_Applications/]\n")
     scaffold_domain(tmp_path, "maths2.0", "example/maths", "a" * 40)
     body = tmp_path / "08_Domain_Applications/method.md"
     body.write_text("# Domain method\n\nSynthetic approved domain source.\n")
     git(tmp_path, "init", "-q")
-    git(tmp_path, "add", "--", "CORE_MANIFEST.yml", "08_Domain_Applications/", "09_Domain_Global_Mechanisms/")
+    git(tmp_path, "add", "--", "CORE_MANIFEST.yml", "08_Domain_Applications/")
     git(tmp_path, "-c", "user.name=PRMS test", "-c", "user.email=test@example.invalid", "commit", "-qm", "domain body")
     body_commit = git(tmp_path, "rev-parse", "HEAD")
     blob = git(tmp_path, "rev-parse", "HEAD:08_Domain_Applications/method.md")
-    root = tmp_path / "09_Domain_Global_Mechanisms"
+    root = tmp_path / "08_Domain_Applications"
     evidence = {"schema_version": "prms.publication_evidence.v1", "mechanism_id": "method",
                 "domain_id": "maths2.0", "repository": "example/maths", "subject_blob": blob}
     (root / "human.yml").write_text(yaml.safe_dump({**evidence, "kind": "HUMAN_APPROVAL", "decision": "APPROVED"}))
@@ -64,9 +64,9 @@ def test_formal_g2_uses_frozen_domain_body_and_matching_publication_evidence(tmp
              "source_commit": body_commit, "content_path": "08_Domain_Applications/method.md", "canonical_blob": blob,
              "owner": {"domain_id": "maths2.0", "repository": "example/maths"}, "publication_status": "PUBLISHED",
              "version": "1", "applicability": ["maths2.0"], "dependencies": [],
-             "evidence_refs": ["09_Domain_Global_Mechanisms/human.yml", "09_Domain_Global_Mechanisms/review.yml"]}
+             "evidence_refs": ["08_Domain_Applications/human.yml", "08_Domain_Applications/review.yml"]}
     (root / "domain_mechanisms.yml").write_text(yaml.safe_dump({"domain_id": "maths2.0", "repository": "example/maths", "entries": [entry]}))
-    git(tmp_path, "add", "--", "09_Domain_Global_Mechanisms/")
+    git(tmp_path, "add", "--", "08_Domain_Applications/")
     git(tmp_path, "-c", "user.name=PRMS test", "-c", "user.email=test@example.invalid", "commit", "-qm", "published fixture records")
     source = GitSource(tmp_path, git(tmp_path, "rev-parse", "HEAD"), "example/maths")
     result = discover_g2(source, "maths2.0")
@@ -90,7 +90,7 @@ def test_formal_g2_uses_frozen_domain_body_and_matching_publication_evidence(tmp
     record = yaml.safe_load((root / "review.yml").read_text())
     record["reviewer_session"] = "execution"
     (root / "review.yml").write_text(yaml.safe_dump(record))
-    git(tmp_path, "add", "--", "09_Domain_Global_Mechanisms/review.yml")
+    git(tmp_path, "add", "--", "08_Domain_Applications/review.yml")
     git(tmp_path, "-c", "user.name=PRMS test", "-c", "user.email=test@example.invalid", "commit", "-qm", "invalid reviewer identity fixture")
     source = GitSource(tmp_path, git(tmp_path, "rev-parse", "HEAD"), "example/maths")
     with pytest.raises(PRMSError, match="AUTHORITY_UNVERIFIED"):

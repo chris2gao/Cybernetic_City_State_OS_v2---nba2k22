@@ -1,0 +1,31 @@
+schema_version: citystate.task_orchestration.boot_manifest.v1
+mechanism_version: 1
+# Added 2026-11-18. The mechanism README recorded "whether a boot manifest is needed
+# is left as a later finding"; the role skills need one exact read list per
+# mechanism, so this manifest closes that finding. It loads, it does not authorize.
+failure_policy: fail_closed_on_missing_or_partial
+load_order:
+  - path: 01_os/03_mechanisms/task_orchestration/README.md
+    purpose: mechanism boundary, two-mode default, self-report and refusal records
+  - path: 01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+    purpose: long-horizon big task, internal continuation vs genuine stop, evidence-driven iteration
+  - path: 01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md
+    purpose: G/R/A/D atomic task semantics and outcome-first execution
+  - path: 01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md
+    purpose: Human-reviewed task prototypes, 05 to 06 compilation, EXECUTION / DEVELOPMENT, self-report
+  - path: 01_os/03_mechanisms/task_orchestration/原子任务场景验证_v1.md
+    purpose: five acceptance scenarios for reading a task chain correctly
+  - path: 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
+    purpose: managed verification of an exact candidate
+  - path: 01_os/03_mechanisms/task_orchestration/loop_iteration_schema_v1.json
+    purpose: opt-in strict development-Loop checkpoint record
+validator: python -B -m pytest 01_os/06_execution/task_orchestration -q
+closure_checker: 01_os/06_execution/task_orchestration/big_task/closure_preflight.py
+registry: 01_os/05_registry/task_orchestration_v1.yml
+invocation: every_role_at_initialization
+background_processes_started: false
+authority_effect: none
+receipt_required:
+  - mechanism_version
+  - loaded_paths
+  - validator_exit_code

@@ -1,0 +1,441 @@
+schema_version: citystate.skills_registry.v1
+registry_id: skills_v1
+mechanism_version: 1
+# Single source for the generated skill adapters (Human decision 2026-11-18: the whole
+# Core OS as skills, loaded by role). generate_skills.py turns this file plus each
+# unit's boot manifest into .agents/skills/<name>/SKILL.md (Codex, Antigravity) and a
+# byte-identical .claude/skills/<name>/SKILL.md (Claude Code). validate_skills.py fails
+# when the files on disk differ from what this source would generate, when a listed
+# path does not exist, or when a role names an unknown unit. A skill is a thin
+# adapter: it says when to load, which exact paths to read and which commands to run.
+# It never copies mechanism text, so the canonical body stays single-sourced.
+#
+# Read-list rules applied by the generator:
+#   - boot: the unit's boot manifest; every load_order path is listed in order.
+#     .py paths are listed as entry points (call them, reading the source is optional),
+#     all other paths as must-read.
+#   - reads: extra must-read paths (units without a boot list everything here).
+#   - optional_reads: read when present; absence is reported, not failed (domain 08).
+authority_effect: none
+generator: 01_os/06_execution/skills/generate_skills.py
+validator: 01_os/06_execution/skills/validate_skills.py
+output_roots: [.agents/skills, .claude/skills]
+source_plan: 01_os/_runs/run-20261118-role-skills-integration-001/01_任务输入/角色化上下文与OS_Skill化方案_v4.md
+
+entries:
+  - path: 01_os/05_registry/skills_v1.yml
+    purpose: single source of the role and mechanism skills - units, read lists, commands, boundaries, role matrix
+    loader: 01_os/06_execution/skills/generate_skills.py
+    loader_class: in_repo_program
+    discovery: referenced from 01_os/README.md, AGENTS.md and the vendor routers
+    evidence: 01_os/06_execution/skills/test_skills.py
+    cache_dirs: []
+    failure_surfacing: next validate_skills.py run
+    deletion_rule: protected
+  - path: 01_os/06_execution/skills/**
+    purpose: skill generator, read-only validator and their tests
+    loader: Human or authorized development executor; role skills run validate_skills.py at initialization
+    loader_class: in_repo_program
+    discovery: named in skills_v1.yml generator / validator fields
+    evidence: 01_os/06_execution/skills/test_skills.py
+    cache_dirs: [__pycache__/]
+    failure_surfacing: validate_skills.py exit 1 lists each finding
+    deletion_rule: protected
+  - path: .agents/skills/**
+    purpose: generated skill adapters read by Codex (repository skills) and Antigravity (.agents workspace skills)
+    loader: Codex and Antigravity skill discovery
+    loader_class: external_tool_convention
+    discovery: vendor scans .agents/skills from the working directory up to the repository root
+    evidence: https://developers.openai.com/codex/skills and GEMINI.md (Antigravity load surface)
+    cache_dirs: []
+    failure_surfacing: validate_skills.py reports drift; role initialization receipt reports what was loaded
+    deletion_rule: protected
+  - path: .claude/skills/**
+    purpose: byte-identical generated mirror of .agents/skills for Claude Code project skills
+    loader: Claude Code project skill discovery
+    loader_class: external_tool_convention
+    discovery: Claude Code loads .claude/skills/<name>/SKILL.md in the project
+    evidence: CLAUDE.md role initialization section
+    cache_dirs: []
+    failure_surfacing: validate_skills.py reports drift; role initialization receipt reports what was loaded
+    deletion_rule: protected
+
+units:
+  - name: citystate-os
+    title: City-State OS 总入口与目录
+    description: >-
+      City-State Core OS 的地图与入口。新窗口开始工作、需要了解 OS 有哪些机制和角色、
+      或要找某个机制该由哪个 skill 加载时使用。列出全部机制单元、五个角色各自加载什么、
+      角色初始化方法与 B0 必读文件。
+    when: 任何角色初始化的第一步；不确定该加载哪个机制时。
+    reads:
+      - AGENT_WORKING_DISCIPLINE.md
+      - AGENTS.md
+      - 01_os/README.md
+      - 01_os/开发入口与单窗口任务规范_v1.md
+      - CORE_MANIFEST.yml
+    commands:
+      - command: python -B 01_os/06_execution/skills/validate_skills.py --repo-root .
+        expect: skills_valid，退出 0
+    boundaries:
+      - skill 与角色标签都不授予任何权限；受保护动作仍按开发入口 §11 与 repository_publisher_authority_v1.yml
+      - 窗口是临时工作台：决定、结论、证据在形成时落进仓库或简报库
+
+  - name: os-mechanism-activation
+    title: 机制激活与正式动作宪法
+    mechanism_id: mechanism_activation
+    description: >-
+      City-State OS 正式跨端点动作的宪法路径。要让另一个模型或端点行动，或要发出/接收任务范围内的
+      request、response、result、correction、blocked、decision 交接时使用；普通 Human 对话不需要。
+    when: 正式跨端点动作之前（AGENTS.md 要求常开）；核对物质验收主张时。
+    boot: 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+    commands:
+      - command: python -B 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py static .
+        expect: validation_passed，退出 0
+    boundaries:
+      - 接收方不唯一 → FORMAL_ACTION_BLOCKED_UNTIL_RECIPIENT_RESOLVED
+      - 绕过 resolver 或 gate → INVALID_FORMAL_ACTION；自我授权禁止
+      - 物质验收主张须期望来源、物理观察和已执行的比较器三者齐全，全部 VERIFIED 才通过
+
+  - name: os-communication
+    title: 正式通讯与 Human 中转交接
+    mechanism_id: communication_system
+    description: >-
+      City-State OS 的 Human 中转通讯协议。要写正式交接消息、发 v2 中转指针、作为接收方从指针进入任务、
+      纠正已发消息或归档通讯任务时使用。不轮询、不自动投递。
+    when: 发出或接收正式交接；建立通讯任务空间；归档通讯任务。
+    boot: 01_os/02_boot/communication_system/启动清单_v1.yml
+    reads:
+      - 01_os/03_mechanisms/communication_system/README.md
+      - 01_os/03_mechanisms/communication_system/接收方bootstrap_v1.md
+    commands:
+      - command: python -B 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py static .
+        expect: validation_passed，退出 0
+      - command: python -B 01_os/06_execution/boot/communication_system/publisher/publish_message.py --task-root <task-root> --message <message>
+        expect: 只在宪法路径通过后发布
+    boundaries:
+      - “已发送”只表示载体写入并读回成功，不表示对方已读、理解或接受
+      - 已发布消息不可改，纠正发 correction 并 supersedes
+      - 九字段 v1 指针只可显式历史读取，新发布必须用 v2 指针
+
+  - name: os-context-management
+    title: 上下文管理、文件放置与工作集
+    mechanism_id: context_management
+    description: >-
+      City-State OS 的上下文管理机制：三个信息平面、文件放在哪里、私有运行时怎么处理、累计区的可见性与归档、
+      项目资料发现与索引同步、workspace 边界。每个角色初始化时加载。
+    when: 每个角色初始化；放置或删除文件；枚举仓库或历史；归档 run；改项目资料索引。
+    boot: 01_os/02_boot/context_management/启动清单_v1.yml
+    reads:
+      - 01_os/03_mechanisms/context_management/方法论_v1.md
+      - 01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
+      - 01_os/03_mechanisms/context_management/项目资料发现与索引同步契约_v1.yml
+    commands:
+      - command: python -B 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
+        expect: "context-management structure: PASS，退出 0"
+      - command: python -B 01_os/06_execution/boot/context_management/working_set/visible_set.py --list
+        expect: 默认工作集，并报告隐藏了什么；过滤结果不是穷举
+    boundaries:
+      - clone/worktree 只是 workspace_partition，不是访问边界
+      - 发布只用精确 allowlist；禁止 git add --all、git add .
+      - 旧聊天不是事实来源；依赖 hash 变化即 stale
+
+  - name: os-task-continuity
+    title: 任务连续性与临时工作台
+    mechanism_id: prms
+    description: >-
+      City-State OS 中窗口是临时工作台、任务与岗位才是持续的。保存或恢复任务上下文、轮换窗口、交班、
+      从 run 或简报库恢复任务时使用（含 PRMS save/list/resume 与 handoff）。
+    when: 每个角色初始化；重大决定或交接时落检查点；窗口轮换或恢复任务。
+    reads:
+      - 01_os/03_mechanisms/context_management/prms/README.md
+      - 01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md
+      - 01_os/03_mechanisms/context_management/prms/OPERATIONS.md
+      - 01_os/03_mechanisms/context_management/prms/loading_rules_v1.yml
+      - 01_os/03_mechanisms/context_management/prms/record_schemas_v1.json
+    commands:
+      - command: python -B 01_os/06_execution/boot/context_management/prms/cli.py --repo-root . --commit <40-char> --repository <owner/repo> catalog --output <outside-repo.json>
+        expect: SCANNED_SCOPE_COMPLETE；只发现，不加载正文、不授权
+      - command: python -B 01_os/06_execution/boot/context_management/prms/task_cli.py --state-root <isolated-state> --role <role> {save,list,resume}
+        expect: 只在已获批准的隔离状态仓上运行；未部署时用 run / 简报库恢复并写明 recovery_source
+    boundaries:
+      - live PRMS save/list/resume 为 PRMS_LIVE_NOT_TESTED；恢复回执不授予执行权
+      - Fork 只是快照；receiver ack 不证明模型理解或交班成功
+
+  - name: os-task-orchestration
+    title: 任务编排：大任务、G/R/A/D、原型与模式
+    mechanism_id: task_orchestration
+    description: >-
+      City-State OS 的任务粒度与执行纪律：默认一个长周期大任务、什么时候不该停/必须停、G/R/A/D 原子任务、
+      Human 审定的任务原型、默认 EXECUTION 与受委托的 DEVELOPMENT、Agent 自报。每个角色初始化时加载。
+    when: 每个角色初始化；拆任务、判断是否该停、执行已审原型、遇到能力缺口时。
+    boot: 01_os/02_boot/task_orchestration/启动清单_v1.yml
+    commands:
+      - command: python -B 01_os/06_execution/task_orchestration/big_task/closure_preflight.py --packet <task-packet>
+        expect: 只报告，不授权
+      - command: python -B -m pytest 01_os/06_execution/task_orchestration -q
+        expect: 全部通过
+    boundaries:
+      - 普通任务分支发布不是停止条件；大不等于危险
+      - STOP ACTION ≠ STOP GOAL：能力缺口返回 INCOMPLETE 与一个最小 Human 决定，不自行转开发
+      - 自报（AGENT_SELF_REPORT）与 Host 实际拒绝（HOST_OBSERVED）分开记录
+
+  - name: os-mwu-output
+    title: 最小工作单元输出
+    mechanism_id: minimum_work_unit_output
+    description: >-
+      City-State OS 三个边界的正式输出格式：正式派单、执行完成交接、独立审核完成。写这三类产出时使用，
+      要求做了什么、方法、可支撑理由、可行理由，以及角色附加字段。
+    when: 写正式派单、执行交接或审核结论时。
+    boot: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+    commands:
+      - command: python -B 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py --root . static
+        expect: validation_passed，退出 0
+      - command: python -B 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py --root . --require-mwu artifact <path>
+        expect: 校验一份正式产出
+    boundaries:
+      - 审核结论统一为 PASS / FIX_REQUIRED / REJECT
+      - 执行者理由是待检验的证词，不是证据；不要求也不提交 chain-of-thought
+
+  - name: os-model-routing
+    title: 模型路由与接收者设置
+    mechanism_id: model_routing
+    description: >-
+      City-State OS 的模型与产品面路由：为执行或独立审核选择 provider、surface、model 与参数档位，
+      生成 receiver_setup。派单前确定执行者或审核者时使用。
+    when: 选择执行者或独立审核者之前；写任务包 executor_profile 时。
+    boot: 01_os/02_boot/model_routing/启动清单_v1.yml
+    reads:
+      - 01_os/02_boot/协作伙伴.md
+    commands:
+      - command: python -B 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static .
+        expect: validation_passed，退出 0
+      - command: python -B 01_os/06_execution/boot/model_routing/route_receiver.py --selection <selection> --catalog <catalog>
+        expect: 输出 receiver_setup，authority 恒为 routing_only
+    boundaries:
+      - 已登记候选默认可用，只有 Human 能标记不可用或恢复；不按价格或额度路由
+      - 路由结果不授予文件、发布或受保护动作权限
+
+  - name: os-stage-deliberation
+    title: 阶段协同推演与增量再确认
+    mechanism_id: stage_collaborative_deliberation
+    description: >-
+      City-State OS 七阶段 Workflow 的阶段协同建模：统一当前模型、可行性依据、未知项处置、阶段 start/completion
+      gate、十个状态维度与 stage receipt。正式七阶段 run 的阶段计划与完成签收时使用；默认休眠。
+    when: 正式七阶段 run 的每个阶段计划与完成检查点；出现承重缺口时。
+    boot: 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+    reads:
+      - 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
+    commands:
+      - command: python -B 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py .
+        expect: 退出 0（先跑）
+      - command: python -B 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py static .
+        expect: 退出 0
+    boundaries:
+      - Human 批准是权力不是证据，不能当可行性依据
+      - 普通局部可逆选择不要 Human 微审批；新承重选择、范围扩张、未覆盖受保护动作须当前 Human 明确决定
+      - canonical 目录不保存实时实例状态
+
+  - name: os-workflow
+    title: 七阶段 Workflow
+    mechanism_id: workflow_minimum_operational_loop
+    description: >-
+      City-State OS 七阶段工作流：需求建模、信息收集、结果建模、测试生成、步骤拆分、执行、测试执行；
+      阶段产物与 stage_control、冻结测试、三出口、runner 与发布门。做正式七阶段任务或其中任一阶段时使用。
+    when: 规划、开发、审核角色初始化；任何正式七阶段任务或阶段产物。
+    boot: 01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml
+    reads:
+      - 01_os/01_workflow/README.md
+      - 01_os/01_workflow/01_需求建模/README.md
+      - 01_os/01_workflow/02_信息收集与提炼/README.md
+      - 01_os/01_workflow/03_结果建模/README.md
+      - 01_os/01_workflow/04_测试生成/README.md
+      - 01_os/01_workflow/05_步骤拆分/README.md
+      - 01_os/01_workflow/06_执行/README.md
+      - 01_os/01_workflow/07_测试执行/README.md
+      - 01_os/06_execution/workflow/minimum_operational_loop/README.md
+      - 01_os/05_registry/workflow_publication_gate_v1.yml
+    commands:
+      - command: python -B 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static .
+        expect: 退出 0
+      - command: python -B 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py validate <run-root> --repo-root . --candidate <40-char>
+        expect: 完整提交态验证；缺 candidate 返回 41，不是通过
+    boundaries:
+      - 测试由证据推导，不由 B 推导；循环开始后测试冻结
+      - 三出口 pass / retry / invalidate_upstream；预算耗尽或失效不能伪装完成
+      - 审核者写统一审核结论，07 阶段完成值由它推导
+
+  - name: os-task-discipline
+    title: 任务纪律：任务包、验证、run 与完成指针
+    mechanism_id: task_discipline
+    description: >-
+      City-State OS 的任务施工纪律：任务包字段、开工 preflight、受控验证、变更路径账本、run 记录与
+      lifecycle 枚举、completion pointer、独立审核排期。建任务、施工、收尾或审核候选时使用。
+    when: 规划、开发、审核角色初始化；material repository mutation 之前；收尾与交接时。
+    reads:
+      - 01_os/06_execution/task_discipline/README.md
+      - 01_os/06_execution/task_discipline/packet_input/README.md
+      - 01_os/06_execution/task_discipline/managed_verification/README.md
+      - 01_os/06_execution/task_discipline/project_context/README.md
+      - 01_os/05_registry/task_discipline_v1.yml
+      - 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
+    commands:
+      - command: python -B 01_os/06_execution/task_discipline/preflight/preflight_task_context.py --packet <task-packet>
+        expect: preflight ok；只报告，不授权
+      - command: python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py --candidate <40-char> {run,inspect}
+        expect: 退出 0 才可声明该候选验证通过
+      - command: python -B 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py --base <40-char>
+        expect: 实测变更路径集合
+    boundaries:
+      - run.yml 的 lifecycle 只能取开发入口 §5 的七个枚举值
+      - 缺最终记录是证据不完整，不是成功；超时不自动重试
+
+  - name: os-publication
+    title: 发布、Git 与受保护动作
+    mechanism_id: publication
+    description: >-
+      City-State OS 的发布规则：传输矩阵（本地 git / GitHub API / gh）、发布权限与需要 Human 确认的动作、
+      push 守卫、master 集成。commit、push、开 PR 或任何受保护动作之前使用。
+    when: 开发角色初始化；任何 commit / push / PR / master 集成之前。
+    reads:
+      - 01_os/05_registry/repository_publisher_authority_v1.yml
+      - 01_os/05_registry/repository_guards_v1.yml
+      - .githooks/README.md
+    commands:
+      - command: git config --get core.hooksPath
+        expect: .githooks（本地传输的守卫）；不一致即 blocked
+      - command: git ls-remote origin refs/heads/master
+        expect: 发布前 fresh 读取 40 位 SHA，不沿用旧值
+    boundaries:
+      - master 集成、force、改写历史、删除、runtime 激活需当前 Human 明确确认
+      - core 历史永不改写；普通任务分支发布是正常流程，不需逐次确认
+
+  - name: os-tools
+    title: Windows 环境与可选外部工具
+    mechanism_id: skills_and_tools
+    description: >-
+      City-State OS 的 Windows 工具纪律（pwsh 7、UTF-8、退出码、引号）与可选外部工具（check-jsonschema、
+      mutmut、cosmic-ray、rea）。在 Windows 上写复杂命令、调用外部工具或做变异测试时使用。
+    when: Windows 命令、外部工具或变异测试相关时。
+    reads:
+      - 01_os/04_skills_and_tools/README.md
+      - 01_os/04_skills_and_tools/windows/README.md
+      - 01_os/05_registry/skills_and_tools_v1.yml
+    commands: []
+    boundaries:
+      - 登记不等于加载；工具可用不等于任务允许
+
+  - name: os-domain-content
+    title: 领域内容（08）
+    mechanism_id: domain_content
+    description: >-
+      City-State 领域仓库的特色内容：08_Domain_Applications 下的 domain.yml、领域机制目录
+      domain_mechanisms.yml 与知识目录。在领域仓工作、开发或使用特色内容时使用；core 仓库没有 08 内容。
+    when: 特色内容开发、特色内容教学或使用角色初始化；规划或审核领域任务时。
+    optional_reads:
+      - 08_Domain_Applications/domain.yml
+      - 08_Domain_Applications/domain_mechanisms.yml
+      - 08_Domain_Applications/knowledge_catalog.yml
+    commands:
+      - command: python -B 01_os/06_execution/boot/context_management/prms/cli.py --repo-root . --commit <40-char> --repository <owner/repo> domain --domain-id <id> --output <outside-repo.json>
+        expect: 领域目录 G2 发现；缺目录时为 DOMAIN_CATALOG_UNINITIALIZED
+    boundaries:
+      - 领域只拥有 08_Domain_Applications/；其余路径与 core 一致，不得在领域仓改 core-owned 路径
+      - 按 domain_mechanisms.yml 列出的条目读取相关领域机制正文，不整目录读取
+
+roles:
+  - name: role-planner
+    title: 任务规划
+    collaboration_role: decision_architecture
+    description: >-
+      City-State OS 任务规划角色初始化。当 Human 说“你的角色是任务规划/规划/planner/decision_architecture”，
+      或要你设计任务、写任务包、派单、做方案对比与裁决记录时使用。加载规划角色全部机制并输出初始化回执。
+    produces: 与 Human 共建的当前模型、方案对比、任务包、原型设计、路由与派单、裁决记录
+    must_not:
+      - 默认做后端实现（Human 点名时除外）
+      - 兼任自己派出的 T2/T3 任务的最终审核
+      - 把推荐当成 Human 决定或授权
+    mode: 设计与派单，不在 EXECUTION 中写代码
+    required: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline, os-communication, os-model-routing, os-stage-deliberation]
+    triggered:
+      - {unit: os-publication, when: 需要向 Human 申请 master 集成或其他受保护动作确认时}
+      - {unit: os-domain-content, when: 规划领域任务时}
+    init_checks: [citystate-os, os-context-management, os-mechanism-activation, os-model-routing, os-workflow, os-stage-deliberation]
+
+  - name: role-developer
+    title: 任务开发
+    collaboration_role: execution
+    description: >-
+      City-State OS 任务开发角色初始化。当 Human 说“你的角色是任务开发/开发/developer/executor”，
+      或把一个开发任务、任务包或已审原型交给你执行时使用。加载开发角色全部机制并输出初始化回执。
+    produces: 改动的文件、真实退出码与证据、run 记录、completion pointer、一份交接
+    must_not:
+      - 自审为独立验收
+      - 执行中遇到能力缺口自行转为开发（返回 INCOMPLETE）
+      - 越出 allowed_changed_paths 或执行未覆盖的受保护动作
+    mode: Human 委托开发时为 DEVELOPMENT；执行已审原型时为 EXECUTION
+    required: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline, os-publication]
+    triggered:
+      - {unit: os-communication, when: 需要发出或接收正式交接时}
+      - {unit: os-stage-deliberation, when: 任务是正式七阶段 run 时}
+      - {unit: os-tools, when: Windows 复杂命令或外部工具时}
+      - {unit: os-domain-content, when: 开发领域内容时}
+    init_checks: [citystate-os, os-context-management, os-mechanism-activation, os-mwu-output, os-workflow]
+
+  - name: role-reviewer
+    title: 审核
+    collaboration_role: independent_review
+    description: >-
+      City-State OS 审核角色初始化。当 Human 说“你的角色是审核/独立审核/reviewer”，或要求对某个候选、
+      分支、PR、run 做独立审核时使用。加载审核角色全部机制并输出初始化回执。
+    produces: 统一审核结论（PASS / FIX_REQUIRED / REJECT）、已审 primary evidence 清单、findings 与残余风险
+    must_not:
+      - 修改执行分支
+      - 读取执行者私有上下文或把执行者理由当证据
+      - 把审核通过当作激活或 master 集成授权
+    mode: 隔离会话，从 primary evidence 重建
+    required: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline]
+    triggered:
+      - {unit: os-stage-deliberation, when: 被审对象是正式七阶段 run 时}
+      - {unit: os-publication, when: 需要核对发布读回或传输门时}
+      - {unit: os-communication, when: 需要经 Human 中转审核结论时}
+      - {unit: os-model-routing, when: 需要核对审核隔离设置时}
+      - {unit: os-tools, when: 需要复跑 Windows 命令或外部工具时}
+      - {unit: os-domain-content, when: 审核领域内容时}
+    init_checks: [citystate-os, os-context-management, os-mechanism-activation, os-mwu-output, os-workflow]
+
+  - name: role-content-developer
+    title: 特色内容开发
+    collaboration_role: execution
+    description: >-
+      City-State 领域仓库特色内容开发角色初始化。当 Human 说“你的角色是特色内容开发/内容开发”时使用。
+      与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与领域机制。
+    produces: 08_Domain_Applications 下的领域内容、领域机制与证据，以及交接
+    must_not:
+      - 修改 08_Domain_Applications 以外的 core-owned 路径（需要 core 改动时向上游提）
+      - 自审为独立验收
+    mode: DEVELOPMENT（Human 委托的领域内容开发）
+    required: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline, os-publication, os-domain-content]
+    triggered:
+      - {unit: os-communication, when: 需要发出或接收正式交接时}
+      - {unit: os-stage-deliberation, when: 任务是正式七阶段 run 时}
+      - {unit: os-tools, when: Windows 复杂命令或外部工具时}
+    init_checks: [citystate-os, os-context-management, os-mechanism-activation, os-mwu-output, os-workflow]
+
+  - name: role-content-user
+    title: 特色内容教学或使用
+    collaboration_role: execution
+    description: >-
+      City-State 领域仓库特色内容教学或使用角色初始化。当 Human 说“你的角色是特色内容教学/使用/老师/助教”
+      或要你用本领域内容完成教学、使用类业务时使用。只在 EXECUTION 模式下运行已审原型。
+    produces: 按 Human 已审原型完成的真实业务结果（教学、使用）及其观察记录
+    must_not:
+      - 写代码、加临时脚本或新的 Ready/Done
+      - 遇到能力缺口时自行开发（返回 INCOMPLETE 与一个最小 Human 决定）
+    mode: EXECUTION only
+    required: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-domain-content]
+    triggered:
+      - {unit: os-mechanism-activation, when: 需要发出正式交接时}
+      - {unit: os-communication, when: 需要发出正式交接时}
+      - {unit: os-mwu-output, when: 需要写正式交接时}
+    init_checks: [citystate-os, os-context-management]

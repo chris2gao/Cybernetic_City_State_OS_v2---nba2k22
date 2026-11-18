@@ -37,6 +37,12 @@ These are candidates for porting, not decisions. Each needs assessing on its own
   pre-action gate 与双向物理事实绑定；formal action 时 always-on，加载不授权、不执行机制。
 - `model_routing/启动清单_v1.yml`：任务时点模型路由与 Human-visible receiver setup；
   不进行后台账户或配额探测。
+- `minimum_work_unit_output/`、`stage_collaborative_deliberation/`、
+  `workflow_minimum_operational_loop/`：各自机制的读取清单。
+- `task_orchestration/启动清单_v1.yml`（2026-11-18 新增）：任务编排的精确读取清单。
+
+每份启动清单的读取清单由 `06_execution/skills/generate_skills.py` 生成为对应的机制 skill；
+角色 skill 按角色组合这些机制 skill（`01_os/05_registry/skills_v1.yml`）。
 
 启动区只声明“启动时读什么”；机制方法论和生命周期定义位于
 `../03_mechanisms/context_management/`。

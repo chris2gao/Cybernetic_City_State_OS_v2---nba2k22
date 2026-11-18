@@ -68,7 +68,7 @@ Shell/GUI/Native。说明：
 有 shell 的实例仍可能读取兄弟目录。需要技术拒绝时必须使用经过正负例验证的
 `enforced_access_boundary`。完整规则引用
 `../../03_mechanisms/context_management/文件隔离与产物生命周期_v1.md`。
-活动 D2 裁决见 `../../_dev/决定_谁执行_v0.2.md`。
+活动 D2 裁决见 `../../03_mechanisms/context_management/决定_谁执行_v0.2.md`。
 
 ## 分区盖不住的
 

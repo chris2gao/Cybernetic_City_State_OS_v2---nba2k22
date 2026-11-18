@@ -24,6 +24,10 @@ EXPECTED_STAGE_IDS=[
 "workflow_stage_07_test_execution"]
 PROHIBITED_OUTPUT_PREFIXES=("01_os/01_workflow/","01_os/02_boot/","01_os/03_mechanisms/","01_os/05_registry/","01_os/06_execution/")
 ACCEPTED_VERDICTS={"PASS","PASS_WITH_NON_BLOCKING_NOTES"}
+# The reviewer writes one OS-wide review verdict (MWU independent_review vocabulary,
+# Human decision 2026-11-18). The stage-07 completion value above is derived from it:
+# only a PASS review may complete the stage. Absent review_verdict keeps legacy runs readable.
+REVIEW_VERDICTS={"PASS","FIX_REQUIRED","REJECT"}
 STAGE01_SPEC="01_os/01_workflow/01_需求建模/方法论_v1.md"
 STAGE01_TEMPLATE="01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml"
 EXPECTED_MECHANISM_ID="stage_collaborative_deliberation_and_incremental_reconfirmation"
@@ -594,6 +598,9 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
         if nums!=list(range(1,max(nums)+1)) or max(rows)[1]!="pass":return 37,["stage6_attempt_sequence"]
     if not p7.get("reviewer_role") or p7.get("reviewer_role")==p6.get("executor_role"):return 38,["stage7_independence"]
     if p7.get("verdict") not in ACCEPTED_VERDICTS:return 38,["stage7_verdict"]
+    if "review_verdict" in p7:
+        if p7.get("review_verdict") not in REVIEW_VERDICTS:return 38,["stage7_review_verdict"]
+        if p7.get("review_verdict")!="PASS":return 38,["stage7_review_verdict_not_pass"]
     results=p7.get("test_results",[])
     if any(x.get("status")!="passed" for x in results) or {x.get("test_id") for x in results}!=test_ids:return 38,["stage7_tests"]
     for claim in p7.get("implementation_claims",[]):

@@ -388,6 +388,12 @@ class MinimumLoopTests(unittest.TestCase):
         self.assertEqual(loop.validate_structure(self.mutate("06_execution.yml",f))[0],37)
     def test_review_independence(self):
         self.assertEqual(loop.validate_structure(self.mutate("07_verification.yml",lambda d:d["payload"].update(reviewer_role="current_project_lead_model")))[0],38)
+    def test_review_verdict_derivation(self):
+        ok=self.mutate("07_verification.yml",lambda d:d["payload"].update(review_verdict="PASS"))
+        self.assertEqual(loop.validate_structure(ok)[0],0)
+        for bad in ("FIX_REQUIRED","REJECT","pass","PASS_WITH_NON_BLOCKING_NOTES",None):
+            root=self.mutate("07_verification.yml",lambda d,b=bad:d["payload"].update(review_verdict=b))
+            self.assertEqual(loop.validate_structure(root)[0],38,bad)
     def test_failed_test(self):
         def f(d):d["payload"]["test_results"][0]["status"]="failed"
         self.assertEqual(loop.validate_structure(self.mutate("07_verification.yml",f))[0],38)

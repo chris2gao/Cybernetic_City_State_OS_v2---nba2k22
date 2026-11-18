@@ -31,11 +31,11 @@ accumulating_surfaces:
     archiver: 01_os/06_execution/boot/context_management/working_set/archive_group.py
 
   - id: domain_runtime_run
-    root: 01_os/07_content/_runs/
-    group_shape: 01_os/07_content/_runs/<run-id>/
+    root: 08_Domain_Applications/_runs/
+    group_shape: 08_Domain_Applications/_runs/<run-id>/
     state_file: run.yml
     state_field: lifecycle
-    archive_root: 01_os/07_content/_runs/_archive/
+    archive_root: 08_Domain_Applications/_runs/_archive/
     ownership: domain
     archiver: 01_os/06_execution/boot/context_management/working_set/archive_group.py
 
@@ -115,13 +115,13 @@ default_visibility:
     - 01_os/04_skills_and_tools/
     - 01_os/05_registry/
     - 01_os/06_execution/
-    - 01_os/07_content/
+    - 08_Domain_Applications/
     - <repository-root-files>
   default_hidden_roots:
     - 01_os/_runs/
     - 01_os/_communication/
     - 01_os/_dev/
-    - 01_os/07_content/_runs/
+    - 08_Domain_Applications/_runs/
   # 谁默认可见、谁默认隐藏。这四条是逐条绑定的，validator 会对它们做漂移守卫。
   #
   # unknown 默认**可见**。这一条曾经写反过：早期实现把 unknown 与 terminal 一起隐藏，
