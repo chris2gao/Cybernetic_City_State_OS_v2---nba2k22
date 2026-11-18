@@ -33,6 +33,11 @@ def scaffold_domain(root, domain_id, repository, core_commit):
                   "Everything this domain owns stays in 08; canonical Core mechanisms are referenced, never copied.\n"
                   "Publication, context loading, effectiveness and execution authorization are separate.\n",
     }
+    # Since 2026-11-18 everything a domain owns lives in 08, so a scaffold must never
+    # overwrite any existing 08 file - not only domain.yml / domain_mechanisms.yml.
+    existing = sorted(str(path.relative_to(root)) for path in files if path.exists())
+    if existing:
+        raise PRMSError("REJECTED", "explicit migration required; existing domain files: " + ", ".join(existing))
     for path, text in files.items():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(text, encoding="utf-8")

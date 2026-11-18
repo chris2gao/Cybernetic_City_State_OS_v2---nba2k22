@@ -39,6 +39,33 @@ verification_attempts:
     result: all 19 required checks success; managed_verify run exit 0 and inspect exit 0
     test_counts: {skills: 5, task_orchestration: '171 + 8 subtests', task_discipline: '140 + 147 subtests', workflow: '174 + 283 subtests', stage_deliberation: 225, context_management: 121, mechanism_activation: '31 (unittest)', model_routing: 7, communication: '84 + 6 subtests'}
     raw_attempt: kept outside the repository in the executor's scratch evidence directory; executor evidence, not independently reproduced
+independent_review:
+  - reviewed_head: 5e4083935d03d6401c88c8b1c4684936f209dee0
+    reviewer: fresh isolated Claude Code session role-test-reviewer (Claude Opus 5.5, same model family as executor - disclosed)
+    report: 07_测试执行/独立审核_5e408393.md
+    verdict: FIX_REQUIRED
+    reproduced: all 19 verification-plan checks exit 0, counts equal attempt-003; PRMS catalog PARTIAL on master, CONSISTENT on head
+    blocking: [B1 fresh-window Done has no evidence; in the reviewer's own fresh window .claude/skills were not offered as invocable skills]
+    nonblocking: [N1 scaffold_domain could overwrite 08 files, N2 PASS vs PASS_WITH_NON_BLOCKING_NOTES not checked against findings, N3 SD-09 mapping placed in 07 README, N4 commit author name unknown, N5 receipt provenance blob historical and format-checked only, N6 freeze lift is documentation only]
+role_tests:
+  - session: role-test-planner
+    told: 你的角色是任务规划。
+    loaded: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline, os-communication, os-model-routing, os-stage-deliberation]
+    matches_matrix: true
+    how: read the role skill and unit SKILL.md files through the CLAUDE.md router; did not invoke them as registered skills
+    validators: 7 run, all exit 0
+    reading: 98 of 103 files fully, 5 large stage-deliberation contracts outlined
+    found: [task_orchestration_v1.yml excluded block still said no boot, core.hooksPath absolute in new worktrees]
+  - session: role-test-developer
+    told: 你的角色是任务开发。
+    loaded: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline, os-publication]
+    matches_matrix: true
+    how: read SKILL.md files through the CLAUDE.md router
+    validators: 5 run, all exit 0
+    reading: about 34 of 71 files fully; reported ~430 KB required reading as too large to load in one window
+post_review_fixes:
+  - N1 scaffold_domain refuses when any target 08 file exists (test added)
+  - task_orchestration_v1.yml stale excluded block and workflow_publication_gate_v1.yml note closed
 remaining:
   - full pytest run on the working tree: 520 passed, 283 subtests passed (exit 0); superseded by managed verification on the final candidate
   - PRMS catalog on 3bec129d: CONSISTENT_WITHIN_SCAN_SCOPE, 0 unregistered, 0 missing (was PARTIAL at base)

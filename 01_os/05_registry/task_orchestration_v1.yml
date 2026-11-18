@@ -84,9 +84,7 @@ entries:
     failure_surfacing: compile_approved or ExecutionModeGateway refusal, explicit unittest; independent Host integration not yet demonstrated
     deletion_rule: protected
 
-excluded:
-  # 本机制目前没有 01_os/02_boot/ 启动清单：该路径不在产生本机制的任务的
-  # allowed_changed_paths 内，执行者不自行扩边界。是否需要 boot manifest 是一条
-  # 待处理 finding，见
-  # 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/08_结论/。
-  - 01_os/02_boot/task_orchestration/**
+# The former finding "no 01_os/02_boot/ manifest for this mechanism" (see
+# 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/08_结论/) was closed on
+# 2026-11-18: 01_os/02_boot/task_orchestration/启动清单_v1.yml now exists and is
+# registered in entries above, so that path is no longer excluded.

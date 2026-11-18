@@ -34,6 +34,19 @@ def test_new_domain_empty_catalog_identity_and_no_core_copy(tmp_path):
         scaffold_domain(tmp_path, "maths2.0", "example/maths", sha)
 
 
+def test_scaffold_never_overwrites_any_existing_domain_file(tmp_path):
+    (tmp_path / "CORE_MANIFEST.yml").write_text("domain_owned_paths: [08_Domain_Applications/]")
+    for name in ("README.md", "knowledge_catalog.yml"):
+        target = tmp_path / "08_Domain_Applications" / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text("domain-owned content")
+        with pytest.raises(PRMSError, match="REJECTED"):
+            scaffold_domain(tmp_path, "maths2.0", "example/maths", "a" * 40)
+        assert target.read_text() == "domain-owned content"
+        assert not (tmp_path / "08_Domain_Applications/domain.yml").exists()
+        target.unlink()
+
+
 def test_missing_catalog_remains_uninitialized(tmp_path):
     (tmp_path / "08_Domain_Applications").mkdir()
     (tmp_path / "08_Domain_Applications/domain.yml").write_text("domain_id: example\nrepository: example/domain\n")
