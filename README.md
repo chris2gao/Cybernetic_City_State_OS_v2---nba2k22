@@ -11,9 +11,12 @@ registry, execution entrypoints and development rules are the current system:
 
 - [`01_os/README.md`](01_os/README.md) — what each area holds and what it does not.
 - [`01_os/开发入口与单窗口任务规范_v1.md`](01_os/开发入口与单窗口任务规范_v1.md) —
-  the entry every new working window reads: minimum load order, one window one
-  task, file placement, registry synchronisation, run evidence, publication
+  the entry every new working window reads: minimum load order, task scope,
+  file placement, registry synchronisation, run evidence, publication
   transport gates, independent review and the Human gate.
+- `.agents/skills/` (mirrored to `.claude/skills/`) — the whole OS as skills:
+  `citystate-os` is the map, one role skill per role, one skill per mechanism.
+  Generated from the registry; do not edit by hand.
 
 The physical retirement is complete. Everything tracked outside `01_os/` is the
 small retained global surface below:
@@ -25,6 +28,7 @@ small retained global surface below:
 | `CLAUDE.md`, `GEMINI.md` | Vendor-discovered root routers. Pointers only. |
 | `CORE_MANIFEST.yml` | Core/domain ownership boundary, merge and domain-creation procedure. |
 | `.githooks/` | The push guard: non-fast-forward refusal and the `master` gate. |
+| `.agents/skills/`, `.claude/skills/` | Generated skill adapters: OS map, role skills, mechanism skills. |
 | `README.md` | This file. |
 
 The former bootstrap, protocol, mailbox, state, load-profile and navigation
@@ -34,22 +38,26 @@ to lift its contents into the repository root and no compatibility shim.
 
 ## If you are a model waking up here
 
-Use the repository-wide always-on bootstrap. Read, in this order: the current
-remote `master` 40-character SHA read fresh; `AGENT_WORKING_DISCIPLINE.md`;
-`AGENTS.md`; then, unconditionally, `01_os/README.md` and
-`01_os/开发入口与单窗口任务规范_v1.md`. A SHA quoted in any document — including
-this one — is not evidence.
+If the Human has told you your role, invoke that role's skill (`role-planner`,
+`role-developer`, `role-reviewer`, `role-content-developer`, `role-content-user`);
+it does the rest. Otherwise use the repository-wide always-on bootstrap: identify
+the repository, branch and Human objective; read `AGENT_WORKING_DISCIPLINE.md`,
+`AGENTS.md`, `01_os/README.md` and `01_os/开发入口与单窗口任务规范_v1.md`. Read the
+exact remote `master` SHA fresh when a material write, immutable evidence or a
+publication boundary needs it. A SHA quoted in any document — including this
+one — is not evidence.
 
 The current Human natural-language request is valid task input. Load an existing
 durable task packet when present. If none exists and the work will cause material
 repository mutation, establish the task packet and run evidence before the first
 business/canonical write; do not require a fixed initialization bundle from the
-Human. After that, load only task-triggered canonical files and registry entries.
-Never default-preload `01_os/_runs/**`.
+Human. Accumulating history surfaces are not enumerated by default, but any exact
+path a loaded skill, boot manifest or task names is read directly.
 
 ## If you are the Human
 
 `CORE_MANIFEST.yml` records what core owns, what each domain owns, how a domain
 merges, and how a new domain is created (`new-domain.ps1`, never a folder copy).
-Domain merges are frozen by decision while the new OS is being built; the freeze
-and its reasoning are recorded in that file.
+A domain repository is identical to core except `08_Domain_Applications/`; a core
+merge overwrites everything else and leaves 08 untouched. The 2026-08-02 merge
+freeze and its lifting are recorded in that file.

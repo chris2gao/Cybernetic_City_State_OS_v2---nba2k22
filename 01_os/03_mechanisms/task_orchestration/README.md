@@ -115,9 +115,9 @@ WorldData 的 Codex 工程任务 `nba2k22-world-data-full-implementation-01` 在
 
 ## 边界
 
-- 本机制**没有** `01_os/02_boot/` 启动清单：该路径不在产生本机制的任务的
-  `allowed_changed_paths` 内，执行者不自行扩边界。是否需要 boot manifest 留作后续
-  finding。当前由 `01_os/05_registry/task_orchestration_v1.yml` 注册。
+- 启动清单 `01_os/02_boot/task_orchestration/启动清单_v1.yml` 于 2026-11-18 补上（原先
+  “是否需要 boot manifest 留作后续 finding”）：角色 skill 需要每个机制一份精确读取清单。
+  它只列读取路径和验证命令，不授权。由 `01_os/05_registry/task_orchestration_v1.yml` 注册。
 - `closure_preflight.py` 只报告，不授权。它说"这个包可以作为大任务派出"，
   不等于任何动作被允许；权限仍只来自当前 Human 指令与 canonical 协议。
 - 契约不新增停止条件。正本是开发入口第 11 节；本契约只是它的编排视角投影。

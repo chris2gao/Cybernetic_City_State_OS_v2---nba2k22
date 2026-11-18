@@ -1,0 +1,40 @@
+completion_pointer:
+  packet_id: OS-CORE-ROLE-SKILLS-INTEGRATION-20261118-001
+  status: integrated  # this pointer reaches master only through the integration merge itself
+  source_branch: task/core-role-skills-20261118
+  source_base: e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
+  source_head: a6fa2d5eca1280ee9f1873b2895e448f5c73253e
+  source_head_note: >-
+    a6fa2d5e is the last commit that changes system files and the candidate managed
+    verification ran on. Later commits on the branch only add run evidence (run.yml,
+    review copies, this pointer and the Human confirmation record).
+  validation:
+    tests: managed_verify attempt-005 on a6fa2d5e - 19 of 19 required checks success, run and inspect exit 0; reproduced independently by the reviewer session
+    candidate_caused_failures: none observed
+    diff_scope: passed
+    hook_guard: passed
+  repository:
+    changed_paths: see changed_path_ledger.py --base e0bdd7fa --head <branch head>; 117 paths at a6fa2d5e, all inside allowed_changed_paths
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean: true
+  review:
+    independent_review: 07_测试执行/独立审核_5e408393.md (FIX_REQUIRED) and 07_测试执行/独立审核2_5e408393.md (FIX_REQUIRED)
+    re_review: 07_测试执行/复审_9c139d12.md (PASS with non-blocking R1-R4)
+    reviewer_family_same_as_executor: true
+  publication:
+    transport: github_cli
+    replacement_gate: to_run_at_merge
+    expected_remote_head: e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
+    resulting_remote_head: read back after the merge and reported outside this commit (a pointer cannot contain the merge commit that contains it)
+    compare_and_swap: gh pr merge --match-head-commit binds the expected PR head
+    fast_forward_verified: to_check_at_merge (merge commit first parent must equal expected master)
+    push_performed: true
+    master_modified: true
+    force_push: false
+  next_owner: Human
+  open_after_integration:
+    - B1 retest in the main checkout - whether the app lists .claude/skills as invocable skills
+    - R1 subcommand-level required options in test_command_templates
+    - R2 add the load/receipt contract to the stage-deliberation on-action reads
+    - R4 move read tiers into boot manifests together with the B0 split task

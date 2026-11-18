@@ -86,7 +86,7 @@ try {
     $scaffoldReceipt = Join-Path ([System.IO.Path]::GetTempPath()) ("prms-domain-" + [guid]::NewGuid().ToString() + ".json")
     python 01_os/06_execution/boot/context_management/prms/cli.py scaffold-domain --repo-root . --commit $inheritedCore --repository $repoFull --domain-id $Name --output $scaffoldReceipt
     if ($LASTEXITCODE -ne 0) { Fail "domain catalog initialization failed" }
-    git add -- 08_Domain_Applications/domain.yml 09_Domain_Global_Mechanisms/README.md 09_Domain_Global_Mechanisms/domain_mechanisms.yml 09_Domain_Global_Mechanisms/knowledge_catalog.yml
+    git add -- 08_Domain_Applications/domain.yml 08_Domain_Applications/README.md 08_Domain_Applications/domain_mechanisms.yml 08_Domain_Applications/knowledge_catalog.yml
     if ($LASTEXITCODE -ne 0) { Fail "domain catalog staging failed" }
     git commit --quiet -m "Initialize domain-owned mechanism catalogs"
     if ($LASTEXITCODE -ne 0) { Fail "domain catalog commit failed" }

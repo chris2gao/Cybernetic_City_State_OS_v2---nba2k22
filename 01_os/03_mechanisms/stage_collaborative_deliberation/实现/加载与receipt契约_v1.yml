@@ -83,6 +83,33 @@ stage_receipt:
   valid_only_after_validator_pass: true
   missing_required_field: invalid_receipt
   partial_publish: invalid_no_valid_receipt
+receipt_field_provenance:
+  # Integrated 2026-11-18 (Human decision: integrate old and new, latest wins) from the
+  # P2 overlay that used to live only in run evidence:
+  # 01_os/_runs/run-20260804-阶段协同推演闭环实现执行-001/P2/07_测试执行/P2_stage_receipt来源声明补全叠加层_v1.yml
+  # (blob 39daceab2c340d7934abcb2a4f27092f86a76495). That file stays where it is as
+  # historical evidence; this block is now the active declaration and the boot no
+  # longer loads the overlay. The 20 stage_receipt.required_fields above were compared
+  # field by field with the overlay's source and are unchanged since 2026-08-04; only
+  # repository paths moved (08_os/ -> 01_os/ on 2026-08-10).
+  field_set_source:
+    path: 01_os/_runs/run-20260804-阶段协同推演闭环实现方案建模-001/04_实现方案建模/实现方案模型_v1.yml
+    blob_sha: 9f93ce2f563eeac79cc5b565f8b01298020363ef
+    pointer: /receipt/required_fields
+  constraints_source:
+    path: 01_os/_runs/run-20260804-阶段协同推演闭环实现方案建模-001/04_实现方案建模/实现方案模型_v1一阶必要修复叠加层_v1.yml
+    blob_sha: e2316bfa10ed07f9db6b6ab8aaad9ebcb9d7ce56
+    role: namespace_and_future_extension_constraints
+  relation_to_B_v1:
+    B_v1_role: observable_result_semantics
+    solution_model_role: implementation_level_receipt_schema_refinement
+    renamed_fields:
+      trigger_evaluation_result: trigger_evaluation_result_ref
+      validator_exit_code: validator_mode_and_exit_code
+      stage_profile_version: profile_id_and_version
+    additional_fields_are_within_confirmed_solution_scope: true
+    semantic_conflict_with_B_union: false
+  consumers_must_not_fall_back_to_B_only_receipt_fields: true
 atomic_publish_sequence:
 - write_runtime_candidate
 - validate_schema_invariants_references_and_authority

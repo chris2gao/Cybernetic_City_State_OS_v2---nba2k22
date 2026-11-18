@@ -10,14 +10,13 @@ load_order:
   - {role: profile_set, path: 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml, blob_sha: 36c30439946aaab4e3ae55e8bbc59cb90683973e}
   - {role: result_object_contract, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml, blob_sha: 8464f14372b903052997447f83e89e4257a62c89}
   - {role: state_transition_contract, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml, blob_sha: 211f056f00125e9a0078ada861f72811b49b23fe}
-  - {role: router_failure_contract, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml, blob_sha: f1c409d3012f8de98b3521c9d97db109598eaf68}
-  - {role: load_receipt_contract, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml, blob_sha: 4435019ffd5a08b95cd77c83e1169d1147745391}
-  - {role: receipt_provenance_overlay, path: 01_os/_runs/run-20260804-阶段协同推演闭环实现执行-001/P2/07_测试执行/P2_stage_receipt来源声明补全叠加层_v1.yml, blob_sha: 39daceab2c340d7934abcb2a4f27092f86a76495}
+  - {role: router_failure_contract, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml, blob_sha: c15152dd8c7a6b6650c16537bbbf4a2373ef645d}
+  - {role: load_receipt_contract, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml, blob_sha: 9421f0a2726cf3b772ea33ce31acc9de78e5c772}
   - {role: activation_state, path: 01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml, blob_sha: 67f9cdc7b5873b13ca131263a93561f182f8b4ff}
   - {role: activation_authorization, path: 01_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml, blob_sha: 5d9d8be9e55c0c904a86907592b70d0a852d1567}
   - {role: canonical_runtime_guard, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py, blob_sha: 419d69cfc064ecbb4652ac5f0eaf76f68e1ee4e0}
   - {role: validator_base, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation.py, blob_sha: a42e7d862889bb39d6b61b8ade9d6c52d2983d03}
-  - {role: validator, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py, blob_sha: e79894757f96fe509fed8ff32f4d954c850f8a23}
+  - {role: validator, path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py, blob_sha: 8e13de023c1c7c5ef1681eda2a91bd850455b0bb}
 required_versions:
   mechanism: 1
   profile_contract: 1

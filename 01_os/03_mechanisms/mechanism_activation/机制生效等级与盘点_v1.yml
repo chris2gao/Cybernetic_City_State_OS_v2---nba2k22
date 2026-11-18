@@ -81,6 +81,34 @@ inventory:
     known_bypass: independent_L4_acceptance_not_yet_recorded
     recommended_successor_action: fresh_independent_acceptance_before_operationally_active_label
 
+  - mechanism_id: task_orchestration
+    current_level: L1_BOOT_VISIBLE
+    target_level: L2_TRIGGER_BOUND
+    acceptance_state: successor_not_scheduled
+    definition_ref: 01_os/03_mechanisms/task_orchestration/
+    boot_ref: 01_os/02_boot/task_orchestration/启动清单_v1.yml
+    trigger_ref: null
+    gate_ref: 01_os/06_execution/task_orchestration/execution_mode_gateway.py
+    receipt_ref: 01_os/02_boot/task_orchestration/启动清单_v1.yml
+    positive_test_ref: 01_os/06_execution/task_orchestration/test_atomic_tasks.py
+    negative_test_ref: 01_os/06_execution/task_orchestration/test_execution_mode_gateway.py
+    known_bypass: gateway_constrains_only_callers_routed_through_it_no_host_tool_takeover
+    recommended_successor_action: bind_role_skill_trigger_then_measure_new_window_adherence
+
+  - mechanism_id: minimum_work_unit_output
+    current_level: L1_BOOT_VISIBLE
+    target_level: L2_TRIGGER_BOUND
+    acceptance_state: successor_not_scheduled
+    definition_ref: 01_os/03_mechanisms/minimum_work_unit_output/
+    boot_ref: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+    trigger_ref: null
+    gate_ref: 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+    receipt_ref: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
+    positive_test_ref: 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+    negative_test_ref: 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py
+    known_bypass: structural_floor_only_no_semantic_check_and_no_formal_action_trigger_binding
+    recommended_successor_action: bind_dispatch_completion_review_triggers_through_role_skills
+
 inventory_scope:
   sources: active_registered_mechanisms_only
   run_history_scan: prohibited_by_default

@@ -127,7 +127,7 @@ def task_series_current(source, run_paths, *, series_id, related_task_ids, serie
     from lifecycle import classify, TERMINAL, CLOSURE_RECORD_KEYS
     tasks, missing, filtered = [], [], []
     for path in run_paths:
-        if not path.startswith(("01_os/_runs/", "01_os/07_content/_runs/")) or not path.endswith("/run.yml"):
+        if not path.startswith(("01_os/_runs/", "08_Domain_Applications/_runs/")) or not path.endswith("/run.yml"):
             raise PRMSError("REJECTED", "task recovery requires an explicit canonical run path")
         try:
             raw, proof = source.read(path)

@@ -97,7 +97,7 @@ entries:
     failure_surfacing: next execution
     deletion_rule: protected
   - path: 01_os/开发入口与单窗口任务规范_v1.md
-    purpose: 新窗口最小加载、一个窗口一个任务、文件放置、registry、run、测试、审核与接入纪律
+    purpose: 新窗口最小加载、任务边界与临时工作台、文件放置、registry、run、测试、审核与接入纪律
     loader: Human and authorized development executors
     loader_class: external_tool_convention
     discovery: referenced from 01_os/README.md
@@ -105,16 +105,7 @@ entries:
     cache_dirs: []
     failure_surfacing: next 01_os development task or independent review
     deletion_rule: protected
-  - path: 01_os/_dev/开发产物与文件隔离规范_v1.md
-    purpose: 活动开发文件分区规范
-    loader: developers and boot manifest
-    loader_class: external_tool_convention
-    discovery: referenced from boot manifest
-    evidence: 01_os/02_boot/context_management/启动清单_v1.yml
-    cache_dirs: []
-    failure_surfacing: next validator run
-    deletion_rule: protected
-  - path: 01_os/_dev/决定_谁执行_v0.2.md
+  - path: 01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md
     purpose: 活动 D2 执行角色、workspace partition 与强边界裁决
     loader: developers and boot manifest
     loader_class: external_tool_convention
@@ -164,6 +155,6 @@ excluded:
   - 01_os/_runs/**
   - 01_os/_runs/<run-id>/_runtime/**
   # Domain-owned business/workflow run traffic is likewise not registry structure.
-  - 01_os/07_content/_runs/**
-  - 01_os/07_content/_runs/<run-id>/_runtime/**
+  - 08_Domain_Applications/_runs/**
+  - 08_Domain_Applications/_runs/<run-id>/_runtime/**
   - role private and scratch

@@ -1,0 +1,105 @@
+task_packet:
+  task_id: OS-CORE-ROLE-SKILLS-INTEGRATION-20261118-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
+  branch: task/core-role-skills-20261118
+  objective: >-
+    Human 只需告诉模型它的角色，模型就能从仓库内的 skill 自行加载该角色所需的全部
+    Core OS 机制与上下文，并把聊天窗口当作临时工作台。为此先按 Human 的“以最新为主”
+    原则整合新旧冲突内容（方案 v4 I1–I16），再把整个 Core OS 做成按角色加载的 skill
+    （入口、角色、机制三层，由 registry 与 boot 生成，带防漂移校验）。
+  source_evidence:
+    - 01_os/_runs/run-20261118-role-skills-integration-001/01_任务输入/角色化上下文与OS_Skill化方案_v4.md
+    - 01_os/_runs/run-20261118-role-skills-integration-001/01_任务输入/Human决策记录_20261118.md
+    - e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
+  allowed_changed_paths:
+    - AGENTS.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - CLAUDE.md
+    - GEMINI.md
+    - README.md
+    - CORE_MANIFEST.yml
+    - new-domain.ps1
+    - .agents/skills/**
+    - .claude/skills/**
+    # Added 2026-11-18 by Human decision ("Add it, rerun") after managed_verify reported
+    # candidate_outside_packet_allowlist: I16 moves the domain _runtime ignore rule.
+    - .gitignore
+    - 01_os/README.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/01_workflow/**
+    - 01_os/02_boot/**
+    - 01_os/03_mechanisms/**
+    - 01_os/04_skills_and_tools/**
+    - 01_os/05_registry/**
+    - 01_os/06_execution/**
+    - 01_os/07_content/**
+    - 01_os/_dev/开发产物与文件隔离规范_v1.md
+    - 01_os/_dev/决定_谁执行_v0.2.md
+    - 01_os/_runs/run-20261116-human-reviewed-atomic-prototypes-001/run.yml
+    - 01_os/_runs/run-20261118-role-skills-integration-001/**
+  verification_plan: 01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/verification_plan.json
+  required_tests:
+    - context_structure
+    - working_set
+    - mechanism_activation_static
+    - communication_static
+    - mwu_static
+    - model_routing_static
+    - stage_deliberation_guard
+    - stage_deliberation_static
+    - workflow_static
+    - skills_static
+    - pytest_skills
+    - pytest_task_orchestration
+    - pytest_task_discipline
+    - pytest_workflow
+    - pytest_stage_deliberation
+    - pytest_context_management
+    - pytest_mechanism_activation
+    - pytest_model_routing
+    - pytest_communication
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - rewrite_historical_run_evidence
+    - modify_domain_repositories
+  required_completion_pointer: 01_os/_runs/run-20261118-role-skills-integration-001/08_结论/completion_pointer.yml
+  big_task: true
+  development_loop:
+    mode: iterative_development
+    progress_evidence: run.yml increments, validator exit codes, pytest results, gap ledger
+    convergence_condition: 方案 v4 I1–I16 完成、skill 全部生成且校验通过、新窗口角色初始化实测与矩阵一致
+    series_id: null
+    review_mode: immediate_required
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
+  # master 集成不属于本任务的执行范围：本任务止于任务分支发布、集中独立审核与
+  # completion pointer（ready_for_human_integration）。按 Human 裁决 D6，集成在审核后
+  # 由 Human 在该动作边界另行确认，因此这里没有本任务要执行的受保护动作。
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Anthropic
+    surface: claude_code_desktop
+    model: Claude Opus 5.5
+    reasoning_effort: surface_current
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: Human 在本会话中直接指定当前窗口施工；模型标签为 Human 当次观察（I12 同时登记）
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: fresh isolated session selected at review time
+    different_model_family: false
+    different_measurement_tool: false

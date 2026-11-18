@@ -45,6 +45,8 @@ nicety — this is the area whose failures would otherwise be silent by construc
 
 ## 当前加载器
 
+- `skills/`（2026-11-18 新增）：从 `05_registry/skills_v1.yml` 与各 boot 清单生成按角色加载的
+  skill（`.agents/skills/`、`.claude/skills/`），并以只读校验防漂移。
 - `boot/context_management/README.md`：读取 boot 清单和 registry，注入最小活动定义，
   排除原始研究报告、运行历史与私有 scratch，并运行结构 validator。
 - `boot/stage_collaborative_deliberation/README.md`：加载 active-dormant 阶段协同推演机制。

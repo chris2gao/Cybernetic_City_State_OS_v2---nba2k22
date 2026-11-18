@@ -34,7 +34,7 @@ mechanism_bindings:
     default_route: dormant
 run_roots:
   shared_os_development: 01_os/_runs/<run-id>/
-  domain_workflow: 01_os/07_content/_runs/<run-id>/
+  domain_workflow: 08_Domain_Applications/_runs/<run-id>/
   private_runtime_suffix: _runtime/
   canonical_live_state: prohibited
 artifact_common_required_fields:
@@ -151,6 +151,14 @@ completion:
   required_final_verdicts:
   - PASS
   - PASS_WITH_NON_BLOCKING_NOTES
+  review_verdict_derivation:
+    decided: 2026-11-18 by Human (integrate old and new, latest mechanism wins)
+    reviewer_writes: payload.review_verdict in {PASS, FIX_REQUIRED, REJECT}
+    vocabulary_owner: 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml#independent_review_machine_floor
+    PASS_without_findings: PASS
+    PASS_with_only_nonblocking_findings: PASS_WITH_NON_BLOCKING_NOTES
+    FIX_REQUIRED_or_REJECT: stage_cannot_complete
+    absent_review_verdict: legacy_run_read_under_previous_rule
   all_stage_status: complete
   canonical_live_state_absent: true
 validation_entries:
