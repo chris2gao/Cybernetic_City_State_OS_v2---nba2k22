@@ -62,6 +62,13 @@ fix_round_1:
   - N2：on_action 的 reads 每项须为非空字符串；任何层里出现 .py 报 SKILL_TIER_ENTRY_POINT。
   - N5：split_b0.py 自己建 os_entry/ 目录；在基线 git archive 干净导出上重放，5 个文件逐字节一致。
   - N3、N4、N6、N7、N8：不改。N3 中 W2-8 小节在启动层只剩标题与指针，记为后续候选；N7 提交作者显示 unknown 由 Human 决定。
+review_round_1:
+  report: 07_测试执行/复审_b9a83124.md
+  verdict: PASS
+  candidate: b9a831242e7b77eb6a787cfb06933a7cbfddc290
+  reviewer: 与第 0 轮相同的独立 Claude Code 会话（Opus 5.5，同族；同一窗口复核自己上一轮的 findings，已披露）
+  non_blocking: [R1 修复与 merge 同在 f408b005，可读性较差, R2 skills README 未写同层多条 on_action 共用路径与 SKILL_TIER_ENTRY_POINT（后续候选）]
+  next: master 集成须 Human 在动作边界确认；集成前 fresh 读取 master，若已不是 0b935671 须重核 merge-tree；集成后新窗口只说角色实测，并补 08_结论/completion_pointer.yml
 findings:
   - 已处置（审核 B1）：PR #40 由 PR #41 取代并已合并（master 0b935671）。修正轮 1 把 origin/master merge 进任务分支（不 rebase），skills_v1.yml、06_execution/skills/README.md、test_skills.py 三处冲突按“读取键只在 boot”解决，`实现/加载与receipt契约_v1.yml` 从 stage_collaborative_deliberation boot 的 program 移到“正式七阶段 run 的阶段计划或完成检查点时”的 on_action，与 PR #41 的生成结果一致。
   - PRMS `catalog.py` / `context.py` 的 B0_PATHS 仍把开发入口当强制读取、不含细则；这是 PRMS 会话计划的口径，不在本任务范围，记为后续候选。
