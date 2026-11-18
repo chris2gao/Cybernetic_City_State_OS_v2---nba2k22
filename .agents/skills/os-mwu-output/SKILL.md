@@ -5,7 +5,7 @@ description: "City-State OS 三个边界的正式输出格式：正式派单、�
 
 # 最小工作单元输出（L1_BOOT_VISIBLE）
 
-> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
+> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml`（读取分层 `read_tiers`）。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
 ## 何时加载
 

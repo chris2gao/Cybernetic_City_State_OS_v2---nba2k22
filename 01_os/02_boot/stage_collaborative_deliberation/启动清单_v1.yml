@@ -42,3 +42,30 @@ master_integrated: true
 global_activation_authorized: true
 per_task_profile_gate_required: true
 external_action_authorization_remains_separate: true
+# Read tiers (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001). The single
+# place that says what a model reads: startup at role initialization; on_action when the stated
+# action happens; program = read by validators / runners, a model reads it only to edit it or to
+# debug a validator failure; optional = startup read that may be absent. .py paths are entry
+# points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
+# fails on any repository file path this manifest names (outside optional_extensions) that is
+# in no tier, or in two. Any load_order in this manifest is
+# unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
+read_tiers:
+  startup:
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
+  on_action:
+  - when: 正式七阶段 run 的阶段计划或完成检查点时
+    reads:
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
+  - when: 核对机制激活状态或其 Human 授权时
+    reads:
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml
+    - 01_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml
+  program:
+  - 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml
+  - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml

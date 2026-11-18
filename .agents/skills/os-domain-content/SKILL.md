@@ -5,7 +5,7 @@ description: "City-State 领域仓库的特色内容：08_Domain_Applications �
 
 # 领域内容（08）
 
-> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
+> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/domain_content/启动清单_v1.yml`（读取分层 `read_tiers`）。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
 ## 何时加载
 
@@ -21,6 +21,10 @@ description: "City-State 领域仓库的特色内容：08_Domain_Applications �
 ## 按动作读取（做到这一步时再读）
 
 - 按学习或使用进度加载具体内容时，先读 08_Domain_Applications/knowledge_catalog.yml 与 domain_mechanisms.yml 的条目，只加载当前模块或课次需要的那几份：按目录条目只读当前需要的那几份
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
+
+- `01_os/02_boot/domain_content/启动清单_v1.yml`
 
 ## 命令
 

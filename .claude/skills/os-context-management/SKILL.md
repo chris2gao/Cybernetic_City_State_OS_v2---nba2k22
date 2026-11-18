@@ -5,7 +5,7 @@ description: "City-State OS 的上下文管理机制：三个信息平面、文�
 
 # 上下文管理、文件放置与工作集（L1_BOOT_VISIBLE）
 
-> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/context_management/启动清单_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
+> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/context_management/启动清单_v1.yml`（读取分层 `read_tiers`）。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
 ## 何时加载
 
@@ -24,6 +24,7 @@ description: "City-State OS 的上下文管理机制：三个信息平面、文�
 - 枚举历史、判断可见性或归档 run 时：`01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml`
 - 涉及执行者、workspace 与访问边界时：`01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md`
 - 修改项目资料索引或模块记录时：`01_os/03_mechanisms/context_management/项目资料发现与索引同步契约_v1.yml`
+- 新增、移动或删除文件、修改 registry 时：开发入口细则 §3 文件放置规则与 §4 registry 同步规则：`01_os/02_boot/os_entry/开发入口_按动作细则_v1.md`
 
 ## 已由 citystate-os 加载（B0，不必重读）
 

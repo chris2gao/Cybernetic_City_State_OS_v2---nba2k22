@@ -5,7 +5,7 @@ description: "City-State OS 七阶段 Workflow 的阶段协同建模：统一当
 
 # 阶段协同推演与增量再确认（L1_BOOT_VISIBLE）
 
-> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
+> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml`（读取分层 `read_tiers`）。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
 ## 何时加载
 

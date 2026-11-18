@@ -1,0 +1,79 @@
+task_id: OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001
+run_id: run-20261118-b0-split-boot-tiers-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: 232345a737f06f348ba8e4fb1ec096537d647a70
+branch: task/core-b0-split-boot-tiers-20261118
+ownership: core_system
+objective: >-
+  B0 入口拆为“操作规则 / 依据与事故记录”两层（Human 选方案 B，含 AGENTS 去重），
+  三层读取从 skills_v1.yml 移入各 boot 清单的 read_tiers，“读什么”只写一处。
+task_packet: 01_任务输入/任务包_v1.yml
+inputs:
+  - 03_方案设计/方案对比_v1.md
+  - 01_任务输入/Human决策记录_20261118.md
+lifecycle: candidate_ready_for_independent_review
+candidate: b9a831242e7b77eb6a787cfb06933a7cbfddc290
+reviewed_candidate_round_0: 4655a3342a410cfdf87c48a46563f5feb82e1eb6
+increments:
+  - commit: ba39c4fa
+    done: 方案对比、任务包草案（批准前，无业务写入）
+  - commit: e7047c4a
+    done: B0 拆分。06_执行/split_b0.py 原文移动 22 段依据、11 节细则；AGENTS.md 五节去重
+  - commit: ee07d92a
+    done: split_b0.py 换行修正；在基线 worktree 上重放，5 个输出文件逐字节一致
+  - commit: 4655a334
+    done: 14 份 boot 写入 read_tiers（8 份加键，6 份新建），skills_v1.yml 去掉读取键，生成器 / 校验器 / 测试改为从 boot 读取，重新生成 38 个 skill 文件
+measured:
+  b0_bytes: {before: 127786, startup_after: 72047, note: "启动必读 = DISCIPLINE 34964 + AGENTS 16246 + 01_os/README 5714 + 开发入口 15124（原 B0 另有 CORE_MANIFEST.yml 12815，现为程序读取）"}
+  role_startup_bytes_after:
+    role-planner: {files: 16, bytes: 123188, before_catalog_kb: 174}
+    role-developer: {files: 15, bytes: 125724, before_catalog_kb: 177}
+    role-reviewer: {files: 13, bytes: 115718, before_measured_bytes: 171457}
+    role-content-developer: {files: 15, bytes: 125724, before_catalog_kb: 177}
+    role-content-user: {files: 9, bytes: 99954, before_catalog_kb: 152}
+  generated_skill_diff: 除来源说明行外，13 个机制 skill 的读取内容与基线逐项相同；新 boot 出现在程序读取；citystate-os 增加按动作读取（细则、依据）与程序读取（CORE_MANIFEST.yml）
+verification_fix_round_1:
+  managed_verify: {candidate: b9a831242e7b77eb6a787cfb06933a7cbfddc290, plan_sha256: 42ae02e6593c21fe9698261191c298056b109ff71ffa27767bcefbb73cf22e65, run_exit: 0, inspect_exit: 0, checks: 20, success: 20, receipt: 07_测试执行/managed_verify_b9a83124.json, executor_evidence_not_independent: true}
+  first_attempt_on_f408b005: "exit 3 candidate_outside_packet_allowlist：任务包 exact_base_sha 仍是 232345a7，merge 进来的 PR #41 run 记录被算作本任务改动；b9a83124 把 exact_base_sha 改为 merge-base 0b935671（原值留作 original_base_sha），相对 master 63 个路径全部在 allowed_changed_paths 内"
+  ad_hoc: [pytest skills 16 passed, verify_b0_split.py exit 0, split_b0.py 在基线 git archive 导出上重放 5 文件逐字节一致, PRMS catalog CONSISTENT_WITHIN_SCAN_SCOPE unregistered 0/0, 各角色启动读取量与修正前相同]
+verification_round_0:
+  managed_verify: {candidate: 4655a3342a410cfdf87c48a46563f5feb82e1eb6, plan: 07_测试执行/verification_plan.json, plan_sha256: 42ae02e6593c21fe9698261191c298056b109ff71ffa27767bcefbb73cf22e65, run_exit: 0, inspect_exit: 0, checks: 20, success: 20, receipt: 07_测试执行/managed_verify_4655a334.json, attempt_dir: outside repo (executor scratchpad), executor_evidence_not_independent: true}
+  ad_hoc_checks_exit_0:
+    - 8 个机制 static 校验器在 boot 加 read_tiers 后（4655a334 前的工作树）
+    - pytest 01_os/06_execution/skills：12 passed
+    - verify_b0_split.py 正例；两个负例（改依据里一个数字、改 AGENTS 非去重节一处）均失败
+    - PRMS catalog @4655a334：SCANNED_SCOPE_COMPLETE，BOOT 14，registry_consistency CONSISTENT_WITHIN_SCAN_SCOPE，unregistered 0 / 0
+plan_vs_actual:
+  - 方案写细则与依据放在 01_os/ 根；实际放在 01_os/02_boot/os_entry/。理由：01_os 根下文件在 CORE_MANIFEST.yml 逐个列为 core-owned，放根目录就要改 CORE_MANIFEST（方案 B 承诺不改它），且 PRMS 的 core/domain 版本比对（G1_ROOTS + B0_PATHS）覆盖不到；02_boot/ 两者都已覆盖。
+  - 方案估 B0 ≈ 62 KB、角色 ≈ 90–115 KB；实测 B0 70.4 KB、角色 97.6–122.8 KB。原因：DISCIPLINE 规则部分比估算多（35 KB 对 31 KB），每处依据指针也占字节；AGENTS 去重后 16 KB 对估算 13 KB。B0 仍在 60–80 KB 目标内；角色合计不在，方案已说明需另立非 B0 调层任务。
+  - 方案列为移出的 DISCIPLINE “What makes the accumulated material worth anything” 保留在原处：其中含“把否定结果作为一等记录”这条规则。
+  - 细则里原文的“本文件”现在指细则文件；细则头部声明它与开发入口同属一个规范、效力相同，语义不变。交审核确认。
+  - AGENTS 去重是语义判断，不是原文移动：verify_b0_split.py 只证明其余各节逐字不变，五个去重节与 DISCIPLINE §0–§0.4、§8、开发入口 §5、§11 的等价性交独立审核。AGENTS 独有的指针（reviewed_prototypes.py、execution_mode_gateway.py、host-owned sink、大任务契约与 closure_preflight）保留。
+review_round_0:
+  report: 07_测试执行/独立审核_4655a334.md
+  verdict: FIX_REQUIRED
+  reviewer: 独立 Claude Code 会话（Opus 5.5，同族，已披露）
+  blocking: [B1 与新 master 冲突, B2 方案 B 的风险缓解未实施]
+fix_round_1:
+  - B1：见 findings 第一条。
+  - B2：按方案 B 的缓解措施，在 boot 的 on_action 中按节点名细则：publication（§1.1、§6）；task_discipline（§7 含 7.1/7.2、§1.2 与 §8、§9、§10）；context_management（§3、§4）；model_routing（§7.1）。为此生成器允许同一路径出现在同一层的多条 on_action 中，跨层或同一列表内重复仍报 SKILL_PATH_MULTI_TIERED。
+  - N1：boot_paths 不再跳过 commands / static_validator / pre_static_guard（其中命令串含空格，本来就不会被当成路径），并把仓库根文件（如 GEMINI.md）也算作被点名路径；只跳过 read_tiers 与 optional_extensions（后者点名的是 task_continuity boot 分层的 PRMS 文件）。14 份 boot 的注释改为与实际行为一致。
+  - N2：on_action 的 reads 每项须为非空字符串；任何层里出现 .py 报 SKILL_TIER_ENTRY_POINT。
+  - N5：split_b0.py 自己建 os_entry/ 目录；在基线 git archive 干净导出上重放，5 个文件逐字节一致。
+  - N3、N4、N6、N7、N8：不改。N3 中 W2-8 小节在启动层只剩标题与指针，记为后续候选；N7 提交作者显示 unknown 由 Human 决定。
+review_round_1:
+  report: 07_测试执行/复审_b9a83124.md
+  verdict: PASS
+  candidate: b9a831242e7b77eb6a787cfb06933a7cbfddc290
+  reviewer: 与第 0 轮相同的独立 Claude Code 会话（Opus 5.5，同族；同一窗口复核自己上一轮的 findings，已披露）
+  non_blocking: [R1 修复与 merge 同在 f408b005，可读性较差, R2 skills README 未写同层多条 on_action 共用路径与 SKILL_TIER_ENTRY_POINT（后续候选）]
+  next: master 集成须 Human 在动作边界确认；集成前 fresh 读取 master，若已不是 0b935671 须重核 merge-tree；集成后新窗口只说角色实测，并补 08_结论/completion_pointer.yml
+findings:
+  - 已处置（审核 B1）：PR #40 由 PR #41 取代并已合并（master 0b935671）。修正轮 1 把 origin/master merge 进任务分支（不 rebase），skills_v1.yml、06_execution/skills/README.md、test_skills.py 三处冲突按“读取键只在 boot”解决，`实现/加载与receipt契约_v1.yml` 从 stage_collaborative_deliberation boot 的 program 移到“正式七阶段 run 的阶段计划或完成检查点时”的 on_action，与 PR #41 的生成结果一致。
+  - PRMS `catalog.py` / `context.py` 的 B0_PATHS 仍把开发入口当强制读取、不含细则；这是 PRMS 会话计划的口径，不在本任务范围，记为后续候选。
+  - 非 B0 启动必读调层（TASK_CONTINUITY.md、task_orchestration/README.md、repository_publisher_authority_v1.yml 等）未做，按 Human 决定另立后续任务。
+remaining:
+  - 独立审核（新的隔离会话；与执行者同为 Claude 模型族，须披露）
+  - 新窗口只说角色的初始化实测：按上一任务 B1 的结论，skill 只在桌面 app 的项目根（主检出）可调用，须在 master 集成后复测
+  - master 集成由 Human 在审核后另行确认

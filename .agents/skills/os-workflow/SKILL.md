@@ -5,7 +5,7 @@ description: "City-State OS 七阶段工作流：需求建模、信息收集、�
 
 # 七阶段 Workflow
 
-> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
+> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml`（读取分层 `read_tiers`）。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
 ## 何时加载
 

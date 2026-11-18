@@ -5,7 +5,7 @@ description: "City-State OS 中窗口是临时工作台、任务与岗位才是�
 
 # 任务连续性与临时工作台
 
-> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
+> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/task_continuity/启动清单_v1.yml`（读取分层 `read_tiers`）。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
 ## 何时加载
 
@@ -24,6 +24,7 @@ description: "City-State OS 中窗口是临时工作台、任务与岗位才是�
 
 ## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 
+- `01_os/02_boot/task_continuity/启动清单_v1.yml`
 - `01_os/03_mechanisms/context_management/prms/record_schemas_v1.json`
 
 ## 命令

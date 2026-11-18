@@ -1,28 +1,24 @@
 schema_version: citystate.skills_registry.v1
 registry_id: skills_v1
 mechanism_version: 1
-# Single source for the generated skill adapters (Human decision 2026-11-18: the whole
-# Core OS as skills, loaded by role). generate_skills.py turns this file plus each
-# unit's boot manifest into .agents/skills/<name>/SKILL.md (Codex, Antigravity) and a
-# byte-identical .claude/skills/<name>/SKILL.md (Claude Code). validate_skills.py fails
-# when the files on disk differ from what this source would generate, when a listed
-# path does not exist, or when a role names an unknown unit. A skill is a thin
-# adapter: it says when to load, which exact paths to read and which commands to run.
-# It never copies mechanism text, so the canonical body stays single-sourced.
+# Source of the generated skill adapters (Human decision 2026-11-18: the whole Core OS as
+# skills, loaded by role). generate_skills.py turns this file plus each unit's boot manifest
+# into .agents/skills/<name>/SKILL.md (Codex, Antigravity) and a byte-identical
+# .claude/skills/<name>/SKILL.md (Claude Code). A skill is a thin adapter: it says when to
+# load, which exact paths to read and which commands to run. It never copies mechanism text.
 #
-# Read tiers (Human decision 2026-11-18: mechanisms are methodology and must not
-# flood a window; domain content loads by progress):
-#   - startup: read at role initialization. citystate-os has no startup list: its
-#     reads are the B0 files and are all startup.
-#   - on_action: read when the stated action happens, each entry says when.
-#   - program: every remaining path from boot / reads that is a registry file, a boot
-#     manifest, a machine schema (*最小运行schema*, *.json), an /实现/ contract or a
-#     fixture. Validators and runners read these; a model reads them only when it
-#     edits them or debugs a validator failure.
-#   - .py paths from a boot are entry points: call them, reading the source is optional.
-#   - optional_reads: startup reads that may be absent (domain 08 in core).
-# Every boot / reads path must land in exactly one tier; validate_skills.py fails on
-# an untiered path. startup_budget_bytes is reported, never enforced.
+# What to read is NOT written here. Every unit names exactly one `boot`, and that boot
+# manifest's `read_tiers` (startup / on_action / program / optional) is the only place that
+# says what a model reads (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001:
+# boot and skill must not each describe it). This file keeps skill metadata - title,
+# description, when, commands, boundaries - and the role matrix. B0 is the startup tier of the
+# citystate-os boot (01_os/02_boot/os_entry/启动清单_v1.yml).
+#
+# validate_skills.py fails when the files on disk differ from what would be generated, when a
+# unit has no boot or its boot has no read_tiers, when a path a boot names is in no tier or in
+# two, when a unit here still carries a read key, when a listed path does not exist, or when a
+# role names an unknown unit. .py paths a boot names are entry points, not tiered.
+# startup_budget_bytes is reported, never enforced.
 authority_effect: none
 generator: 01_os/06_execution/skills/generate_skills.py
 validator: 01_os/06_execution/skills/validate_skills.py
@@ -33,7 +29,7 @@ source_plan: 01_os/_runs/run-20261118-role-skills-integration-001/01_任务输�
 
 entries:
   - path: 01_os/05_registry/skills_v1.yml
-    purpose: single source of the role and mechanism skills - units, read lists, commands, boundaries, role matrix
+    purpose: skill metadata of the role and mechanism skills - units, their boot, commands, boundaries, role matrix (read lists live in each boot's read_tiers)
     loader: 01_os/06_execution/skills/generate_skills.py
     loader_class: in_repo_program
     discovery: referenced from 01_os/README.md, AGENTS.md and the vendor routers
@@ -49,6 +45,18 @@ entries:
     evidence: 01_os/06_execution/skills/test_skills.py
     cache_dirs: [__pycache__/]
     failure_surfacing: validate_skills.py exit 1 lists each finding
+    deletion_rule: protected
+  - path: "{01_os/02_boot/os_entry/**,01_os/02_boot/task_continuity/**,01_os/02_boot/task_discipline/**,01_os/02_boot/publication/**,01_os/02_boot/skills_and_tools/**,01_os/02_boot/domain_content/**}"
+    purpose: >-
+      read-tier boot manifests for the skill units that had none (2026-11-18), and in os_entry the two
+      on-action halves of B0 - 开发入口_按动作细则_v1.md (OS entry sections moved verbatim, same numbers) and
+      入口依据与事故记录_v1.md (B0 incidents, measurements and rationale moved verbatim)
+    loader: 01_os/06_execution/skills/generate_skills.py reads the manifests; models read the two B0 halves when the action or question named next to the rule arises
+    loader_class: in_repo_program
+    discovery: boot field of each unit in skills_v1.yml; stubs and markers in AGENT_WORKING_DISCIPLINE.md, 01_os/README.md and 01_os/开发入口与单窗口任务规范_v1.md
+    evidence: 01_os/06_execution/skills/test_skills.py; 01_os/_runs/run-20261118-b0-split-boot-tiers-001/07_测试执行/verify_b0_split.py
+    cache_dirs: []
+    failure_surfacing: validate_skills.py exit 1 (missing tiers, untiered or missing path); a stub or marker without its target is visible on reading
     deletion_rule: protected
   - path: .agents/skills/**
     purpose: generated skill adapters read by Codex (repository skills) and Antigravity (.agents workspace skills)
@@ -77,12 +85,7 @@ units:
       或要找某个机制该由哪个 skill 加载时使用。列出全部机制单元、五个角色各自加载什么、
       角色初始化方法与 B0 必读文件。
     when: 任何角色初始化的第一步；不确定该加载哪个机制时。
-    reads:
-      - AGENT_WORKING_DISCIPLINE.md
-      - AGENTS.md
-      - 01_os/README.md
-      - 01_os/开发入口与单窗口任务规范_v1.md
-      - CORE_MANIFEST.yml
+    boot: 01_os/02_boot/os_entry/启动清单_v1.yml
 
     commands:
       - command: python -B 01_os/06_execution/skills/validate_skills.py --repo-root .
@@ -99,20 +102,6 @@ units:
       request、response、result、correction、blocked、decision 交接时使用；普通 Human 对话不需要。
     when: 正式跨端点动作之前（AGENTS.md 要求常开）；核对物质验收主张时。
     boot: 01_os/02_boot/mechanism_activation/启动清单_v1.yml
-    startup:
-      - 01_os/03_mechanisms/mechanism_activation/README.md
-    on_action:
-      - when: 发出或接收正式跨端点动作之前
-        reads:
-          - 01_os/03_mechanisms/mechanism_activation/正式动作宪法_v1.yml
-          - 01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml
-      - when: 核对物质验收主张、写 receipt 或判断验证方式时
-        reads:
-          - 01_os/03_mechanisms/mechanism_activation/物理事实双向绑定契约_v1.yml
-          - 01_os/03_mechanisms/mechanism_activation/验证适用性契约_v1.yml
-      - when: 判断某个机制的生效等级时
-        reads:
-          - 01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml
     commands:
       - command: python -B 01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py static .
         expect: validation_passed，退出 0
@@ -129,35 +118,6 @@ units:
       纠正已发消息或归档通讯任务时使用。不轮询、不自动投递。
     when: 发出或接收正式交接；建立通讯任务空间；归档通讯任务。
     boot: 01_os/02_boot/communication_system/启动清单_v1.yml
-    reads:
-      - 01_os/03_mechanisms/communication_system/README.md
-      - 01_os/03_mechanisms/communication_system/接收方bootstrap_v1.md
-    startup:
-      - 01_os/03_mechanisms/communication_system/README.md
-    on_action:
-      - when: 写或发布正式交接消息时
-        reads:
-          - 01_os/03_mechanisms/communication_system/通讯契约_v1.yml
-          - 01_os/03_mechanisms/communication_system/消息契约_v1.yml
-          - 01_os/03_mechanisms/communication_system/文档与引用契约_v1.yml
-          - 01_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml
-          - 01_os/03_mechanisms/communication_system/正式动作接入契约_v1.yml
-          - 01_os/03_mechanisms/communication_system/Human中转指针契约_v2.yml
-      - when: 作为接收方从指针进入任务时
-        reads:
-          - 01_os/03_mechanisms/communication_system/接收方bootstrap_v1.md
-          - 01_os/03_mechanisms/communication_system/端点卡契约_v1.yml
-      - when: 发布到 GitHub 或做整任务收敛时
-        reads:
-          - 01_os/03_mechanisms/communication_system/载体与发布契约_v1.yml
-          - 01_os/03_mechanisms/communication_system/Git收敛契约_v1.yml
-      - when: 纠正已发消息或归档通讯任务时
-        reads:
-          - 01_os/03_mechanisms/communication_system/纠正与跨端一致性_v1.yml
-          - 01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml
-      - when: 判断角色、权限或确认要求时
-        reads:
-          - 01_os/03_mechanisms/communication_system/角色与权限边界_v1.yml
     commands:
       - command: python -B 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py static .
         expect: validation_passed，退出 0
@@ -176,26 +136,6 @@ units:
       项目资料发现与索引同步、workspace 边界。每个角色初始化时加载。
     when: 每个角色初始化；放置或删除文件；枚举仓库或历史；归档 run；改项目资料索引。
     boot: 01_os/02_boot/context_management/启动清单_v1.yml
-    reads:
-      - 01_os/03_mechanisms/context_management/方法论_v1.md
-      - 01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
-      - 01_os/03_mechanisms/context_management/项目资料发现与索引同步契约_v1.yml
-    startup:
-      - 01_os/03_mechanisms/context_management/README.md
-      - 01_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md
-    on_action:
-      - when: 需要理解三个信息平面、恢复与 stale 规则时
-        reads:
-          - 01_os/03_mechanisms/context_management/方法论_v1.md
-      - when: 枚举历史、判断可见性或归档 run 时
-        reads:
-          - 01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
-      - when: 涉及执行者、workspace 与访问边界时
-        reads:
-          - 01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md
-      - when: 修改项目资料索引或模块记录时
-        reads:
-          - 01_os/03_mechanisms/context_management/项目资料发现与索引同步契约_v1.yml
     commands:
       - command: python -B 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
         expect: "context-management structure: PASS，退出 0"
@@ -213,20 +153,7 @@ units:
       City-State OS 中窗口是临时工作台、任务与岗位才是持续的。保存或恢复任务上下文、轮换窗口、交班、
       从 run 或简报库恢复任务时使用（含 PRMS save/list/resume 与 handoff）。
     when: 每个角色初始化；重大决定或交接时落检查点；窗口轮换或恢复任务。
-    reads:
-      - 01_os/03_mechanisms/context_management/prms/README.md
-      - 01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md
-      - 01_os/03_mechanisms/context_management/prms/OPERATIONS.md
-      - 01_os/03_mechanisms/context_management/prms/loading_rules_v1.yml
-      - 01_os/03_mechanisms/context_management/prms/record_schemas_v1.json
-    startup:
-      - 01_os/03_mechanisms/context_management/prms/README.md
-      - 01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md
-    on_action:
-      - when: 运行 PRMS 命令、保存或恢复任务上下文时
-        reads:
-          - 01_os/03_mechanisms/context_management/prms/OPERATIONS.md
-          - 01_os/03_mechanisms/context_management/prms/loading_rules_v1.yml
+    boot: 01_os/02_boot/task_continuity/启动清单_v1.yml
     commands:
       - command: python -B 01_os/06_execution/boot/context_management/prms/cli.py --repo-root . --commit <40-char> --repository <owner/repo> catalog --output <outside-repo.json>
         expect: SCANNED_SCOPE_COMPLETE；只发现，不加载正文、不授权
@@ -244,22 +171,6 @@ units:
       Human 审定的任务原型、默认 EXECUTION 与受委托的 DEVELOPMENT、Agent 自报。每个角色初始化时加载。
     when: 每个角色初始化；拆任务、判断是否该停、执行已审原型、遇到能力缺口时。
     boot: 01_os/02_boot/task_orchestration/启动清单_v1.yml
-    startup:
-      - 01_os/03_mechanisms/task_orchestration/README.md
-    on_action:
-      - when: 拆分任务、判断该继续还是必须停时
-        reads:
-          - 01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
-      - when: 定义或检查 G/R/A/D 节点与父任务 Done 时
-        reads:
-          - 01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md
-          - 01_os/03_mechanisms/task_orchestration/原子任务场景验证_v1.md
-      - when: 设计或执行可复用任务原型、遇到能力缺口、判断 EXECUTION / DEVELOPMENT 时
-        reads:
-          - 01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md
-      - when: 对候选做受控验证时
-        reads:
-          - 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
     commands:
       - command: python -B 01_os/06_execution/task_orchestration/big_task/closure_preflight.py --packet <task-packet>
         expect: 只报告，不授权
@@ -278,12 +189,6 @@ units:
       要求做了什么、方法、可支撑理由、可行理由，以及角色附加字段。
     when: 写正式派单、执行交接或审核结论时。
     boot: 01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml
-    startup:
-      - 01_os/03_mechanisms/minimum_work_unit_output/README.md
-    on_action:
-      - when: 写正式派单、执行交接或审核结论时
-        reads:
-          - 01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml
     commands:
       - command: python -B 01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py --root . static
         expect: validation_passed，退出 0
@@ -301,21 +206,6 @@ units:
       生成 receiver_setup。派单前确定执行者或审核者时使用。
     when: 选择执行者或独立审核者之前；写任务包 executor_profile 时。
     boot: 01_os/02_boot/model_routing/启动清单_v1.yml
-    reads:
-      - 01_os/02_boot/协作伙伴.md
-    startup:
-      - 01_os/03_mechanisms/model_routing/README.md
-    on_action:
-      - when: 选择执行者或独立审核者、写 receiver_setup 时
-        reads:
-          - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
-          - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
-          - 01_os/02_boot/协作伙伴.md
-          - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
-          - 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
-      - when: 核对模型目录的来源时
-        reads:
-          - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
     commands:
       - command: python -B 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static .
         expect: validation_passed，退出 0
@@ -333,21 +223,6 @@ units:
       gate、十个状态维度与 stage receipt。正式七阶段 run 的阶段计划与完成签收时使用；默认休眠。
     when: 正式七阶段 run 的每个阶段计划与完成检查点；出现承重缺口时。
     boot: 01_os/02_boot/stage_collaborative_deliberation/启动清单_v1.yml
-    reads:
-      - 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
-    startup:
-      - 01_os/03_mechanisms/stage_collaborative_deliberation/README.md
-    on_action:
-      - when: 正式七阶段 run 的阶段计划或完成检查点时
-        reads:
-          - 01_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md
-          - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml
-          - 01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml
-          - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
-      - when: 核对机制激活状态或其 Human 授权时
-        reads:
-          - 01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml
-          - 01_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml
     commands:
       - command: python -B 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py .
         expect: 退出 0（先跑）
@@ -366,48 +241,6 @@ units:
       阶段产物与 stage_control、冻结测试、三出口、runner 与发布门。做正式七阶段任务或其中任一阶段时使用。
     when: 规划、开发、审核角色初始化；任何正式七阶段任务或阶段产物。
     boot: 01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml
-    reads:
-      - 01_os/01_workflow/README.md
-      - 01_os/01_workflow/01_需求建模/README.md
-      - 01_os/01_workflow/02_信息收集与提炼/README.md
-      - 01_os/01_workflow/03_结果建模/README.md
-      - 01_os/01_workflow/04_测试生成/README.md
-      - 01_os/01_workflow/05_步骤拆分/README.md
-      - 01_os/01_workflow/06_执行/README.md
-      - 01_os/01_workflow/07_测试执行/README.md
-      - 01_os/06_execution/workflow/minimum_operational_loop/README.md
-      - 01_os/05_registry/workflow_publication_gate_v1.yml
-    startup:
-      - 01_os/01_workflow/README.md
-    on_action:
-      - when: 进入阶段 01 需求建模时
-        reads:
-          - 01_os/01_workflow/01_需求建模/README.md
-          - 01_os/01_workflow/01_需求建模/方法论_v1.md
-      - when: 进入阶段 02 信息收集时
-        reads:
-          - 01_os/01_workflow/02_信息收集与提炼/README.md
-      - when: 进入阶段 03 结果建模时
-        reads:
-          - 01_os/01_workflow/03_结果建模/README.md
-      - when: 进入阶段 04 测试生成时
-        reads:
-          - 01_os/01_workflow/04_测试生成/README.md
-      - when: 进入阶段 05 步骤拆分时
-        reads:
-          - 01_os/01_workflow/05_步骤拆分/README.md
-      - when: 进入阶段 06 执行时
-        reads:
-          - 01_os/01_workflow/06_执行/README.md
-      - when: 进入阶段 07 测试执行或写审核结论时
-        reads:
-          - 01_os/01_workflow/07_测试执行/README.md
-      - when: 运行 runner、验证或发布七阶段 run 时
-        reads:
-          - 01_os/06_execution/workflow/minimum_operational_loop/README.md
-      - when: 核对协同推演激活状态时
-        reads:
-          - 01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml
     commands:
       - command: python -B 01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py static .
         expect: 退出 0
@@ -425,26 +258,7 @@ units:
       City-State OS 的任务施工纪律：任务包字段、开工 preflight、受控验证、变更路径账本、run 记录与
       lifecycle 枚举、completion pointer、独立审核排期。建任务、施工、收尾或审核候选时使用。
     when: 规划、开发、审核角色初始化；material repository mutation 之前；收尾与交接时。
-    reads:
-      - 01_os/06_execution/task_discipline/README.md
-      - 01_os/06_execution/task_discipline/packet_input/README.md
-      - 01_os/06_execution/task_discipline/managed_verification/README.md
-      - 01_os/06_execution/task_discipline/project_context/README.md
-      - 01_os/05_registry/task_discipline_v1.yml
-      - 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
-    startup:
-      - 01_os/06_execution/task_discipline/README.md
-    on_action:
-      - when: 建或读任务包时
-        reads:
-          - 01_os/06_execution/task_discipline/packet_input/README.md
-      - when: 对候选做受控验证时
-        reads:
-          - 01_os/06_execution/task_discipline/managed_verification/README.md
-          - 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
-      - when: 同步项目资料索引时
-        reads:
-          - 01_os/06_execution/task_discipline/project_context/README.md
+    boot: 01_os/02_boot/task_discipline/启动清单_v1.yml
     commands:
       - command: python -B 01_os/06_execution/task_discipline/preflight/preflight_task_context.py --packet <task-packet>
         expect: preflight ok；只报告，不授权
@@ -463,17 +277,7 @@ units:
       City-State OS 的发布规则：传输矩阵（本地 git / GitHub API / gh）、发布权限与需要 Human 确认的动作、
       push 守卫、master 集成。commit、push、开 PR 或任何受保护动作之前使用。
     when: 开发角色初始化；任何 commit / push / PR / master 集成之前。
-    reads:
-      - 01_os/05_registry/repository_publisher_authority_v1.yml
-      - 01_os/05_registry/repository_guards_v1.yml
-      - .githooks/README.md
-    startup:
-      - 01_os/05_registry/repository_publisher_authority_v1.yml
-      - .githooks/README.md
-    on_action:
-      - when: push 被守卫拒绝、或要修改守卫时
-        reads:
-          - 01_os/05_registry/repository_guards_v1.yml
+    boot: 01_os/02_boot/publication/启动清单_v1.yml
     commands:
       - command: git config --get core.hooksPath
         expect: .githooks（本地传输的守卫）；不一致即 blocked
@@ -490,16 +294,7 @@ units:
       City-State OS 的 Windows 工具纪律（pwsh 7、UTF-8、退出码、引号）与可选外部工具（check-jsonschema、
       mutmut、cosmic-ray、rea）。在 Windows 上写复杂命令、调用外部工具或做变异测试时使用。
     when: Windows 命令、外部工具或变异测试相关时。
-    reads:
-      - 01_os/04_skills_and_tools/README.md
-      - 01_os/04_skills_and_tools/windows/README.md
-      - 01_os/05_registry/skills_and_tools_v1.yml
-    startup:
-      - 01_os/04_skills_and_tools/README.md
-    on_action:
-      - when: 在 Windows 上写复杂命令、处理编码或退出码时
-        reads:
-          - 01_os/04_skills_and_tools/windows/README.md
+    boot: 01_os/02_boot/skills_and_tools/启动清单_v1.yml
     commands: []
     boundaries:
       - 登记不等于加载；工具可用不等于任务允许
@@ -511,12 +306,7 @@ units:
       City-State 领域仓库的特色内容：08_Domain_Applications 下的 domain.yml、领域机制目录
       domain_mechanisms.yml 与知识目录。在领域仓工作、开发或使用特色内容时使用；core 仓库没有 08 内容。
     when: 特色内容开发、特色内容教学或使用角色初始化；规划或审核领域任务时。
-    optional_reads:
-      - 08_Domain_Applications/domain.yml
-      - 08_Domain_Applications/domain_mechanisms.yml
-    on_action:
-      - when: 按学习或使用进度加载具体内容时，先读 08_Domain_Applications/knowledge_catalog.yml 与 domain_mechanisms.yml 的条目，只加载当前模块或课次需要的那几份
-        reads: []
+    boot: 01_os/02_boot/domain_content/启动清单_v1.yml
     commands:
       - command: python -B 01_os/06_execution/boot/context_management/prms/cli.py --repo-root . --commit <40-char> --repository <owner/repo> domain --domain-id <id> --output <outside-repo.json>
         expect: 领域目录 G2 发现；缺目录时为 DOMAIN_CATALOG_UNINITIALIZED

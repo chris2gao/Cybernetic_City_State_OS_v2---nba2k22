@@ -5,7 +5,7 @@ description: "City-State OS 正式跨端点动作的宪法路径。要让另一�
 
 # 机制激活与正式动作宪法（L3_EXECUTION_GATED）
 
-> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/mechanism_activation/启动清单_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
+> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/mechanism_activation/启动清单_v1.yml`（读取分层 `read_tiers`）。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
 ## 何时加载
 
