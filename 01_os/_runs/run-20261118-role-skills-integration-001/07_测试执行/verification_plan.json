@@ -1,0 +1,259 @@
+{
+ "schema_version": "citystate.verification_plan.v1",
+ "task_packet": "01_os/_runs/run-20261118-role-skills-integration-001/01_任务输入/任务包_v1.yml",
+ "checks": [
+  {
+   "id": "context_structure",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/03_mechanisms/context_management/实现/verify_context_structure.py"
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "working_set",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/06_execution/boot/context_management/working_set/validate_working_set.py",
+    "--repository-root",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "mechanism_activation_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/06_execution/boot/mechanism_activation/validate_mechanism_activation.py",
+    "static",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "communication_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/06_execution/boot/communication_system/validator/validate_communication_system.py",
+    "static",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "mwu_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/06_execution/boot/minimum_work_unit_output/validate_minimum_work_unit_output.py",
+    "--root",
+    ".",
+    "static"
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "model_routing_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/03_mechanisms/model_routing/实现/verify_model_routing.py",
+    "static",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "stage_deliberation_guard",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "stage_deliberation_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py",
+    "static",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "workflow_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py",
+    "static",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "skills_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/06_execution/skills/validate_skills.py",
+    "--repo-root",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_skills",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/skills",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_task_orchestration",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/task_orchestration",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 1800,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_task_discipline",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/task_discipline",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 1800,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_workflow",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/workflow",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 1800,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_stage_deliberation",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/03_mechanisms/stage_collaborative_deliberation/实现",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 1800,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_context_management",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/boot/context_management",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 3600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_mechanism_activation",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/boot/mechanism_activation",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 1800,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_model_routing",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/boot/model_routing",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_communication",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/boot/communication_system",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 1800,
+   "expected_exit_code": 0
+  }
+ ]
+}
