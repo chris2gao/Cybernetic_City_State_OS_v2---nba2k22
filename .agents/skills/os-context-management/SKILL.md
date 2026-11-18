@@ -13,18 +13,27 @@ description: "City-State OS 的上下文管理机制：三个信息平面、文�
 
 适用角色：初始化必载 = 任务规划、任务开发、审核、特色内容开发、特色内容教学或使用；按触发加载 = 无
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 5 KB）
 
-- `01_os/02_boot/context_management/启动清单_v1.yml`
-- `01_os/README.md`
-- `01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md`
 - `01_os/03_mechanisms/context_management/README.md`
 - `01_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 需要理解三个信息平面、恢复与 stale 规则时：`01_os/03_mechanisms/context_management/方法论_v1.md`
+- 枚举历史、判断可见性或归档 run 时：`01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml`
+- 涉及执行者、workspace 与访问边界时：`01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md`
+- 修改项目资料索引或模块记录时：`01_os/03_mechanisms/context_management/项目资料发现与索引同步契约_v1.yml`
+
+## 已由 citystate-os 加载（B0，不必重读）
+
+- `01_os/README.md`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
+
+- `01_os/02_boot/context_management/启动清单_v1.yml`
 - `01_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml`
 - `01_os/05_registry/context_management_v1.yml`
-- `01_os/03_mechanisms/context_management/方法论_v1.md`
-- `01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml`
-- `01_os/03_mechanisms/context_management/项目资料发现与索引同步契约_v1.yml`
 
 ## 入口程序（调用即可，不必通读源码）
 

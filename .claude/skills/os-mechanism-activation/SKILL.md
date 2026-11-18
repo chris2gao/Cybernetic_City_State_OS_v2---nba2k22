@@ -13,15 +13,19 @@ description: "City-State OS 正式跨端点动作的宪法路径。要让另一�
 
 适用角色：初始化必载 = 任务规划、任务开发、审核、特色内容开发；按触发加载 = 特色内容教学或使用
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 2 KB）
+
+- `01_os/03_mechanisms/mechanism_activation/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 发出或接收正式跨端点动作之前：`01_os/03_mechanisms/mechanism_activation/正式动作宪法_v1.yml`、`01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml`
+- 核对物质验收主张、写 receipt 或判断验证方式时：`01_os/03_mechanisms/mechanism_activation/物理事实双向绑定契约_v1.yml`、`01_os/03_mechanisms/mechanism_activation/验证适用性契约_v1.yml`
+- 判断某个机制的生效等级时：`01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 
 - `01_os/02_boot/mechanism_activation/启动清单_v1.yml`
-- `01_os/03_mechanisms/mechanism_activation/README.md`
-- `01_os/03_mechanisms/mechanism_activation/正式动作宪法_v1.yml`
-- `01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml`
-- `01_os/03_mechanisms/mechanism_activation/物理事实双向绑定契约_v1.yml`
-- `01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml`
-- `01_os/03_mechanisms/mechanism_activation/验证适用性契约_v1.yml`
 - `01_os/05_registry/mechanism_activation_v1.yml`
 
 ## 入口程序（调用即可，不必通读源码）

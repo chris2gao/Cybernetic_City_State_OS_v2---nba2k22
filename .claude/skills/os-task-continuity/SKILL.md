@@ -13,18 +13,23 @@ description: "City-State OS 中窗口是临时工作台、任务与岗位才是�
 
 适用角色：初始化必载 = 任务规划、任务开发、审核、特色内容开发、特色内容教学或使用；按触发加载 = 无
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 11 KB）
 
 - `01_os/03_mechanisms/context_management/prms/README.md`
 - `01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md`
-- `01_os/03_mechanisms/context_management/prms/OPERATIONS.md`
-- `01_os/03_mechanisms/context_management/prms/loading_rules_v1.yml`
+
+## 按动作读取（做到这一步时再读）
+
+- 运行 PRMS 命令、保存或恢复任务上下文时：`01_os/03_mechanisms/context_management/prms/OPERATIONS.md`、`01_os/03_mechanisms/context_management/prms/loading_rules_v1.yml`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
+
 - `01_os/03_mechanisms/context_management/prms/record_schemas_v1.json`
 
 ## 命令
 
 - `python -B 01_os/06_execution/boot/context_management/prms/cli.py --repo-root . --commit <40-char> --repository <owner/repo> catalog --output <outside-repo.json>` → SCANNED_SCOPE_COMPLETE；只发现，不加载正文、不授权
-- `python -B 01_os/06_execution/boot/context_management/prms/task_cli.py --state-root <isolated-state> --role <role> {save,list,resume}` → 只在已获批准的隔离状态仓上运行；未部署时用 run / 简报库恢复并写明 recovery_source
+- `python -B 01_os/06_execution/boot/context_management/prms/task_cli.py --state-root <isolated-state> --role <role> --output <outside-repo> {save,list,resume}` → 只在已获批准的隔离状态仓上运行；未部署时用 run / 简报库恢复并写明 recovery_source
 
 ## 边界与停止
 

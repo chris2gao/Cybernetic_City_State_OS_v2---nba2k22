@@ -66,6 +66,28 @@ role_tests:
 post_review_fixes:
   - N1 scaffold_domain refuses when any target 08 file exists (test added)
   - task_orchestration_v1.yml stale excluded block and workflow_publication_gate_v1.yml note closed
+  - reviewed_head: 5e4083935d03d6401c88c8b1c4684936f209dee0
+    reviewer: Human-assigned isolated review session (Claude Opus 5.5, same family - disclosed)
+    report: 07_测试执行/独立审核2_5e408393.md
+    verdict: FIX_REQUIRED
+    reproduced: managed_verify exit 3 because pytest_workflow hit the 1800 s limit (it needs ~1795 s); the 5 remaining suites passed when run directly; PRMS catalog CONSISTENT
+review_dispositions:
+  F1_task_continuity_single_window: fixed - TASK_CONTINUITY.md now says the window is a workbench and one task vs a series is the Human's call
+  F2_startup_reading_load: fixed by Human-approved three-tier loading; startup reading per role before -> after - planner 552 KB -> 174 KB, developer 419 -> 177, reviewer 395 -> 167, content developer 419 -> 177, content user 259 -> 152 (B0 is 124 KB of each); B0 split proposed as a separate task
+  F3_command_templates: fixed - publish_message, route_receiver, task_cli, managed_verify templates now carry every required option; test_skills checks this against each script's --help
+  F4_pr37_lifecycle_value: open - needs Human decision
+  F5_review_verdict_derivation: plan-vs-actual delta - runner enforces vocabulary and PASS-only completion; PASS vs PASS_WITH_NON_BLOCKING_NOTES is not machine-checked because the stage-07 schema has no findings field; schema also does not declare review_verdict
+  F6_existing_domain_catalog_path: fixed in CORE_MANIFEST merge_rule - migrating domains must repoint domain.yml global_mechanism_catalog, content_path and evidence_refs into 08
+  F7_skill_blob_pins: plan-vs-actual delta - validate_skills checks paths and tiers, not blob pins; the only pinned boot (stage deliberation) is checked by its own v2 static
+  F8_working_set_wording: fixed
+  F9_workflow_timeout: fixed - pytest_workflow timeout_seconds 1800 -> 3600
+  N1_scaffold_overwrite: fixed (earlier commit e0ea24f8)
+  N3_sd09_mapping_location: plan-vs-actual delta - mapping written in the stage-07 README instead of the state contract so the stage-deliberation boot pins did not have to change again
+  N4_commit_author_unknown: open - needs Human decision
+  B1_skill_registration: open - needs Human decision; role tests loaded skills by reading SKILL.md through CLAUDE.md, the app did not list .claude/skills as invocable in worktree sessions
+plan_vs_actual:
+  - plan 4.3 put a skill block in each mechanism registry; actual is one registry skills_v1.yml (one source, simpler generator)
+  - plan 6 step 5 asked each role window to do a small real task; planner and developer tests did initialization only, the reviewer test did a real review
 remaining:
   - full pytest run on the working tree: 520 passed, 283 subtests passed (exit 0); superseded by managed verification on the final candidate
   - PRMS catalog on 3bec129d: CONSISTENT_WITHIN_SCAN_SCOPE, 0 unregistered, 0 missing (was PARTIAL at base)

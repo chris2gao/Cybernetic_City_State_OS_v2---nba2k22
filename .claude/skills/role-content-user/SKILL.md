@@ -16,7 +16,7 @@ description: "City-State 领域仓库特色内容教学或使用角色初始化�
 ## 初始化（按顺序全部完成，再开始工作）
 
 1. 确认仓库、分支、HEAD、Human 目标与当前任务；有任务包就读任务包，有未完成任务就按 `os-task-continuity` 从 run 或简报库恢复。
-2. 依次读取下列 skill 文件（与本文件同级目录），并读完每个 skill 的“必读”与“有则必读”清单：
+2. 依次读取下列 skill 文件（与本文件同级目录），并读完每个 skill 的“启动必读”与“有则必读”；“按动作读取”做到那一步时再读，“程序读取”不主动读：
 
    - `../citystate-os/SKILL.md` — City-State OS 总入口与目录
    - `../os-context-management/SKILL.md` — 上下文管理、文件放置与工作集
@@ -37,7 +37,7 @@ role: role-content-user
 repository / branch / head: <实测>
 human_objective: <一句话>
 skills_loaded: <上面第 2 步的 skill 名>
-paths_read: <实际读取的路径数，及缺失的“有则必读”项>
+paths_read: <启动必读实际读取的路径数与字节数，及缺失的“有则必读”项>
 validators: <命令 = 退出码>
 gaps: <未读、失败或与预期不符之处；没有就写 none>
 ```

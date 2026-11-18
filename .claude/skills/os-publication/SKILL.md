@@ -13,11 +13,14 @@ description: "City-State OS 的发布规则：传输矩阵（本地 git / GitHub
 
 适用角色：初始化必载 = 任务开发、特色内容开发；按触发加载 = 任务规划、审核
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 9 KB）
 
 - `01_os/05_registry/repository_publisher_authority_v1.yml`
-- `01_os/05_registry/repository_guards_v1.yml`
 - `.githooks/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- push 被守卫拒绝、或要修改守卫时：`01_os/05_registry/repository_guards_v1.yml`
 
 ## 命令
 

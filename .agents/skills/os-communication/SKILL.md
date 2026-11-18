@@ -13,24 +13,22 @@ description: "City-State OS 的 Human 中转通讯协议。要写正式交接消
 
 适用角色：初始化必载 = 任务规划；按触发加载 = 任务开发、审核、特色内容开发、特色内容教学或使用
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 1 KB）
+
+- `01_os/03_mechanisms/communication_system/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 写或发布正式交接消息时：`01_os/03_mechanisms/communication_system/通讯契约_v1.yml`、`01_os/03_mechanisms/communication_system/消息契约_v1.yml`、`01_os/03_mechanisms/communication_system/文档与引用契约_v1.yml`、`01_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml`、`01_os/03_mechanisms/communication_system/正式动作接入契约_v1.yml`、`01_os/03_mechanisms/communication_system/Human中转指针契约_v2.yml`
+- 作为接收方从指针进入任务时：`01_os/03_mechanisms/communication_system/接收方bootstrap_v1.md`、`01_os/03_mechanisms/communication_system/端点卡契约_v1.yml`
+- 发布到 GitHub 或做整任务收敛时：`01_os/03_mechanisms/communication_system/载体与发布契约_v1.yml`、`01_os/03_mechanisms/communication_system/Git收敛契约_v1.yml`
+- 纠正已发消息或归档通讯任务时：`01_os/03_mechanisms/communication_system/纠正与跨端一致性_v1.yml`、`01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml`
+- 判断角色、权限或确认要求时：`01_os/03_mechanisms/communication_system/角色与权限边界_v1.yml`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 
 - `01_os/02_boot/communication_system/启动清单_v1.yml`
-- `01_os/03_mechanisms/communication_system/通讯契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/端点卡契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/角色与权限边界_v1.yml`
-- `01_os/03_mechanisms/communication_system/消息契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/文档与引用契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/载体与发布契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/Git收敛契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/纠正与跨端一致性_v1.yml`
-- `01_os/03_mechanisms/communication_system/正式动作接入契约_v1.yml`
-- `01_os/03_mechanisms/communication_system/Human中转指针契约_v2.yml`
 - `01_os/05_registry/communication_system_v1.yml`
-- `01_os/03_mechanisms/communication_system/README.md`
-- `01_os/03_mechanisms/communication_system/接收方bootstrap_v1.md`
 
 ## 入口程序（调用即可，不必通读源码）
 
@@ -39,7 +37,7 @@ description: "City-State OS 的 Human 中转通讯协议。要写正式交接消
 ## 命令
 
 - `python -B 01_os/06_execution/boot/communication_system/validator/validate_communication_system.py static .` → validation_passed，退出 0
-- `python -B 01_os/06_execution/boot/communication_system/publisher/publish_message.py --task-root <task-root> --message <message>` → 只在宪法路径通过后发布
+- `python -B 01_os/06_execution/boot/communication_system/publisher/publish_message.py --task-root <task-root> --message <message> --activation-context <activation-context> --mechanism-preconditions <preconditions> --receiver-setup <receiver-setup>` → 只在宪法路径通过后发布
 
 ## 边界与停止
 

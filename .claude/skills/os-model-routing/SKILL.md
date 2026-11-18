@@ -13,17 +13,19 @@ description: "City-State OS 的模型与产品面路由：为执行或独立审�
 
 适用角色：初始化必载 = 任务规划；按触发加载 = 审核
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 1 KB）
+
+- `01_os/03_mechanisms/model_routing/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 选择执行者或独立审核者、写 receiver_setup 时：`01_os/03_mechanisms/model_routing/路由契约_v1.yml`、`01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml`、`01_os/02_boot/协作伙伴.md`、`01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml`、`01_os/03_mechanisms/model_routing/项目观察证据_v1.yml`
+- 核对模型目录的来源时：`01_os/03_mechanisms/model_routing/来源索引_v1.yml`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 
 - `01_os/02_boot/model_routing/启动清单_v1.yml`
-- `01_os/03_mechanisms/model_routing/README.md`
-- `01_os/03_mechanisms/model_routing/路由契约_v1.yml`
-- `01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml`
-- `01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml`
-- `01_os/03_mechanisms/model_routing/项目观察证据_v1.yml`
-- `01_os/03_mechanisms/model_routing/来源索引_v1.yml`
 - `01_os/05_registry/model_routing_v1.yml`
-- `01_os/02_boot/协作伙伴.md`
 
 ## 入口程序（调用即可，不必通读源码）
 
@@ -33,7 +35,7 @@ description: "City-State OS 的模型与产品面路由：为执行或独立审�
 ## 命令
 
 - `python -B 01_os/03_mechanisms/model_routing/实现/verify_model_routing.py static .` → validation_passed，退出 0
-- `python -B 01_os/06_execution/boot/model_routing/route_receiver.py --selection <selection> --catalog <catalog>` → 输出 receiver_setup，authority 恒为 routing_only
+- `python -B 01_os/06_execution/boot/model_routing/route_receiver.py --selection <selection> --catalog <catalog> --role-contract <role-contract>` → 输出 receiver_setup，authority 恒为 routing_only
 
 ## 边界与停止
 

@@ -13,19 +13,24 @@ description: "City-State OS 的任务施工纪律：任务包字段、开工 pre
 
 适用角色：初始化必载 = 任务规划、任务开发、审核、特色内容开发；按触发加载 = 无
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 5 KB）
 
 - `01_os/06_execution/task_discipline/README.md`
-- `01_os/06_execution/task_discipline/packet_input/README.md`
-- `01_os/06_execution/task_discipline/managed_verification/README.md`
-- `01_os/06_execution/task_discipline/project_context/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 建或读任务包时：`01_os/06_execution/task_discipline/packet_input/README.md`
+- 对候选做受控验证时：`01_os/06_execution/task_discipline/managed_verification/README.md`、`01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml`
+- 同步项目资料索引时：`01_os/06_execution/task_discipline/project_context/README.md`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
+
 - `01_os/05_registry/task_discipline_v1.yml`
-- `01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml`
 
 ## 命令
 
 - `python -B 01_os/06_execution/task_discipline/preflight/preflight_task_context.py --packet <task-packet>` → preflight ok；只报告，不授权
-- `python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py --candidate <40-char> {run,inspect}` → 退出 0 才可声明该候选验证通过
+- `python -B 01_os/06_execution/task_discipline/managed_verification/managed_verify.py --candidate <40-char> --plan <plan.json> --attempt <outside-repo-new-dir> {run,inspect}` → 退出 0 才可声明该候选验证通过
 - `python -B 01_os/06_execution/task_discipline/path_ledger/changed_path_ledger.py --base <40-char>` → 实测变更路径集合
 
 ## 边界与停止

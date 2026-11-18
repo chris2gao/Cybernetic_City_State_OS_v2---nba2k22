@@ -13,10 +13,16 @@ Windows 命令、外部工具或变异测试相关时。
 
 适用角色：初始化必载 = 无；按触发加载 = 任务开发、审核、特色内容开发
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 2 KB）
 
 - `01_os/04_skills_and_tools/README.md`
-- `01_os/04_skills_and_tools/windows/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 在 Windows 上写复杂命令、处理编码或退出码时：`01_os/04_skills_and_tools/windows/README.md`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
+
 - `01_os/05_registry/skills_and_tools_v1.yml`
 
 ## 边界与停止

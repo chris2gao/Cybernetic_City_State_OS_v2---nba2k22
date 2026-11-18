@@ -13,11 +13,17 @@ description: "City-State OS 三个边界的正式输出格式：正式派单、�
 
 适用角色：初始化必载 = 任务规划、任务开发、审核、特色内容开发；按触发加载 = 特色内容教学或使用
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 4 KB）
+
+- `01_os/03_mechanisms/minimum_work_unit_output/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 写正式派单、执行交接或审核结论时：`01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 
 - `01_os/02_boot/minimum_work_unit_output/启动清单_v1.yml`
-- `01_os/03_mechanisms/minimum_work_unit_output/README.md`
-- `01_os/03_mechanisms/minimum_work_unit_output/最小工作单元输出契约_v1.yml`
 - `01_os/05_registry/minimum_work_unit_output_v1.yml`
 
 ## 入口程序（调用即可，不必通读源码）

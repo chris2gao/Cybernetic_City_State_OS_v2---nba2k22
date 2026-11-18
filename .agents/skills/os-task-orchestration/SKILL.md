@@ -13,15 +13,20 @@ description: "City-State OS 的任务粒度与执行纪律：默认一个长周�
 
 适用角色：初始化必载 = 任务规划、任务开发、审核、特色内容开发、特色内容教学或使用；按触发加载 = 无
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 10 KB）
+
+- `01_os/03_mechanisms/task_orchestration/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 拆分任务、判断该继续还是必须停时：`01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml`
+- 定义或检查 G/R/A/D 节点与父任务 Done 时：`01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`、`01_os/03_mechanisms/task_orchestration/原子任务场景验证_v1.md`
+- 设计或执行可复用任务原型、遇到能力缺口、判断 EXECUTION / DEVELOPMENT 时：`01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md`
+- 对候选做受控验证时：`01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 
 - `01_os/02_boot/task_orchestration/启动清单_v1.yml`
-- `01_os/03_mechanisms/task_orchestration/README.md`
-- `01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml`
-- `01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`
-- `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md`
-- `01_os/03_mechanisms/task_orchestration/原子任务场景验证_v1.md`
-- `01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml`
 - `01_os/03_mechanisms/task_orchestration/loop_iteration_schema_v1.json`
 - `01_os/05_registry/task_orchestration_v1.yml`
 

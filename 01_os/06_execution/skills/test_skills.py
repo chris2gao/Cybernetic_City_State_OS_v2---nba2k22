@@ -33,7 +33,7 @@ def mini_repo(tmp_path: Path) -> Path:
             {"name": "citystate-os", "title": "入口", "description": "入口描述", "when": "总是",
              "reads": ["CORE_MANIFEST.yml"], "commands": [{"command": "python v.py", "expect": "退出 0"}]},
             {"name": "os-m1", "title": "机制一", "mechanism_id": "m1", "description": "机制一描述：带冒号", "when": "需要时",
-             "boot": "01_os/02_boot/m1/启动清单_v1.yml",
+             "boot": "01_os/02_boot/m1/启动清单_v1.yml", "startup": ["01_os/03_mechanisms/m1/README.md"],
              "commands": [{"command": "python 01_os/03_mechanisms/m1/check.py .", "expect": "退出 0"},
                           {"command": "python x.py <placeholder>", "expect": "退出 0"}]},
         ],
@@ -60,7 +60,8 @@ def test_generation_is_deterministic_and_mirrors_are_identical(tmp_path):
     assert first == second
     assert first[".agents/skills/os-m1/SKILL.md"] == first[".claude/skills/os-m1/SKILL.md"]
     body = first[".agents/skills/os-m1/SKILL.md"]
-    assert "- `01_os/03_mechanisms/m1/README.md`" in body          # boot load_order is must-read
+    assert "## 启动必读" in body and "- `01_os/03_mechanisms/m1/README.md`" in body
+    assert "## 程序读取" in body and "启动清单_v1.yml" in body        # boot manifest is program tier
     assert "## 入口程序" in body and "check.py" in body              # .py listed as entry point
     head = yaml.safe_load(body.split("---\n")[1])
     assert head["name"] == "os-m1" and "冒号" in head["description"]  # frontmatter stays valid YAML
@@ -106,3 +107,40 @@ def test_output_root_must_be_core_owned(tmp_path):
     (root / "CORE_MANIFEST.yml").write_text(yaml.safe_dump({"core_owned_paths": [".agents/skills/"]}), encoding="utf-8")
     _, errors = gs.render_all(root)
     assert "SKILL_ROOT_NOT_CORE_OWNED:.claude/skills/" in errors
+
+
+def test_untiered_path_fails_closed(tmp_path):
+    root = mini_repo(tmp_path)
+    (root / "01_os/03_mechanisms/m1/rules.md").write_text("# rules", encoding="utf-8")
+    registry = yaml.safe_load((root / gs.REGISTRY).read_text(encoding="utf-8"))
+    registry["units"][1]["reads"] = ["01_os/03_mechanisms/m1/rules.md"]
+    (root / gs.REGISTRY).write_text(yaml.safe_dump(registry, allow_unicode=True), encoding="utf-8")
+    _, errors = gs.render_all(root)
+    assert "SKILL_PATH_UNTIERED:os-m1:01_os/03_mechanisms/m1/rules.md" in errors
+    registry["units"][1]["on_action"] = [{"when": "写规则时", "reads": ["01_os/03_mechanisms/m1/rules.md"]}]
+    (root / gs.REGISTRY).write_text(yaml.safe_dump(registry, allow_unicode=True), encoding="utf-8")
+    files, errors = gs.render_all(root)
+    assert errors == [] and "写规则时：`01_os/03_mechanisms/m1/rules.md`" in files[".agents/skills/os-m1/SKILL.md"]
+
+
+def test_command_templates_carry_every_required_option():
+    """Each templated python command names every option its --help marks as required."""
+    import re
+    import subprocess
+    registry = yaml.safe_load((REPO / gs.REGISTRY).read_text(encoding="utf-8"))
+    checked = 0
+    for unit in registry["units"]:
+        for item in unit.get("commands", []) or []:
+            argv = item["command"].split()
+            script = next((a for a in argv if a.endswith(".py")), None)
+            if argv[:1] != ["python"] or not script:
+                continue
+            usage = subprocess.run([sys.executable, "-B", str(REPO / script), "--help"], capture_output=True,
+                                   text=True, encoding="utf-8", cwd=REPO).stdout
+            head = usage.split(chr(10) * 2, 1)[0]  # the usage block ends at the first blank line
+            optional = set(re.findall(r"\[(--[a-z][a-z0-9-]*)", head))
+            required = {o for o in re.findall(r"(?<![\[\w-])(--[a-z][a-z0-9-]*)", head) if o not in optional}
+            missing = sorted(o for o in required if o not in argv)
+            assert not missing, (unit["name"], item["command"], missing)
+            checked += 1
+    assert checked >= 15

@@ -13,11 +13,14 @@ description: "City-State 领域仓库的特色内容：08_Domain_Applications �
 
 适用角色：初始化必载 = 特色内容开发、特色内容教学或使用；按触发加载 = 任务规划、任务开发、审核
 
-## 有则必读（不存在时在回执里写明缺失，不算失败）
+## 有则必读（初始化时读；不存在时在回执里写明缺失，不算失败）
 
 - `08_Domain_Applications/domain.yml`
 - `08_Domain_Applications/domain_mechanisms.yml`
-- `08_Domain_Applications/knowledge_catalog.yml`
+
+## 按动作读取（做到这一步时再读）
+
+- 按学习或使用进度加载具体内容时，先读 08_Domain_Applications/knowledge_catalog.yml 与 domain_mechanisms.yml 的条目，只加载当前模块或课次需要的那几份：按目录条目只读当前需要的那几份
 
 ## 命令
 

@@ -13,11 +13,26 @@ description: "City-State OS 七阶段工作流：需求建模、信息收集、�
 
 适用角色：初始化必载 = 任务规划、任务开发、审核、特色内容开发；按触发加载 = 无
 
-## 必读（按顺序全部读完）
+## 启动必读（角色初始化时读完，约 2 KB）
+
+- `01_os/01_workflow/README.md`
+
+## 按动作读取（做到这一步时再读）
+
+- 进入阶段 01 需求建模时：`01_os/01_workflow/01_需求建模/README.md`、`01_os/01_workflow/01_需求建模/方法论_v1.md`
+- 进入阶段 02 信息收集时：`01_os/01_workflow/02_信息收集与提炼/README.md`
+- 进入阶段 03 结果建模时：`01_os/01_workflow/03_结果建模/README.md`
+- 进入阶段 04 测试生成时：`01_os/01_workflow/04_测试生成/README.md`
+- 进入阶段 05 步骤拆分时：`01_os/01_workflow/05_步骤拆分/README.md`
+- 进入阶段 06 执行时：`01_os/01_workflow/06_执行/README.md`
+- 进入阶段 07 测试执行或写审核结论时：`01_os/01_workflow/07_测试执行/README.md`
+- 运行 runner、验证或发布七阶段 run 时：`01_os/06_execution/workflow/minimum_operational_loop/README.md`
+- 核对协同推演激活状态时：`01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml`
+
+## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 
 - `01_os/02_boot/workflow_minimum_operational_loop/启动清单_v1.yml`
 - `01_os/01_workflow/实现/七阶段最小运行契约_v1.yml`
-- `01_os/01_workflow/01_需求建模/方法论_v1.md`
 - `01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml`
 - `01_os/01_workflow/01_需求建模/实现/最小运行schema_v1.yml`
 - `01_os/01_workflow/02_信息收集与提炼/实现/最小运行schema_v1.yml`
@@ -27,16 +42,6 @@ description: "City-State OS 七阶段工作流：需求建模、信息收集、�
 - `01_os/01_workflow/06_执行/实现/最小运行schema_v1.yml`
 - `01_os/01_workflow/07_测试执行/实现/最小运行schema_v1.yml`
 - `01_os/05_registry/workflow_minimum_operational_loop_v1.yml`
-- `01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml`
-- `01_os/01_workflow/README.md`
-- `01_os/01_workflow/01_需求建模/README.md`
-- `01_os/01_workflow/02_信息收集与提炼/README.md`
-- `01_os/01_workflow/03_结果建模/README.md`
-- `01_os/01_workflow/04_测试生成/README.md`
-- `01_os/01_workflow/05_步骤拆分/README.md`
-- `01_os/01_workflow/06_执行/README.md`
-- `01_os/01_workflow/07_测试执行/README.md`
-- `01_os/06_execution/workflow/minimum_operational_loop/README.md`
 - `01_os/05_registry/workflow_publication_gate_v1.yml`
 
 ## 入口程序（调用即可，不必通读源码）

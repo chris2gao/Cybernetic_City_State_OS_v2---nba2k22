@@ -180,7 +180,11 @@ domain_merge_procedure:
     domain that still holds material in 01_Research_Reports/, 02_Protocols/,
     03_Daily_Execution/, 09_Domain_Global_Mechanisms/ or 01_os/07_content/ moves it
     into 08 before or within its first merge after 2026-11-18, so that the merge does
-    not conflict and nothing domain-owned is lost.
+    not conflict and nothing domain-owned is lost. When 09_Domain_Global_Mechanisms/
+    moves, also update domain.yml global_mechanism_catalog to
+    08_Domain_Applications/domain_mechanisms.yml and every catalog entry's content_path
+    and evidence_refs that still point into 09/ - PRMS discover_g2 rejects any path
+    outside 08_Domain_Applications/.
   first_time_only: >-
     git merge -s ours core/master
     records ancestry WITHOUT taking core's tree. Required exactly once per
