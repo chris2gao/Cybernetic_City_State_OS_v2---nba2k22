@@ -12,6 +12,7 @@ inputs:
   - 01_任务输入/角色化上下文与OS_Skill化方案_v4.md
   - 01_任务输入/Human决策记录_20261118.md
 lifecycle: candidate_pending_validation
+closure_record: 08_结论/completion_pointer.yml
 increments:
   - commit: b225fb67
     done: [I1, I6, I11, I12, I13, I15, CORE_MANIFEST part of I14/I16]
@@ -79,6 +80,11 @@ post_review_fixes:
     report: 07_测试执行/独立审核2_5e408393.md
     verdict: FIX_REQUIRED
     reproduced: managed_verify exit 3 because pytest_workflow hit the 1800 s limit (it needs ~1795 s); the 5 remaining suites passed when run directly; PRMS catalog CONSISTENT
+  - reviewed_range: 5e4083935d03d6401c88c8b1c4684936f209dee0..9c139d12e1b9eb3521e4486ab9ee2f9569608992
+    reviewer: Human-assigned isolated review session (Claude Opus 5.5, same family - disclosed)
+    report: 07_测试执行/复审_9c139d12.md
+    verdict: PASS
+    reproduced: managed_verify run and inspect exit 0 on a6fa2d5e (19/19, 2461 s), skills validator and generate --check exit 0, PRMS catalog CONSISTENT
 review_dispositions:
   F1_task_continuity_single_window: fixed - TASK_CONTINUITY.md now says the window is a workbench and one task vs a series is the Human's call
   F2_startup_reading_load: fixed by Human-approved three-tier loading; startup reading per role before -> after - planner 552 KB -> 174 KB, developer 419 -> 177, reviewer 395 -> 167, content developer 419 -> 177, content user 259 -> 152 (B0 is 124 KB of each); B0 split proposed as a separate task
@@ -93,6 +99,10 @@ review_dispositions:
   N3_sd09_mapping_location: plan-vs-actual delta - mapping written in the stage-07 README instead of the state contract so the stage-deliberation boot pins did not have to change again
   N4_commit_author_unknown: accepted by Human decision - commits stay as they are; author name is unset in the local git config
   B1_skill_registration: accepted by Human decision as passing evidence - role tests loaded the matrix skill sets by reading SKILL.md through the vendor router; registration as invocable skills is unverified in worktree sessions and is retested after master integration in the main checkout
+  R1_subcommand_options: follow-up - test_command_templates parses top-level --help only; reviewer checked subcommand level by hand, no gaps now
+  R2_receipt_contract_on_action: follow-up - add 实现/加载与receipt契约_v1.yml to the stage-deliberation on-action read for stage checkpoints
+  R3_worktree_hooks_path: disposition - Claude Desktop worktrees get core.hooksPath set to the main checkout's absolute .githooks in config.worktree; the hook files are byte-identical, but the local_git gate expects exactly .githooks. An executor in such a worktree sets `git config --worktree core.hooksPath .githooks` before publishing (done in this task, recorded at its start); changing the gate to accept an equivalent absolute path is a separate decision
+  R4_tiers_in_boot: follow-up - move read tiers into boot manifests with the B0 split task
 plan_vs_actual:
   - plan 4.3 put a skill block in each mechanism registry; actual is one registry skills_v1.yml (one source, simpler generator)
   - plan 6 step 5 asked each role window to do a small real task; planner and developer tests did initialization only, the reviewer test did a real review
