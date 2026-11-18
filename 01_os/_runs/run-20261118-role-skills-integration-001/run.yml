@@ -12,4 +12,15 @@ inputs:
   - 01_任务输入/角色化上下文与OS_Skill化方案_v4.md
   - 01_任务输入/Human决策记录_20261118.md
 lifecycle: candidate_pending_validation
-increments: []
+increments:
+  - commit: b225fb67
+    done: [I1, I6, I11, I12, I13, I15, CORE_MANIFEST part of I14/I16]
+  - commit: dfb019ba
+    done: [I2, I3, I4, I7, I8, I9, I10, I16, skills registry + generator + validator + 38 generated files]
+    checks_run_exit_0: [verify_context_structure, validate_working_set, validate_mechanism_activation static, verify_model_routing static, stage guard + v2 static, run_minimum_operational_loop static, validate_skills, pytest skills 5 passed, pytest model_routing 7 passed]
+remaining:
+  - full pytest run (started in background, result not yet read)
+  - verification_plan.json + managed_verify run/inspect
+  - PRMS catalog recheck of registry_consistency on the committed candidate
+  - new-window role initialization test (planner, developer, reviewer)
+  - push task branch, independent review, completion pointer, Human master confirmation
