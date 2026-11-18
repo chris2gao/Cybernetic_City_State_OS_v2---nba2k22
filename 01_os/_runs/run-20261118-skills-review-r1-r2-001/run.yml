@@ -4,6 +4,7 @@ repository: chris2gao/Cybernetic_City_State_OS_v2---core
 risk_tier: T1_standard
 base_commit: 232345a737f06f348ba8e4fb1ec096537d647a70
 branch: task/core-skills-review-r1-r2-20261118
+integration_branch: task/core-skills-review-r1-r2-20261118-b
 ownership: core_system
 objective: >-
   处理上一任务复审（01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md）
@@ -76,7 +77,10 @@ review_dispositions:
   N1_N4: follow-up candidates for the command-template test; no template is affected on the current tree
   N5: accepted by reviewer as LOCAL_FIX, no action
 integration:
-  pr: chris2gao/Cybernetic_City_State_OS_v2---core#40
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#41 (replaces #40, closed unmerged)
+  why_replaced: >-
+    the local pre-push guard refused the evidence commit on the #40 branch because run.yml at the remote
+    head 996b6dfa was invalid YAML (gate exit 11); no --no-verify, no force push; Human chose a new PR
   master_before: 232345a737f06f348ba8e4fb1ec096537d647a70
   method: gh pr merge --merge --match-head-commit <this evidence commit>; no squash, rebase or force
   confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261118.md
