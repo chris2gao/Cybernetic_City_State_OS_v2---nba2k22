@@ -1,0 +1,17 @@
+task_id: OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001
+run_id: run-20261118-b0-split-boot-tiers-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: 232345a737f06f348ba8e4fb1ec096537d647a70
+branch: task/core-b0-split-boot-tiers-20261118
+ownership: core_system
+objective: >-
+  B0 入口拆为“操作规则 / 依据与事故记录”两层，三层读取从 skills_v1.yml 移入各 boot 清单。
+task_packet: 01_任务输入/任务包_v1.yml
+inputs:
+  - 03_方案设计/方案对比_v1.md
+lifecycle: research_only
+remaining:
+  - Human 在方案 A / B 之间选择（方案对比_v1.md §6）
+  - 施工、受控验证、原文移动核对、新窗口角色初始化实测
+  - 独立审核；master 集成由 Human 另行确认
