@@ -23,6 +23,9 @@ task_packet:
     - new-domain.ps1
     - .agents/skills/**
     - .claude/skills/**
+    # Added 2026-11-18 by Human decision ("Add it, rerun") after managed_verify reported
+    # candidate_outside_packet_allowlist: I16 moves the domain _runtime ignore rule.
+    - .gitignore
     - 01_os/README.md
     - 01_os/开发入口与单窗口任务规范_v1.md
     - 01_os/01_workflow/**

@@ -18,9 +18,16 @@ increments:
   - commit: dfb019ba
     done: [I2, I3, I4, I7, I8, I9, I10, I16, skills registry + generator + validator + 38 generated files]
     checks_run_exit_0: [verify_context_structure, validate_working_set, validate_mechanism_activation static, verify_model_routing static, stage guard + v2 static, run_minimum_operational_loop static, validate_skills, pytest skills 5 passed, pytest model_routing 7 passed]
+boundary_corrections:
+  - date: 2026-11-18
+    finding: dispatch_boundary_defect
+    path: .gitignore
+    detected_by: managed_verify run on 3bec129d returned candidate_outside_packet_allowlist (exit 3); changed_path_ledger listed .gitignore as the only out-of-scope path of 112
+    cause: I16 moves the domain _runtime ignore rule to 08_Domain_Applications/_runs/*/_runtime/; the packet author (this executor) omitted .gitignore from allowed_changed_paths
+    resolution: Human chose to add .gitignore to allowed_changed_paths and rerun verification
 remaining:
-  - full pytest run (started in background, result not yet read)
+  - full pytest run on the working tree: 520 passed, 283 subtests passed (exit 0); superseded by managed verification on the final candidate
   - verification_plan.json + managed_verify run/inspect
-  - PRMS catalog recheck of registry_consistency on the committed candidate
+  - PRMS catalog on 3bec129d: CONSISTENT_WITHIN_SCAN_SCOPE, 0 unregistered, 0 missing (was PARTIAL at base)
   - new-window role initialization test (planner, developer, reviewer)
   - push task branch, independent review, completion pointer, Human master confirmation
