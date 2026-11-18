@@ -24,8 +24,11 @@ REGISTRY = "01_os/05_registry/skills_v1.yml"
 INVENTORY = "01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml"
 NAME_RE = re.compile(r"^[a-z0-9][a-z0-9-]{1,62}$")
 DESCRIPTION_LIMIT = 1024
-# Boot keys whose values are not part of the named read set (read_tiers is the tiering itself).
-SKIPPED_BOOT_KEYS = {"optional_extensions", "commands", "static_validator", "pre_static_guard", "read_tiers"}
+# Boot keys whose values are not part of the named read set: read_tiers is the tiering itself;
+# optional_extensions names another unit's files (context_management -> prms is tiered in the
+# task_continuity boot). Command strings elsewhere contain spaces and are never taken as paths.
+SKIPPED_BOOT_KEYS = {"optional_extensions", "read_tiers"}
+ROOT_FILE_RE = re.compile(r"^[A-Za-z0-9_.-]+\.[A-Za-z0-9]+$")
 TIER_KEYS = {"startup", "on_action", "program", "optional"}
 # A second source of "what to read" in the registry is what this design removes.
 REGISTRY_READ_KEYS = {"reads", "startup", "on_action", "optional_reads", "program"}
@@ -64,7 +67,13 @@ def boot_paths(root: Path, boot_rel: str) -> list[str]:
                 walk(item, key)
         elif isinstance(value, str):
             text = value.strip()
-            if " " in text or not text.startswith(("01_os/", ".githooks/")) or any(c in text for c in "<*{"):
+            if " " in text or any(c in text for c in "<*{"):
+                return
+            if ROOT_FILE_RE.fullmatch(text):  # a repository-root file such as AGENTS.md
+                if (root / text).is_file() and text not in found:
+                    found.append(text)
+                return
+            if not text.startswith(("01_os/", ".githooks/")):
                 return
             if (root / text).is_file():
                 if text not in found:
@@ -94,8 +103,14 @@ def read_tiers(root: Path, boot_rel: str) -> dict[str, Any]:
     actions = value.get("on_action", []) or []
     if not isinstance(actions, list) or not all(
             isinstance(a, dict) and isinstance(a.get("when"), str) and a["when"].strip()
-            and isinstance(a.get("reads", []) or [], list) for a in actions):
+            and isinstance(a.get("reads", []) or [], list)
+            and all(isinstance(p, str) and p.strip() for p in a.get("reads", []) or []) for a in actions):
         raise SkillError(f"SKILL_TIER_INVALID:{boot_rel}:on_action")
+    tiered = [p for key in ("startup", "optional", "program") for p in value.get(key, []) or []]
+    tiered += [p for a in actions for p in a.get("reads", []) or []]
+    entry_points = sorted({p for p in tiered if p.endswith(".py")})
+    if entry_points:  # .py files are entry points to call, never a read tier
+        raise SkillError(f"SKILL_TIER_ENTRY_POINT:{boot_rel}:{entry_points}")
     return value
 
 
@@ -118,12 +133,16 @@ def tiers(root: Path, unit: dict[str, Any], b0_set: set[str] | None = None) -> d
     optional = list(value.get("optional", []) or [])
     actions = [(str(a["when"]).strip(), list(a.get("reads", []) or [])) for a in value.get("on_action", []) or []]
     program = list(value.get("program", []) or [])
-    listed = startup + optional + [p for _, reads in actions for p in reads] + program
-    declared = set(listed)
+    # One path may serve several on_action entries (e.g. different sections of one detail file),
+    # but it may sit in only one tier, and only once inside any single list.
+    lists = [startup, optional, program] + [reads for _, reads in actions]
+    tier_sets = [set(startup), set(optional), set(program), {p for _, reads in actions for p in reads}]
+    declared = set().union(*tier_sets)
     entry = [p for p in named if p.endswith(".py")]
     b0 = [p for p in named if p in b0_set and p not in declared]
     untiered = [p for p in named if not p.endswith(".py") and p not in declared and p not in b0]
-    duplicated = sorted({p for p in listed if listed.count(p) > 1})
+    duplicated = sorted({p for p in declared if sum(p in s for s in tier_sets) > 1}
+                        | {p for items in lists for p in items if items.count(p) > 1})
     return {"startup": startup, "optional": optional, "actions": actions, "program": program, "b0": b0,
             "entry": entry, "untiered": untiered, "duplicated": duplicated}
 

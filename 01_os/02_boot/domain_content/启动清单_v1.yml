@@ -11,7 +11,8 @@ authority_effect: none
 # action happens; program = read by validators / runners, a model reads it only to edit it or to
 # debug a validator failure; optional = startup read that may be absent. .py paths are entry
 # points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
-# fails on a path this manifest names outside every tier. Any load_order in this manifest is
+# fails on any repository file path this manifest names (outside optional_extensions) that is
+# in no tier, or in two. Any load_order in this manifest is
 # unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
 read_tiers:
   optional:

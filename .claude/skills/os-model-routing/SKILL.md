@@ -21,6 +21,7 @@ description: "City-State OS 的模型与产品面路由：为执行或独立审�
 
 - 选择执行者或独立审核者、写 receiver_setup 时：`01_os/03_mechanisms/model_routing/路由契约_v1.yml`、`01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml`、`01_os/02_boot/协作伙伴.md`、`01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml`、`01_os/03_mechanisms/model_routing/项目观察证据_v1.yml`
 - 核对模型目录的来源时：`01_os/03_mechanisms/model_routing/来源索引_v1.yml`
+- 写任务包 executor_profile 时：开发入口细则 §7.1 模型路由 preflight：`01_os/02_boot/os_entry/开发入口_按动作细则_v1.md`
 
 ## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 

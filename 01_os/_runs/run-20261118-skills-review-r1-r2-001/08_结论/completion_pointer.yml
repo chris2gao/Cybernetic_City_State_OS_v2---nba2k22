@@ -1,0 +1,49 @@
+completion_pointer:
+  packet_id: OS-CORE-SKILLS-REVIEW-R1-R2-20261118-001
+  status: integrated  # this pointer reaches master only through the integration merge itself
+  source_branch: task/core-skills-review-r1-r2-20261118-b  # replaces task/core-skills-review-r1-r2-20261118 (PR #40)
+  source_base: 232345a737f06f348ba8e4fb1ec096537d647a70
+  source_head: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
+  source_head_note: >-
+    3039712c is the candidate managed verification ran on; the later commit that adds this
+    pointer only changes run evidence (run.yml and this file).
+  validation:
+    tests: managed_verify attempt-001 on 3039712c - 5 of 5 required checks success, inspect exit 0
+    candidate_caused_failures: none observed
+    diff_scope: passed
+    hook_guard: not_applicable_transport  # the master merge goes over gh; the task-branch pushes went over local_git with core.hooksPath .githooks
+  repository:
+    changed_paths:
+      - .agents/skills/os-stage-deliberation/SKILL.md
+      - .claude/skills/os-stage-deliberation/SKILL.md
+      - 01_os/05_registry/skills_v1.yml
+      - 01_os/06_execution/skills/README.md
+      - 01_os/06_execution/skills/test_skills.py
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/01_任务输入/任务包_v1.yml
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/07_测试执行/verification_plan.json
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/run.yml
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/08_结论/completion_pointer.yml
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261118.md
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/07_测试执行/独立审核_3039712c.md
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/07_测试执行/独立审核_3039712c.yml
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean: true
+  review:
+    independent_review: 07_测试执行/独立审核_3039712c.md (PASS, non-blocking N1-N5)
+    reviewer_family_same_as_executor: true
+  publication:
+    transport: github_cli
+    replacement_gate: to_run_at_merge
+    expected_remote_head: 232345a737f06f348ba8e4fb1ec096537d647a70
+    resulting_remote_head: read back after the merge and reported outside this commit (a pointer cannot contain the merge commit that contains it)
+    compare_and_swap: gh pr merge --match-head-commit binds the expected PR head
+    fast_forward_verified: to_check_at_merge (merge commit first parent must equal expected master)
+    push_performed: true
+    master_modified: true
+    force_push: false
+  master_integration_confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261118.md
+  next_owner: Human
+  open_after_integration:
+    - N1-N4 command-template test refinements (optional follow-up)
+    - R3 and R4 from the previous run stay open

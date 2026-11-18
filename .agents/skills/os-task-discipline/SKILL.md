@@ -22,6 +22,10 @@ description: "City-State OS 的任务施工纪律：任务包字段、开工 pre
 - 建或读任务包时：`01_os/06_execution/task_discipline/packet_input/README.md`
 - 对候选做受控验证时：`01_os/06_execution/task_discipline/managed_verification/README.md`、`01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml`
 - 同步项目资料索引时：`01_os/06_execution/task_discipline/project_context/README.md`
+- 写或读任务包、选择执行者、向 Human 请求批准或确认时：开发入口细则 §7（含 7.1 模型路由 preflight、7.2 Human 确认与大任务预确认）：`01_os/02_boot/os_entry/开发入口_按动作细则_v1.md`
+- 固定执行环境、设计或执行测试、写证据、做候选受控验证时：开发入口细则 §1.2 执行环境约定与 §8 测试与证据标准（含 8.1）：`01_os/02_boot/os_entry/开发入口_按动作细则_v1.md`
+- 派审核、做独立审核或安排审核时机时：开发入口细则 §9 独立审核与 Human 决策 / 确认（含 9.1–9.3）：`01_os/02_boot/os_entry/开发入口_按动作细则_v1.md`
+- 写 completion pointer 或收尾交接时：开发入口细则 §10 completion pointer 最小模板：`01_os/02_boot/os_entry/开发入口_按动作细则_v1.md`
 
 ## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 

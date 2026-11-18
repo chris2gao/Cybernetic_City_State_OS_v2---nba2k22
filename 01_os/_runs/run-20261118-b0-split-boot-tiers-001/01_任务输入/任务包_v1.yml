@@ -57,7 +57,8 @@ task_packet:
     publication_transport: local_git
     source_branch_publication: task_scope_default
     master_integration_confirmation: not_requested
-    expected_remote_master_head: 232345a737f06f348ba8e4fb1ec096537d647a70
+    # master 在独立审核期间前进到 0b935671（PR #41）；按审核 B1 以 merge（不 rebase）并入任务分支。
+    expected_remote_master_head: 0b93567116a53968f98b590eae09431a16a5f6d0
   big_task_confirmation_closure:
     enabled: true
     known_confirmation_required_actions: []

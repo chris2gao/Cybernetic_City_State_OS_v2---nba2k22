@@ -19,7 +19,7 @@ description: "City-State OS 七阶段 Workflow 的阶段协同建模：统一当
 
 ## 按动作读取（做到这一步时再读）
 
-- 正式七阶段 run 的阶段计划或完成检查点时：`01_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md`、`01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml`、`01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml`
+- 正式七阶段 run 的阶段计划或完成检查点时：`01_os/03_mechanisms/stage_collaborative_deliberation/方法论_v1.md`、`01_os/03_mechanisms/stage_collaborative_deliberation/阶段profile契约_v1.yml`、`01_os/03_mechanisms/stage_collaborative_deliberation/阶段profiles_v1.yml`、`01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml`
 - 核对机制激活状态或其 Human 授权时：`01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml`、`01_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml`
 
 ## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
@@ -28,7 +28,6 @@ description: "City-State OS 七阶段 Workflow 的阶段协同建模：统一当
 - `01_os/03_mechanisms/stage_collaborative_deliberation/实现/结果对象契约_v1.yml`
 - `01_os/03_mechanisms/stage_collaborative_deliberation/实现/状态转换与不变量契约_v1.yml`
 - `01_os/03_mechanisms/stage_collaborative_deliberation/实现/路由与失败契约_v1.yml`
-- `01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml`
 
 ## 入口程序（调用即可，不必通读源码）
 

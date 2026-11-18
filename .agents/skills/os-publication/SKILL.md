@@ -21,6 +21,7 @@ description: "City-State OS 的发布规则：传输矩阵（本地 git / GitHub
 ## 按动作读取（做到这一步时再读）
 
 - push 被守卫拒绝、或要修改守卫时：`01_os/05_registry/repository_guards_v1.yml`
+- commit、push、开 PR 或 master 集成之前：开发入口细则 §1.1 发布传输矩阵与 §6 分支与发布纪律：`01_os/02_boot/os_entry/开发入口_按动作细则_v1.md`
 
 ## 程序读取（validator / runner 读取；只在修改这些文件或排查校验失败时读）
 

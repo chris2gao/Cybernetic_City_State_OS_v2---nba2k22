@@ -11,7 +11,8 @@ authority_effect: none
 # action happens; program = read by validators / runners, a model reads it only to edit it or to
 # debug a validator failure; optional = startup read that may be absent. .py paths are entry
 # points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
-# fails on a path this manifest names outside every tier. Any load_order in this manifest is
+# fails on any repository file path this manifest names (outside optional_extensions) that is
+# in no tier, or in two. Any load_order in this manifest is
 # unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
 read_tiers:
   startup:
@@ -27,6 +28,18 @@ read_tiers:
   - when: 同步项目资料索引时
     reads:
     - 01_os/06_execution/task_discipline/project_context/README.md
+  - when: 写或读任务包、选择执行者、向 Human 请求批准或确认时：开发入口细则 §7（含 7.1 模型路由 preflight、7.2 Human 确认与大任务预确认）
+    reads:
+    - 01_os/02_boot/os_entry/开发入口_按动作细则_v1.md
+  - when: 固定执行环境、设计或执行测试、写证据、做候选受控验证时：开发入口细则 §1.2 执行环境约定与 §8 测试与证据标准（含 8.1）
+    reads:
+    - 01_os/02_boot/os_entry/开发入口_按动作细则_v1.md
+  - when: 派审核、做独立审核或安排审核时机时：开发入口细则 §9 独立审核与 Human 决策 / 确认（含 9.1–9.3）
+    reads:
+    - 01_os/02_boot/os_entry/开发入口_按动作细则_v1.md
+  - when: 写 completion pointer 或收尾交接时：开发入口细则 §10 completion pointer 最小模板
+    reads:
+    - 01_os/02_boot/os_entry/开发入口_按动作细则_v1.md
   program:
   - 01_os/02_boot/task_discipline/启动清单_v1.yml
   - 01_os/05_registry/task_discipline_v1.yml

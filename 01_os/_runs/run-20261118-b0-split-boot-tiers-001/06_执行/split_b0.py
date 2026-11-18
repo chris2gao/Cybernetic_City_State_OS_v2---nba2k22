@@ -137,6 +137,7 @@ def main() -> int:
 
     for rel, text in texts.items():
         (ROOT / rel).write_text(text.rstrip("\n") + "\n", encoding="utf-8", newline="\n")
+    (ROOT / BASIS).parent.mkdir(parents=True, exist_ok=True)  # review N5: a clean base has no os_entry/
     (ROOT / BASIS).write_text("\n".join(basis).rstrip() + "\n", encoding="utf-8", newline="\n")
     (ROOT / DETAIL).write_text("\n".join(detail).rstrip() + "\n", encoding="utf-8", newline="\n")
     print("split_done fragments=%d stubs=%d" % (len(FRAGMENTS), len(STUBS)))

@@ -1,5 +1,8 @@
 """Behaviour tests for the skill generator and validator (isolated temp repos + the real tree)."""
 from pathlib import Path
+import re
+import shutil
+import subprocess
 import sys
 
 import yaml
@@ -168,6 +171,41 @@ def test_path_in_two_tiers_fails_closed(tmp_path):
     assert errors == [f"SKILL_PATH_MULTI_TIERED:os-m1:{M1_README}"]
 
 
+def test_one_detail_file_may_serve_several_actions(tmp_path):
+    root = mini_repo(tmp_path)
+    (root / "01_os/02_boot/m1/detail.md").write_text("# detail\n", encoding="utf-8")
+    detail = "01_os/02_boot/m1/detail.md"
+    set_m1_boot(root, {"startup": [M1_README], "program": [M1_BOOT],
+                       "on_action": [{"when": "发布前：§1", "reads": [detail]}, {"when": "收尾时：§2", "reads": [detail]}]})
+    files, errors = gs.render_all(root)
+    assert errors == []
+    body = files[".agents/skills/os-m1/SKILL.md"]
+    assert f"发布前：§1：`{detail}`" in body and f"收尾时：§2：`{detail}`" in body
+    set_m1_boot(root, {"startup": [M1_README], "program": [M1_BOOT],
+                       "on_action": [{"when": "发布前", "reads": [detail, detail]}]})
+    assert gs.render_all(root)[1] == [f"SKILL_PATH_MULTI_TIERED:os-m1:{detail}"]
+
+
+def test_root_level_and_formerly_skipped_paths_are_covered(tmp_path):
+    root = mini_repo(tmp_path)
+    (root / "GEMINI.md").write_text("# g\n", encoding="utf-8")
+    set_m1_boot(root, {"startup": [M1_README], "program": [M1_BOOT]}, vendor="GEMINI.md",
+                static_validator={"command": "python 01_os/03_mechanisms/m1/check.py <repo-root>",
+                                  "doc": "01_os/README.md"})
+    _, errors = gs.render_all(root)
+    assert errors == ["SKILL_PATH_UNTIERED:os-m1:GEMINI.md"]  # 01_os/README.md is B0: shown, not untiered
+    set_m1_boot(root, {"startup": [M1_README], "program": [M1_BOOT]}, optional_extensions={"x": "GEMINI.md"})
+    assert gs.render_all(root)[1] == []  # optional_extensions names another unit's files
+
+
+def test_entry_point_or_blank_read_in_a_tier_fails_closed(tmp_path):
+    root = mini_repo(tmp_path)
+    set_m1_boot(root, {"startup": [M1_README], "program": [M1_BOOT, "01_os/03_mechanisms/m1/check.py"]})
+    assert gs.render_all(root)[1][0].startswith(f"SKILL_TIER_ENTRY_POINT:{M1_BOOT}")
+    set_m1_boot(root, {"startup": [M1_README], "program": [M1_BOOT], "on_action": [{"when": "x", "reads": [""]}]})
+    assert gs.render_all(root)[1] == [f"SKILL_TIER_INVALID:{M1_BOOT}:on_action"]
+
+
 def test_missing_or_malformed_tiers_fail_closed(tmp_path):
     root = mini_repo(tmp_path)
     boot = m1_boot({})
@@ -193,24 +231,90 @@ def test_registry_read_list_or_missing_boot_is_a_second_source(tmp_path):
     assert "SKILL_UNIT_WITHOUT_BOOT:citystate-os" in errors
 
 
+OPTION = r"--[a-z][a-z0-9-]*"
+
+
+def usage_head(script: Path, prefix: tuple[str, ...]) -> str:
+    """The usage block of `<script> <prefix...> --help` (it ends at the first blank line)."""
+    out = subprocess.run([sys.executable, "-B", str(script), *prefix, "--help"], capture_output=True,
+                         text=True, encoding="utf-8", cwd=REPO).stdout
+    return out.split(chr(10) * 2, 1)[0]
+
+
+def missing_required_options(script: Path, argv: list[str], prefix: tuple[str, ...] = (),
+                             head: str | None = None, levels: list[str] | None = None) -> set[tuple[str, str]]:
+    """Required options a command template leaves out, at top level and at every named subcommand.
+
+    A subcommand is a positional choice from the usage's `{a,b}` group that the template names, either
+    literally (`catalog`) or as a choice group of its own (`{save,list,resume}` means each of them). It is
+    descended into only when `<sub> --help` prints a different usage, i.e. a real subparser.
+    """
+    head = usage_head(script, prefix) if head is None else head
+    if levels is not None:
+        levels.append(" ".join(prefix))
+    optional = set(re.findall(r"\[(" + OPTION + ")", head))
+    required = {o for o in re.findall(r"(?<![\[\w-])(" + OPTION + ")", head) if o not in optional}
+    missing = {(" ".join(prefix), o) for o in required if o not in argv}
+    group = re.search(r"\{([a-z0-9_,-]+)\}", head)
+    if not group:
+        return missing
+    choices = group.group(1).split(",")
+    named: set[str] = set()
+    for token in argv:
+        if token in choices:
+            named.add(token)
+        elif token.startswith("{") and token.endswith("}"):
+            named |= set(token[1:-1].split(",")) & set(choices)
+    for sub in sorted(named - set(prefix)):
+        sub_head = usage_head(script, prefix + (sub,))
+        if sub_head != head:
+            missing |= missing_required_options(script, argv, prefix + (sub,), sub_head, levels)
+    return missing
+
+
+def template_script(command: str) -> tuple[list[str], str | None]:
+    argv = command.split()
+    script = next((a for a in argv if a.endswith(".py")), None)
+    return argv, script if argv[:1] == ["python"] else None
+
+
 def test_command_templates_carry_every_required_option():
-    """Each templated python command names every option its --help marks as required."""
-    import re
-    import subprocess
+    """Each templated python command names every option its --help marks as required, subcommands included."""
     registry = yaml.safe_load((REPO / gs.REGISTRY).read_text(encoding="utf-8"))
-    checked = 0
+    checked, levels = 0, []
     for unit in registry["units"]:
         for item in unit.get("commands", []) or []:
-            argv = item["command"].split()
-            script = next((a for a in argv if a.endswith(".py")), None)
-            if argv[:1] != ["python"] or not script:
+            argv, script = template_script(item["command"])
+            if not script:
                 continue
-            usage = subprocess.run([sys.executable, "-B", str(REPO / script), "--help"], capture_output=True,
-                                   text=True, encoding="utf-8", cwd=REPO).stdout
-            head = usage.split(chr(10) * 2, 1)[0]  # the usage block ends at the first blank line
-            optional = set(re.findall(r"\[(--[a-z][a-z0-9-]*)", head))
-            required = {o for o in re.findall(r"(?<![\[\w-])(--[a-z][a-z0-9-]*)", head) if o not in optional}
-            missing = sorted(o for o in required if o not in argv)
-            assert not missing, (unit["name"], item["command"], missing)
+            missing = missing_required_options(REPO / script, argv, levels=levels)
+            assert not missing, (unit["name"], item["command"], sorted(missing))
             checked += 1
     assert checked >= 15
+    assert sum(1 for level in levels if level) >= 3  # real subparsers (e.g. `static`) were descended into
+
+
+FAKE_CLI = """import argparse
+p = argparse.ArgumentParser()
+p.add_argument("--root", required=True)
+sub = p.add_subparsers(dest="cmd", required=True)
+c = sub.add_parser("catalog")
+c.add_argument("--output", required=True)
+c.add_argument("--limit")
+l = sub.add_parser("list")
+l.add_argument("--state", required=True)
+p.parse_args()
+"""
+
+
+def test_subcommand_required_options_are_checked(tmp_path):
+    script = tmp_path / "fake_cli.py"
+    script.write_text(FAKE_CLI, encoding="utf-8")
+
+    def missing(command: str) -> set[tuple[str, str]]:
+        return missing_required_options(script, template_script(command)[0])
+
+    assert missing("python fake_cli.py catalog --output x") == {("", "--root")}
+    assert missing("python fake_cli.py --root . catalog") == {("catalog", "--output")}
+    assert missing("python fake_cli.py --root . catalog --output <o>") == set()
+    assert missing("python fake_cli.py --root . --output <o> {catalog,list}") == {("list", "--state")}

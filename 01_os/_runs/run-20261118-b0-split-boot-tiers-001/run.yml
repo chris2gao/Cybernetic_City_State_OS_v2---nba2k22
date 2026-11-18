@@ -12,8 +12,9 @@ task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 03_方案设计/方案对比_v1.md
   - 01_任务输入/Human决策记录_20261118.md
-lifecycle: candidate_ready_for_independent_review
-candidate: 4655a3342a410cfdf87c48a46563f5feb82e1eb6
+lifecycle: candidate_pending_validation
+candidate: pending_fix_round_1
+reviewed_candidate_round_0: 4655a3342a410cfdf87c48a46563f5feb82e1eb6
 increments:
   - commit: ba39c4fa
     done: 方案对比、任务包草案（批准前，无业务写入）
@@ -45,8 +46,20 @@ plan_vs_actual:
   - 方案列为移出的 DISCIPLINE “What makes the accumulated material worth anything” 保留在原处：其中含“把否定结果作为一等记录”这条规则。
   - 细则里原文的“本文件”现在指细则文件；细则头部声明它与开发入口同属一个规范、效力相同，语义不变。交审核确认。
   - AGENTS 去重是语义判断，不是原文移动：verify_b0_split.py 只证明其余各节逐字不变，五个去重节与 DISCIPLINE §0–§0.4、§8、开发入口 §5、§11 的等价性交独立审核。AGENTS 独有的指针（reviewed_prototypes.py、execution_mode_gateway.py、host-owned sink、大任务契约与 closure_preflight）保留。
+review_round_0:
+  report: 07_测试执行/独立审核_4655a334.md
+  verdict: FIX_REQUIRED
+  reviewer: 独立 Claude Code 会话（Opus 5.5，同族，已披露）
+  blocking: [B1 与新 master 冲突, B2 方案 B 的风险缓解未实施]
+fix_round_1:
+  - B1：见 findings 第一条。
+  - B2：按方案 B 的缓解措施，在 boot 的 on_action 中按节点名细则：publication（§1.1、§6）；task_discipline（§7 含 7.1/7.2、§1.2 与 §8、§9、§10）；context_management（§3、§4）；model_routing（§7.1）。为此生成器允许同一路径出现在同一层的多条 on_action 中，跨层或同一列表内重复仍报 SKILL_PATH_MULTI_TIERED。
+  - N1：boot_paths 不再跳过 commands / static_validator / pre_static_guard（其中命令串含空格，本来就不会被当成路径），并把仓库根文件（如 GEMINI.md）也算作被点名路径；只跳过 read_tiers 与 optional_extensions（后者点名的是 task_continuity boot 分层的 PRMS 文件）。14 份 boot 的注释改为与实际行为一致。
+  - N2：on_action 的 reads 每项须为非空字符串；任何层里出现 .py 报 SKILL_TIER_ENTRY_POINT。
+  - N5：split_b0.py 自己建 os_entry/ 目录；在基线 git archive 干净导出上重放，5 个文件逐字节一致。
+  - N3、N4、N6、N7、N8：不改。N3 中 W2-8 小节在启动层只剩标题与指针，记为后续候选；N7 提交作者显示 unknown 由 Human 决定。
 findings:
-  - PR chris2gao/Cybernetic_City_State_OS_v2---core#40（未合并）给 skills_v1.yml 的 os-stage-deliberation on_action 加了 `实现/加载与receipt契约_v1.yml`。本任务把读取键整体移出 skills_v1.yml，二者会冲突；先合并的一方之后，另一方须把该路径放进 stage_collaborative_deliberation boot 的 read_tiers（从 program 移到对应 on_action）。
+  - 已处置（审核 B1）：PR #40 由 PR #41 取代并已合并（master 0b935671）。修正轮 1 把 origin/master merge 进任务分支（不 rebase），skills_v1.yml、06_execution/skills/README.md、test_skills.py 三处冲突按“读取键只在 boot”解决，`实现/加载与receipt契约_v1.yml` 从 stage_collaborative_deliberation boot 的 program 移到“正式七阶段 run 的阶段计划或完成检查点时”的 on_action，与 PR #41 的生成结果一致。
   - PRMS `catalog.py` / `context.py` 的 B0_PATHS 仍把开发入口当强制读取、不含细则；这是 PRMS 会话计划的口径，不在本任务范围，记为后续候选。
   - 非 B0 启动必读调层（TASK_CONTINUITY.md、task_orchestration/README.md、repository_publisher_authority_v1.yml 等）未做，按 Human 决定另立后续任务。
 remaining:
