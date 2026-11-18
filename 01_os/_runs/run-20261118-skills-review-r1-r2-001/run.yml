@@ -12,7 +12,7 @@ task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md
   - 01_os/_runs/run-20261118-role-skills-integration-001/run.yml (review_dispositions R1_subcommand_options, R2_receipt_contract_on_action)
-lifecycle: candidate_ready_for_independent_review
+lifecycle: integrated_and_verified_on_demand
 start_record:
   hooks_path: >-
     worktree config core.hooksPath was the main checkout's absolute .githooks path; set
@@ -52,7 +52,10 @@ verification_attempts:
     result: all 5 required checks success (skills_static, skills_generate_check, pytest_skills 8 passed, stage_deliberation_guard, stage_deliberation_static); result.json status success; inspect exit 0
     note: the run command's own exit code was piped through tail and not captured separately; inspect replays the attempt and exited 0
     raw_attempt: executor scratchpad outside the repository; executor evidence, not independently reproduced
-  changed_path_ledger: 8 paths against base 232345a7, all inside allowed_changed_paths
+changed_path_ledger: 8 paths against base 232345a7, all inside allowed_changed_paths
+yaml_correction: >-
+  this key was indented under verification_attempts in commit 996b6dfa, which made run.yml invalid YAML;
+  found while writing the integration record and dedented here
 self_report:
   - kind: AGENT_SELF_REPORT
     deviation: >-
@@ -60,12 +63,22 @@ self_report:
       the packet before the first canonical write. Business impact none - packet, candidate commit and
       verification all bind the same final content; preflight therefore reported worktree_dirty:8 at
       packet time.
-review_schedule:
-  review_mode: immediate_required
-  series_id: null
-  review_trigger: before master integration
-  must_review_before: master integration (Human confirmation required)
-  candidate_head: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
-  verification_receipt: verification_attempts attempt-001
-  downstream_consumption: candidate_only
+independent_review:
+  - reviewed_head: 996b6dfacf608cfa42b8f9227ee8968310aac334
+    candidate: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
+    reviewer: fresh isolated Claude Code session pr40-reviewer (Claude Opus 5.5, same model family as executor - disclosed)
+    report: 07_测试执行/独立审核_3039712c.md
+    mwu_artifact: 07_测试执行/独立审核_3039712c.yml (validate_minimum_work_unit_output --require-mwu artifact exit 0)
+    verdict: PASS
+    reproduced: managed_verify run exit 0 and inspect exit 0 on 3039712c (5/5, pytest_skills 8 passed, same plan_sha256); generate --check, changed_path_ledger, git diff --check exit 0; 6 R1 mutants, the negative test kills 4
+    nonblocking: [N1 option match ignores position and level, N2 mutant M3 survives the levels assertion, N3 usage_head ignores --help exit code, N4 only the first lowercase choice group, N5 packet-after-edit order is executor self-report only]
+review_dispositions:
+  N1_N4: follow-up candidates for the command-template test; no template is affected on the current tree
+  N5: accepted by reviewer as LOCAL_FIX, no action
+integration:
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#40
+  master_before: 232345a737f06f348ba8e4fb1ec096537d647a70
+  method: gh pr merge --merge --match-head-commit <this evidence commit>; no squash, rebase or force
+  confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261118.md
+  readback: resulting master head is read back after the merge and reported outside this commit (a record cannot contain the merge commit that contains it)
 closure_record: 08_结论/completion_pointer.yml
