@@ -1,0 +1,71 @@
+task_packet:
+  task_id: OS-CORE-SKILLS-REVIEW-R1-R2-20261118-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T1_standard
+  exact_base_sha: 232345a737f06f348ba8e4fb1ec096537d647a70
+  branch: task/core-skills-review-r1-r2-20261118
+  objective: >-
+    处理 OS-CORE-ROLE-SKILLS-INTEGRATION-20261118-001 复审留下的两条不阻断意见。
+    R1：命令模板必填参数测试在模板点名位置子命令时，再核对 `<子命令> --help` 一级的必填参数，
+    不再只看脚本顶层 usage。R2：`os-stage-deliberation` 的“正式七阶段 run 的阶段计划或完成检查点时”
+    按动作读取加入 `实现/加载与receipt契约_v1.yml`（stage_receipt 的 20 个必填字段在这里），
+    使写阶段 receipt 的模型不必等 validator 失败才读到字段定义。
+  source_evidence:
+    - 01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md
+    - 01_os/_runs/run-20261118-role-skills-integration-001/run.yml
+    - 232345a737f06f348ba8e4fb1ec096537d647a70
+  allowed_changed_paths:
+    - 01_os/05_registry/skills_v1.yml
+    - 01_os/06_execution/skills/**
+    - .agents/skills/**
+    - .claude/skills/**
+    - 01_os/_runs/run-20261118-skills-review-r1-r2-001/**
+  verification_plan: 01_os/_runs/run-20261118-skills-review-r1-r2-001/07_测试执行/verification_plan.json
+  required_tests:
+    - skills_static
+    - skills_generate_check
+    - pytest_skills
+    - stage_deliberation_guard
+    - stage_deliberation_static
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - rewrite_historical_run_evidence
+    - hand_edit_generated_skill_files
+  required_completion_pointer: 01_os/_runs/run-20261118-skills-review-r1-r2-001/08_结论/completion_pointer.yml
+  big_task: false
+  development_loop:
+    mode: one_step_sufficient
+    progress_evidence: managed_verify attempt on the candidate commit, recorded in run.yml
+    convergence_condition: R1 与 R2 落地；generate --check、validate_skills、pytest skills 与 stage deliberation 两个静态检查退出 0
+    series_id: null
+    review_mode: immediate_required
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 232345a737f06f348ba8e4fb1ec096537d647a70
+  # master 集成不在本任务执行范围内：本任务止于任务分支发布、PR 与 completion pointer；
+  # 集成由 Human 在该动作边界另行确认。
+  big_task_confirmation_closure:
+    enabled: false
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Anthropic
+    surface: claude_code_desktop
+    model: Claude Opus 5.5
+    reasoning_effort: surface_current
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: 上一任务的会话把这两条后续处理交给本会话施工（Claude Code 桌面 worktree 会话）
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: fresh isolated session selected at review time
+    different_model_family: false
+    different_measurement_tool: false

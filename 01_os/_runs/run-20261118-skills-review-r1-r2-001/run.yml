@@ -1,0 +1,47 @@
+task_id: OS-CORE-SKILLS-REVIEW-R1-R2-20261118-001
+run_id: run-20261118-skills-review-r1-r2-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T1_standard
+base_commit: 232345a737f06f348ba8e4fb1ec096537d647a70
+branch: task/core-skills-review-r1-r2-20261118
+ownership: core_system
+objective: >-
+  处理上一任务复审（01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md）
+  的不阻断意见 R1、R2。
+task_packet: 01_任务输入/任务包_v1.yml
+inputs:
+  - 01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md
+  - 01_os/_runs/run-20261118-role-skills-integration-001/run.yml (review_dispositions R1_subcommand_options, R2_receipt_contract_on_action)
+lifecycle: candidate_pending_validation
+start_record:
+  hooks_path: >-
+    worktree config core.hooksPath was the main checkout's absolute .githooks path; set
+    `git config --worktree core.hooksPath .githooks` before any commit, per the R3 disposition
+    in the previous run
+changes:
+  R1:
+    file: 01_os/06_execution/skills/test_skills.py
+    before: test_command_templates_carry_every_required_option parsed only `<script> --help`
+    after: >-
+      missing_required_options() checks the top-level usage, then for every positional choice the
+      template names (literally, e.g. `static`, or as a choice group, e.g. `{save,list,resume}`) runs
+      `<script> <sub> --help` and, when that prints a different usage (a real subparser), checks the
+      required options there too. The real-tree test asserts at least 3 subcommand levels were descended.
+    negative_test: >-
+      test_subcommand_required_options_are_checked builds a two-subparser script and asserts a missing
+      top-level option, a missing `catalog --output`, a complete command, and a `{catalog,list}` group
+      that leaves out `list --state`.
+    finding_on_current_tree: >-
+      prms/cli.py and task_cli.py, named in the review as subcommand scripts, take the subcommand as a
+      positional choice on one parser, so their --output was already covered by the top-level check;
+      the real subparsers among the templates are validate_mechanism_activation static,
+      validate_communication_system static and verify_model_routing static. No template misses an option.
+  R2:
+    file: 01_os/05_registry/skills_v1.yml
+    change: >-
+      os-stage-deliberation on_action "正式七阶段 run 的阶段计划或完成检查点时" now also reads
+      01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml; the generator
+      moved it from the program tier to that on-action line in both SKILL.md mirrors. Startup reading
+      for every role is unchanged (on-action reads are not startup).
+  readme: 01_os/06_execution/skills/README.md test_skills.py row describes the subcommand-level check
+  generated: .agents/skills/os-stage-deliberation/SKILL.md, .claude/skills/os-stage-deliberation/SKILL.md (generate_skills.py, not hand-edited)
