@@ -12,8 +12,8 @@ task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 03_方案设计/方案对比_v1.md
   - 01_任务输入/Human决策记录_20261118.md
-lifecycle: candidate_pending_validation
-candidate: pending_fix_round_1
+lifecycle: candidate_ready_for_independent_review
+candidate: b9a831242e7b77eb6a787cfb06933a7cbfddc290
 reviewed_candidate_round_0: 4655a3342a410cfdf87c48a46563f5feb82e1eb6
 increments:
   - commit: ba39c4fa
@@ -33,7 +33,11 @@ measured:
     role-content-developer: {files: 15, bytes: 125724, before_catalog_kb: 177}
     role-content-user: {files: 9, bytes: 99954, before_catalog_kb: 152}
   generated_skill_diff: 除来源说明行外，13 个机制 skill 的读取内容与基线逐项相同；新 boot 出现在程序读取；citystate-os 增加按动作读取（细则、依据）与程序读取（CORE_MANIFEST.yml）
-verification:
+verification_fix_round_1:
+  managed_verify: {candidate: b9a831242e7b77eb6a787cfb06933a7cbfddc290, plan_sha256: 42ae02e6593c21fe9698261191c298056b109ff71ffa27767bcefbb73cf22e65, run_exit: 0, inspect_exit: 0, checks: 20, success: 20, receipt: 07_测试执行/managed_verify_b9a83124.json, executor_evidence_not_independent: true}
+  first_attempt_on_f408b005: "exit 3 candidate_outside_packet_allowlist：任务包 exact_base_sha 仍是 232345a7，merge 进来的 PR #41 run 记录被算作本任务改动；b9a83124 把 exact_base_sha 改为 merge-base 0b935671（原值留作 original_base_sha），相对 master 63 个路径全部在 allowed_changed_paths 内"
+  ad_hoc: [pytest skills 16 passed, verify_b0_split.py exit 0, split_b0.py 在基线 git archive 导出上重放 5 文件逐字节一致, PRMS catalog CONSISTENT_WITHIN_SCAN_SCOPE unregistered 0/0, 各角色启动读取量与修正前相同]
+verification_round_0:
   managed_verify: {candidate: 4655a3342a410cfdf87c48a46563f5feb82e1eb6, plan: 07_测试执行/verification_plan.json, plan_sha256: 42ae02e6593c21fe9698261191c298056b109ff71ffa27767bcefbb73cf22e65, run_exit: 0, inspect_exit: 0, checks: 20, success: 20, receipt: 07_测试执行/managed_verify_4655a334.json, attempt_dir: outside repo (executor scratchpad), executor_evidence_not_independent: true}
   ad_hoc_checks_exit_0:
     - 8 个机制 static 校验器在 boot 加 read_tiers 后（4655a334 前的工作树）
