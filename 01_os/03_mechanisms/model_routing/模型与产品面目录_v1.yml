@@ -1,6 +1,6 @@
 schema_version: citystate.model_routing.catalog.v1
 mechanism_version: 1
-catalog_version: 3
+catalog_version: 4
 status: active
 entitlement_is_account_availability: false
 source_index_ref: 01_os/03_mechanisms/model_routing/来源索引_v1.yml
@@ -148,6 +148,34 @@ entries:
     verified_at: '2026-08-11'
     invalidation_conditions: [Anthropic plan or model update, Human task-time model observation differs]
     confidence: high
+
+  - provider: Anthropic
+    surface_id: claude_code_desktop
+    model_label: Claude Opus 5.5
+    registered: true
+    capabilities:
+      context: unknown
+      reasoning_controls: account_and_surface_current_selection
+      agent_and_tools: supported
+      coding: supported
+      research: supported
+      multimodal_vision: unknown
+      speed_latency: unknown
+    parameter_profiles:
+      - profile_id: claude_code_opus55_task_time
+        reasoning_levels: [surface_current]
+        source_class: provider_documentation_plus_Human_task_time_observation
+        surface_exposure_evidence: [ANTH_CODE_MODELS, ANTH_CODE_USAGE, HUMAN_CLAUDE_CODE_OPUS55_20261118]
+    source_refs: [ANTH_CODE_MODELS, ANTH_CODE_USAGE, HUMAN_CLAUDE_CODE_OPUS55_20261118]
+    evidence_binding:
+      surface_and_product_identity: provider_first_party_documentation
+      exact_model_label: Human_task_time_observation
+      exact_model_label_provider_documentation_claimed: false
+    verified_at: '2026-11-18'
+    invalidation_conditions:
+      - Anthropic Claude Code model or product update
+      - Human task-time model observation differs
+    confidence: medium
 
   - provider: Anthropic
     surface_id: claude_desktop_cowork

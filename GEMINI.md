@@ -22,11 +22,25 @@ bootstrap in this order:
 Load an existing durable task packet when present. If none exists and the work
 will cause material repository mutation, establish the task packet and run
 evidence before the first business/canonical write. Do not ask the Human for a
-fixed initialization bundle. Never default-preload `01_os/_runs/**`.
+fixed initialization bundle.
+
+**Role initialization.** When the Human names your role — 任务规划, 任务开发 or 审核
+in core; 特色内容开发 or 特色内容教学或使用 in a domain — invoke the matching role
+skill in `.agents/skills/`: `role-planner`, `role-developer`, `role-reviewer`,
+`role-content-developer` or `role-content-user`. It loads every mechanism skill
+that role needs and ends with a role-initialization receipt. `citystate-os` is the
+map of the whole OS. The chat window is a temporary workbench.
+
+Accumulating surfaces — `01_os/_runs/**`, `01_os/_communication/**`,
+`01_os/_dev/**`, `08_Domain_Applications/_runs/**` — are history: do not enumerate
+or bulk-read them. Any exact path that a loaded skill, a boot manifest or the
+current task names is read directly; there is no separate permission or
+forbidden zone.
 
 `01_os/**` is the permanent active OS namespace. The retained global surface is this file,
 `AGENTS.md`, `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `README.md`,
-`CORE_MANIFEST.yml` and `.githooks/`. Physical legacy retirement is complete;
+`CORE_MANIFEST.yml`, `.githooks/` and the generated skill adapters in
+`.agents/skills/` and `.claude/skills/`. Physical legacy retirement is complete;
 retired paths are not startup, communication, state or navigation sources and
 must not be recreated. Shared communication handoff behavior is defined only in
 `AGENTS.md`.
@@ -64,6 +78,8 @@ Read out of the shipped `language_server.exe` on 2026-07-25, not assumed:
   for its directory scope. Only `.agents/rules/*.md` supports `trigger`, where
   `always_on` loads unconditionally and `model_decision` loads on demand.
 
-This project deliberately uses only the two root files. `.agents/rules/` is available
-if a path-scoped or on-demand rule is ever needed; adding it should be a decision, not
-a default.
+This project uses the two root files plus `.agents/skills/`, by Human decision on
+2026-11-18: every Core OS mechanism and every role is a skill there, generated from
+the registry by `01_os/06_execution/skills/generate_skills.py` and checked by
+`validate_skills.py`. Do not edit a generated `SKILL.md` by hand. `.agents/rules/` is
+still unused; adding it should be a decision, not a default.

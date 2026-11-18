@@ -34,22 +34,30 @@ task-triggered steps loads by default.
    business/canonical write, following the OS entry.
 8. Then read only the canonical files and registry entries the task actually
    triggers.
-9. Never default-preload `01_os/_runs/**`; read only a run explicitly required by
-   the current task or its verification. The same applies to `01_os/_communication/**`
-   and `01_os/_dev/**`. When you enumerate or search the repository,
+9. **Load by role.** When the Human names your role — 任务规划, 任务开发 or 审核
+   in core; 特色内容开发 or 特色内容教学或使用 in a domain — invoke the matching
+   role skill in `.agents/skills/` (`role-planner`, `role-developer`,
+   `role-reviewer`, `role-content-developer`, `role-content-user`). It loads every
+   mechanism skill that role needs and ends with a role-initialization receipt;
+   `citystate-os` is the map of the whole OS. Other mechanism skills load when
+   their trigger fires. The chat window is a temporary workbench: whether one
+   window carries one task or a series is the Human's decision, and continuity
+   lives in the task packet, run record, brief vault and PRMS, never in the chat.
+10. **History is visible, not forbidden.** The accumulating surfaces
+   `01_os/_runs/**`, `01_os/_communication/**`, `01_os/_dev/**` and
+   `08_Domain_Applications/_runs/**` are not enumerated or bulk-read by default.
+   Any exact path that a loaded skill, a boot manifest or the current task names
+   is read directly; no separate permission applies. When you enumerate or search
+   the repository,
    `01_os/06_execution/boot/context_management/working_set/visible_set.py --list`
    gives the default working set and always reports what it hid;
    `--include-hidden` widens when history is genuinely the subject. A filtered
    listing is never exhaustive and must not be presented as one.
-   Measured on the current tree, it excludes 28.0% of listing bytes, and all of
-   that is the communication surface under its own navigation/archive contract:
-   a group is hidden only once positively classified as finished, and no run
-   currently is. The three accumulating surfaces are about 90% of listing bytes,
-   but that is their share, not a saving anyone has yet realised.
 
 `01_os/**` is the permanent active OS namespace. The retained global surface outside it is this file,
 `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`,
-`CORE_MANIFEST.yml` and `.githooks/`. Physical retirement of the former legacy
+`CORE_MANIFEST.yml`, `.githooks/` and the generated skill adapters in
+`.agents/skills/` and `.claude/skills/`. Physical retirement of the former legacy
 surface is complete; no legacy path outside this retained surface is a startup,
 communication, state, task, role or navigation source of truth. Do not recreate
 one or reintroduce a dependency on one — including in a file you are only passing

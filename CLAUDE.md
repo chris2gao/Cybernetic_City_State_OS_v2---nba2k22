@@ -21,12 +21,27 @@ bootstrap in this order:
 Load an existing durable task packet when present. If none exists and the work
 will cause material repository mutation, establish the task packet and run
 evidence before the first business/canonical write. Do not ask the Human for a
-fixed initialization bundle. Never default-preload `01_os/_runs/**`.
+fixed initialization bundle.
+
+**Role initialization.** When the Human names your role — 任务规划, 任务开发 or 审核
+in core; 特色内容开发 or 特色内容教学或使用 in a domain — invoke the matching role
+skill in `.claude/skills/`: `role-planner`, `role-developer`, `role-reviewer`,
+`role-content-developer` or `role-content-user`. It loads every mechanism skill
+that role needs and ends with a role-initialization receipt. `citystate-os` is the
+map of the whole OS. The chat window is a temporary workbench: decisions, results
+and evidence land in the repository or the brief vault as they form.
+
+Accumulating surfaces — `01_os/_runs/**`, `01_os/_communication/**`,
+`01_os/_dev/**`, `08_Domain_Applications/_runs/**` — are history: do not enumerate
+or bulk-read them. Any exact path that a loaded skill, a boot manifest or the
+current task names is read directly; there is no separate permission or
+forbidden zone.
 
 `01_os/**` is the permanent active OS namespace. Material elsewhere in this repository is
 retained global infrastructure — this file, `AGENTS.md`,
 `AGENT_WORKING_DISCIPLINE.md`, `GEMINI.md`, `README.md`, `CORE_MANIFEST.yml`,
-`.githooks/` — and nothing else is a current startup surface. Physical legacy
+`.githooks/`, and the generated skill adapters in `.agents/skills/` and
+`.claude/skills/` — and nothing else is a current startup surface. Physical legacy
 retirement is complete.
 
 Task-specific root-cause analyses, handovers and unverified hypotheses stay in
