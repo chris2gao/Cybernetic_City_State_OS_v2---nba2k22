@@ -1,0 +1,31 @@
+schema_version: citystate.read_tiers.boot_manifest.v1
+mechanism_id: os_entry
+mechanism_version: 1
+# Added 2026-11-18 (OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001) so that every skill unit has
+# exactly one boot manifest that says what to read. It loads, it does not authorize.
+failure_policy: fail_closed_on_missing_or_partial
+background_processes_started: false
+authority_effect: none
+# Read tiers (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001). The single
+# place that says what a model reads: startup at role initialization; on_action when the stated
+# action happens; program = read by validators / runners, a model reads it only to edit it or to
+# debug a validator failure; optional = startup read that may be absent. .py paths are entry
+# points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
+# fails on a path this manifest names outside every tier. Any load_order in this manifest is
+# unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
+read_tiers:
+  startup:
+  - AGENT_WORKING_DISCIPLINE.md
+  - AGENTS.md
+  - 01_os/README.md
+  - 01_os/开发入口与单窗口任务规范_v1.md
+  on_action:
+  - when: 做到开发入口某节标题下写明的动作时（发布、建任务包、测试与证据、审核、completion pointer 等），读该节
+    reads:
+    - 01_os/02_boot/os_entry/开发入口_按动作细则_v1.md
+  - when: 要理解、质疑或修改某条 B0 规则时，按规则旁的（依据：…§编号）读对应条目
+    reads:
+    - 01_os/02_boot/os_entry/入口依据与事故记录_v1.md
+  program:
+  - 01_os/02_boot/os_entry/启动清单_v1.yml
+  - CORE_MANIFEST.yml

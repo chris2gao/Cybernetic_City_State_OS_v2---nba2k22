@@ -4,8 +4,10 @@
 Each unit and role becomes <root>/<name>/SKILL.md under every output root
 (.agents/skills for Codex and Antigravity, .claude/skills for Claude Code). The
 files are thin adapters: when to load, which exact paths to read, which commands
-to run. Mechanism text is never copied. Run with --check to compare without
-writing (that is what validate_skills.py does).
+to run. Mechanism text is never copied. What to read comes only from each unit's
+boot manifest (`read_tiers`); skills_v1.yml holds skill metadata and the role
+matrix. Run with --check to compare without writing (that is what
+validate_skills.py does).
 """
 from __future__ import annotations
 
@@ -22,8 +24,12 @@ REGISTRY = "01_os/05_registry/skills_v1.yml"
 INVENTORY = "01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml"
 NAME_RE = re.compile(r"^[a-z0-9][a-z0-9-]{1,62}$")
 DESCRIPTION_LIMIT = 1024
-# Boot keys whose values are not part of the always-loaded read list.
-SKIPPED_BOOT_KEYS = {"optional_extensions", "commands", "static_validator", "pre_static_guard"}
+# Boot keys whose values are not part of the named read set (read_tiers is the tiering itself).
+SKIPPED_BOOT_KEYS = {"optional_extensions", "commands", "static_validator", "pre_static_guard", "read_tiers"}
+TIER_KEYS = {"startup", "on_action", "program", "optional"}
+# A second source of "what to read" in the registry is what this design removes.
+REGISTRY_READ_KEYS = {"reads", "startup", "on_action", "optional_reads", "program"}
+ENTRY_UNIT = "citystate-os"
 GENERATED_NOTE = (
     "> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml`{boot}。修改来源后运行 "
     "`python -B 01_os/06_execution/skills/generate_skills.py`。"
@@ -72,47 +78,59 @@ def boot_paths(root: Path, boot_rel: str) -> list[str]:
     return found
 
 
-B0_PATHS = ("AGENT_WORKING_DISCIPLINE.md", "AGENTS.md", "01_os/README.md",
-            "01_os/开发入口与单窗口任务规范_v1.md", "CORE_MANIFEST.yml")
+def read_tiers(root: Path, boot_rel: str) -> dict[str, Any]:
+    """The boot manifest's read_tiers, shape-checked: startup / optional / program are path lists,
+    on_action is a list of {when, reads}."""
+    boot = load_yaml(root, boot_rel)
+    value = boot.get("read_tiers") if isinstance(boot, dict) else None
+    if not isinstance(value, dict) or not value:
+        raise SkillError(f"SKILL_BOOT_TIERS_MISSING:{boot_rel}")
+    if set(value) - TIER_KEYS:
+        raise SkillError(f"SKILL_TIER_KEY_UNKNOWN:{boot_rel}:{sorted(set(value) - TIER_KEYS)}")
+    for key in ("startup", "optional", "program"):
+        items = value.get(key, []) or []
+        if not isinstance(items, list) or not all(isinstance(p, str) and p for p in items):
+            raise SkillError(f"SKILL_TIER_INVALID:{boot_rel}:{key}")
+    actions = value.get("on_action", []) or []
+    if not isinstance(actions, list) or not all(
+            isinstance(a, dict) and isinstance(a.get("when"), str) and a["when"].strip()
+            and isinstance(a.get("reads", []) or [], list) for a in actions):
+        raise SkillError(f"SKILL_TIER_INVALID:{boot_rel}:on_action")
+    return value
 
 
-def source_paths(root: Path, unit: dict[str, Any]) -> list[str]:
-    paths: list[str] = []
-    if unit.get("boot"):
-        paths.extend(boot_paths(root, unit["boot"]))
-    for rel in unit.get("reads", []) or []:
-        if rel not in paths:
-            paths.append(rel)
-    return paths
+def entry_paths(root: Path, registry: dict[str, Any]) -> set[str]:
+    """B0: the startup tier of the entry unit's boot, already read by every role."""
+    unit = next((u for u in registry.get("units", []) if u.get("name") == ENTRY_UNIT), None)
+    if not unit or not unit.get("boot"):
+        return set()
+    return set(read_tiers(root, unit["boot"]).get("startup", []) or [])
 
 
-def is_program_path(rel: str) -> bool:
-    name = rel.rsplit("/", 1)[-1]
-    return (rel.startswith("01_os/05_registry/") or (rel.startswith("01_os/02_boot/") and name.startswith("启动清单"))
-            or "最小运行schema" in name or name.endswith(".json") or "/fixtures/" in rel
-            or ("/实现/" in rel and not name.endswith(".md")))
+def tiers(root: Path, unit: dict[str, Any], b0_set: set[str] | None = None) -> dict[str, Any]:
+    """A unit's reads from its boot: startup / optional / on_action / program, plus the boot-named
+    paths that are B0 (read by the entry unit) and the .py entry points."""
+    boot_rel = unit["boot"]
+    value = read_tiers(root, boot_rel)
+    named = boot_paths(root, boot_rel)
+    b0_set = set() if b0_set is None or unit["name"] == ENTRY_UNIT else b0_set
+    startup = list(value.get("startup", []) or [])
+    optional = list(value.get("optional", []) or [])
+    actions = [(str(a["when"]).strip(), list(a.get("reads", []) or [])) for a in value.get("on_action", []) or []]
+    program = list(value.get("program", []) or [])
+    listed = startup + optional + [p for _, reads in actions for p in reads] + program
+    declared = set(listed)
+    entry = [p for p in named if p.endswith(".py")]
+    b0 = [p for p in named if p in b0_set and p not in declared]
+    untiered = [p for p in named if not p.endswith(".py") and p not in declared and p not in b0]
+    duplicated = sorted({p for p in listed if listed.count(p) > 1})
+    return {"startup": startup, "optional": optional, "actions": actions, "program": program, "b0": b0,
+            "entry": entry, "untiered": untiered, "duplicated": duplicated}
 
 
-def tiers(root: Path, unit: dict[str, Any]) -> dict[str, Any]:
-    """Split a unit's reads into startup / on_action / program / B0 / entry points."""
-    paths = source_paths(root, unit)
-    if unit["name"] == "citystate-os":
-        startup = [p for p in paths if not p.endswith(".py")]
-        actions: list[tuple[str, list[str]]] = []
-    else:
-        startup = list(unit.get("startup", []) or [])
-        actions = [(str(a["when"]), list(a.get("reads", []) or [])) for a in unit.get("on_action", []) or []]
-    declared = set(startup) | {p for _, reads in actions for p in reads}
-    entry = [p for p in paths if p.endswith(".py")]
-    b0 = [p for p in paths if p in B0_PATHS and p not in declared]
-    program = [p for p in paths if p not in declared and p not in b0 and not p.endswith(".py") and is_program_path(p)]
-    untiered = [p for p in paths if p not in declared and p not in b0 and p not in program and not p.endswith(".py")]
-    return {"startup": startup, "actions": actions, "program": program, "b0": b0, "entry": entry, "untiered": untiered}
-
-
-def read_lists(root: Path, unit: dict[str, Any]) -> tuple[list[str], list[str]]:
-    """Every readable path a unit names (all tiers) and its entry points."""
-    tier = tiers(root, unit)
+def read_lists(root: Path, unit: dict[str, Any], b0_set: set[str] | None = None) -> tuple[list[str], list[str]]:
+    """Every path a unit requires to exist (all tiers except optional) and its entry points."""
+    tier = tiers(root, unit, b0_set)
     must: list[str] = []
     for rel in tier["startup"] + [p for _, reads in tier["actions"] for p in reads] + tier["program"] + tier["b0"]:
         if rel not in must:
@@ -156,11 +174,11 @@ def init_commands(units: dict[str, dict[str, Any]], names: list[str]) -> list[st
 
 
 def render_unit(root: Path, unit: dict[str, Any], registry: dict[str, Any], levels: dict[str, str]) -> str:
-    tier = tiers(root, unit)
+    tier = tiers(root, unit, entry_paths(root, registry))
     entry = tier["entry"]
     level = levels.get(str(unit.get("mechanism_id", "")), "")
     title = unit["title"] + (f"（{level}）" if level else "")
-    boot_note = f" + `{unit['boot']}`" if unit.get("boot") else ""
+    boot_note = f" + `{unit['boot']}`（读取分层 `read_tiers`）"
     lines = [frontmatter(unit["name"], unit["description"]), f"# {title}", "", GENERATED_NOTE.format(boot=boot_note), ""]
     lines += ["## 何时加载", "", str(unit.get("when", "")).strip(), ""]
     roles_req = [r["title"] for r in registry["roles"] if unit["name"] in r.get("required", [])]
@@ -169,7 +187,7 @@ def render_unit(root: Path, unit: dict[str, Any], registry: dict[str, Any], leve
     if tier["startup"]:
         size = sum((root / p).stat().st_size for p in tier["startup"]) // 1024
         lines += [f"## 启动必读（角色初始化时读完，约 {size} KB）", ""] + [f"- `{p}`" for p in tier["startup"]] + [""]
-    optional = unit.get("optional_reads", []) or []
+    optional = tier["optional"]
     if optional:
         lines += ["## 有则必读（初始化时读；不存在时在回执里写明缺失，不算失败）", ""] + [f"- `{p}`" for p in optional] + [""]
     if tier["actions"]:
@@ -274,18 +292,33 @@ def check_registry(root: Path, registry: dict[str, Any]) -> list[str]:
     for item in units + roles:
         if len(one_line(item.get("description", ""))) > DESCRIPTION_LIMIT or not item.get("description"):
             errors.append(f"SKILL_DESCRIPTION_INVALID:{item.get('name')}")
+    try:
+        b0_set = entry_paths(root, registry)
+    except SkillError as exc:
+        errors.append(str(exc))
+        b0_set = set()
+    if ENTRY_UNIT not in unit_names:
+        errors.append(f"SKILL_ENTRY_UNIT_MISSING:{ENTRY_UNIT}")
     for unit in units:
-        if unit.get("boot") and not (root / unit["boot"]).is_file():
+        second_source = sorted(REGISTRY_READ_KEYS & set(unit))
+        if second_source:
+            errors.append(f"SKILL_REGISTRY_READ_KEY:{unit.get('name')}:{second_source}")
+        if not unit.get("boot"):
+            errors.append(f"SKILL_UNIT_WITHOUT_BOOT:{unit.get('name')}")
+            continue
+        if not (root / unit["boot"]).is_file():
             errors.append(f"SKILL_BOOT_MISSING:{unit['name']}:{unit['boot']}")
             continue
         try:
-            tier = tiers(root, unit)
-            must, entry = read_lists(root, unit)
+            tier = tiers(root, unit, b0_set)
+            must, entry = read_lists(root, unit, b0_set)
         except SkillError as exc:
             errors.append(f"{exc}")
             continue
         for rel in tier["untiered"]:
             errors.append(f"SKILL_PATH_UNTIERED:{unit['name']}:{rel}")
+        for rel in tier["duplicated"]:
+            errors.append(f"SKILL_PATH_MULTI_TIERED:{unit['name']}:{rel}")
         for rel in dict.fromkeys(must + entry + tier["untiered"]):
             if not (root / rel).is_file():
                 errors.append(f"SKILL_READ_MISSING:{unit['name']}:{rel}")

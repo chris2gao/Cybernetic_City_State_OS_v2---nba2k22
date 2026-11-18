@@ -5,7 +5,7 @@ description: "City-State OS 的任务粒度与执行纪律：默认一个长周�
 
 # 任务编排：大任务、G/R/A/D、原型与模式（L1_BOOT_VISIBLE）
 
-> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/task_orchestration/启动清单_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
+> 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml` + `01_os/02_boot/task_orchestration/启动清单_v1.yml`（读取分层 `read_tiers`）。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
 ## 何时加载
 

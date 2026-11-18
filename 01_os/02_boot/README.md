@@ -40,9 +40,10 @@ These are candidates for porting, not decisions. Each needs assessing on its own
 - `minimum_work_unit_output/`、`stage_collaborative_deliberation/`、
   `workflow_minimum_operational_loop/`：各自机制的读取清单。
 - `task_orchestration/启动清单_v1.yml`（2026-11-18 新增）：任务编排的精确读取清单。
+- `os_entry/`（2026-11-18 新增）：B0 入口的读取分层。启动必读是 `AGENT_WORKING_DISCIPLINE.md`、`AGENTS.md`、`01_os/README.md` 与开发入口；同目录的 `开发入口_按动作细则_v1.md`（开发入口按原节号移出的按动作部分）与 `入口依据与事故记录_v1.md`（B0 原有的事故、实测与理由）按动作读取；`CORE_MANIFEST.yml` 为程序读取。
+- `task_continuity/`、`task_discipline/`、`publication/`、`skills_and_tools/`、`domain_content/`（2026-11-18 新增）：原来没有 boot 的 skill 单元的读取分层。
 
-每份启动清单的读取清单由 `06_execution/skills/generate_skills.py` 生成为对应的机制 skill；
-角色 skill 按角色组合这些机制 skill（`01_os/05_registry/skills_v1.yml`）。
+每份启动清单的 `read_tiers`（启动必读 / 按动作读取 / 程序读取 / 有则必读）是该单元“读什么”的唯一来源，由 `06_execution/skills/generate_skills.py` 生成为对应的机制 skill；`load_order` 等原有键不变，仍是机制自身 validator 的输入。角色 skill 按角色组合这些机制 skill（角色矩阵在 `01_os/05_registry/skills_v1.yml`）。
 
 启动区只声明“启动时读什么”；机制方法论和生命周期定义位于
 `../03_mechanisms/context_management/`。

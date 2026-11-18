@@ -29,3 +29,31 @@ receipt_required:
   - mechanism_version
   - loaded_paths
   - validator_exit_code
+# Read tiers (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001). The single
+# place that says what a model reads: startup at role initialization; on_action when the stated
+# action happens; program = read by validators / runners, a model reads it only to edit it or to
+# debug a validator failure; optional = startup read that may be absent. .py paths are entry
+# points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
+# fails on a path this manifest names outside every tier. Any load_order in this manifest is
+# unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
+read_tiers:
+  startup:
+  - 01_os/03_mechanisms/task_orchestration/README.md
+  on_action:
+  - when: 拆分任务、判断该继续还是必须停时
+    reads:
+    - 01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml
+  - when: 定义或检查 G/R/A/D 节点与父任务 Done 时
+    reads:
+    - 01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md
+    - 01_os/03_mechanisms/task_orchestration/原子任务场景验证_v1.md
+  - when: 设计或执行可复用任务原型、遇到能力缺口、判断 EXECUTION / DEVELOPMENT 时
+    reads:
+    - 01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md
+  - when: 对候选做受控验证时
+    reads:
+    - 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
+  program:
+  - 01_os/02_boot/task_orchestration/启动清单_v1.yml
+  - 01_os/03_mechanisms/task_orchestration/loop_iteration_schema_v1.json
+  - 01_os/05_registry/task_orchestration_v1.yml

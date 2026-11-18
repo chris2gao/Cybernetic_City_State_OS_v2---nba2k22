@@ -1,0 +1,25 @@
+schema_version: citystate.read_tiers.boot_manifest.v1
+mechanism_id: publication
+mechanism_version: 1
+# Added 2026-11-18 (OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001) so that every skill unit has
+# exactly one boot manifest that says what to read. It loads, it does not authorize.
+failure_policy: fail_closed_on_missing_or_partial
+background_processes_started: false
+authority_effect: none
+# Read tiers (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001). The single
+# place that says what a model reads: startup at role initialization; on_action when the stated
+# action happens; program = read by validators / runners, a model reads it only to edit it or to
+# debug a validator failure; optional = startup read that may be absent. .py paths are entry
+# points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
+# fails on a path this manifest names outside every tier. Any load_order in this manifest is
+# unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
+read_tiers:
+  startup:
+  - 01_os/05_registry/repository_publisher_authority_v1.yml
+  - .githooks/README.md
+  on_action:
+  - when: push 被守卫拒绝、或要修改守卫时
+    reads:
+    - 01_os/05_registry/repository_guards_v1.yml
+  program:
+  - 01_os/02_boot/publication/启动清单_v1.yml

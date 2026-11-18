@@ -22,3 +22,28 @@ receipt_fields:
   - action_class_when_invoked
   - resolver_result_ref_when_formal
   - gate_result_ref_when_formal
+# Read tiers (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001). The single
+# place that says what a model reads: startup at role initialization; on_action when the stated
+# action happens; program = read by validators / runners, a model reads it only to edit it or to
+# debug a validator failure; optional = startup read that may be absent. .py paths are entry
+# points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
+# fails on a path this manifest names outside every tier. Any load_order in this manifest is
+# unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
+read_tiers:
+  startup:
+  - 01_os/03_mechanisms/mechanism_activation/README.md
+  on_action:
+  - when: 发出或接收正式跨端点动作之前
+    reads:
+    - 01_os/03_mechanisms/mechanism_activation/正式动作宪法_v1.yml
+    - 01_os/03_mechanisms/mechanism_activation/机制触发注册表_v1.yml
+  - when: 核对物质验收主张、写 receipt 或判断验证方式时
+    reads:
+    - 01_os/03_mechanisms/mechanism_activation/物理事实双向绑定契约_v1.yml
+    - 01_os/03_mechanisms/mechanism_activation/验证适用性契约_v1.yml
+  - when: 判断某个机制的生效等级时
+    reads:
+    - 01_os/03_mechanisms/mechanism_activation/机制生效等级与盘点_v1.yml
+  program:
+  - 01_os/02_boot/mechanism_activation/启动清单_v1.yml
+  - 01_os/05_registry/mechanism_activation_v1.yml
