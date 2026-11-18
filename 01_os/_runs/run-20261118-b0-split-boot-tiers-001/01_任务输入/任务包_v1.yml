@@ -2,7 +2,11 @@ task_packet:
   task_id: OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001
   repository: chris2gao/Cybernetic_City_State_OS_v2---core
   risk_tier: T2_semantic
-  exact_base_sha: 232345a737f06f348ba8e4fb1ec096537d647a70
+  # 修正轮 1 把 master 0b935671（PR #41）merge 进任务分支后，分支与 master 的 merge-base 是
+  # 0b935671；exact_base_sha 改为这个实际基线，使 managed_verify 的 diff 只含本任务改动。
+  # 原基线保留在 original_base_sha，verify_b0_split.py 的原文核对仍对照它（PR #41 未改 B0）。
+  exact_base_sha: 0b93567116a53968f98b590eae09431a16a5f6d0
+  original_base_sha: 232345a737f06f348ba8e4fb1ec096537d647a70
   branch: task/core-b0-split-boot-tiers-20261118
   # Human 2026-11-18 选择“方案 B，含去重”（01_任务输入/Human决策记录_20261118.md），
   # 这一批准确定执行范围（开发入口 §7.2）。细则与依据文件按施工中发现放在
