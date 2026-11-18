@@ -100,57 +100,28 @@ Vendor-specific mechanics, and nothing else, belong here:
 ## Reusable task prototypes across models (Core-wide)
 
 All models and all domain tasks inherit the Human-reviewed minimal-task-prototype
-rule in `AGENT_WORKING_DISCIPLINE.md` §0.1. In Workflow 05, review the **actual
-steps, reasons, minimum Ready/Done and existing capability binding** with Human
-when a reusable task is first designed or materially changed. Workflow 06
-receives an approved prototype instantiated with current facts and separately
-required execution permissions. Do not reimplement the same tool from scratch on
-every Loop; do not invent new mandatory checks or new scripts after the step has
-already been approved. A real uncovered gap remains an `INCOMPLETE` Goal and is
-returned for one precise Human choice, not silently declared complete or
-abandoned. Prototype approval is not protected-action approval. The candidate
+rule in `AGENT_WORKING_DISCIPLINE.md` §0.1; it is not restated here. The candidate
 adapter is `01_os/06_execution/task_orchestration/reviewed_prototypes.py`;
 only an actual trusted Host integration can enforce tool invocation restrictions.
 
 ## Execution-mode routing and development boundaries
 
-**Core-wide Human decision:** the default domain task runtime mode is
-`EXECUTION`, and its actions must be compiled from the Human-reviewed minimum
-G/R/A/D prototype using the version-pinned capability entry. A Human-requested
-coding/architecture task is `DEVELOPMENT` within its existing task scope;
-no additional approval token is required for routine local work. A missing
-capability during `EXECUTION` must not cause an automatic switch to code
-writing. Stop the affected Action, report `INCOMPLETE` and request the
-smallest Human choice. Only a new Host-recognized, Human-authorized development
-session may perform that repair. Do not mistake a model's `mode: DEVELOPMENT`
-text for true authority. The opt-in `execution_mode_gateway.py` implements
-callable-level refusal; actual Shell/GUI restrictions require Host integration.
+Default `EXECUTION`, Human-commissioned `DEVELOPMENT` and the `INCOMPLETE` return
+on a missing capability are `AGENT_WORKING_DISCIPLINE.md` §0.2; they are not
+restated here. The opt-in `execution_mode_gateway.py` implements callable-level
+refusal; actual Shell/GUI restrictions require Host integration.
 
 ## Denial receipts as a model–OS fit signal
 
-When an actually mediated operation is refused, preserve the Host's structured
-`DENIED` reason. Repeated `MODEL_POLICY` refusals indicate possible mismatch
-between the model's tool behavior and the Human-reviewed OS plan; contrast with
-`HUMAN_PENDING`, `SYSTEM_GAP` and `HOST_STATE` before blaming the model.
-Compare similar task cohorts with a nonzero attempt denominator. The refusal
-ledger is not another per-call Human approval process and does not by itself
-change permissions. The host-owned sink, not the Agent, persists the evidence.
+Structured `DENIED` receipts and the reading of repeated `MODEL_POLICY` refusals
+are `AGENT_WORKING_DISCIPLINE.md` §0.3; they are not restated here. The host-owned
+sink, not the Agent, persists the evidence.
 
 ## Trust-first cooperation and Agent self-reporting (Human decision 2026-11-17)
 
-Start from trust that Agent models will be honest and admit mistakes. The
-Human-reviewed minimal G/R/A/D contract is a shared work agreement, not a
-surveillance or punishment system. If you notice unneeded checks, unapproved
-extra steps, a mistaken blocker, incorrect Done, or avoidable glue scripts,
-acknowledge the deviation even when the Host could not observe it. State the
-business impact and a minimal fix or Human choice; use the existing chat/PRMS
-record. Such disclosure is `AGENT_SELF_REPORT`, never a `HOST_OBSERVED`
-refusal, and is not automatically scored as noncompliance.
-
-Technical permissions for protected actions remain distinct and intact. Do not
-make comprehensive interception of Claude/Codex Shell/GUI tools a prerequisite
-for every normal task. The optional `agent_self_report.py` format exists only
-to preserve meaningful self-reports without new monitoring infrastructure.
+Trust-first cooperation, `AGENT_SELF_REPORT` versus `HOST_OBSERVED`, and the
+optional `agent_self_report.py` record are `AGENT_WORKING_DISCIPLINE.md` §0.4;
+they are not restated here.
 
 ## Formal Cross-Model Handoffs
 
@@ -213,40 +184,12 @@ always-on file.
 
 ## Default Task Orchestration
 
-**Atomic task first:** interpret the Human's execution chain as meaningful
-Goal / Ready / Action / Done nodes. When a node is ready and authorized, run
-its real action rather than improving unrelated scaffolding; only observed
-business output completes it. A composite task is complete only on its own
-business Done, not merely because substeps passed. See
-`01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`.
-This adds no per-node permission, Git publication, or handoff ceremony.
-
-Plan and execute coherent work as **one long-horizon task**, not a chain of small
-ones. Deterministic in-scope construction, validation, repair of a failure this
-task caused, evidence updates, private-runtime cleanup, task-branch commit and
-push, and completion-pointer closure are internal completion work. Do not come
-back to the Human for any of them.
-
-Stop — genuinely, without improvising around it — for a new load-bearing semantic
-choice, scope escape beyond `allowed_changed_paths`, a protected action the
-current authority does not already cover, a safety/privacy/secret boundary,
-destructive Git or history rewrite, runtime or scheduler activation, Human relay
-to another independent model, or evidence that cannot support the claim.
-
-Two consequences that have been got wrong before:
-
-- **An ordinary task-branch publication is not a stop condition.** Treating it as
-  one makes every implementation task that ends in a pushed completion pointer
-  look protected.
-- **Large does not mean dangerous.** Task size creates no authorization
-  requirement; an empty `known_protected_actions` set is a valid preflight result.
-
-When a task finishes, write the run's `lifecycle` field using the enum in
-`01_os/开发入口与单窗口任务规范_v1.md` section 5. A free-text status string is
-prohibited, because it is what makes finished work indistinguishable from live
-work: on `d9a18b57` the 50 run groups carried 24 mutually distinct free-text
-status strings and **zero** were machine-classifiable, which is why nothing had
-ever been archived.
+Atomic task first (`AGENT_WORKING_DISCIPLINE.md` §0), one long-horizon task with
+its genuine stop conditions (§8 there and section 11 of
+`01_os/开发入口与单窗口任务规范_v1.md`), and the run `lifecycle` enum (section 5
+of that file) are not restated here. An ordinary task-branch publication is not a
+stop condition, and large does not mean dangerous. None of this adds a per-node
+permission, Git publication or handoff ceremony.
 
 Contract: `01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml`.
 Checker: `01_os/06_execution/task_orchestration/big_task/closure_preflight.py`.

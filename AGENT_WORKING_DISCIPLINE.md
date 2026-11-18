@@ -12,15 +12,11 @@ protocol. Where it meets `AGENTS.md`, the OS entry
 Every rule below was paid for. The incident is named so the rule is not mistaken
 for style preference.
 
+> 拆分说明（2026-11-18）：事故经过、实测数字与设计理由已原文移入 `01_os/02_boot/os_entry/入口依据与事故记录_v1.md`，本文件在原位以“（依据：入口依据与事故记录_v1.md §编号）”指向；要理解、质疑或修改某条规则时去读。规则本身未改。
+
 ## 0. Human-scale execution: outcome before infrastructure
 
-*Paid for 2026-11-11, NBA2K22 Issue #40 / PR #43:* after a long
-engineering-preparation task, a further roughly one-hour live-research run
-successfully qualified 16 native fields but performed **zero** calendar
-simulations, post-game captures or mechanism analyses. Its actual script
-explicitly allowed zero calendar calls and ended by requiring a reload. Passing
-code tests and producing correct receipts did not fulfil the Human's research
-objective. [Primary incident and evidence](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---nba2k22/issues/40#issuecomment-6796587612).
+（依据：入口依据与事故记录_v1.md §W0-1）
 
 This is an execution-priority correction, **not** another gate or a new
 authorization mechanism.
@@ -93,12 +89,7 @@ Canonical semantics and positive/negative examples:
 
 ## 0.1 Human-reviewed reusable task prototypes — design once, execute many
 
-*Paid for 2026-11-16, NBA2K22 T15 / GE-01:* a task had a Goal and nominal action
-sequence, but during live execution the model improvised extra checks, foreground
-operations and scripts. A test wrapper's all-Pending assumption was mistakenly
-promoted into a Human-level blocker and the unfinished Goal was not promptly
-returned to Human for decision. Producing code or obeying an overstrong contract
-was not adequate business delivery.
+（依据：入口依据与事故记录_v1.md §W0.1-1）
 
 For **every domain and every level of task**, use the existing G/R/A/D model as a
 **reusable task prototype** when the action may recur or be delegated:
@@ -206,52 +197,33 @@ Anything that matters — decisions, verdicts, evidence, contracts — goes into
 repository or the brief vault before the task is called done. A conversation is a
 workbench, not a record.
 
-*Paid for 2026-07-25:* a long session became unreachable through the UI (its
-transcript was stranded under a previous install path). Nothing of value was lost,
-because every conclusion was already in git or the brief vault. That is the only
-reason it was a curiosity rather than a loss.
+（依据：入口依据与事故记录_v1.md §W1-1）
 
 ## 2. Filter large output before you fetch it
 
 Never run an unbounded recursive search or print an unfiltered scan. Use targeted
 search tools, path filters, `head`/`-First` limits, or aggregate counts.
 
-*Paid for 2026-07-25:* a recursive `findstr` walked into a cache directory and
-produced 1.79 million characters; a privacy scan printed 1,254 lines when three
-numbers were the answer. Both cost more context than the work they served.
-
-This is the cheapest available saving. It beats any configuration setting.
+（依据：入口依据与事故记录_v1.md §W2-1）
 
 ### The specific habits, and what each one costs
 
-Measured 2026-07-26 across 50 Codex rollout sessions on this workstation: 2,599
-shell calls, 5,360 tool outputs, 8.84 billion input tokens. The numbers below are
-from that measurement, not estimates.
+（依据：入口依据与事故记录_v1.md §W2-2）
 
 - **Never read a whole file when a slice answers the question.** Use `-TotalCount`,
   `-First`, `head -n`, or an explicit line range, and widen only after the slice
-  proves insufficient. *Measured:* 303 of 355 `Get-Content` calls (85%) carried no
-  length limit; an unlimited read cost 6,283 characters on average against 1,839
-  for a limited one — **3.4x per call**. Those 303 reads alone were 1.9 million
-  characters, roughly a fifth of all tool output.
+  proves insufficient. （依据：入口依据与事故记录_v1.md §W2-3）
 - **Cap output at the call site, before it runs** — not by ignoring it afterwards.
-  *Measured:* output is median 244 characters but p99 28,075; the twenty largest
-  outputs were 8.8% of every character returned.
+  （依据：入口依据与事故记录_v1.md §W2-4）
 - **When polling a background job, pass the smallest token cap the tool offers,
   and poll less often rather than truncating a large payload repeatedly.**
-  *Measured:* the `wait` tool was **30% of all tool traffic** (1,468 calls,
-  3.39M characters). 92 of those calls — 6.3% — returned over 10,000 characters
-  and accounted for **56% of all polling traffic**. The tool accepts a
-  `max_tokens` argument that was never used.
+  （依据：入口依据与事故记录_v1.md §W2-5）
 - **Ask Git for the summary first:** `git status -sb`, `git diff --stat`,
   `git log --oneline -n`. Fetch full text only for the hunk in question.
-  *Measured:* one `git status` returned 40,093 characters — the truncation
-  ceiling, meaning the real output was longer still.
+  （依据：入口依据与事故记录_v1.md §W2-6）
 - **Write anything longer than one line as a script file and run the file.** Do
   not pack multi-statement logic into a single `-Command` or `-c` string.
-  *Measured:* one quoting mistake in a single-line PowerShell command produced
-  53.5 KB of repeated parser errors. Outputs containing a PowerShell error
-  averaged 3,655 characters against 1,717 for clean ones — **twice the cost**.
+  （依据：入口依据与事故记录_v1.md §W2-7）
 - **On failure, do not re-run the same command unchanged.** Read the error,
   change the hypothesis, and cap the output of the retry. Treat a failure by its
   signature, not by the spelling of the command: a repeat needs new evidence, a
@@ -283,11 +255,7 @@ from that measurement, not estimates.
 
 ### What is not worth optimising
 
-The shell *invocation* is not where the tokens go. Command arguments are 0.87% of
-all conversation content, and Windows-specific text — escaped backslashes and CRLF
-— is about 0.07%. 96.8% of input tokens are cache hits, so a few characters of
-path syntax cost essentially nothing. Claims that one operating system costs
-tens of percent more than another do not survive measurement; output volume does.
+（依据：入口依据与事故记录_v1.md §W2-8）
 
 ## 3. Verify before acting — then report the finding, not the reading
 
@@ -295,16 +263,7 @@ Check the actual state before you change anything: real HEADs, real file content
 real exit codes. Then say what you found and what differs. Do **not** replay the
 material you read.
 
-*Paid for 2026-07-25, three times:*
-- a routine `git merge core/master` would have deleted 1,132 files and 204,156
-  lines from a domain — caught by checking the merge delta on a scratch branch
-  first, not by trusting that "merging core is safe";
-- a folder about to become a new repository still had `origin` pointing at another
-  repository; one push would have written into the wrong system;
-- a derived denylist term matched 10,708 lines on both trees, which is how it was
-  identified as a path fragment rather than a learner identifier.
-
-Each check cost a few commands. Each would have been expensive to undo.
+（依据：入口依据与事故记录_v1.md §W3-1）
 
 The second half matters as much: reciting file contents back to the Human is pure
 cost. Give the conclusion and the delta.
@@ -325,11 +284,7 @@ conditions under which an executor may keep working inside it, are defined once 
 section 2 of `01_os/开发入口与单窗口任务规范_v1.md`. No additional packet field
 carries this; the boundary field already in use is the whole mechanism.
 
-*Paid for 2026-07-25:* two dispatches specified a changed-path count ("15 paths",
-"14 paths") that no longer matched reality by execution time. One of them also
-required both a count and an edit that necessarily changed that count — mutually
-exclusive instructions. The executor measured, followed the measurement, and
-reported the contradiction.
+（依据：入口依据与事故记录_v1.md §W4-1）
 
 **If a dispatch conflicts with what you measure, the measurement wins — and you say
 so explicitly.** Silently following the dispatch produces a false record; silently
@@ -346,10 +301,7 @@ report the conflict.
   reproduced. In this project those have repeatedly been the same person, and that
   fact belongs in the report.
 
-*Standing failure mode:* six review rounds on one subsystem kept producing the same
-shape of error — a claim slightly wider than the thing actually checked. It was not
-six mistakes by one careless author; it was one relationship structure (author
-designs their own verification) reproducing itself. Where it matters, separate the
+（依据：入口依据与事故记录_v1.md §W5-1） Where it matters, separate the
 two roles, or hand a reviewer the raw material with the conclusions stripped out.
 
 ## 6. Irreversible actions are announced before they happen
@@ -392,12 +344,7 @@ transport must prove instead is the matrix in section 1.1 of
 small set of confirmation-bound actions are defined in
 `01_os/05_registry/repository_publisher_authority_v1.yml`.
 
-*Paid for once:* an executor with only a connector read "I cannot run
-`git config --get core.hooksPath`" as "I am not permitted to publish", withheld a
-finished artifact, and then published a proposal branch through that same
-transport. One executor, one session, two incompatible rulings — because the rule
-said nothing about the transport and it had to invent one twice. An undefined
-gate does not fail safe; it fails inconsistently.
+（依据：入口依据与事故记录_v1.md §W6-1）
 
 ## 7. Keep durable memory honest
 
@@ -406,10 +353,7 @@ Periodically merge duplicates, correct what changed, and delete what was overtur
 When a stored note names a file, flag or setting, confirm it still exists before
 recommending it.
 
-*Paid for repeatedly:* a report kept asserting "both nodes remain review_required"
-after they had been accepted, and "master still holds residue" after a merge had
-cleaned it. Each stale line forced a later reader to work out which statement to
-believe.
+（依据：入口依据与事故记录_v1.md §W7-1）
 
 Two rules follow from that, and they are what make a stored note checkable later:
 
@@ -460,30 +404,16 @@ protected-action confirmation or UNKNOWN-effect reconciliation.
 Write one of them into `run.yml`'s `lifecycle` field. A free-text status is
 prohibited.
 
-*Measured 2026-08-28 on `d9a18b57`:* the 50 run groups under `01_os/_runs`
-carried **24 mutually distinct** free-text status strings — mostly under a
-`status:` key rather than `lifecycle:` — and **not one** was machine-classifiable
-as finished. The communication archiver had existed for weeks and `archive/` was
-still empty, because nothing could answer "is this one done?". Fragmented tasks
-each invent their own status word; nobody has to agree with anyone. The bill
-arrives later, as a repository that cannot tell live work from history.
+（依据：入口依据与事故记录_v1.md §W8-1）
 
-That bill is also why enumeration is expensive here: the three accumulating
-surfaces are about **90%** of all listing bytes and **69–93%** of the hits on
-ordinary routing terms, while the fixed startup load touches none of them. So
-the cost is not size. But that 90% is a *composition*, not a saving — a group may
-be hidden only once it is positively classified as finished, and today none is,
-so the measured exclusion is 28.0% and all of it is the communication surface.
+（依据：入口依据与事故记录_v1.md §W8-2）
 Use
 `01_os/06_execution/boot/context_management/working_set/visible_set.py --list`,
 which reports what it hid.
 
 Two rules that cost more than they look:
 
-- **Hiding requires proof of completion, not absence of proof of life.** An
-  earlier revision of that tool hid unknown-state groups alongside finished ones
-  and reported an 89% reduction. Independent review rejected it: the hidden set
-  was exactly the 68 groups whose state the repository cannot vouch for.
+- **Hiding requires proof of completion, not absence of proof of life.** （依据：入口依据与事故记录_v1.md §W8-3）
 - **Never add a global silent exclusion.** It converts noise into false
   negatives, and section 3 already records what those cost.
 
@@ -612,10 +542,7 @@ fraction of the same effort.
 
 ## 9. Promote evidence-backed execution feedback, not every local defect
 
-*Paid for 2026-10-23, NBA2K22 R00-01:* narrow probe dispatches, a
-claimed out-of-scope live observation and JSON-only verification led to
-repeated corrections without proportional new native-data capability.
-These represent different failures: task design, authorization and proof.
+（依据：入口依据与事故记录_v1.md §W9-1）
 
 - **LOCAL_FIX:** one-off arithmetic, naming or receipt defect that can be
   corrected inside the task; do not create global rules for it.

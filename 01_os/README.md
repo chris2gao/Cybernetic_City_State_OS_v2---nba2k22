@@ -47,10 +47,7 @@ evidence，不要求 Human 手工粘贴固定初始化包。累计区（`_runs/`
 ## Two rules this structure exists to enforce
 
 **The registry is updated with the development, not after it.** Every file added under
-`01_os` gets a registry entry in the same change. A registry that lags is a registry
-that lies, and the previous system demonstrated exactly what that costs: two
-mechanism files were deleted by a correct reachability computation because nothing
-recorded that an external tool loaded them, and both were found by accident.
+`01_os` gets a registry entry in the same change. （依据：入口依据与事故记录_v1.md §R-1）
 
 **Intermediate files produced by task execution are not registered and are deleted.**
 The registry describes the system, not the traffic through it. If a file is scratch,
