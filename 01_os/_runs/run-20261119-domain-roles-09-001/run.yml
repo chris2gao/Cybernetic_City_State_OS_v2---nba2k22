@@ -9,7 +9,8 @@ objective: 领域仓里 Human 说出的角色不是 core 五个角色时，由�
 task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 01_任务输入/Human决策记录_20261119.md
-lifecycle: verified_on_demand
+lifecycle: integrated_and_verified_on_demand
+closure_record: 08_结论/completion_pointer.yml
 candidate: 36279cbcab4769c9bc5ead374d01770f7a76dd39
 candidate_round_0: ee952e50c463e6343442fd2a67c39c4411e91f2f
 verification_round_0:
@@ -32,9 +33,15 @@ verification_round_1:
   managed_verify: {candidate: 36279cbcab4769c9bc5ead374d01770f7a76dd39, plan: 07_测试执行/verification_plan.json, plan_sha256: fae1b93dc579108883878219939ec4d74d2acf276deee40bdbe57b1e78b3fb33, run_exit: 0, inspect_exit: 0, checks: 9, success: 9, receipt: 07_测试执行/managed_verify_36279cbc.json, attempt_dir: outside repo (author scratchpad), executor_evidence_not_independent: true}
   path_ledger: paths=19 allowlist=ok
 independent_review_after_fix: waived_by_Human   # Human 决策第 5 条“无需审核”；修复轮没有独立审核，角色重合须披露
-remaining:
-  - master 集成（Human 决策第 5 条“开发完集成即可”；确认记录 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261119.md）
-  - 之后各领域仓按方法二再合并一次 core
+integration:
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#47 (MERGED 2026-11-19T11:51:34Z)
+  master_before: d888f40a4f4089647f88c956629c2782b88169eb
+  pr_head_bound: 422ef69ce9318438f21f4453de673d8dfb2d9b48
+  master_after: 280512de9e517a70fb5673888f53bcb8ace0346d
+  confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261119.md
+follow_up_candidates:
+  - 各领域仓按方法二再合并一次 core（领域仓的动作，不在本 run 内）
+remaining: []
 verification_scope_note: >-
   只改了入口文字、skills 登记与生成的 skill，没有改程序。验证计划取 7 个静态校验、skills 测试，以及会读取 B0 文本
   （AGENTS.md、01_os/README.md）的 PRMS 测试。
