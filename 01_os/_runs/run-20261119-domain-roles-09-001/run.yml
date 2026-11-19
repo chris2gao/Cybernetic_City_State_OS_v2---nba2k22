@@ -9,7 +9,14 @@ objective: 领域仓里 Human 说出的角色不是 core 五个角色时，由�
 task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 01_任务输入/Human决策记录_20261119.md
-lifecycle: candidate_pending_validation
+lifecycle: candidate_ready_for_independent_review
+candidate: ee952e50c463e6343442fd2a67c39c4411e91f2f
+verification:
+  managed_verify: {candidate: ee952e50c463e6343442fd2a67c39c4411e91f2f, plan: 07_测试执行/verification_plan.json, plan_sha256: 3c7c199e3ab7813c89977a2c99a6603680c777c193479c7708b4e37f8f5401f2, run_exit: 0, inspect_exit: 0, checks: 8, success: 8, receipt: 07_测试执行/managed_verify_ee952e50.json, executor_evidence_not_independent: true}
+remaining:
+  - 独立审核（新的隔离会话；同为 Claude 模型族，须披露）
+  - master 集成由 Human 在审核后另行确认
+  - 之后各领域仓按方法二再合并一次 core
 verification_scope_note: >-
   只改了入口文字、skills 登记与生成的 skill，没有改任何程序。验证计划取与这些文件相关的 7 个静态校验与 skills 测试；
   PRMS、workflow 等 pytest 与本次改动无关，未纳入。
