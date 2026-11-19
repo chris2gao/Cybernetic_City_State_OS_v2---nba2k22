@@ -99,6 +99,21 @@
    ],
    "timeout_seconds": 600,
    "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_prms",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/boot/context_management/prms",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 900,
+   "expected_exit_code": 0
   }
  ]
 }

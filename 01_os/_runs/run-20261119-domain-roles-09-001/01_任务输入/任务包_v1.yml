@@ -19,7 +19,7 @@ task_packet:
     - .claude/skills/**
     - 01_os/_runs/run-20261119-domain-roles-09-001/**
   verification_plan: 01_os/_runs/run-20261119-domain-roles-09-001/07_测试执行/verification_plan.json
-  required_tests: [context_structure, working_set, mechanism_activation_static, communication_static, mwu_static, workflow_static, skills_static, pytest_skills]
+  required_tests: [context_structure, working_set, mechanism_activation_static, communication_static, mwu_static, workflow_static, skills_static, pytest_skills, pytest_prms]
   prohibitions:
     - modify_master_without_required_Human_confirmation
     - force_push
