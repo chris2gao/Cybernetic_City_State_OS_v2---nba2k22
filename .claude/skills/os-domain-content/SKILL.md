@@ -34,3 +34,4 @@ description: "City-State 领域仓库的特色内容：08_Domain_Applications �
 
 - 领域只拥有 08_Domain_Applications/ 与 09_Domain_Global_Mechanisms/；其余路径经合并取自 core，不得在领域仓改 core-owned 路径
 - 按 domain_mechanisms.yml 列出的条目读取相关领域机制正文，不整目录读取
+- Human 说出的角色不是 core 的五个角色时，它是本领域定义的领域角色，到 09 的 domain_mechanisms.yml 找它；这个角色加载哪些上下文由领域自己决定；找不到就在回执里写明并问 Human，不自编

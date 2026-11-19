@@ -313,6 +313,7 @@ units:
     boundaries:
       - 领域只拥有 08_Domain_Applications/ 与 09_Domain_Global_Mechanisms/；其余路径经合并取自 core，不得在领域仓改 core-owned 路径
       - 按 domain_mechanisms.yml 列出的条目读取相关领域机制正文，不整目录读取
+      - Human 说出的角色不是 core 的五个角色时，它是本领域定义的领域角色，到 09 的 domain_mechanisms.yml 找它；这个角色加载哪些上下文由领域自己决定；找不到就在回执里写明并问 Human，不自编
 
 roles:
   - name: role-planner
@@ -379,8 +380,9 @@ roles:
     title: 特色内容开发
     collaboration_role: execution
     description: >-
-      City-State 领域仓库特色内容开发角色初始化。当 Human 说“你的角色是特色内容开发/内容开发”时使用。
-      与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与 09 的领域机制目录。
+      City-State 领域仓库特色内容开发角色初始化。当 Human 说“你的角色是特色内容开发/内容开发”，或要你开发、修改本领域在
+      09_Domain_Global_Mechanisms 定义的领域角色时使用。与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与 09
+      的领域机制目录。
     produces: 08_Domain_Applications 下的领域内容与证据、09_Domain_Global_Mechanisms 下的领域机制目录，以及交接
     must_not:
       - 修改 08_Domain_Applications、09_Domain_Global_Mechanisms 以外的 core-owned 路径（需要 core 改动时向上游提）
@@ -397,12 +399,14 @@ roles:
     title: 特色内容教学或使用
     collaboration_role: execution
     description: >-
-      City-State 领域仓库特色内容教学或使用角色初始化。当 Human 说“你的角色是特色内容教学/使用/老师/助教”
-      或要你用本领域内容完成教学、使用类业务时使用。只在 EXECUTION 模式下运行已审原型。
+      City-State 领域仓库特色内容教学或使用角色初始化。当 Human 说“你的角色是特色内容教学/使用/老师/助教”，在领域仓里说出的角色
+      不是 core 的五个角色（即本领域在 09_Domain_Global_Mechanisms 定义的领域角色，如教学角色、智能体角色），或要你用本领域内容
+      完成教学、使用类业务时使用。只在 EXECUTION 模式下运行已审原型。
     produces: 按 Human 已审原型完成的真实业务结果（教学、使用）及其观察记录
     must_not:
       - 写代码、加临时脚本或新的 Ready/Done
       - 遇到能力缺口时自行开发（返回 INCOMPLETE 与一个最小 Human 决定）
+      - 自编 09 目录里没有的领域角色
     mode: EXECUTION only
     required: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-domain-content]
     triggered:

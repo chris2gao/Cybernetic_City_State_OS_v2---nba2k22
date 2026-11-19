@@ -1,0 +1,47 @@
+task_id: OS-CORE-DOMAIN-ROLES-09-20261119-001
+run_id: run-20261119-domain-roles-09-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: d888f40a4f4089647f88c956629c2782b88169eb
+branch: task/core-domain-roles-09-20261119
+ownership: core_system
+objective: 领域仓里 Human 说出的角色不是 core 五个角色时，由领域角色 skill 从 09 的领域机制目录加载该领域角色；角色内容由领域自定。
+task_packet: 01_任务输入/任务包_v1.yml
+inputs:
+  - 01_任务输入/Human决策记录_20261119.md
+lifecycle: integrated_and_verified_on_demand
+closure_record: 08_结论/completion_pointer.yml
+candidate: 36279cbcab4769c9bc5ead374d01770f7a76dd39
+candidate_round_0: ee952e50c463e6343442fd2a67c39c4411e91f2f
+verification_round_0:
+  managed_verify: {candidate: ee952e50c463e6343442fd2a67c39c4411e91f2f, plan_sha256: 3c7c199e3ab7813c89977a2c99a6603680c777c193479c7708b4e37f8f5401f2, run_exit: 0, inspect_exit: 0, checks: 8, success: 8, receipt: 07_测试执行/managed_verify_ee952e50.json, executor_evidence_not_independent: true}
+review_round_0:
+  report: 07_测试执行/独立审核_ee952e50.md
+  verdict: FIX_REQUIRED
+  reviewer: 独立 Claude Code 会话 local_ba8f387b（Opus 5.5，与执行者同族，已披露）；独立复跑 8/8 + PRMS 80 passed
+  blocking: [F1 os-domain-content boundary 说“条目怎么写……core 不规定”，与 prms/catalog.py discover_g2 强制的 G2 字段矛盾（探针复现）]
+  nonblocking: [F2 citystate-os 地图未提领域角色, F3 scope note 称 PRMS 无关不准确, F4 CLAUDE.md/GEMINI.md 插入句未折行]
+fix_round_1:
+  author: 同一会话 local_ba8f387b 由审核改任开发（Human 决策第 5 条），作者与 round 0 审核者重合
+  changes:
+    - F1：删去“条目怎么写、角色规则是什么由领域自定，core 不规定”与“按条目读取正文”，改为“到 09 的 domain_mechanisms.yml 找它；这个角色加载哪些上下文由领域自己决定”；不新增条目写法说明（Human 决策第 4 条）
+    - F3：验证计划与任务包 required_tests 加入 pytest_prms（PRMS 的 B0 读取 AGENTS.md 与 01_os/README.md）
+    - F4：CLAUDE.md、GEMINI.md 插入段落折行，文字不变
+  not_done:
+    - F2 不做：生成器在 allowlist 外，且 Human 决策第 4 条要求 core 对领域角色不做说明
+verification_round_1:
+  managed_verify: {candidate: 36279cbcab4769c9bc5ead374d01770f7a76dd39, plan: 07_测试执行/verification_plan.json, plan_sha256: fae1b93dc579108883878219939ec4d74d2acf276deee40bdbe57b1e78b3fb33, run_exit: 0, inspect_exit: 0, checks: 9, success: 9, receipt: 07_测试执行/managed_verify_36279cbc.json, attempt_dir: outside repo (author scratchpad), executor_evidence_not_independent: true}
+  path_ledger: paths=19 allowlist=ok
+independent_review_after_fix: waived_by_Human   # Human 决策第 5 条“无需审核”；修复轮没有独立审核，角色重合须披露
+integration:
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#47 (MERGED 2026-11-19T11:51:34Z)
+  master_before: d888f40a4f4089647f88c956629c2782b88169eb
+  pr_head_bound: 422ef69ce9318438f21f4453de673d8dfb2d9b48
+  master_after: 280512de9e517a70fb5673888f53bcb8ace0346d
+  confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261119.md
+follow_up_candidates:
+  - 各领域仓按方法二再合并一次 core（领域仓的动作，不在本 run 内）
+remaining: []
+verification_scope_note: >-
+  只改了入口文字、skills 登记与生成的 skill，没有改程序。验证计划取 7 个静态校验、skills 测试，以及会读取 B0 文本
+  （AGENTS.md、01_os/README.md）的 PRMS 测试。

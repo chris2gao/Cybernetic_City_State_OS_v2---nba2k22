@@ -38,7 +38,12 @@ task-triggered steps loads by default.
    in core; 特色内容开发 or 特色内容教学或使用 in a domain — invoke the matching
    role skill in `.agents/skills/` (`role-planner`, `role-developer`,
    `role-reviewer`, `role-content-developer`, `role-content-user`). It loads every
-   mechanism skill that role needs and ends with a role-initialization receipt;
+   mechanism skill that role needs and ends with a role-initialization receipt.
+   A role the Human names in a domain that is none of these is a domain role, which
+   that domain defines itself in `09_Domain_Global_Mechanisms/`: invoke
+   `role-content-user` (or `role-content-developer` when the task is to build or
+   change that role), which looks it up in
+   `09_Domain_Global_Mechanisms/domain_mechanisms.yml`.
    `citystate-os` is the map of the whole OS. Other mechanism skills load when
    their trigger fires. The chat window is a temporary workbench: whether one
    window carries one task or a series is the Human's decision, and continuity
