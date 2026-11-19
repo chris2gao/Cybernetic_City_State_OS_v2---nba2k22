@@ -1,6 +1,6 @@
 ---
 name: role-content-developer
-description: "City-State 领域仓库特色内容开发角色初始化。当 Human 说“你的角色是特色内容开发/内容开发”时使用。与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与 09 的领域机制目录。"
+description: "City-State 领域仓库特色内容开发角色初始化。当 Human 说“你的角色是特色内容开发/内容开发”，或要你开发、修改本领域在 09_Domain_Global_Mechanisms 定义的领域角色时使用。与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与 09 的领域机制目录。"
 ---
 
 # 角色：特色内容开发（`execution`）

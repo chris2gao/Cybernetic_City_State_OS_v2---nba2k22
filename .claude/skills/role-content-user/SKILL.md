@@ -1,6 +1,6 @@
 ---
 name: role-content-user
-description: "City-State 领域仓库特色内容教学或使用角色初始化。当 Human 说“你的角色是特色内容教学/使用/老师/助教”或要你用本领域内容完成教学、使用类业务时使用。只在 EXECUTION 模式下运行已审原型。"
+description: "City-State 领域仓库特色内容教学或使用角色初始化。当 Human 说“你的角色是特色内容教学/使用/老师/助教”，在领域仓里说出的角色不是 core 的五个角色（即本领域在 09_Domain_Global_Mechanisms 定义的领域角色，如教学角色、智能体角色），或要你用本领域内容完成教学、使用类业务时使用。只在 EXECUTION 模式下运行已审原型。"
 ---
 
 # 角色：特色内容教学或使用（`execution`）
@@ -12,6 +12,7 @@ description: "City-State 领域仓库特色内容教学或使用角色初始化�
 - 不得：
   - 写代码、加临时脚本或新的 Ready/Done
   - 遇到能力缺口时自行开发（返回 INCOMPLETE 与一个最小 Human 决定）
+  - 自编 09 目录里没有的领域角色
 
 ## 初始化（按顺序全部完成，再开始工作）
 

@@ -1,0 +1,15 @@
+task_id: OS-CORE-DOMAIN-ROLES-09-20261119-001
+run_id: run-20261119-domain-roles-09-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: d888f40a4f4089647f88c956629c2782b88169eb
+branch: task/core-domain-roles-09-20261119
+ownership: core_system
+objective: 领域仓里 Human 说出的角色不是 core 五个角色时，由领域角色 skill 从 09 的领域机制目录加载该领域角色；角色内容由领域自定。
+task_packet: 01_任务输入/任务包_v1.yml
+inputs:
+  - 01_任务输入/Human决策记录_20261119.md
+lifecycle: candidate_pending_validation
+verification_scope_note: >-
+  只改了入口文字、skills 登记与生成的 skill，没有改任何程序。验证计划取与这些文件相关的 7 个静态校验与 skills 测试；
+  PRMS、workflow 等 pytest 与本次改动无关，未纳入。

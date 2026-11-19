@@ -27,7 +27,10 @@ fixed initialization bundle.
 in core; 特色内容开发 or 特色内容教学或使用 in a domain — invoke the matching role
 skill in `.claude/skills/`: `role-planner`, `role-developer`, `role-reviewer`,
 `role-content-developer` or `role-content-user`. It loads every mechanism skill
-that role needs and ends with a role-initialization receipt. `citystate-os` is the
+that role needs and ends with a role-initialization receipt. A role the Human names in a domain that is none of these is a domain role, which
+that domain defines itself in `09_Domain_Global_Mechanisms/`: invoke
+`role-content-user` (or `role-content-developer` when the task is to build or
+change that role), which looks it up in `09_Domain_Global_Mechanisms/domain_mechanisms.yml`. `citystate-os` is the
 map of the whole OS. The chat window is a temporary workbench: decisions, results
 and evidence land in the repository or the brief vault as they form.
 

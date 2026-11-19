@@ -1,0 +1,52 @@
+task_packet:
+  task_id: OS-CORE-DOMAIN-ROLES-09-20261119-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: d888f40a4f4089647f88c956629c2782b88169eb
+  branch: task/core-domain-roles-09-20261119
+  approval_state: Human_approved_domain_role_rule   # 01_任务输入/Human决策记录_20261119.md 第 2 条
+  objective: >-
+    给领域角色提供加载框架：在领域仓里，Human 说出的角色不是 core 的五个角色时，使用领域角色 skill，
+    从 09_Domain_Global_Mechanisms/domain_mechanisms.yml 找到该角色的条目并按条目读取正文；找不到就说明，不自编。
+    角色内容与条目写法由各领域在 09 自定，core 不规定。
+  allowed_changed_paths:
+    - CLAUDE.md
+    - AGENTS.md
+    - GEMINI.md
+    - 01_os/README.md
+    - 01_os/05_registry/skills_v1.yml
+    - .agents/skills/**
+    - .claude/skills/**
+    - 01_os/_runs/run-20261119-domain-roles-09-001/**
+  verification_plan: 01_os/_runs/run-20261119-domain-roles-09-001/07_测试执行/verification_plan.json
+  required_tests: [context_structure, working_set, mechanism_activation_static, communication_static, mwu_static, workflow_static, skills_static, pytest_skills]
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - modify_domain_repositories
+  required_completion_pointer: 01_os/_runs/run-20261119-domain-roles-09-001/08_结论/completion_pointer.yml
+  big_task: true
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: d888f40a4f4089647f88c956629c2782b88169eb
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Anthropic
+    surface: claude_code_desktop
+    model: claude-opus-5-5
+    reasoning_effort: runtime_default
+    mode: standard
+    authority: routing_only
+  verification_profile:
+    independent_reviewer: 新的隔离 Claude Code 会话
+    different_model_family: false
+    different_measurement_tool: false
