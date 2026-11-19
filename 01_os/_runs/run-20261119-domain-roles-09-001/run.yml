@@ -9,7 +9,8 @@ objective: 领域仓里 Human 说出的角色不是 core 五个角色时，由�
 task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 01_任务输入/Human决策记录_20261119.md
-lifecycle: candidate_pending_validation
+lifecycle: verified_on_demand
+candidate: 36279cbcab4769c9bc5ead374d01770f7a76dd39
 candidate_round_0: ee952e50c463e6343442fd2a67c39c4411e91f2f
 verification_round_0:
   managed_verify: {candidate: ee952e50c463e6343442fd2a67c39c4411e91f2f, plan_sha256: 3c7c199e3ab7813c89977a2c99a6603680c777c193479c7708b4e37f8f5401f2, run_exit: 0, inspect_exit: 0, checks: 8, success: 8, receipt: 07_测试执行/managed_verify_ee952e50.json, executor_evidence_not_independent: true}
@@ -27,10 +28,12 @@ fix_round_1:
     - F4：CLAUDE.md、GEMINI.md 插入段落折行，文字不变
   not_done:
     - F2 不做：生成器在 allowlist 外，且 Human 决策第 4 条要求 core 对领域角色不做说明
+verification_round_1:
+  managed_verify: {candidate: 36279cbcab4769c9bc5ead374d01770f7a76dd39, plan: 07_测试执行/verification_plan.json, plan_sha256: fae1b93dc579108883878219939ec4d74d2acf276deee40bdbe57b1e78b3fb33, run_exit: 0, inspect_exit: 0, checks: 9, success: 9, receipt: 07_测试执行/managed_verify_36279cbc.json, attempt_dir: outside repo (author scratchpad), executor_evidence_not_independent: true}
+  path_ledger: paths=19 allowlist=ok
 independent_review_after_fix: waived_by_Human   # Human 决策第 5 条“无需审核”；修复轮没有独立审核，角色重合须披露
 remaining:
-  - 对修复候选跑受控验证
-  - master 集成（Human 决策第 5 条“开发完集成即可”）
+  - master 集成（Human 决策第 5 条“开发完集成即可”；确认记录 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261119.md）
   - 之后各领域仓按方法二再合并一次 core
 verification_scope_note: >-
   只改了入口文字、skills 登记与生成的 skill，没有改程序。验证计划取 7 个静态校验、skills 测试，以及会读取 B0 文本
