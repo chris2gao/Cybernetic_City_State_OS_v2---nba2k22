@@ -336,11 +336,13 @@ def check_ownership() -> None:
         "01_os/_runs/",
         "01_os/claude与人类的开发对话日志.md",
     }
-    # Since 2026-11-18 (Human decision) a domain repository differs from core only
-    # in 08_Domain_Applications/. The domain run root lives under it, so it is
-    # covered by that entry rather than listed beside it. Listing both would be a
-    # prefix overlap and CM024 below would - correctly - report it.
-    expected_domain = {"08_Domain_Applications/"}
+    # Since 2026-11-18 (Human decision, run-20261118-restore-09-001) a domain
+    # repository differs from core only in 08_Domain_Applications/ (content) and
+    # 09_Domain_Global_Mechanisms/ (the domain's loading configuration). The domain
+    # run root lives under 08, so it is covered by that entry rather than listed
+    # beside it. Listing both would be a prefix overlap and CM024 below would -
+    # correctly - report it.
+    expected_domain = {"08_Domain_Applications/", "09_Domain_Global_Mechanisms/"}
     for missing in sorted(expected_core - set(core)):
         finding("CM022_CORE_OWNERSHIP_MISSING", missing)
     for missing in sorted(expected_domain - set(domain)):
@@ -350,7 +352,7 @@ def check_ownership() -> None:
     if "08_Domain_Applications/_runs/" in core:
         finding("CM032_DOMAIN_RUN_CORE_OWNED", "08_Domain_Applications/_runs/")
     if set(domain) != expected_domain:
-        finding("CM036_DOMAIN_OWNERSHIP_NOT_08_ONLY", str(sorted(domain)))
+        finding("CM036_DOMAIN_OWNERSHIP_NOT_08_AND_09", str(sorted(domain)))
     for left in core:
         for right in domain:
             if left.startswith(right) or right.startswith(left):

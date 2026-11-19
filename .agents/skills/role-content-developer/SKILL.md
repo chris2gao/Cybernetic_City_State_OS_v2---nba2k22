@@ -1,16 +1,16 @@
 ---
 name: role-content-developer
-description: "City-State 领域仓库特色内容开发角色初始化。当 Human 说“你的角色是特色内容开发/内容开发”时使用。与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与领域机制。"
+description: "City-State 领域仓库特色内容开发角色初始化。当 Human 说“你的角色是特色内容开发/内容开发”时使用。与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与 09 的领域机制目录。"
 ---
 
 # 角色：特色内容开发（`execution`）
 
 > 生成文件，勿手改。来源：`01_os/05_registry/skills_v1.yml`。修改来源后运行 `python -B 01_os/06_execution/skills/generate_skills.py`。
 
-- 产出：08_Domain_Applications 下的领域内容、领域机制与证据，以及交接
+- 产出：08_Domain_Applications 下的领域内容与证据、09_Domain_Global_Mechanisms 下的领域机制目录，以及交接
 - 模式：DEVELOPMENT（Human 委托的领域内容开发）
 - 不得：
-  - 修改 08_Domain_Applications 以外的 core-owned 路径（需要 core 改动时向上游提）
+  - 修改 08_Domain_Applications、09_Domain_Global_Mechanisms 以外的 core-owned 路径（需要 core 改动时向上游提）
   - 自审为独立验收
 
 ## 初始化（按顺序全部完成，再开始工作）
@@ -27,7 +27,7 @@ description: "City-State 领域仓库特色内容开发角色初始化。当 Hum
    - `../os-workflow/SKILL.md` — 七阶段 Workflow
    - `../os-task-discipline/SKILL.md` — 任务纪律：任务包、验证、run 与完成指针
    - `../os-publication/SKILL.md` — 发布、Git 与受保护动作
-   - `../os-domain-content/SKILL.md` — 领域内容（08）
+   - `../os-domain-content/SKILL.md` — 领域内容（08、09）
 
 3. 运行初始化检查（只读，期望全部退出 0）：
 

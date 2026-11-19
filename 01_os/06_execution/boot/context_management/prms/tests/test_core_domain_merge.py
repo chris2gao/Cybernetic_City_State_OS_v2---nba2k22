@@ -15,14 +15,16 @@ def test_core_candidate_merge_preserves_domain_owned_08_and_no_role_state(tmp_pa
         assert result.returncode == 0, result.stderr.decode("utf-8", "replace")
         return result.stdout
     git("checkout", "-b", "fixture-domain", BASE)
-    path = domain / "08_Domain_Applications/domain_mechanisms.yml"
-    path.parent.mkdir(parents=True)
+    # Both domain-owned roots (08 content, 09 loading configuration) survive a core merge.
+    paths = [domain / "08_Domain_Applications/domain.yml", domain / "09_Domain_Global_Mechanisms/domain_mechanisms.yml"]
     contents = b"domain_id: fixture\nentries: []\nfixture_domain_content: retained\n"
-    path.write_bytes(contents)
-    git("add", "--", "08_Domain_Applications/domain_mechanisms.yml")
+    for path in paths:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(contents)
+    git("add", "--", "08_Domain_Applications/", "09_Domain_Global_Mechanisms/")
     git("-c", "user.name=PRMS test", "-c", "user.email=test@example.invalid", "commit", "-qm", "domain-owned fixture")
     git("-c", "user.name=PRMS test", "-c", "user.email=test@example.invalid", "merge", "--no-edit", candidate)
-    assert path.read_bytes() == contents
+    assert all(path.read_bytes() == contents for path in paths)
     tree = [p.decode() for p in git("ls-tree", "-r", "--name-only", "HEAD").splitlines()]
     assert not any(p.startswith(("roles/", "publications/", "state/roles/")) for p in tree)
     assert git("show", "HEAD:CORE_MANIFEST.yml") == git("show", candidate + ":CORE_MANIFEST.yml")

@@ -139,25 +139,29 @@ core_owned_paths:
 
 # Paths every domain owns for itself. A core merge must not touch them.
 #
-# Settled 2026-11-18 by Human decision: a domain repository is identical to core
-# except 08_Domain_Applications/. Everything a domain owns - its content modules,
-# its domain mechanism catalog (domain_mechanisms.yml, formerly under
-# 09_Domain_Global_Mechanisms/), its research, protocols and daily execution
-# material (formerly 01/02/03) and its run traffic (_runs/, formerly
-# 01_os/07_content/_runs/) - lives under that one directory. Each domain moves its
-# existing 01/02/03/09/07_content material into 08 in its own merge task; core
-# changes nothing in a domain repository.
+# Settled 2026-11-18 by Human decision (second decision that day, recorded in
+# 01_os/_runs/run-20261118-restore-09-001/01_任务输入/Human决策记录_20261118.md):
+# a domain repository is the latest core plus two domain-owned directories.
+#   08_Domain_Applications/       the domain's own content: modules, domain.yml,
+#                                 knowledge_catalog.yml, research, protocols and
+#                                 its run traffic (_runs/).
+#   09_Domain_Global_Mechanisms/  where the domain keeps its loading configuration:
+#                                 the domain mechanism catalog domain_mechanisms.yml.
+#                                 Each domain updates it itself.
+# The earlier decision of the same day folded 09 into 08; this restores 09. Core
+# ships neither directory, so a core merge never touches them.
 #
 # Settled 2026-08-10 by Human decision: README.md is core-owned - it is the entry
 # that declares which OS is active, and a domain that could rewrite it could
 # contradict core about that.
 #
-# Core ships nothing at this path by design.
+# Core ships nothing at these paths by design.
 domain_owned_paths:
   - "08_Domain_Applications/"
-  # The domain run root 08_Domain_Applications/_runs/ is covered by the entry
-  # above and must not be listed separately: a separate line would be a prefix
-  # overlap and the ownership check would report it.
+  - "09_Domain_Global_Mechanisms/"
+  # The domain run root 08_Domain_Applications/_runs/ is covered by the 08 entry
+  # and must not be listed separately: a separate line would be a prefix overlap
+  # and the ownership check would report it.
 
 # Mechanics a domain repository follows. Recorded here so the procedure lives
 # with the manifest instead of in someone's memory.
@@ -175,16 +179,16 @@ domain_merge_procedure:
     The lifting takes effect for each domain only after this change is integrated
     into core master; each domain merge is its own task in that domain repository.
   merge_rule: >-
-    Everything outside 08_Domain_Applications/ is taken from core and overwrites
-    the domain copy. 08_Domain_Applications/ is never touched by a core merge. A
-    domain that still holds material in 01_Research_Reports/, 02_Protocols/,
-    03_Daily_Execution/, 09_Domain_Global_Mechanisms/ or 01_os/07_content/ moves it
-    into 08 before or within its first merge after 2026-11-18, so that the merge does
-    not conflict and nothing domain-owned is lost. When 09_Domain_Global_Mechanisms/
-    moves, also update domain.yml global_mechanism_catalog to
-    08_Domain_Applications/domain_mechanisms.yml and every catalog entry's content_path
-    and evidence_refs that still point into 09/ - PRMS discover_g2 rejects any path
-    outside 08_Domain_Applications/.
+    A domain upgrades its OS by merging core as it stands; there is no separate
+    migration task (Human decision 2026-11-18, recorded in
+    01_os/_runs/run-20261118-restore-09-001/01_任务输入/Human决策记录_20261118.md).
+    Core ships neither 08_Domain_Applications/ nor 09_Domain_Global_Mechanisms/, so a
+    core merge never touches them. A domain does not have to move other material it
+    still keeps (for example 01_os/07_content/) before merging: a three-way merge
+    removes only files that came from core and that core has since deleted, and keeps
+    files the domain added itself. What the domain does with such material is its own
+    decision. A conflict means the domain edited a core-owned path; see
+    every_upgrade_after.
   first_time_only: >-
     git merge -s ours core/master
     records ancestry WITHOUT taking core's tree. Required exactly once per

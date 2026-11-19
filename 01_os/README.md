@@ -30,8 +30,9 @@ evidence，不要求 Human 手工粘贴固定初始化包。累计区（`_runs/`
 
 ## The areas
 
-领域内容不在 `01_os/` 内：领域仓库与 core 除仓库根的 `08_Domain_Applications/` 外完全一致，
-领域内容、领域机制目录与领域运行记录都在 08（Human 决定 2026-11-18）。
+领域内容不在 `01_os/` 内：领域仓库 = 最新 core + 领域自有的 `08_Domain_Applications/`（领域内容、
+`domain.yml` 与领域运行记录）和 `09_Domain_Global_Mechanisms/`（领域加载配置，即领域机制目录
+`domain_mechanisms.yml`）。core 不带这两个目录，领域仓经合并 core 升级 OS（Human 决定 2026-11-18）。
 
 | Directory | Holds | Does not hold |
 | :--- | :--- | :--- |
@@ -66,7 +67,7 @@ it does not get an entry; it gets removed.
 
 `CORE_MANIFEST.yml` 将 OS 机制区域和保存共享 OS 开发/验证历史的 `01_os/_runs/`
 列为 core-owned；`08_Domain_Applications/`（含领域运行根 `08_Domain_Applications/_runs/`）
-是唯一的 domain-owned 路径。两个集合不得重叠。
+与 `09_Domain_Global_Mechanisms/` 是仅有的两个 domain-owned 路径。两个集合不得重叠。
 # 全局通讯机制接入
 
 供应商无关、Human 触发与 Human 中转的通讯契约位于

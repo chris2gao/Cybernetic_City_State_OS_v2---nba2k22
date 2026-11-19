@@ -22,7 +22,7 @@ description: "City-State 领域仓库特色内容教学或使用角色初始化�
    - `../os-context-management/SKILL.md` — 上下文管理、文件放置与工作集
    - `../os-task-continuity/SKILL.md` — 任务连续性与临时工作台
    - `../os-task-orchestration/SKILL.md` — 任务编排：大任务、G/R/A/D、原型与模式
-   - `../os-domain-content/SKILL.md` — 领域内容（08）
+   - `../os-domain-content/SKILL.md` — 领域内容（08、09）
 
 3. 运行初始化检查（只读，期望全部退出 0）：
 

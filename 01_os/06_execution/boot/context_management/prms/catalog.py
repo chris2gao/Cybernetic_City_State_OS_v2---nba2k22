@@ -109,19 +109,23 @@ def discover_g1(source):
             "coverage": "PARTIAL" if missing or unresolved else "SCANNED_SCOPE_COMPLETE"}
 
 
+# A domain owns two roots (Human decision 2026-11-18, run-20261118-restore-09-001):
+# 08 holds its content and domain.yml; 09 holds its loading configuration, the domain
+# mechanism catalog. Core ships neither, so a core merge never touches them.
 DOMAIN_ROOT = "08_Domain_Applications/"
-DOMAIN_CATALOG_PATH = DOMAIN_ROOT + "domain_mechanisms.yml"
+MECHANISM_ROOT = "09_Domain_Global_Mechanisms/"
+DOMAIN_ROOTS = (DOMAIN_ROOT, MECHANISM_ROOT)
+DOMAIN_CATALOG_PATH = MECHANISM_ROOT + "domain_mechanisms.yml"
 
 
 def discover_g2(source, domain_id):
     domain = mapping(source, "08_Domain_Applications/domain.yml")
     if domain.get("domain_id") != domain_id or domain.get("repository") != source.repository:
         raise PRMSError("REJECTED", "domain/repository binding mismatch")
-    # Since 2026-11-18 every domain-owned file lives under 08_Domain_Applications/;
-    # domain.yml names the catalog and it must stay inside 08.
+    # domain.yml may name the catalog; it must stay in the domain's loading-configuration root.
     path = domain.get("global_mechanism_catalog") or DOMAIN_CATALOG_PATH
-    if not isinstance(path, str) or not path.startswith(DOMAIN_ROOT):
-        raise PRMSError("REJECTED", "domain mechanism catalog must live under 08_Domain_Applications/")
+    if not isinstance(path, str) or not path.startswith(MECHANISM_ROOT):
+        raise PRMSError("REJECTED", "domain mechanism catalog must live under 09_Domain_Global_Mechanisms/")
     result = {"layer": "G2", "domain_id": domain_id, "repository": source.repository,
               "source_commit": source.commit, "entries": [], "candidates": [], "issues": [],
               "status": "DOMAIN_CATALOG_UNINITIALIZED"}
@@ -145,7 +149,7 @@ def discover_g2(source, domain_id):
             owner = item["owner"]
             if owner != domain_id and owner != {"domain_id": domain_id, "repository": source.repository}:
                 raise PRMSError("AUTHORITY_UNVERIFIED", "G2 owner not bound to this domain")
-            if not item["content_path"].startswith(DOMAIN_ROOT):
+            if not item["content_path"].startswith(DOMAIN_ROOTS):
                 raise PRMSError("REJECTED", "G2 cannot replace a Core canonical body")
             body_source = source if item.get("source_commit") == source.commit else source.at(item.get("source_commit", ""))
             _, proof = body_source.read(item["content_path"], item["canonical_blob"])
