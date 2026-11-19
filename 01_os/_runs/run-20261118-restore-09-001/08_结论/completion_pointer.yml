@@ -1,0 +1,57 @@
+completion_pointer:
+  packet_id: OS-CORE-RESTORE-09-20261118-001
+  status: integrated
+  source_branch: task/core-restore-09-20261118
+  source_base: 5cb71b61b26917831978e84979a7bf5d9fce3765
+  source_head: d87291e12925f1b2494fc859c247e85c0076f27d
+  verified_candidate: b9946714bc310f43aaf7adef04615d8a4eb0b718
+  validation:
+    tests: managed_verify 19/19 success on b9946714 (executor); independent re-run 19/19 success (07_测试执行/独立审核_b9946714.md)
+    candidate_caused_failures: 0
+    diff_scope: passed
+    hook_guard: branch pushes ran the branch's own .githooks (git -c core.hooksPath=.githooks); master merge via github_cli
+  repository:
+    changed_paths_vs_master_before: 28
+    changed_paths:
+    - .agents/skills/citystate-os/SKILL.md
+    - .agents/skills/os-domain-content/SKILL.md
+    - .agents/skills/role-content-developer/SKILL.md
+    - .agents/skills/role-content-user/SKILL.md
+    - .claude/skills/citystate-os/SKILL.md
+    - .claude/skills/os-domain-content/SKILL.md
+    - .claude/skills/role-content-developer/SKILL.md
+    - .claude/skills/role-content-user/SKILL.md
+    - 01_os/02_boot/domain_content/启动清单_v1.yml
+    - 01_os/02_boot/os_entry/开发入口_按动作细则_v1.md
+    - 01_os/03_mechanisms/context_management/实现/verify_context_structure.py
+    - 01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
+    - 01_os/05_registry/skills_v1.yml
+    - 01_os/06_execution/boot/context_management/prms/catalog.py
+    - 01_os/06_execution/boot/context_management/prms/domain.py
+    - 01_os/06_execution/boot/context_management/prms/tests/test_core_domain_merge.py
+    - 01_os/06_execution/boot/context_management/prms/tests/test_domain.py
+    - 01_os/README.md
+    - 01_os/_runs/run-20261118-restore-09-001/01_任务输入/Human决策记录_20261118.md
+    - 01_os/_runs/run-20261118-restore-09-001/01_任务输入/任务包_v1.yml
+    - 01_os/_runs/run-20261118-restore-09-001/07_测试执行/managed_verify_b9946714.json
+    - 01_os/_runs/run-20261118-restore-09-001/07_测试执行/verification_plan.json
+    - 01_os/_runs/run-20261118-restore-09-001/07_测试执行/独立审核_b9946714.md
+    - 01_os/_runs/run-20261118-restore-09-001/08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261119.md
+    - 01_os/_runs/run-20261118-restore-09-001/run.yml
+    - CORE_MANIFEST.yml
+    - README.md
+    - new-domain.ps1
+    out_of_scope_paths: 0
+    worktree_clean: true
+  publication:
+    transport: github_cli
+    expected_remote_head: d87291e12925f1b2494fc859c247e85c0076f27d
+    resulting_remote_head: 7f600951882fe72a6cda3500a2e6968c939fcee9
+    compare_and_swap: passed
+    force_push: false
+    readback: PR chris2gao/Cybernetic_City_State_OS_v2---core#45 MERGED 2026-11-19T09:29:34Z via gh pr merge --merge --match-head-commit d87291e1; master 7f600951 parents [5cb71b61, d87291e1]; old master is an ancestor; merge tree equals PR head tree
+    confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261119.md
+  business_done:
+    restore_09: 09_Domain_Global_Mechanisms/ 是领域自有目录，OS 从 09 读领域机制目录；临时副本中 company2.0 合并候选后放入 09，PRMS 为 CATALOG_DISCOVERED_NOT_ACTIVATED
+    domain_upgrade: 各领域仓按方法二（git fetch core && git merge core/master）升级，属各领域仓的动作，不在本 run 内
+  next_owner: Human

@@ -9,7 +9,8 @@ objective: 恢复 09_Domain_Global_Mechanisms/ 为领域自有（领域加载配
 task_packet: 01_任务输入/任务包_v1.yml
 inputs:
   - 01_任务输入/Human决策记录_20261118.md
-lifecycle: candidate_ready_for_independent_review
+lifecycle: integrated_and_verified_on_demand
+closure_record: 08_结论/completion_pointer.yml
 candidate: b9946714bc310f43aaf7adef04615d8a4eb0b718
 increments:
   - commit: b9946714
@@ -31,6 +32,10 @@ review_round_0:
   observation_O2: domain.yml 未指定目录而目录在 08 时静默为 UNINITIALIZED；6 个本地领域仓都没有 domain_mechanisms.yml（执行者 2026-11-18 实测），当前无影响
 follow_up_candidates:
   - F1、F2 文档补一句 09（下次改动 context_management / CORE_MANIFEST 时顺带）
-remaining:
-  - master 集成由 Human 在审核后另行确认
-  - 之后按方法二把 core 合并进各领域仓（领域仓的动作，推送前由 Human 确认）
+integration:
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#45 (MERGED 2026-11-19T09:29:34Z)
+  master_before: 5cb71b61b26917831978e84979a7bf5d9fce3765
+  pr_head_bound: d87291e12925f1b2494fc859c247e85c0076f27d
+  master_after: 7f600951882fe72a6cda3500a2e6968c939fcee9
+  confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261119.md
+remaining: []
