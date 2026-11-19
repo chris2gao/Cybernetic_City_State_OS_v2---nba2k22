@@ -23,7 +23,14 @@ verification:
 findings:
   - task_preflight 报 worktree_dirty（预检在写入后才补跑）与 hook_guard：本仓 core.hooksPath 为主检出 `.githooks` 的绝对路径，不是 `.githooks`。两处 .githooks 逐文件一致；推送时用 `git -c core.hooksPath=.githooks push`，让本分支自己的守卫执行。
   - 领域仓按方法二（git fetch core && git merge core/master）升级不需要额外检查（Human 2026-11-18）；本任务只改 core。
+review_round_0:
+  report: 07_测试执行/独立审核_b9946714.md
+  verdict: PASS
+  reviewer: 独立 Claude Code 会话（Opus 5.5，同族，已披露）；独立复跑 19/19 success
+  nonblocking: [F1 开发总结_v1.md 仍写“除 08 外完全一致”, F2 CORE_MANIFEST 两处注释只提 08, F3 completion pointer 在收尾时写]
+  observation_O2: domain.yml 未指定目录而目录在 08 时静默为 UNINITIALIZED；6 个本地领域仓都没有 domain_mechanisms.yml（执行者 2026-11-18 实测），当前无影响
+follow_up_candidates:
+  - F1、F2 文档补一句 09（下次改动 context_management / CORE_MANIFEST 时顺带）
 remaining:
-  - 独立审核（新的隔离会话；与执行者同为 Claude 模型族，须披露）
   - master 集成由 Human 在审核后另行确认
   - 之后按方法二把 core 合并进各领域仓（领域仓的动作，推送前由 Human 确认）
