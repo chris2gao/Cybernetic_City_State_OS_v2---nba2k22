@@ -16,7 +16,10 @@ fresh-read，不作为每个窗口的启动门。进入本 repository 工作本�
 **按角色加载。** Human 说明角色（任务规划、任务开发、审核；领域仓另有特色内容开发、
 特色内容教学或使用）后，模型调用对应角色 skill（`role-planner`、`role-developer`、
 `role-reviewer`、`role-content-developer`、`role-content-user`），由它加载该角色需要的
-全部机制 skill 并输出角色初始化回执。`citystate-os` skill 是整个 OS 的目录。skill 位于
+全部机制 skill 并输出角色初始化回执。在领域仓里，Human 说出的角色不是上面这些时，就是该领域在
+`09_Domain_Global_Mechanisms/` 自己定义的领域角色：调用 `role-content-user`（要开发或修改这个角色时调用
+`role-content-developer`），由它到 `09_Domain_Global_Mechanisms/domain_mechanisms.yml` 找该角色的条目。
+`citystate-os` skill 是整个 OS 的目录。skill 位于
 仓库根 `.agents/skills/`（Claude Code 读 `.claude/skills/` 镜像），由
 `06_execution/skills/generate_skills.py` 从 registry 生成，不手改。聊天窗口是临时工作台，
 一个窗口承担一个任务还是一个系列由 Human 决定。

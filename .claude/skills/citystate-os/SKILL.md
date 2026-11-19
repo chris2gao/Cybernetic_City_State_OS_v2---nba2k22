@@ -13,7 +13,7 @@ description: "City-State Core OS 的地图与入口。新窗口开始工作、�
 
 适用角色：初始化必载 = 任务规划、任务开发、审核、特色内容开发、特色内容教学或使用；按触发加载 = 无
 
-## 启动必读（角色初始化时读完，约 70 KB）
+## 启动必读（角色初始化时读完，约 71 KB）
 
 - `AGENT_WORKING_DISCIPLINE.md`
 - `AGENTS.md`
@@ -43,7 +43,7 @@ description: "City-State Core OS 的地图与入口。新窗口开始工作、�
 
 | Skill | 内容 | 生效等级 | 启动读取 | 任务规划 | 任务开发 | 审核 | 特色内容开发 | 特色内容教学或使用 |
 |---|---|---|---|---|---|---|---|---|
-| `citystate-os` | City-State OS 总入口与目录 | — | 70 KB | 必 | 必 | 必 | 必 | 必 |
+| `citystate-os` | City-State OS 总入口与目录 | — | 71 KB | 必 | 必 | 必 | 必 | 必 |
 | `os-mechanism-activation` | 机制激活与正式动作宪法 | L3_EXECUTION_GATED | 2 KB | 必 | 必 | 必 | 必 | 触 |
 | `os-communication` | 正式通讯与 Human 中转交接 | L3_EXECUTION_GATED | 1 KB | 必 | 触 | 触 | 触 | 触 |
 | `os-context-management` | 上下文管理、文件放置与工作集 | L1_BOOT_VISIBLE | 5 KB | 必 | 必 | 必 | 必 | 必 |
@@ -62,11 +62,11 @@ description: "City-State Core OS 的地图与入口。新窗口开始工作、�
 
 各角色初始化的启动读取量（启动必读合计，不含按动作读取与程序读取）：
 
-- 任务规划：约 120 KB
-- 任务开发：约 122 KB
+- 任务规划：约 121 KB
+- 任务开发：约 123 KB
 - 审核：约 113 KB
-- 特色内容开发：约 122 KB
-- 特色内容教学或使用：约 97 KB
+- 特色内容开发：约 123 KB
+- 特色内容教学或使用：约 98 KB
 
 ## 角色初始化
 
