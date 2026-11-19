@@ -1,0 +1,70 @@
+{
+  "source_refs": [
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "99938b46e47c7ded9a8ba317fef6a7849342a171",
+      "path": "01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/evidence/ge01-audit/entry-native/37373e0605674e0b9d1150085d83b989/evidence.json",
+      "blob": "e8c10e66162176fe5704b52e1ee7bfe2703acd32",
+      "sha256": "2c76ee54055f2637acc38107884bcd67c9db67565c308ef0dc88df83f1ebd475",
+      "bytes": 387
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "99938b46e47c7ded9a8ba317fef6a7849342a171",
+      "path": "01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/evidence/ge01-audit/entry-repair-01-native/bc70f7bfe40140fbb484208589f259b9/evidence.json",
+      "blob": "dc9956ba3387737a14745a816f70b09cf67152a8",
+      "sha256": "0795b9bbde294287f24ee46544d50888e4a751ac4a746d154124790268ad4464",
+      "bytes": 1694
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "99938b46e47c7ded9a8ba317fef6a7849342a171",
+      "path": "01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/evidence/ge01-audit/entry-repair-01-native/bc70f7bfe40140fbb484208589f259b9/program.js",
+      "blob": "4f7ab3b958ecfd06817a2e97aa34f303ccf20030",
+      "sha256": "a266ef68425fdb02428ea5103d1ebb4143d0349f0acf2e9510c20f5bf3de70ef",
+      "bytes": 12258
+    },
+    {
+      "repository": "chris2gao/Cybernetic_City_State_OS_v2---nba2k22",
+      "commit": "99938b46e47c7ded9a8ba317fef6a7849342a171",
+      "path": "01_os/07_content/_runs/run-20261111-nba2k22-live-research-continuation-001/GE01_EXECUTION_AUDIT.md",
+      "blob": "3979507768ab7eeb3182977f867890496bc7f808",
+      "sha256": "30107ff836d625f265c0a4a2b3f4e1eb2d92ce770e211e3ee21196c6bb170e5a",
+      "bytes": 11290
+    }
+  ],
+  "validation_error": {
+    "code": "VALIDATION_ERROR",
+    "message": "REA could not read the command arguments. Check the named argument and its expected type, then try again.",
+    "fieldErrors": [
+      {
+        "code": "too_big",
+        "missing": false,
+        "path": "durationMs",
+        "expected": "",
+        "received": "",
+        "message": "Too big: expected number to be <=60000"
+      }
+    ]
+  },
+  "fixture_error": {
+    "description": "Error: Schedule fixture differs",
+    "line_number": 118,
+    "cleanup_error": null,
+    "pre_dispatch_check_precedes_invoke": true,
+    "observed_row_values": "NOT_RECORDED",
+    "comparison_fields_from_source": [
+      "id",
+      "duplicate_id",
+      "day",
+      "home",
+      "away"
+    ]
+  },
+  "audit_statistics": {
+    "basis": "executor audit assertions, not independent replay",
+    "first_attempt_seconds": 5152.458,
+    "outer_tool_calls_before_first_attempt": 51,
+    "calendar_dispatches": 0
+  }
+}

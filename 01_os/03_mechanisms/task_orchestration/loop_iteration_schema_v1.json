@@ -1,0 +1,264 @@
+{
+  "$id": "urn:citystate:core:development-loop:iteration:v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "anyOf": [
+    {
+      "properties": {
+        "changed_paths": {
+          "minItems": 1
+        }
+      },
+      "required": [
+        "changed_paths"
+      ]
+    },
+    {
+      "properties": {
+        "research_actions": {
+          "minItems": 1
+        }
+      },
+      "required": [
+        "research_actions"
+      ]
+    }
+  ],
+  "properties": {
+    "actual_test_receipts": {
+      "items": {
+        "additionalProperties": true,
+        "properties": {
+          "exit_code": {
+            "type": "integer"
+          },
+          "receipt_ref": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "FAIL",
+              "PASS",
+              "SKIP",
+              "UNKNOWN"
+            ]
+          },
+          "test_name": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "test_name",
+          "status",
+          "exit_code",
+          "receipt_ref"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "after_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "before_sha": {
+      "pattern": "^[0-9a-f]{40}$",
+      "type": "string"
+    },
+    "changed_paths": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "continuation_reason": {
+      "enum": [
+        "completion_pointer_closure",
+        "deterministic_in_scope_construction",
+        "deterministic_repair_of_a_failure_this_task_caused",
+        "evidence_and_receipt_update",
+        "private_runtime_cleanup",
+        "required_validation_and_test_execution",
+        "task_branch_commit",
+        "task_branch_push"
+      ]
+    },
+    "evidence_grade": {
+      "enum": [
+        "DOCUMENTED_ONLY",
+        "EXECUTED_VERIFIED",
+        "LEGACY_EVIDENCE_MISSING",
+        "UNVERIFIED"
+      ]
+    },
+    "expected_vs_observed": {
+      "additionalProperties": true,
+      "properties": {
+        "expected": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "observed": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "expected",
+        "observed"
+      ],
+      "type": "object"
+    },
+    "independent_review_status": {
+      "type": "string"
+    },
+    "iteration_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "iteration_index": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "lifecycle": {
+      "enum": [
+        "candidate_pending_validation",
+        "candidate_ready_for_independent_review",
+        "deferred",
+        "excluded",
+        "integrated_and_verified_on_demand",
+        "research_only",
+        "verified_on_demand"
+      ]
+    },
+    "next_action_or_stop_reason": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "objective": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "outcome": {
+      "enum": [
+        "genuine_stop_reached",
+        "hypothesis_refuted_and_revised",
+        "improvement_verified_in_scope",
+        "objective_met_ready_for_series_review",
+        "scoped_gap_with_evidence_and_next_trigger",
+        "verified_no_regression_but_goal_incomplete"
+      ]
+    },
+    "protected_actions": {
+      "items": {
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "regression_status": {
+      "enum": [
+        "FAIL",
+        "NOT_APPLICABLE",
+        "PASS",
+        "UNKNOWN"
+      ]
+    },
+    "remaining_gaps": {
+      "items": {
+        "properties": {
+          "id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "OPEN",
+              "CLOSED",
+              "BLOCKED"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ],
+        "type": "object"
+      },
+      "type": "array"
+    },
+    "research_actions": {
+      "items": {
+        "minLength": 1,
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "review_schedule": {
+      "properties": {
+        "review_mode": {
+          "enum": [
+            "deferred_to_series",
+            "immediate_required"
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "schema_version": {
+      "const": "core.development_loop.iteration.v1"
+    },
+    "source_ref": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "stop_reason": {
+      "enum": [
+        "destructive_git_or_history_rewrite",
+        "evidence_cannot_support_the_claim",
+        "human_relay_required_to_reach_another_independent_model",
+        "new_load_bearing_semantic_choice",
+        "protected_action_not_already_covered_by_current_authority",
+        "runtime_or_scheduler_activation",
+        "safety_privacy_secret_or_credential_boundary",
+        "scope_escape_beyond_allowed_changed_paths"
+      ]
+    },
+    "task_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "trigger_type": {
+      "enum": [
+        "human_scope_update",
+        "planned_increment",
+        "research",
+        "resumed_checkpoint",
+        "review_remediation",
+        "test_failure"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "task_id",
+    "iteration_id",
+    "iteration_index",
+    "trigger_type",
+    "objective",
+    "source_ref",
+    "before_sha",
+    "after_sha",
+    "actual_test_receipts",
+    "expected_vs_observed",
+    "regression_status",
+    "evidence_grade",
+    "remaining_gaps",
+    "next_action_or_stop_reason",
+    "outcome"
+  ],
+  "title": "Core OS evidence-driven iteration checkpoint",
+  "type": "object"
+}

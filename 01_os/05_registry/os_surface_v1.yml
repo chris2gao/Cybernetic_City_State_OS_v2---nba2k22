@@ -1,0 +1,109 @@
+schema_version: citystate.registry.v1
+registry_id: os_surface_v1
+mechanism_version: 1
+# Added 2026-11-18 (plan v4 I10). Before this file, 142 tracked files outside run
+# traffic were covered by no registry entry, which the PRMS catalog reported as
+# registry_consistency: PARTIAL. The skill generator reads registry and boot files as
+# its source, so coverage had to be complete first. Entries here are path-sets for
+# areas whose files share one purpose; mechanism-specific registries keep their
+# finer entries and win where both match.
+entries:
+  - path: "{AGENTS.md,AGENT_WORKING_DISCIPLINE.md,CLAUDE.md,GEMINI.md,README.md,CORE_MANIFEST.yml,.gitattributes,.gitignore,new-domain.ps1,.claude/settings.json}"
+    purpose: retained global surface outside 01_os - vendor routers, shared discipline, ownership manifest, Git attributes and ignores, domain creation, Claude Code permission policy
+    loader: Codex (AGENTS.md), Claude Code (CLAUDE.md, .claude/settings.json), Antigravity (GEMINI.md, AGENTS.md), Git, Human
+    loader_class: external_tool_convention
+    discovery: vendor root discovery; CORE_MANIFEST.yml core_owned_paths group 1
+    evidence: CORE_MANIFEST.yml
+    cache_dirs: []
+    failure_surfacing: verify_context_structure.py ownership checks; next session bootstrap
+    deletion_rule: protected
+  - path: "{01_os/README.md,01_os/02_boot/README.md,01_os/03_mechanisms/README.md,01_os/05_registry/README.md,01_os/06_execution/README.md}"
+    purpose: area entry READMEs - what each 01_os area holds and does not hold
+    loader: Human and every role at bootstrap (01_os/README.md is B0)
+    loader_class: external_tool_convention
+    discovery: linked from 01_os/README.md and the citystate-os skill
+    evidence: .agents/skills/citystate-os/SKILL.md
+    cache_dirs: []
+    failure_surfacing: verify_context_structure.py active-text checks
+    deletion_rule: protected
+  - path: 01_os/05_registry/*.yml
+    purpose: the registry itself - each file describes one mechanism or area's files, loaders and failure surfacing
+    loader: PRMS catalog, skill generator, mechanism validators
+    loader_class: in_repo_program
+    discovery: 01_os/05_registry/ enumeration by the PRMS catalog
+    evidence: 01_os/06_execution/boot/context_management/prms/catalog.py
+    cache_dirs: []
+    failure_surfacing: PRMS catalog registry_consistency; validate_skills.py
+    deletion_rule: protected
+  - path: "01_os/01_workflow/{README.md,*/README.md,*/方法论_v*.md,*/实现/**,*/工具使用_DeepResearch与NotebookLM.md}"
+    purpose: seven-stage workflow stage specifications, methodologies, stage implementation notes, schemas and stage-deliberation profile references
+    loader: os-workflow skill; run_minimum_operational_loop.py for schemas and profile references
+    loader_class: in_repo_program
+    discovery: 01_os/01_workflow/README.md; 02_boot/workflow_minimum_operational_loop/启动清单_v1.yml
+    evidence: 01_os/06_execution/workflow/minimum_operational_loop/test_minimum_operational_loop.py
+    cache_dirs: []
+    failure_surfacing: run_minimum_operational_loop.py static exit codes 20-24
+    deletion_rule: protected
+  - path: 01_os/01_workflow/*/依据材料/**
+    purpose: research and source material each stage's methodology was derived from; evidence, not runtime rules
+    loader: Human and design work on that stage
+    loader_class: external_tool_convention
+    discovery: linked from the stage README
+    evidence: the stage README that cites it
+    cache_dirs: []
+    failure_surfacing: independent review of the stage methodology
+    deletion_rule: human_decision_required
+  - path: "{01_os/02_boot/stage_collaborative_deliberation/**,01_os/03_mechanisms/stage_collaborative_deliberation/**,01_os/06_execution/boot/stage_collaborative_deliberation/**}"
+    purpose: stage collaborative deliberation mechanism - boot, method, profile contract and set, implementation contracts, validators, fixtures and historical authority helper
+    loader: os-stage-deliberation skill; verify_stage_collaborative_deliberation_v2.py; run_minimum_operational_loop.py
+    loader_class: in_repo_program
+    discovery: 01_os/05_registry/stage_collaborative_deliberation_v1.yml activation and discovery blocks
+    evidence: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+    cache_dirs: [__pycache__/]
+    failure_surfacing: verify_no_canonical_live_state.py and v2 static exit codes
+    deletion_rule: protected
+  - path: "01_os/03_mechanisms/task_orchestration/{原子任务与结果驱动执行模型_v1.md,原子任务场景验证_v1.md}"
+    purpose: G/R/A/D atomic task semantics and its five acceptance scenarios
+    loader: os-task-orchestration skill
+    loader_class: external_tool_convention
+    discovery: 01_os/02_boot/task_orchestration/启动清单_v1.yml
+    evidence: 01_os/06_execution/task_orchestration/test_atomic_tasks.py
+    cache_dirs: []
+    failure_surfacing: validate_skills.py when a listed path disappears
+    deletion_rule: protected
+  - path: 01_os/02_boot/协作伙伴.md
+    purpose: stable collaboration-role entry; dynamic model facts live in model_routing
+    loader: os-model-routing skill
+    loader_class: external_tool_convention
+    discovery: listed in skills_v1.yml os-model-routing reads
+    evidence: .agents/skills/os-model-routing/SKILL.md
+    cache_dirs: []
+    failure_surfacing: validate_skills.py
+    deletion_rule: protected
+  - path: 01_os/03_mechanisms/context_management/依据材料/系统机制总结_历史输入_v1.md
+    purpose: historical input summary of the first-generation system; evidence only
+    loader: Human
+    loader_class: external_tool_convention
+    discovery: context_management 依据材料
+    evidence: 01_os/03_mechanisms/context_management/开发总结_v1.md
+    cache_dirs: []
+    failure_surfacing: none at runtime; not loaded by any role
+    deletion_rule: human_decision_required
+  - path: "01_os/06_execution/task_discipline/{path_ledger,preflight,quiet_verify}/test_*.py"
+    purpose: behaviour tests of the task-discipline reporting tools
+    loader: pytest
+    loader_class: in_repo_program
+    discovery: python -m pytest 01_os/06_execution/task_discipline
+    evidence: the tests themselves
+    cache_dirs: [.pytest_cache/, __pycache__/]
+    failure_surfacing: pytest exit code
+    deletion_rule: protected
+  - path: 01_os/_dev/**
+    purpose: development design history and superseded versions; active rules do not live here since 2026-11-18
+    loader: Human when history is the subject
+    loader_class: external_tool_convention
+    discovery: exact path named by a task, or visible_set.py --include-hidden
+    evidence: 01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml development_design surface
+    cache_dirs: []
+    failure_surfacing: none at runtime
+    deletion_rule: human_decision_required

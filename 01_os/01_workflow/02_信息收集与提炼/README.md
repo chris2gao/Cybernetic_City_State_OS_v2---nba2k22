@@ -2,7 +2,7 @@
 
 工作流阶段二。本目录持有阶段规格、工具路由与可执行结构；共享 OS 机制开发和验证任务的
 公开耐久证据放在 `01_os/_runs/<run-id>/`，领域业务任务的运行流量放在
-`01_os/07_content/_runs/<run-id>/`。被提升为全局资产的依据材料位于相应
+`08_Domain_Applications/_runs/<run-id>/`。被提升为全局资产的依据材料位于相应
 `03_mechanisms/<mechanism>/依据材料/`。
 
 ## 当前文件
@@ -24,6 +24,15 @@
 这个区别决定了搜什么。前者会搜到关于问题的背景资料；后者搜的是能支撑或推翻“A 可以被实现”这个判断的依据。
 
 目标始终指向下一阶段的结果建模 B。搜索的终点不是知识，是**判断的依据**。
+
+按完整A的RES/SC/EVQ逐项查证，领域背景只在理解当前问题时加载。
+机器claim使用`purpose: FEASIBILITY | BACKGROUND`，并分别标记STATIC_SOURCE、
+OFFLINE_TEST、LIVE_TOOL_CALL、LIVE_TARGET_EFFECT、INDEPENDENT_REVIEW、UNKNOWN或
+BACKGROUND_REFERENCE。每条保留limits、result_item_ids、success_criterion_ids和source_ids；
+UNKNOWN必须说明closure_evidence，不能独自支撑阶段03实现主张。
+source_ref记录repository、精确40位commit和path，publication_status单独表达；
+历史实测、条目数量和Draft文件存在均不能自行升级成熟度。真实来源状态可通过现有
+`task_discipline/project_context`的PRMS来源读取和祖先检查复核。
 
 ## 两类研究问题
 
@@ -62,7 +71,3 @@ run: 01_os/_runs/run-007-上下文管理信息收集测试/
 该运行已完成两路研究、第三方匹配、本机分区试验和最终证据闭包。运行记录保留在
 run-007，提升后的 canonical 依据位于全局机制；当前结构迁移见 run-008。二者都是
 共享 OS 的开发/验证历史，因此属于 core-owned `_runs/`，不是领域业务运行流量。
-
-## 2026-10-23 阶段01输入澄清
-
-阶段02以经过 Human 确认的 **01b 需求结果 A**（逐结果对象、字段/行为、关系、未知缺口、完成判据）为调查输入，不再以仅有目标与约束的 01a 共识代替完整 A。核实每一条已知/待确认内容及反例；如事实要求改变产品结果，返还 01b 进行 Human 再确认。

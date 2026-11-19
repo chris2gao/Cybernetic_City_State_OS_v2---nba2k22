@@ -1,0 +1,84 @@
+task_packet:
+  task_id: OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  # 修正轮 1 把 master 0b935671（PR #41）merge 进任务分支后，分支与 master 的 merge-base 是
+  # 0b935671；exact_base_sha 改为这个实际基线，使 managed_verify 的 diff 只含本任务改动。
+  # 原基线保留在 original_base_sha，verify_b0_split.py 的原文核对仍对照它（PR #41 未改 B0）。
+  exact_base_sha: 0b93567116a53968f98b590eae09431a16a5f6d0
+  original_base_sha: 232345a737f06f348ba8e4fb1ec096537d647a70
+  branch: task/core-b0-split-boot-tiers-20261118
+  # Human 2026-11-18 选择“方案 B，含去重”（01_任务输入/Human决策记录_20261118.md），
+  # 这一批准确定执行范围（开发入口 §7.2）。细则与依据文件按施工中发现放在
+  # 01_os/02_boot/os_entry/（理由见 run.yml plan_vs_actual），仍在 01_os/02_boot/** 边界内。
+  approval_state: Human_approved_plan_B_with_dedup
+  objective: >-
+    把 Core OS 的 B0 入口文件拆成“操作规则”与“依据与事故记录”两层，并把三层读取
+    （启动必读 / 按动作读取 / 程序读取）从 skills_v1.yml 写进各机制的 boot 清单，
+    使“读什么”只在 boot 写一次；各角色启动读取量实测下降，规则不删、不改语义，
+    新窗口只说角色即可按矩阵加载。
+  source_evidence:
+    - 01_os/_runs/run-20261118-b0-split-boot-tiers-001/03_方案设计/方案对比_v1.md
+    - 01_os/_runs/run-20261118-role-skills-integration-001/01_任务输入/Human决策记录_20261118.md
+    - 01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md
+    - 01_os/_runs/run-20261118-b0-split-boot-tiers-001/01_任务输入/Human决策记录_20261118.md
+    - 232345a737f06f348ba8e4fb1ec096537d647a70
+  allowed_changed_paths:
+    - AGENT_WORKING_DISCIPLINE.md
+    - AGENTS.md
+    - CLAUDE.md
+    - GEMINI.md
+    - CORE_MANIFEST.yml
+    - 01_os/README.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/02_boot/**
+    - 01_os/05_registry/skills_v1.yml
+    - 01_os/05_registry/os_surface_v1.yml
+    - 01_os/06_execution/skills/**
+    - .agents/skills/**
+    - .claude/skills/**
+    - 01_os/_runs/run-20261118-b0-split-boot-tiers-001/**
+  verification_plan: 01_os/_runs/run-20261118-b0-split-boot-tiers-001/07_测试执行/verification_plan.json
+  required_tests: [context_structure, working_set, mechanism_activation_static, communication_static, mwu_static, model_routing_static, stage_deliberation_guard, stage_deliberation_static, workflow_static, skills_static, pytest_skills, pytest_task_orchestration, pytest_task_discipline, pytest_workflow, pytest_stage_deliberation, pytest_context_management, pytest_mechanism_activation, pytest_model_routing, pytest_communication, b0_verbatim_move]
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - rewrite_historical_run_evidence
+    - change_rule_semantics
+    - modify_domain_repositories
+  required_completion_pointer: 01_os/_runs/run-20261118-b0-split-boot-tiers-001/08_结论/completion_pointer.yml
+  big_task: true
+  development_loop:
+    mode: iterative_development
+    progress_evidence: run.yml increments, validator exit codes, measured startup bytes per role
+    convergence_condition: 所选方案施工完成、全部校验与测试通过、新窗口只说角色的实测读取量下降且与矩阵一致
+    series_id: null
+    review_mode: immediate_required
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    # master 在独立审核期间前进到 0b935671（PR #41）；按审核 B1 以 merge（不 rebase）并入任务分支。
+    expected_remote_master_head: 0b93567116a53968f98b590eae09431a16a5f6d0
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Anthropic
+    surface: claude_code_desktop
+    model: claude-opus-5-5
+    reasoning_effort: runtime_default
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: 由上一任务的会话派生，延续同一机制上下文
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: 新的隔离 Claude Code 会话
+    different_model_family: false
+    different_measurement_tool: false

@@ -1,0 +1,60 @@
+task_packet:
+  task_id: OS-CORE-WORKFLOW-REA-PROMOTION-20261029-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: d463b83c74c17d74cacf64c4d82e4abce5004b75
+  branch: task/os-core-workflow-rea-promotion-20261029
+  objective: Implement S1-S3 and S5 of the approved unified Workflow, development practice and optional REA upgrade; NBA S4 stays domain-owned.
+  source_evidence:
+    - chris2gao/Cybernetic_City_State_OS_v2---nba2k22@15d664405330cd38e04fee5980a89ada36376d14:01_os/07_content/_runs/run-20261029-os-core-workflow-rea-promotion-001/README.md
+    - chris2gao/Cybernetic_City_State_OS_v2---nba2k22@094f1aa641f93dec2277707ad9dbf5bdb0341247:08_Domain_Applications/Antigravity_GM_Engine/PROJECT_INDEX.md
+  allowed_changed_paths:
+    - AGENTS.md
+    - AGENT_WORKING_DISCIPLINE.md
+    - 01_os/README.md
+    - 01_os/开发入口与单窗口任务规范_v1.md
+    - 01_os/01_workflow/**
+    - 01_os/02_boot/workflow_minimum_operational_loop/**
+    - 01_os/03_mechanisms/context_management/**
+    - 01_os/03_mechanisms/task_orchestration/**
+    - 01_os/04_skills_and_tools/**
+    - 01_os/05_registry/**
+    - 01_os/06_execution/workflow/**
+    - 01_os/06_execution/task_discipline/**
+    - 01_os/06_execution/tools/rea/**
+    - 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/**
+  verification_plan: 01_os/_runs/run-20261029-os-core-workflow-rea-promotion-implementation-001/verification_plan.json
+  required_tests: [python_suites, static]
+  prohibitions: [merge_master, rewrite_history, other_domains, auto_install, elevate, game_attach, game_write, new_service, legacy_stage01_compatibility]
+  required_completion_pointer: exact Core and NBA PR heads, managed verification and independent review inputs
+  big_task: true
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: d463b83c74c17d74cacf64c4d82e4abce5004b75
+  executor_profile:
+    provider: OpenAI
+    surface: codex_desktop
+    model: current_Human_assigned_Codex_session
+    reasoning_effort: runtime_selected_not_independently_observable
+    mode: standard
+    routing_basis: Current Human explicitly assigns this Codex session sole engineering ownership; no delegation or model change.
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: separate_Human_selected_session
+    different_model_family: preferred
+    different_measurement_tool: task_fit
+  affected_module_ids: [workflow_stage01, development_context, optional_rea]
+  source_refs_read:
+    - repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+      commit: 15d664405330cd38e04fee5980a89ada36376d14
+      publication_status: PLANNING_BRANCH_HUMAN_CONFIRMED_SCOPE
+  stop_conditions: [new_load_bearing_product_decision, scope_escape, uncovered_protected_action, safety_or_secret_boundary]

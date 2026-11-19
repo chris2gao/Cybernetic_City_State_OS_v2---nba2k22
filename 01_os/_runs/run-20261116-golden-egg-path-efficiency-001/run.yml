@@ -1,0 +1,15 @@
+task_id: OS-CORE-GOLDEN-EGG-F01-F02-20261116
+run_id: run-20261116-golden-egg-path-efficiency-001
+base: bd185822822543350e9d3c07a1174285b47b788d
+branch: task/core-golden-egg-path-efficiency-20261116
+ownership: core
+purpose: Bounded F01/F02 follow-up to the existing candidate, not a governed seven-stage Run or formal test freeze
+outputs: [existing_runner_business_decision_path, unchanged_v2_test_input, tests, RESULT.md]
+verification: verification_plan.json
+lifecycle: candidate_ready_for_independent_review
+review_schedule:
+  review_mode: deferred_to_series
+  series_id: golden-egg-workflow-20261116
+  reviewer: Human_and_GPT_per_current_Human_override
+  must_review_before: master_integration_or_real_game_validation
+task_packet_ref: task_packet.yml

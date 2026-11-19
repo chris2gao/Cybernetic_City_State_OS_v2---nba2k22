@@ -1,0 +1,78 @@
+task_id: OS-CORE-HUMAN-REVIEWED-ATOMIC-PROTOTYPES-SYSTEM-UPGRADE-20261116-001
+run_id: run-20261116-human-reviewed-atomic-prototypes-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: 5806c381c599e817106cbdb7c6352f6156b8cdcc
+branch: task/core-human-reviewed-atomic-prototypes-20261116
+ownership: core_system
+objective: >-
+  Upgrade Core OS across all domains and all task levels with Human-reviewed
+  minimal G/R/A/D prototypes, prebound callable execution plans, reusable
+  instances, and bounded Loop correction at the existing Stage05→06 boundary.
+lifecycle: candidate_pending_validation
+lifecycle_note: >-
+  2026-11-18 (run-20261118-role-skills-integration-001, Human decision): PR #37 is
+  integrated - head 2a06287e is an ancestor of core master, merge commit
+  e0bdd7fa2ab233bafa4c65644cadce475f66a1c7 (parents 5806c381 and 2a06287e). The
+  lifecycle stays open on purpose: independent runtime test NOT_RUN, human semantic
+  review PENDING and production Host integration NOT_IMPLEMENTED are still open, and a
+  terminal value would hide this run from the default working set and make it
+  archivable. Move it to a terminal value only when those gaps are closed or excluded.
+allowed_changed_paths:
+  - AGENT_WORKING_DISCIPLINE.md
+  - AGENTS.md
+  - 01_os/01_workflow/05_步骤拆分/README.md
+  - 01_os/01_workflow/06_执行/README.md
+  - 01_os/03_mechanisms/task_orchestration/
+  - 01_os/05_registry/task_orchestration_v1.yml
+  - 01_os/06_execution/task_orchestration/
+  - 01_os/_runs/run-20261116-human-reviewed-atomic-prototypes-001/
+verification:
+  proposed_tests:
+    - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_atomic_tasks.py -v
+    - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_reviewed_prototypes.py -v
+    - python -m unittest discover -s 01_os/06_execution/task_orchestration -p test_review_prototype_cli.py -v
+  offline_test_commit: a527cc7f4a96356310635530b45bfabcc24ee5a2
+  offline_test_environment: Windows_10_Python_3_14_6
+  offline_test_command: python -B -m pytest 01_os/06_execution/task_orchestration -q --disable-warnings --maxfail=1
+  offline_test_result: 171_passed_8_subtests_passed
+  cross_stage_regression: NOT_VERIFIED_attempted_no_final_exit
+  runtime_execution: FIRST_REAL_PRMS_READ_ONLY_LOCAL_E2E_PASS
+  remote_file_readback: PERFORMED
+  human_architecture_mode_decision: APPROVED_2026_11_16
+  high_r1: CLOSED_BY_INDEPENDENT_STATIC_REVIEW
+  high_r2: CLOSED_BY_INDEPENDENT_STATIC_REVIEW
+  independent_review_status: PASS_WITH_GAPS
+  independent_review_type: STATIC_SOURCE_REVIEW_NO_INDEPENDENT_PYTEST
+  independent_review_record: INDEPENDENT_REVIEW_RESULT_20261117.md
+  independent_review_source_sha: a527cc7f4a96356310635530b45bfabcc24ee5a2
+  prms_review_lookup: REAL_HUMAN_CHAT_RECORD_LOCAL_E2E_PASS_HOST_IDENTITY_UNVERIFIED
+  specific_prototype_human_review: APPROVED_FIRST_EXACT_DIGEST_2026_11_17
+  first_prototype_key: core-prms-registry-read-v1
+  first_prototype_digest: 5bbfdfd45e75b936933922620a81e0c55b645a212b380256447a5c28ba9ce501
+  first_prototype_human_approval: HUMAN_PROTOTYPE_APPROVAL_20261117.md
+  first_prototype_human_approval_sha256: 3dffd7930523fed0b98dd95666c110a0b5a5444cf318430c74d3b886719cf918
+  first_prototype_approval_manifest: HUMAN_PROTOTYPE_REVIEWS.json
+  first_prototype_e2e_record: FIRST_PRMS_PROTOTYPE_E2E_RESULT_20261117.md
+  first_prototype_e2e_status: LOCAL_READ_ONLY_PASS
+  first_prototype_host_identity_attestation: NOT_IMPLEMENTED
+  first_prototype_action_calls: 1
+  first_prototype_business_done: OBSERVED_TRUE
+  local_20261117_regression: 171_passed_8_subtests_passed_exit_0
+  independent_runtime_test: NOT_RUN
+  human_semantic_review: PENDING
+  human_refusal_observability_decision: APPROVED_2026_11_17
+  refusal_audit_jsonl_reference: IMPLEMENTED_TESTED
+  human_trust_first_decision: APPROVED_2026_11_17
+  agent_self_report_reference: IMPLEMENTED_TESTED
+  host_live_audit_routing: NOT_IMPLEMENTED
+  callable_mode_gateway: IMPLEMENTED_TESTED
+  full_tool_boundary: NOT_IMPLEMENTED
+  no_domain_native_actions: true
+closure_record: CHECKPOINT.md
+publisher:
+  publication_transport: github_api_connector
+  source_branch_publication: task_scope_default
+  master_integration_confirmation: current_Human_confirmed
+  confirmation_ref: HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261117.md
+  expected_remote_master_head: 5806c381c599e817106cbdb7c6352f6156b8cdcc

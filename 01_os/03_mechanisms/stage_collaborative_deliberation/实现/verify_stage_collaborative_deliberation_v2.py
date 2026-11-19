@@ -14,7 +14,15 @@ BASE_VALIDATOR_NAME = "verify_stage_collaborative_deliberation.py"
 ACTIVATION_STATE_PATH = "01_os/03_mechanisms/stage_collaborative_deliberation/激活状态_v1.yml"
 AUTHORIZATION_PATH = "01_os/_runs/run-20260804-阶段协同推演闭环激活-001/01_任务输入/Human授权_全局机制激活_v1.yml"
 ACTIVE_VALIDATOR_PATH = "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py"
-RECEIPT_PROVENANCE_PATH = "01_os/_runs/run-20260804-阶段协同推演闭环实现执行-001/P2/07_测试执行/P2_stage_receipt来源声明补全叠加层_v1.yml"
+# The P2 receipt-provenance overlay that used to be pinned from run evidence was
+# integrated into the load/receipt contract on 2026-11-18 (receipt_field_provenance).
+# The boot must not load it any more; the run file stays as historical evidence.
+RETIRED_BOOT_ROLES = {"receipt_provenance_overlay"}
+EXPECTED_RECEIPT_RENAMES = {
+    "trigger_evaluation_result": "trigger_evaluation_result_ref",
+    "validator_exit_code": "validator_mode_and_exit_code",
+    "stage_profile_version": "profile_id_and_version",
+}
 EXPECTED_ACTIVE_STATE = "active_dormant"
 EXPECTED_PROFILE_IDS = {
     "workflow_stage_01_requirement_modeling",
@@ -103,14 +111,12 @@ def validate_static_repo(repo_root: Path) -> int:
         "state_transition_contract": base.REQUIRED_STATIC_PATHS[5],
         "router_failure_contract": base.REQUIRED_STATIC_PATHS[6],
         "load_receipt_contract": base.REQUIRED_STATIC_PATHS[7],
-        "receipt_provenance_overlay": RECEIPT_PROVENANCE_PATH,
         "activation_state": ACTIVATION_STATE_PATH,
         "activation_authorization": AUTHORIZATION_PATH,
         "validator_base": base_validator_path,
         "validator": ACTIVE_VALIDATOR_PATH,
     }
     required_paths = list(base.REQUIRED_STATIC_PATHS) + [
-        RECEIPT_PROVENANCE_PATH,
         ACTIVATION_STATE_PATH,
         AUTHORIZATION_PATH,
         ACTIVE_VALIDATOR_PATH,
@@ -230,6 +236,20 @@ def validate_static_repo(repo_root: Path) -> int:
         expected_entry = {"role": role, "path": path, "blob_sha": artifact_blobs[role]}
         if load_order_entry(boot, role) != expected_entry:
             return 13
+    if any(load_order_entry(boot, role) is not None for role in RETIRED_BOOT_ROLES):
+        return 13
+
+    provenance = load_contract.get("receipt_field_provenance")
+    if not isinstance(provenance, dict):
+        return 17
+    relation = provenance.get("relation_to_B_v1", {})
+    if not isinstance(relation, dict) or relation.get("renamed_fields") != EXPECTED_RECEIPT_RENAMES:
+        return 17
+    if provenance.get("consumers_must_not_fall_back_to_B_only_receipt_fields") is not True:
+        return 17
+    field_source = provenance.get("field_set_source", {})
+    if not isinstance(field_source, dict) or not field_source.get("path") or len(str(field_source.get("blob_sha", ""))) != 40:
+        return 17
 
     registry_state_ref = registry.get("activation", {}).get("state_ref", {})
     registry_auth_ref = registry.get("activation", {}).get("authorization_ref", {})
@@ -247,7 +267,7 @@ def validate_static_repo(repo_root: Path) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=("static", "instance", "legacy_instance", "material_event", "review_execution"))
+    parser.add_argument("mode", choices=("static", "instance", "ordinary-work", "legacy_instance", "material_event", "review_execution"))
     parser.add_argument("target")
     parser.add_argument("--case-id")
     parser.add_argument("--json-output", action="store_true")
@@ -259,7 +279,7 @@ def main() -> int:
         if args.mode == "static" and target.is_dir():
             code = validate_static_repo(target)
         else:
-            loader = base.load_task_scope_doc if args.mode == "instance" else base.load_doc
+            loader = base.load_task_scope_doc if args.mode in {"instance", "ordinary-work"} else base.load_doc
             data = base.select_case(loader(target), args.case_id)
             if not isinstance(data, dict):
                 code = 11
@@ -267,8 +287,9 @@ def main() -> int:
                 payload = data.get("data", data)
                 if args.mode == "static":
                     code = validate_static_fixture(payload)
-                elif args.mode == "instance":
-                    code = base.validate_task_scope_instance(payload, args.repo_root, args.candidate)
+                elif args.mode in {"instance", "ordinary-work"}:
+                    code = base.validate_task_scope_instance(payload, args.repo_root, args.candidate,
+                                                             ordinary_work=args.mode == "ordinary-work")
                 elif args.mode == "legacy_instance":
                     code = base.validate_instance(payload, args.repo_root)
                 elif args.mode == "material_event":

@@ -8,7 +8,7 @@ input_refs:
 - stage_id: workflow_stage_01_requirement_modeling
   path: 01_requirement.yml
   artifact_version: 1
-  sha256: 70fd90cb4cead1617b97cf33eb448d36d5eba80b60168ff497a9fb85b80b571e
+  sha256: 5a0887b44120c82f7e5837025322b5e06076c54e24e2bb9216472e11221fad38
 deliberation_receipt:
   mechanism_id: stage_collaborative_deliberation_and_incremental_reconfirmation
   activation_state: active_dormant
@@ -26,23 +26,60 @@ payload:
   - source_id: SRC-1
     kind: repository_primary_evidence
     path: 01_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/独立全局激活MAJOR-1修复复审结果_v1.yml
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---core
+      commit: e075cdf288a765b7bfd2f4891c8f384404da16e1
+      path: 01_os/_runs/run-20260804-阶段协同推演闭环激活-001/07_测试执行/独立全局激活MAJOR-1修复复审结果_v1.yml
+    publication_status: MASTER_INCLUDED
   - source_id: SRC-2
     kind: repository_source
     path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+    source_ref:
+      repository: chris2gao/Cybernetic_City_State_OS_v2---core
+      commit: e075cdf288a765b7bfd2f4891c8f384404da16e1
+      path: 01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py
+    publication_status: MASTER_INCLUDED
   claims:
   - claim_id: E-1
     statement: str(Path(repository_logical_path)) is host-separator dependent.
     source_ids:
     - SRC-1
+    purpose: FEASIBILITY
+    evidence_kind: STATIC_SOURCE
+    limits: Synthetic pilot cites historical source evidence; it does not reproduce a current platform or game experiment.
+    result_item_ids:
+    - RES-PATH-001
+    success_criterion_ids:
+    - SC-1
+    - SC-2
+    - SC-3
   - claim_id: E-2
     statement: Forward-slash string construction is platform independent for repository logical paths.
     source_ids:
     - SRC-1
     - SRC-2
+    purpose: FEASIBILITY
+    evidence_kind: STATIC_SOURCE
+    limits: Synthetic pilot cites historical source evidence; it does not reproduce a current platform or game experiment.
+    result_item_ids:
+    - RES-PATH-001
+    success_criterion_ids:
+    - SC-1
+    - SC-2
+    - SC-3
   - claim_id: E-3
     statement: The repaired validator returned 0 in a byte-exact Windows checkout.
     source_ids:
     - SRC-1
+    purpose: FEASIBILITY
+    evidence_kind: OFFLINE_TEST
+    limits: Synthetic pilot cites historical source evidence; it does not reproduce a current platform or game experiment.
+    result_item_ids:
+    - RES-PATH-001
+    success_criterion_ids:
+    - SC-1
+    - SC-2
+    - SC-3
   completion:
     feasibility_basis_complete: true
     conflicts_resolved_or_durable: true

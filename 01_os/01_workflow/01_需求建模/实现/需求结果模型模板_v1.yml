@@ -1,36 +1,58 @@
-# Stage01b 跨领域参考模板；不是当前七阶段 runner v1 的新增必填 Schema
-schema_version: citystate.workflow.requirement_result.template.v1
-status: template_only
-task_id: "<task>"
-stage01:
-  consensus_A0:
-    version: "<A0 version>"
-    human_confirmation_ref: "<A0 confirmed ref>"
-  requirement_result_A:
-    version: "<A version>"
-    objective: "<任务最终成品的可观察形态>"
-    result_items:
-    - result_item_id: "RES-001"
-      title: "<一个具体的最终交付对象>"
-      kind: "<entity|function|interface|document|other>"
-      expected_end_state: "<最终交付成品实际具有的内容/形态>"
-      components: ["<已知子对象/字段/行为，逐项展开>"]
-      relations: ["<对象间关系/键/生命周期>"]
-      inputs_outputs: ["<查询/导出/操作结果举例>"]
-      completeness_rule: "<如何判定全部内容到位>"
+# Shape template, not a fabricated Human approval. Replace placeholders and bind actual sources.
+requirement_id: <requirement-id>
+objective: <observable final outcome>
+success_criteria:
+  - criterion_id: SC-001
+    statement: <observable success criterion>
+constraints: []
+consensus_A0:
+  model_id: A0-001
+  version: 1
+  objective: <agreed purpose>
+  boundaries: [<scope boundary>]
+  terms: {}
+  success_direction: <agreed success direction>
+consensus_Human_confirmation:
+  confirmed: false
+  model_kind: consensus_A0
+  model_id: A0-001
+  artifact_version: 1
+  content_sha256: <normalized_sha256 of consensus_A0>
+  confirmation_ref: <actual Human A0 confirmation source>
+requirement_result_A:
+  model_id: A-001
+  version: 1
+  consensus_ref:
+    model_id: A0-001
+    version: 1
+    sha256: <normalized_sha256 of consensus_A0>
+    confirmation_ref: <same actual A0 confirmation source>
+  result_items:
+    - result_item_id: RES-001
+      title: <concrete deliverable>
+      kind: <function|interface|document|data|other>
+      expected_end_state: <observable final state and behavior>
+      components: [<known components>]
+      relations: []
+      inputs_outputs: [<concrete input and output example>]
+      completeness_rule: <how completeness is checked>
       known_facts:
-      - item: "<明确已知项目>"
-        evidence_status: "human_requirement"
+        - item: <requirement or evidence>
+          evidence_status: human_requirement
       unknowns:
-      - question_id: "EVQ-001"
-        scope: "<具体需核实的剩余字段/来源/关系>"
-        closure_evidence: "<何种证明可关闭>"
-        status: unknown
-      acceptance_criterion_ids: ["SC-001"]
-    coverage:
-    - success_criterion_id: "SC-001"
-      result_item_ids: ["RES-001"]
-      evidence_questions: ["EVQ-001"]
-    human_complete_A_confirmation:
-      confirmed: false
-      version: "<A version>"
+        - question_id: EVQ-001
+          scope: <precise unknown>
+          closure_evidence: <what would close it>
+          status: UNKNOWN
+      acceptance_criterion_ids: [SC-001]
+  coverage:
+    - success_criterion_id: SC-001
+      result_item_ids: [RES-001]
+      evidence_questions: [EVQ-001]
+Human_confirmation:
+  confirmed: false
+  model_kind: requirement_result_A
+  model_id: A-001
+  artifact_version: 1
+  content_sha256: <full payload excluding both confirmation fields, normalized_sha256>
+  confirmation_ref: <different actual Human complete A confirmation source>

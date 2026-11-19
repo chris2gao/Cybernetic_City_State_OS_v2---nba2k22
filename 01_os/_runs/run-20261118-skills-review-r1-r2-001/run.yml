@@ -1,0 +1,88 @@
+task_id: OS-CORE-SKILLS-REVIEW-R1-R2-20261118-001
+run_id: run-20261118-skills-review-r1-r2-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T1_standard
+base_commit: 232345a737f06f348ba8e4fb1ec096537d647a70
+branch: task/core-skills-review-r1-r2-20261118
+integration_branch: task/core-skills-review-r1-r2-20261118-b
+ownership: core_system
+objective: >-
+  处理上一任务复审（01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md）
+  的不阻断意见 R1、R2。
+task_packet: 01_任务输入/任务包_v1.yml
+inputs:
+  - 01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md
+  - 01_os/_runs/run-20261118-role-skills-integration-001/run.yml (review_dispositions R1_subcommand_options, R2_receipt_contract_on_action)
+lifecycle: integrated_and_verified_on_demand
+start_record:
+  hooks_path: >-
+    worktree config core.hooksPath was the main checkout's absolute .githooks path; set
+    `git config --worktree core.hooksPath .githooks` before any commit, per the R3 disposition
+    in the previous run
+changes:
+  R1:
+    file: 01_os/06_execution/skills/test_skills.py
+    before: test_command_templates_carry_every_required_option parsed only `<script> --help`
+    after: >-
+      missing_required_options() checks the top-level usage, then for every positional choice the
+      template names (literally, e.g. `static`, or as a choice group, e.g. `{save,list,resume}`) runs
+      `<script> <sub> --help` and, when that prints a different usage (a real subparser), checks the
+      required options there too. The real-tree test asserts at least 3 subcommand levels were descended.
+    negative_test: >-
+      test_subcommand_required_options_are_checked builds a two-subparser script and asserts a missing
+      top-level option, a missing `catalog --output`, a complete command, and a `{catalog,list}` group
+      that leaves out `list --state`.
+    finding_on_current_tree: >-
+      prms/cli.py and task_cli.py, named in the review as subcommand scripts, take the subcommand as a
+      positional choice on one parser, so their --output was already covered by the top-level check;
+      the real subparsers among the templates are validate_mechanism_activation static,
+      validate_communication_system static and verify_model_routing static. No template misses an option.
+  R2:
+    file: 01_os/05_registry/skills_v1.yml
+    change: >-
+      os-stage-deliberation on_action "正式七阶段 run 的阶段计划或完成检查点时" now also reads
+      01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml; the generator
+      moved it from the program tier to that on-action line in both SKILL.md mirrors. Startup reading
+      for every role is unchanged (on-action reads are not startup).
+  readme: 01_os/06_execution/skills/README.md test_skills.py row describes the subcommand-level check
+  generated: .agents/skills/os-stage-deliberation/SKILL.md, .claude/skills/os-stage-deliberation/SKILL.md (generate_skills.py, not hand-edited)
+verification_attempts:
+  - attempt: attempt-001
+    candidate: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
+    plan_sha256: 4d771a8342b0a10ffb1deb44112372c78947b799aa28692c7adb870f2aa91a0a
+    result: all 5 required checks success (skills_static, skills_generate_check, pytest_skills 8 passed, stage_deliberation_guard, stage_deliberation_static); result.json status success; inspect exit 0
+    note: the run command's own exit code was piped through tail and not captured separately; inspect replays the attempt and exited 0
+    raw_attempt: executor scratchpad outside the repository; executor evidence, not independently reproduced
+changed_path_ledger: 8 paths against base 232345a7, all inside allowed_changed_paths
+yaml_correction: >-
+  this key was indented under verification_attempts in commit 996b6dfa, which made run.yml invalid YAML;
+  found while writing the integration record and dedented here
+self_report:
+  - kind: AGENT_SELF_REPORT
+    deviation: >-
+      R1 and R2 edits were made before the task packet and run record were written; the entry asks for
+      the packet before the first canonical write. Business impact none - packet, candidate commit and
+      verification all bind the same final content; preflight therefore reported worktree_dirty:8 at
+      packet time.
+independent_review:
+  - reviewed_head: 996b6dfacf608cfa42b8f9227ee8968310aac334
+    candidate: 3039712c0fefb1cc606f6a0bdb7bf455b722fb07
+    reviewer: fresh isolated Claude Code session pr40-reviewer (Claude Opus 5.5, same model family as executor - disclosed)
+    report: 07_测试执行/独立审核_3039712c.md
+    mwu_artifact: 07_测试执行/独立审核_3039712c.yml (validate_minimum_work_unit_output --require-mwu artifact exit 0)
+    verdict: PASS
+    reproduced: managed_verify run exit 0 and inspect exit 0 on 3039712c (5/5, pytest_skills 8 passed, same plan_sha256); generate --check, changed_path_ledger, git diff --check exit 0; 6 R1 mutants, the negative test kills 4
+    nonblocking: [N1 option match ignores position and level, N2 mutant M3 survives the levels assertion, N3 usage_head ignores --help exit code, N4 only the first lowercase choice group, N5 packet-after-edit order is executor self-report only]
+review_dispositions:
+  N1_N4: follow-up candidates for the command-template test; no template is affected on the current tree
+  N5: accepted by reviewer as LOCAL_FIX, no action
+integration:
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#41 (replaces #40, closed unmerged)
+  why_replaced: >-
+    the local pre-push guard refused the evidence commit on the #40 branch because run.yml at the remote
+    head 996b6dfa was invalid YAML (gate exit 11); no --no-verify, no force push; Human chose a new PR
+  master_before: 232345a737f06f348ba8e4fb1ec096537d647a70
+  method: gh pr merge --merge --match-head-commit <this evidence commit>; no squash, rebase or force
+  confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261118.md
+  readback: resulting master head is read back after the merge and reported outside this commit (a record cannot contain the merge commit that contains it)
+closure_record: 08_结论/completion_pointer.yml

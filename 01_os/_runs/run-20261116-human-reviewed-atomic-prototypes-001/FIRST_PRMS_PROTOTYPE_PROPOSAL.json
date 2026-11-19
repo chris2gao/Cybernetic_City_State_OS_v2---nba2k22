@@ -1,0 +1,35 @@
+{
+  "schema": "citystate.task-prototype-review.v1",
+  "prototype": {
+    "key": "core-prms-registry-read-v1",
+    "goal": "只读查询固定 Core 提交中的 PRMS v1 注册清单，交付实际注册条目与可追溯来源；不修改 Core、PRMS 状态或其他业务数据",
+    "ready": [],
+    "done": [
+      {
+        "key": "registry_observed",
+        "fact": "prms_registry_result_verified",
+        "why": "只有实际获得与目标注册表匹配、具有固定源读取证据的结果，才算业务完成；无报错或调用成功不等于 Done",
+        "basis": "现有 catalog.mapping 返回的 dict 与 GitSource.read 的 commit/path/blob 读取证据"
+      }
+    ],
+    "operation": {
+      "capability_id": "prms.catalog.mapping",
+      "version": "git-blob:4fc0cca559b658282ff45581f3395780801ba01c",
+      "effect": "READ_ONLY",
+      "parameters": [],
+      "why": "直接复用 PRMS catalog.py 的 mapping(source,path)，从预绑定冻结的 GitSource 读取 01_os/05_registry/prms_v1.yml；调用一次",
+      "procedure_ref": ""
+    },
+    "children": [],
+    "procedure": [
+      {
+        "key": "read_pinned_prms_registry",
+        "action": "经 Host 预绑定的现有 catalog.mapping(source, '01_os/05_registry/prms_v1.yml') 读取一次固定 Git 版本文件；Host 仅保留返回结果供 Done 事实回读",
+        "why": "用仓库已有解析函数获得真实 PRMS 注册数据；源验证由 GitSource.read 内部完成，不附加重复预检、目录扫描或临时业务脚本",
+        "basis": "01_os/06_execution/boot/context_management/prms/catalog.py::mapping（blob 4fc0cca559b658282ff45581f3395780801ba01c）及 source.py::GitSource.read（blob 1cfde9fa42b6ea573c05f203119d5df280a30332）",
+        "execution_owner": "HOST_BINDING",
+        "binding": "prms.catalog.mapping"
+      }
+    ]
+  }
+}

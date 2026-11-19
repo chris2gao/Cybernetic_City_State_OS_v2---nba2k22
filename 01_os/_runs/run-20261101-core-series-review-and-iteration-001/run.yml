@@ -1,0 +1,25 @@
+task_id: OS-CORE-EVIDENCE-LOOP-SERIES-REVIEW-20261101-001
+run_id: run-20261101-core-series-review-and-iteration-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+branch: task/core-risk-based-series-review-cadence-20261101
+exact_base_sha: 934425cf43d4fe3307b0112142aec1ba434a5734
+ownership: Core_OS
+role: decision_architecture
+risk_tier: T2_semantic
+lifecycle: candidate_ready_for_independent_review
+status: "Core OS source-branch candidate published; final independent audit and master integration pending"
+objective: "Add evidence-driven internal task iteration and risk-gated series-level independent review without bypassing existing Workflow completion gates."
+task_packet_ref: 01_任务输入/task_packet.yml
+verification_ref: 07_测试执行/static_source_checks.md
+closure_record: 08_结论/completion_pointer.md
+review_schedule:
+  review_mode: immediate_required
+  review_trigger: before_Core_master_integration_and_downstream_as_global_canonical
+  deferral_reason: "As global Core OS rules these changes are load-bearing; review required before master integration."
+protected_actions:
+  master_merge: NOT_REQUESTED
+  runtime_activation: NOT_RUN
+  history_rewrite: NOT_RUN
+test_execution:
+  offline_pytest: NOT_RUN
+  new_loop_runtime_engine: NOT_IMPLEMENTED

@@ -49,21 +49,17 @@
 执行 allowlist、重试与上游失效、独立验证和完成。需求、证据、B、测试、步骤及实现内容仍由
 模型或 Human 判断产生；runner 不把认知生成伪装成确定性程序。
 
-## 阶段一：需求共识与需求结果模型（本仓活动语义）
-
-按照 `01_需求建模/方法论_v0.4.md`：Human 首先确认 01a 共识，再由规划模型将任务完成时真实应有的成品、内容与关系形成 01b 需求结果 A 并交 Human 确认。**01a 共识不是完整需求建模的结束。** 02 依 A 核实资料，03 得到证据支持的实现结果 B。七阶段机器身份与历史 Run 均不改变。
-
 ## 链条
 
 ```
-需求 → 01a共识 → 01b需求结果A → 证据 → 实现结果B → 测试程序 → 步骤拆分 → [执行→验证→循环] → 完成
+需求 → 01a共识A0 → Human确认 → 01b完整需求结果A → Human确认 → 证据 → B → 测试程序 → 步骤拆分 → [执行→验证→循环] → 完成
          ↑______________________________|
                 失效可向上退回任意阶段
 ```
 
 设计依据在 `../_dev/WORKFLOW_BACKBONE_v0.3.md`（四阶段与承重关系）
 与 `../_dev/WORKFLOW_MECHANISM_v0.2.md`（连接方式、全局上下文机制、执行循环）。
-活动 D2 执行角色裁决位于 `../_dev/决定_谁执行_v0.2.md`。
+活动 D2 执行角色裁决位于 `../03_mechanisms/context_management/决定_谁执行_v0.2.md`。
 
 ## 与全局机制的边界
 
@@ -71,4 +67,4 @@
 workspace partition、访问边界、发布 allowlist、stale 与生命周期由
 `../03_mechanisms/context_management/` 统一定义。共享 OS/workflow/mechanism 的
 开发与验证证据放 `../_runs/<run-id>/`；领域业务 workflow 的运行流量放
-`01_os/07_content/_runs/<run-id>/`。两类 private scratch 均不进入 Git。
+`08_Domain_Applications/_runs/<run-id>/`。两类 private scratch 均不进入 Git。

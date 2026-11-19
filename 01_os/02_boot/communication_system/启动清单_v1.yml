@@ -23,3 +23,41 @@ receipt_fields:
   - mechanism_version
   - actual_read_paths
   - validator_exit_code
+# Read tiers (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001). The single
+# place that says what a model reads: startup at role initialization; on_action when the stated
+# action happens; program = read by validators / runners, a model reads it only to edit it or to
+# debug a validator failure; optional = startup read that may be absent. .py paths are entry
+# points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
+# fails on any repository file path this manifest names (outside optional_extensions) that is
+# in no tier, or in two. Any load_order in this manifest is
+# unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
+read_tiers:
+  startup:
+  - 01_os/03_mechanisms/communication_system/README.md
+  on_action:
+  - when: 写或发布正式交接消息时
+    reads:
+    - 01_os/03_mechanisms/communication_system/通讯契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/消息契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/文档与引用契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/发送方区与序号契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/正式动作接入契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/Human中转指针契约_v2.yml
+  - when: 作为接收方从指针进入任务时
+    reads:
+    - 01_os/03_mechanisms/communication_system/接收方bootstrap_v1.md
+    - 01_os/03_mechanisms/communication_system/端点卡契约_v1.yml
+  - when: 发布到 GitHub 或做整任务收敛时
+    reads:
+    - 01_os/03_mechanisms/communication_system/载体与发布契约_v1.yml
+    - 01_os/03_mechanisms/communication_system/Git收敛契约_v1.yml
+  - when: 纠正已发消息或归档通讯任务时
+    reads:
+    - 01_os/03_mechanisms/communication_system/纠正与跨端一致性_v1.yml
+    - 01_os/03_mechanisms/communication_system/导航与归档契约_v1.yml
+  - when: 判断角色、权限或确认要求时
+    reads:
+    - 01_os/03_mechanisms/communication_system/角色与权限边界_v1.yml
+  program:
+  - 01_os/02_boot/communication_system/启动清单_v1.yml
+  - 01_os/05_registry/communication_system_v1.yml

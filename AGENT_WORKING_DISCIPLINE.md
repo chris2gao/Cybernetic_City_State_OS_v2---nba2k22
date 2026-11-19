@@ -12,58 +12,218 @@ protocol. Where it meets `AGENTS.md`, the OS entry
 Every rule below was paid for. The incident is named so the rule is not mistaken
 for style preference.
 
+> 拆分说明（2026-11-18）：事故经过、实测数字与设计理由已原文移入 `01_os/02_boot/os_entry/入口依据与事故记录_v1.md`，本文件在原位以“（依据：入口依据与事故记录_v1.md §编号）”指向；要理解、质疑或修改某条规则时去读。规则本身未改。
+
+## 0. Human-scale execution: outcome before infrastructure
+
+（依据：入口依据与事故记录_v1.md §W0-1）
+
+This is an execution-priority correction, **not** another gate or a new
+authorization mechanism.
+
+- **Translate the Human's objective into the shortest real business loop.** If
+  five existing commands can acquire -> change -> simulate -> reacquire ->
+  analyze, that loop is the plan. Prefer calling and fixing those commands over
+  designing another orchestration, catalog, receipt scheme or approval layer.
+  Do not confuse implementation completeness with observable domain output.
+- **First obtain one genuine end-to-end result.** An isolated getter success,
+  fixture pass, plan, or qualification is not a substitute for the user-visible
+  result. Prove the complete small loop as early as existing authority and
+  safety allow; then batch and extend it. If a real blocker prevents it, name
+  that blocker, the earliest missing operation and the minimal repair rather
+  than expanding unrelated preparation.
+- **Use human-scale commands.** Choose an existing work branch, call the
+  relevant script, inspect its return value, correct a concrete failure, and
+  continue. For ordinary non-publication work the branch name and current
+  working tree identify the work. Do not request a fresh 40-character SHA,
+  generate a Git receipt, re-read an unchanged remote head, or construct a new
+  task packet *per script call or experiment round*. Obtain exact immutable
+  identities at the existing material-change/publication/protected-action
+  boundary when actually needed; never weaken a publication compare-and-swap.
+- **Keep automatic checks inside the tool.** A native setter should establish
+  the target object and legal value, make the change, and verify its actual
+  readback. A simulator should check its intended date and real results. Reuse
+  these protections without making them new Human-facing phases. Do not add
+  repetitive hashes or approval rituals absent a concrete failure they prevent.
+- **Measure business progress and elapsed cost.** Count successful complete
+  loops, actual modifications, simulated events, usable observations and
+  analyses (or the equivalent actual consumer outcome), not files, tests,
+  field names, hashes or preparation checkpoints. At the first observable
+  absence of business output, reconsider the *execution sequence* before
+  optimizing more internals. Do not claim a task complete when only its
+  prerequisites have succeeded.
+- **Do not solve the incident by removing real safety.** Respect explicit
+  Human scope, protected actions, destructive operations, wrong-target risk,
+  unknown native side effects and irreversible boundaries. Separate a hard
+  blocker from missing optional evidence; do not bypass an actual authorization
+  requirement just to reach a metric. A scope or authority blocker is a
+  concrete finding, not permission to create paperwork indefinitely.
+
+**Sender → receiver priority binding (reuse existing slots, no new form):**
+The sender states the **primary business outcome**, the **shortest real executable
+loop**, and the **actual boundary**. Put the outcome in the existing task
+packet `objective`; put first execution and supporting conditions in the existing
+message `content` / `requested_action` or the ordinary task handoff. The receiver
+must restate internally which action produces the first observable outcome and
+which checks are merely supporting. A supporting action earns priority only
+when it is essential to an authorized step or repairs an observed blocker.
+At each internal Loop iteration, ask **what actual business result changed?**
+If the answer is only "more tests, files, hashes, approvals or qualifiers", then
+reassess the next action against the primary objective before investing further.
+The receiver must not silently promote a prerequisite into the task's completion
+criterion, nor quietly reduce the scope of the primary objective.
+
+The operative test is: **would a competent Human operator, with the existing
+tools, perform these steps to obtain the requested result?** If not, justify the
+extra step by a demonstrated risk or remove it. This rule applies to planning,
+execution and review; a reviewer must judge the business outcome before
+mechanical document conformity.
+
+**Atomic-task interpretation:** model the next meaningful business unit as
+Goal / Ready / Action / Done. Mark a node complete only on its actual consumer
+result; parent completion has its own outcome test. A receiver may optimize the
+chain only without weakening the Human's goal, safety or required evidence.
+Use the existing task plan and internal Loop, not a new per-tool-call form.
+Canonical semantics and positive/negative examples:
+`01_os/03_mechanisms/task_orchestration/原子任务与结果驱动执行模型_v1.md`.
+
+## 0.1 Human-reviewed reusable task prototypes — design once, execute many
+
+（依据：入口依据与事故记录_v1.md §W0.1-1）
+
+For **every domain and every level of task**, use the existing G/R/A/D model as a
+**reusable task prototype** when the action may recur or be delegated:
+
+- At **first design or material revision**, expose the actual intended procedure to
+  Human: Goal; each minimum Ready and Done criterion with its reason and factual
+  basis; the concrete function/CLI/tool and version; the necessary internal
+  operations/checks; what can be collapsed into a single existing callable;
+  parameters, side effects, exceptions and reuse boundary. Human and model
+  **discuss and decide the implementation steps**, not merely approve a title.
+  Do not treat a model-generated checklist as approved design.
+- Record the Human-approved prototype version and use it for **subsequent task
+  instances** with fresh parameters. Do not require Human to review the same
+  settled capture, simulation or verification design on each Loop iteration;
+  actual protected side-effect authority remains separate and instance-scoped.
+- At Workflow **05→06**, bind each leaf task to a verified, version-pinned existing
+  capability and a minimal observable Done. Routine internal checks stay inside
+  the tool. Do not silently invent a new shell command, glue script, readiness
+  requirement or completion test during approved instance execution.
+- If a capability is missing or a criterion turns out invalid, **stop the affected
+  Action, not the Goal**. Return `INCOMPLETE`, exact reason, evidence and the
+  smallest decision/repair options to Human. Only the changed prototype segment
+  needs re-design; unchanged nodes and proven outputs remain reusable.
+- An unreviewed proposal may be discussed, inspected or implemented as an
+  expressly commissioned **development** task. It must not masquerade as an
+  approved reusable execution contract. Human prototype review is not a Native,
+  credential, destructive-operation or master-publication permission.
+
+This is **not** an instruction to produce a per-command checklist, add a new
+Workflow phase, or delay a ready one-off task with a redundant approval ritual.
+For ordinary scoped implementation choices already delegated to the model, keep
+working within the existing authority. To actually restrict an executor with
+unrestricted Shell/GUI access requires a trusted host/tool boundary, not merely
+these written instructions. Canonical details:
+`01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md`.
+
+## 0.2 Default execution / explicit development mode (Human decision, 2026-11-16)
+
+The **default for delegated business execution is EXECUTION**, regardless of provider.
+Its actions must be instances of Human-reviewed G/R/A/D prototypes compiled to
+pre-existing, version-pinned tools. Runtime improvisation of new scripts, extra
+Ready/Done gates, unbound tool calls, or automatic promotion into coding work is
+not an approved business action. Real Done still comes from the domain.
+
+**DEVELOPMENT is separate**: a Human instruction actually commissioning code or
+new capability work is sufficient development delegation within the existing
+scope. The model can iterate on implementation and tests inside that scope;
+it does not need per-command Human approval. A failed EXECUTION action does not
+itself commission DEVELOPMENT. Report `INCOMPLETE`, the concrete capability gap
+and one minimal Human decision instead of silently switching modes.
+
+A trusted Host, not a model-generated field, owns the active task mode and may
+expose different tools. A mode/scope change invalidates the old execution
+instance; after Human re-authorizes, create a fresh scoped session. Prototype
+design review, development delegation, and protected side-effect authorization
+remain separate decisions. The candidate callable implementation is
+`01_os/06_execution/task_orchestration/execution_mode_gateway.py` and the
+canonical contract is `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §9.
+An unrestricted model Shell/GUI remains outside this mechanism until the
+actual Host removes that bypass: do not claim a text instruction is sandboxing.
+
+## 0.3 Observable refusals and model–OS fit (Human decision, 2026-11-17)
+
+A Host-denied prototype/tool operation must produce a small, structured audit
+receipt. A high volume or proportion of repeated **model-policy refusals** is
+an early Human-review signal that the model may not follow the approved OS
+execution contract. Do not conflate that with missing Human approvals, missing
+capabilities or Host mode changes. Include comparable accepted request counts
+so one refusal in a short task is not misreported as incompatibility. Do not
+capture secrets, raw parameters, or every nested check. A report is advisory,
+never automatic punishment, permission relaxation, or a new Workflow phase.
+Canonical event classes, Host JSONL sink and analysis are in
+`01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §10.
+
+## 0.4 Trust-first Agent discipline and voluntary disclosure (Human decision 2026-11-17)
+
+**Assume Agent honesty and willingness to acknowledge mistakes.** OS task contracts
+are jointly designed ways of working, not measures for treating the model as an
+adversary. Human-reviewed minimum Ready/Action/Done means the Agent commits to
+follow the shared design and raise a concrete correction when reality differs.
+When a deviation is visible only to the Agent (extra checking, repeated glue
+script, mistaken blocker, incorrect Done), report it promptly and candidly:
+what happened, why, effect on actual Goal, correction and any Human choice.
+The absence of Host instrumentation is NOT a reason to build surveillance.
+
+Do not treat an Agent's voluntary correction as a Host denial, as misconduct, or
+as evidence of incompatibility. Keep the source tag `AGENT_SELF_REPORT` distinct
+from actual `HOST_OBSERVED` admissions/refusals. No report is required for
+ordinary successful calls; do not manufacture per-command overhead. Use the
+existing task chat/Run/PRMS checkpoint or optional `agent_self_report.py` JSONL
+for meaningful disclosures. Lack of a writable optional report log never blocks
+otherwise authorized business work. Self-report records are useful evidence of
+what the Agent says, not proof of what a Host independently observed.
+
+Human instruction, existing protected-action permissions, and Native/irreversible
+safety boundaries still apply: trusting an Agent is distinct from granting it
+new permissions. Never claim free Shell/GUI access is safe for all sensitive
+operations or that every Agent tool has already been constrained. **Do not make
+full Shell/GUI capture a prerequisite for ordinary task-prototype adoption.**
+Canonical scope: `01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md` §11.
+
 ## 1. Land the output; the chat holds nothing
 
 Anything that matters — decisions, verdicts, evidence, contracts — goes into the
 repository or the brief vault before the task is called done. A conversation is a
 workbench, not a record.
 
-*Paid for 2026-07-25:* a long session became unreachable through the UI (its
-transcript was stranded under a previous install path). Nothing of value was lost,
-because every conclusion was already in git or the brief vault. That is the only
-reason it was a curiosity rather than a loss.
+（依据：入口依据与事故记录_v1.md §W1-1）
 
 ## 2. Filter large output before you fetch it
 
 Never run an unbounded recursive search or print an unfiltered scan. Use targeted
 search tools, path filters, `head`/`-First` limits, or aggregate counts.
 
-*Paid for 2026-07-25:* a recursive `findstr` walked into a cache directory and
-produced 1.79 million characters; a privacy scan printed 1,254 lines when three
-numbers were the answer. Both cost more context than the work they served.
-
-This is the cheapest available saving. It beats any configuration setting.
+（依据：入口依据与事故记录_v1.md §W2-1）
 
 ### The specific habits, and what each one costs
 
-Measured 2026-07-26 across 50 Codex rollout sessions on this workstation: 2,599
-shell calls, 5,360 tool outputs, 8.84 billion input tokens. The numbers below are
-from that measurement, not estimates.
+（依据：入口依据与事故记录_v1.md §W2-2）
 
 - **Never read a whole file when a slice answers the question.** Use `-TotalCount`,
   `-First`, `head -n`, or an explicit line range, and widen only after the slice
-  proves insufficient. *Measured:* 303 of 355 `Get-Content` calls (85%) carried no
-  length limit; an unlimited read cost 6,283 characters on average against 1,839
-  for a limited one — **3.4x per call**. Those 303 reads alone were 1.9 million
-  characters, roughly a fifth of all tool output.
+  proves insufficient. （依据：入口依据与事故记录_v1.md §W2-3）
 - **Cap output at the call site, before it runs** — not by ignoring it afterwards.
-  *Measured:* output is median 244 characters but p99 28,075; the twenty largest
-  outputs were 8.8% of every character returned.
+  （依据：入口依据与事故记录_v1.md §W2-4）
 - **When polling a background job, pass the smallest token cap the tool offers,
   and poll less often rather than truncating a large payload repeatedly.**
-  *Measured:* the `wait` tool was **30% of all tool traffic** (1,468 calls,
-  3.39M characters). 92 of those calls — 6.3% — returned over 10,000 characters
-  and accounted for **56% of all polling traffic**. The tool accepts a
-  `max_tokens` argument that was never used.
+  （依据：入口依据与事故记录_v1.md §W2-5）
 - **Ask Git for the summary first:** `git status -sb`, `git diff --stat`,
   `git log --oneline -n`. Fetch full text only for the hunk in question.
-  *Measured:* one `git status` returned 40,093 characters — the truncation
-  ceiling, meaning the real output was longer still.
+  （依据：入口依据与事故记录_v1.md §W2-6）
 - **Write anything longer than one line as a script file and run the file.** Do
   not pack multi-statement logic into a single `-Command` or `-c` string.
-  *Measured:* one quoting mistake in a single-line PowerShell command produced
-  53.5 KB of repeated parser errors. Outputs containing a PowerShell error
-  averaged 3,655 characters against 1,717 for clean ones — **twice the cost**.
+  （依据：入口依据与事故记录_v1.md §W2-7）
 - **On failure, do not re-run the same command unchanged.** Read the error,
   change the hypothesis, and cap the output of the retry. Treat a failure by its
   signature, not by the spelling of the command: a repeat needs new evidence, a
@@ -95,11 +255,7 @@ from that measurement, not estimates.
 
 ### What is not worth optimising
 
-The shell *invocation* is not where the tokens go. Command arguments are 0.87% of
-all conversation content, and Windows-specific text — escaped backslashes and CRLF
-— is about 0.07%. 96.8% of input tokens are cache hits, so a few characters of
-path syntax cost essentially nothing. Claims that one operating system costs
-tens of percent more than another do not survive measurement; output volume does.
+（依据：入口依据与事故记录_v1.md §W2-8）
 
 ## 3. Verify before acting — then report the finding, not the reading
 
@@ -107,16 +263,7 @@ Check the actual state before you change anything: real HEADs, real file content
 real exit codes. Then say what you found and what differs. Do **not** replay the
 material you read.
 
-*Paid for 2026-07-25, three times:*
-- a routine `git merge core/master` would have deleted 1,132 files and 204,156
-  lines from a domain — caught by checking the merge delta on a scratch branch
-  first, not by trusting that "merging core is safe";
-- a folder about to become a new repository still had `origin` pointing at another
-  repository; one push would have written into the wrong system;
-- a derived denylist term matched 10,708 lines on both trees, which is how it was
-  identified as a path fragment rather than a learner identifier.
-
-Each check cost a few commands. Each would have been expensive to undo.
+（依据：入口依据与事故记录_v1.md §W3-1）
 
 The second half matters as much: reciting file contents back to the Human is pure
 cost. Give the conclusion and the delta.
@@ -137,11 +284,7 @@ conditions under which an executor may keep working inside it, are defined once 
 section 2 of `01_os/开发入口与单窗口任务规范_v1.md`. No additional packet field
 carries this; the boundary field already in use is the whole mechanism.
 
-*Paid for 2026-07-25:* two dispatches specified a changed-path count ("15 paths",
-"14 paths") that no longer matched reality by execution time. One of them also
-required both a count and an edit that necessarily changed that count — mutually
-exclusive instructions. The executor measured, followed the measurement, and
-reported the contradiction.
+（依据：入口依据与事故记录_v1.md §W4-1）
 
 **If a dispatch conflicts with what you measure, the measurement wins — and you say
 so explicitly.** Silently following the dispatch produces a false record; silently
@@ -158,10 +301,7 @@ report the conflict.
   reproduced. In this project those have repeatedly been the same person, and that
   fact belongs in the report.
 
-*Standing failure mode:* six review rounds on one subsystem kept producing the same
-shape of error — a claim slightly wider than the thing actually checked. It was not
-six mistakes by one careless author; it was one relationship structure (author
-designs their own verification) reproducing itself. Where it matters, separate the
+（依据：入口依据与事故记录_v1.md §W5-1） Where it matters, separate the
 two roles, or hand a reviewer the raw material with the conclusions stripped out.
 
 ## 6. Irreversible actions are announced before they happen
@@ -204,12 +344,7 @@ transport must prove instead is the matrix in section 1.1 of
 small set of confirmation-bound actions are defined in
 `01_os/05_registry/repository_publisher_authority_v1.yml`.
 
-*Paid for once:* an executor with only a connector read "I cannot run
-`git config --get core.hooksPath`" as "I am not permitted to publish", withheld a
-finished artifact, and then published a proposal branch through that same
-transport. One executor, one session, two incompatible rulings — because the rule
-said nothing about the transport and it had to invent one twice. An undefined
-gate does not fail safe; it fails inconsistently.
+（依据：入口依据与事故记录_v1.md §W6-1）
 
 ## 7. Keep durable memory honest
 
@@ -218,10 +353,7 @@ Periodically merge duplicates, correct what changed, and delete what was overtur
 When a stored note names a file, flag or setting, confirm it still exists before
 recommending it.
 
-*Paid for repeatedly:* a report kept asserting "both nodes remain review_required"
-after they had been accepted, and "master still holds residue" after a merge had
-cleaned it. Each stale line forced a later reader to work out which statement to
-believe.
+（依据：入口依据与事故记录_v1.md §W7-1）
 
 Two rules follow from that, and they are what make a stored note checkable later:
 
@@ -248,35 +380,40 @@ activation, relay to another independent model, or evidence that cannot carry th
 claim. Size is not one of them — an empty protected-action set is a valid answer,
 and a task branch push is section 6 normal flow, not a gate.
 
+**Minimum Ready × Minimum Sufficient Completion.** Once necessary inputs,
+authorization and actual dependencies are satisfied, execute real business work.
+Optimize implementation without expanding the Human Goal, approved Done or
+required validation. Continue or add work only to advance unfinished Goal/Done,
+meet an existing contract/safety/verification/publication requirement, or address
+an observed failure, relevant state/source change or reproducible evidence gap.
+"More complete/professional/safe" alone creates no obligation; no per-action
+classification is required. Reuse valid checks while relevant inputs, candidate,
+environment and authority remain unchanged; uncertainty or change still triggers
+existing fail-closed rechecks. Once approved Done and applicable required
+verification, safety and publication conditions are met, give the minimum
+sufficient handoff and stop adding preparation, checks, tests, logs or reports.
+Preserve necessary raw evidence once through existing durable mechanisms and
+cite exact sources/hashes instead of duplicating evidence packs, except for
+explicit Human or existing format/log requirements. This never waives necessary
+positive/negative tests, managed verification, independent review, scope,
+protected-action confirmation or UNKNOWN-effect reconciliation.
+([Issue #31](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/31))
+
 **End on the declared enum.** Section 5 of
 `01_os/开发入口与单窗口任务规范_v1.md` lists the seven legal run lifecycle values.
 Write one of them into `run.yml`'s `lifecycle` field. A free-text status is
 prohibited.
 
-*Measured 2026-08-28 on `d9a18b57`:* the 50 run groups under `01_os/_runs`
-carried **24 mutually distinct** free-text status strings — mostly under a
-`status:` key rather than `lifecycle:` — and **not one** was machine-classifiable
-as finished. The communication archiver had existed for weeks and `archive/` was
-still empty, because nothing could answer "is this one done?". Fragmented tasks
-each invent their own status word; nobody has to agree with anyone. The bill
-arrives later, as a repository that cannot tell live work from history.
+（依据：入口依据与事故记录_v1.md §W8-1）
 
-That bill is also why enumeration is expensive here: the three accumulating
-surfaces are about **90%** of all listing bytes and **69–93%** of the hits on
-ordinary routing terms, while the fixed startup load touches none of them. So
-the cost is not size. But that 90% is a *composition*, not a saving — a group may
-be hidden only once it is positively classified as finished, and today none is,
-so the measured exclusion is 28.0% and all of it is the communication surface.
+（依据：入口依据与事故记录_v1.md §W8-2）
 Use
 `01_os/06_execution/boot/context_management/working_set/visible_set.py --list`,
 which reports what it hid.
 
 Two rules that cost more than they look:
 
-- **Hiding requires proof of completion, not absence of proof of life.** An
-  earlier revision of that tool hid unknown-state groups alongside finished ones
-  and reported an 89% reduction. Independent review rejected it: the hidden set
-  was exactly the 68 groups whose state the repository cannot vouch for.
+- **Hiding requires proof of completion, not absence of proof of life.** （依据：入口依据与事故记录_v1.md §W8-3）
 - **Never add a global silent exclusion.** It converts noise into false
   negatives, and section 3 already records what those cost.
 
@@ -375,6 +512,8 @@ passes disagree — that disagreement is the signal worth having.
 
 ### The flow
 
+Review **timing** is separate from reviewer independence. Routine candidate work may undergo a single independent review at a coherent series milestone rather than immediately after each task, but independent acceptance must precede load-bearing downstream adoption, protected integration, or final acceptance. The canonical scheduling rule is `01_os/开发入口与单窗口任务规范_v1.md` section 9; do not duplicate its predicates here.
+
 Research produces material → review judges it → the repository keeps it.
 
 Nothing is finished at the point a model says it is finished. A deep research
@@ -403,10 +542,7 @@ fraction of the same effort.
 
 ## 9. Promote evidence-backed execution feedback, not every local defect
 
-*Paid for 2026-10-23, NBA2K22 R00-01:* narrow probe dispatches, a
-claimed out-of-scope live observation and JSON-only verification led to
-repeated corrections without proportional new native-data capability.
-These represent different failures: task design, authorization and proof.
+（依据：入口依据与事故记录_v1.md §W9-1）
 
 - **LOCAL_FIX:** one-off arithmetic, naming or receipt defect that can be
   corrected inside the task; do not create global rules for it.

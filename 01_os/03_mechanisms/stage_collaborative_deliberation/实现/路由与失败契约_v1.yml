@@ -20,7 +20,8 @@ routers:
     failure_conditions: [load_bearing_gap_silently_skipped, unjustified_full_activation, stage_profile_main_obligation_missing, formalistic_round_counting]
     stop_conditions: [dormant_route_with_reason_and_valid_receipt, active_session_created_with_exact_authorization]
     modes: {dormant: no_load_bearing_gap_and_no_mandatory_trigger, full: new_or_structurally_changed_bearing_model, incremental: ordinary_bearing_update_with_known_affected_scope}
-    round_minimums: {full: 5, incremental: 2}
+    # No fixed round minimums: removed by 阶段profile契约_v1.yml readiness_contract
+    # (2026-08-17); the leftover full=5/incremental=2 line was deleted 2026-11-18.
     formalistic_rounds_count: false
   inquiry:
     order: [bind_target_model_element, classify_gap, estimate_value_cost_timing_and_risk, prioritize, ask_or_act, evaluate_acceptance, stop_or_escalate]

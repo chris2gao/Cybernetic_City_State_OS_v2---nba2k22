@@ -12,8 +12,11 @@ subsection rather than in the general rules.
 Startup uses the repository-wide always-on bootstrap below. Nothing beyond the
 task-triggered steps loads by default.
 
-1. **The current remote `master` 40-character SHA, read fresh.** Never carry a SHA
-   forward from chat, a report, or a document.
+1. **Identify the current repository, Human objective and working branch.**
+   Do not make a remote 40-character SHA read an unconditional startup tax.
+   Read the precise current master/base/head when material repository mutation,
+   immutable source evidence or a protected/publication action actually needs it;
+   do not reuse an old SHA at that boundary.
 2. `AGENT_WORKING_DISCIPLINE.md`. Short, applies to every model in this project
    regardless of vendor, and is where the recurring failure modes are written down
    with the incident that produced each one.
@@ -31,22 +34,30 @@ task-triggered steps loads by default.
    business/canonical write, following the OS entry.
 8. Then read only the canonical files and registry entries the task actually
    triggers.
-9. Never default-preload `01_os/_runs/**`; read only a run explicitly required by
-   the current task or its verification. The same applies to `01_os/_communication/**`
-   and `01_os/_dev/**`. When you enumerate or search the repository,
+9. **Load by role.** When the Human names your role — 任务规划, 任务开发 or 审核
+   in core; 特色内容开发 or 特色内容教学或使用 in a domain — invoke the matching
+   role skill in `.agents/skills/` (`role-planner`, `role-developer`,
+   `role-reviewer`, `role-content-developer`, `role-content-user`). It loads every
+   mechanism skill that role needs and ends with a role-initialization receipt;
+   `citystate-os` is the map of the whole OS. Other mechanism skills load when
+   their trigger fires. The chat window is a temporary workbench: whether one
+   window carries one task or a series is the Human's decision, and continuity
+   lives in the task packet, run record, brief vault and PRMS, never in the chat.
+10. **History is visible, not forbidden.** The accumulating surfaces
+   `01_os/_runs/**`, `01_os/_communication/**`, `01_os/_dev/**` and
+   `08_Domain_Applications/_runs/**` are not enumerated or bulk-read by default.
+   Any exact path that a loaded skill, a boot manifest or the current task names
+   is read directly; no separate permission applies. When you enumerate or search
+   the repository,
    `01_os/06_execution/boot/context_management/working_set/visible_set.py --list`
    gives the default working set and always reports what it hid;
    `--include-hidden` widens when history is genuinely the subject. A filtered
    listing is never exhaustive and must not be presented as one.
-   Measured on the current tree, it excludes 28.0% of listing bytes, and all of
-   that is the communication surface under its own navigation/archive contract:
-   a group is hidden only once positively classified as finished, and no run
-   currently is. The three accumulating surfaces are about 90% of listing bytes,
-   but that is their share, not a saving anyone has yet realised.
 
 `01_os/**` is the permanent active OS namespace. The retained global surface outside it is this file,
 `AGENT_WORKING_DISCIPLINE.md`, `CLAUDE.md`, `GEMINI.md`, `README.md`,
-`CORE_MANIFEST.yml` and `.githooks/`. Physical retirement of the former legacy
+`CORE_MANIFEST.yml`, `.githooks/` and the generated skill adapters in
+`.agents/skills/` and `.claude/skills/`. Physical retirement of the former legacy
 surface is complete; no legacy path outside this retained surface is a startup,
 communication, state, task, role or navigation source of truth. Do not recreate
 one or reintroduce a dependency on one — including in a file you are only passing
@@ -61,6 +72,10 @@ its content or substituting a nearby file.
 These apply to every backend executor in this repository — Codex, Antigravity, or
 any other — because every one of them loads this file.
 
+- **Deliver the Human's shortest real business loop first.** Apply
+  `AGENT_WORKING_DISCIPLINE.md` section 0 before adding preparation,
+  verification wrappers or new architecture. Genuine safety and authority
+  boundaries still apply.
 - Use the existing repository structure and naming conventions.
 - Prefer narrow, factual edits over broad rewrites.
 - Use PowerShell commands in this Windows workspace.
@@ -75,8 +90,49 @@ any other — because every one of them loads this file.
 Vendor-specific mechanics, and nothing else, belong here:
 
 - Codex: use `apply_patch` for manual file edits.
+- Codex on Windows: measure the running shell once, then use the task's verified
+  PowerShell 7 path with an explicit working directory and profile loading
+  disabled. Read `01_os/04_skills_and_tools/windows/README.md` when Windows
+  quoting, native exit codes, historical source reuse or CLI diagnostics are
+  relevant. Reuse the recorded entry points within that environment, batch
+  independent reads, and keep dependent mutations sequential.
+
+## Reusable task prototypes across models (Core-wide)
+
+All models and all domain tasks inherit the Human-reviewed minimal-task-prototype
+rule in `AGENT_WORKING_DISCIPLINE.md` §0.1; it is not restated here. The candidate
+adapter is `01_os/06_execution/task_orchestration/reviewed_prototypes.py`;
+only an actual trusted Host integration can enforce tool invocation restrictions.
+
+## Execution-mode routing and development boundaries
+
+Default `EXECUTION`, Human-commissioned `DEVELOPMENT` and the `INCOMPLETE` return
+on a missing capability are `AGENT_WORKING_DISCIPLINE.md` §0.2; they are not
+restated here. The opt-in `execution_mode_gateway.py` implements callable-level
+refusal; actual Shell/GUI restrictions require Host integration.
+
+## Denial receipts as a model–OS fit signal
+
+Structured `DENIED` receipts and the reading of repeated `MODEL_POLICY` refusals
+are `AGENT_WORKING_DISCIPLINE.md` §0.3; they are not restated here. The host-owned
+sink, not the Agent, persists the evidence.
+
+## Trust-first cooperation and Agent self-reporting (Human decision 2026-11-17)
+
+Trust-first cooperation, `AGENT_SELF_REPORT` versus `HOST_OBSERVED`, and the
+optional `agent_self_report.py` record are `AGENT_WORKING_DISCIPLINE.md` §0.4;
+they are not restated here.
 
 ## Formal Cross-Model Handoffs
+
+**Goal-first handoff and reception.** Preserve the existing task packet
+`objective` and message `content` / `requested_action` slots. The sender must
+make the observable business outcome and first real executable loop prominent,
+with preparation, checks, and documents explicitly subordinate. The receiver
+must recognize that hierarchy on entry and keep it through the internal Loop;
+it must not turn the handoff's preparation steps into a substitute objective.
+No additional mandatory communication fields, proof package, acknowledgment or
+Human approval is created by this rule. See `AGENT_WORKING_DISCIPLINE.md` §0.
 
 When the current task already supplies a valid communication context or exact
 communication pointer, a formal cross-model handoff uses the canonical safe-subset
@@ -128,32 +184,12 @@ always-on file.
 
 ## Default Task Orchestration
 
-Plan and execute coherent work as **one long-horizon task**, not a chain of small
-ones. Deterministic in-scope construction, validation, repair of a failure this
-task caused, evidence updates, private-runtime cleanup, task-branch commit and
-push, and completion-pointer closure are internal completion work. Do not come
-back to the Human for any of them.
-
-Stop — genuinely, without improvising around it — for a new load-bearing semantic
-choice, scope escape beyond `allowed_changed_paths`, a protected action the
-current authority does not already cover, a safety/privacy/secret boundary,
-destructive Git or history rewrite, runtime or scheduler activation, Human relay
-to another independent model, or evidence that cannot support the claim.
-
-Two consequences that have been got wrong before:
-
-- **An ordinary task-branch publication is not a stop condition.** Treating it as
-  one makes every implementation task that ends in a pushed completion pointer
-  look protected.
-- **Large does not mean dangerous.** Task size creates no authorization
-  requirement; an empty `known_protected_actions` set is a valid preflight result.
-
-When a task finishes, write the run's `lifecycle` field using the enum in
-`01_os/开发入口与单窗口任务规范_v1.md` section 5. A free-text status string is
-prohibited, because it is what makes finished work indistinguishable from live
-work: on `d9a18b57` the 50 run groups carried 24 mutually distinct free-text
-status strings and **zero** were machine-classifiable, which is why nothing had
-ever been archived.
+Atomic task first (`AGENT_WORKING_DISCIPLINE.md` §0), one long-horizon task with
+its genuine stop conditions (§8 there and section 11 of
+`01_os/开发入口与单窗口任务规范_v1.md`), and the run `lifecycle` enum (section 5
+of that file) are not restated here. An ordinary task-branch publication is not a
+stop condition, and large does not mean dangerous. None of this adds a per-node
+permission, Git publication or handoff ceremony.
 
 Contract: `01_os/03_mechanisms/task_orchestration/大任务与长时执行契约_v1.yml`.
 Checker: `01_os/06_execution/task_orchestration/big_task/closure_preflight.py`.
@@ -172,9 +208,10 @@ current task scope.
 2. Choose the simplest implementation that fully satisfies the current
    requirements. Do not add speculative abstractions, extension points, or
    configuration layers.
-3. In a layered system, establish the smallest working end-to-end path first, then
-   add layers incrementally. Never dismantle a working slice merely to accommodate
-   incomplete complexity.
+3. In a layered system, run the smallest *real business* end-to-end path first,
+   preferably using existing commands, then add layers only for observed gaps.
+   A fixture, qualification or documentation cycle is not an end-to-end domain
+   result. Never dismantle a working slice to accommodate incomplete complexity.
 4. Keep components modular, with clear boundaries and separation of concerns.
 5. Prefer mature, actively maintained libraries. Do not reimplement an available
    capability without a concrete, task-relevant reason.
@@ -198,6 +235,10 @@ current task scope.
 
 ## Git Workflow
 
+- Ordinary work is organized by the actual branch name and working tree; do not
+  repeatedly resolve a SHA or run publication checks for every command. Exact
+  commit identity is required when the existing material-write, publication or
+  protected-action gate actually needs it, not as a proxy for task progress.
 - Active work branch is task-specific; do not infer it from historical documentation.
 - Remotes differ per repository in the core/domain fork family. Read them with
   `git remote -v` instead of trusting a name written here; a hardcoded remote in a

@@ -141,6 +141,34 @@ def run_cli(source, data, tmp_path, *, version="v2", mode="instance", raw=None, 
     return result.returncode
 
 
+def test_ordinary_work_reuses_one_packet_across_source_checkpoints(source, tmp_path):
+    packet_blob = source.packet_blob
+    for mode, content in (("dormant", "first change"), ("incremental", "second change")):
+        (source.repo / "scope/result.txt").write_text(content, encoding="utf-8")
+        source.commit()
+        assert source.packet_blob == packet_blob
+        data = source.instance()
+        data["activation_mode"] = mode
+        del data["receipt"]
+        del data["current_model"]["stage_specific_model_elements"]
+        assert run_cli(source, data, tmp_path, mode="ordinary-work") == 0
+        assert run_cli(source, data, tmp_path, mode="instance") != 0
+    assert git(source.repo, "ls-files", "scope") == "scope/result.txt\nscope/task_packet.yml"
+
+
+def test_ordinary_work_does_not_admit_protected_action_or_formal_claim(source, tmp_path):
+    data = source.instance()
+    del data["receipt"]
+    del data["current_model"]["stage_specific_model_elements"]
+    data["seven_stage_child"] = True
+    assert run_cli(source, data, tmp_path, mode="ordinary-work") != 0
+    source.protected(confirmation=False)
+    data = source.instance()
+    del data["receipt"]
+    del data["current_model"]["stage_specific_model_elements"]
+    assert run_cli(source, data, tmp_path, mode="ordinary-work") != 0
+
+
 @pytest.mark.parametrize("version", ["v1", "v2"])
 @pytest.mark.parametrize("mode", ["dormant", "full", "incremental"])
 @pytest.mark.parametrize("profile", PROFILES, ids=lambda p: p["profile_id"])

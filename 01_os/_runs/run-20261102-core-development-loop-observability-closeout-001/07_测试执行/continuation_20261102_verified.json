@@ -1,0 +1,33 @@
+{
+  "task_id": "OS-CORE-DEVELOPMENT-LOOP-OBSERVABILITY-CLOSEOUT-20261102-001",
+  "source_branch": "task/core-risk-based-series-review-cadence-20261101",
+  "previous_reported_head": "2482a7842c40f50b75bb22ed9130e1ad9ac2b796",
+  "scope": "local isolated Python tests of new loop-observability code, NOT full Core checkout tests",
+  "local_command": "python -m pytest test_loop_observability.py -q",
+  "local_exit_code": 0,
+  "local_stdout_summary": "33 passed in 0.05s",
+  "schema_check": "jsonschema.Draft202012Validator.check_schema: PASS",
+  "files": {
+    "01_os/06_execution/task_orchestration/big_task/loop_observability.py": "747690849930337a7b2b050051eea55f145b30bb",
+    "01_os/06_execution/task_orchestration/big_task/test_loop_observability.py": "45aa13e09ba5daf36882d0ebbbd236d710f396e2",
+    "01_os/03_mechanisms/task_orchestration/loop_iteration_schema_v1.json": "cc1836132b07d2e41e85eee2c751ab49c61ed798"
+  },
+  "fixes": [
+    "preserve unresolved gap identities across iterations",
+    "reject silent omission of open gaps",
+    "reject duplicate gap IDs",
+    "derive open-gap summary from latest explicit state, excluding closed gaps"
+  ],
+  "added_tests": 4,
+  "not_run": [
+    "full Core Task Orchestration original test suite in checkout",
+    "complete changed YAML PyYAML parsing",
+    "Python CLI direct replay on immutable NBA G2/S0 source JSONL",
+    "Python CLI direct replay on immutable NBA SeasonCycleHost JSONL",
+    "full seven-stage Workflow state and Human checkpoint regression"
+  ],
+  "lifecycle": "candidate_pending_validation",
+  "independent_review": "NOT_EXECUTED",
+  "core_master_integration": "NOT_REQUESTED",
+  "authority_effect": "none"
+}

@@ -11,6 +11,11 @@ Schema and a local JSON/YAML instance. Before validation it runs two fail-closed
 Only after both pass does it start validation, forward stdout/stderr and preserve the
 CLI exit code. No loader or server remains resident.
 
+During this invocation the wrapper sets the process-local `PYTHONIOENCODING` to
+`utf-8` for Python children, then restores the caller's value in `finally`, including
+early failure exits. This keeps Chinese diagnostic paths readable for UTF-8 pipe
+consumers without changing global code pages, installed tools or validation semantics.
+
 ## Usage
 
 ```powershell

@@ -38,7 +38,7 @@ from reference_safety import tracked_paths  # noqa: E402
 # 01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
 HIDDEN_SURFACES: tuple[tuple[str, str | None, str], ...] = (
     # (root, state_file, state_field)
-    ("01_os/07_content/_runs/", "run.yml", "lifecycle"),
+    ("08_Domain_Applications/_runs/", "run.yml", "lifecycle"),
     ("01_os/_runs/", "run.yml", "lifecycle"),
     ("01_os/_dev/", None, "lifecycle"),
 )

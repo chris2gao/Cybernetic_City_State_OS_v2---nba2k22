@@ -1,0 +1,108 @@
+{
+  "task_id": "OS-CORE-CODEX-TOOL-FLUENCY-S2-C1-20261114-001",
+  "base": "3f645d3048b32835dd5430da2780bd99939b3f8e",
+  "observed_start_ms": 1794729661936,
+  "first_reproduction": {
+    "command": "& '01_os/06_execution/tools/check_jsonschema/invoke.ps1' -SchemaPath '01_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/fixtures/run_manifest.schema.json' -InstancePath 'C:/Users/gk/AppData/Local/Temp/C1 非法 实例.yaml'",
+    "start_ms": 1794729714500,
+    "end_ms": 1794729715873,
+    "chunk_id": "904910",
+    "wall_time_seconds": 1.1980689,
+    "exit_code": 1,
+    "original_token_count": 44,
+    "output": "Schema validation errors were encountered.\r\n  C:\\Users\\gk\\AppData\\Local\\Temp\\C1 �Ƿ� ʵ��.yaml::$.status: 'done' is not one of ['planned', 'running', 'completed', 'blocked']\r\n",
+    "seconds_from_observed_start": 53.937
+  },
+  "first_fixed_return": {
+    "command": "& '01_os/06_execution/tools/check_jsonschema/invoke.ps1' -SchemaPath '01_os/_runs/run-012-check-jsonschema安装接入验证/07_测试执行/fixtures/run_manifest.schema.json' -InstancePath 'C:/Users/gk/AppData/Local/Temp/C1 非法 实例.yaml'",
+    "end_ms": 1794729919411,
+    "chunk_id": "ca9b6b",
+    "wall_time_seconds": 1.3764082,
+    "exit_code": 1,
+    "original_token_count": 45,
+    "output": "Schema validation errors were encountered.\r\n  C:\\Users\\gk\\AppData\\Local\\Temp\\C1 非法 实例.yaml::$.status: 'done' is not one of ['planned', 'running', 'completed', 'blocked']\r\n",
+    "seconds_from_observed_start": 257.475
+  },
+  "boundary_probe": {
+    "tool_chunk": "0ed675",
+    "cli_default_exit": 1,
+    "cli_default_stdout_encoding": "CP936; strict UTF-8 decoding failed",
+    "cp936_filename_hex": "b7c7b7a820cab5c0fd",
+    "decoded_filename": "非法 实例",
+    "wrapper_default_stdout": "Same CP936 bytes as direct CLI",
+    "utf8_child_override": "PYTHONIOENCODING=utf-8",
+    "utf8_filename_hex": "e99d9ee6b39520e5ae9ee4be8b",
+    "override_cli_and_wrapper_exit": 1,
+    "override_cli_and_wrapper_exact_path": true,
+    "source_probe": "Local Temp/c1_encoding_probe.py, a single run-specific diagnostic script with four raw-byte captures; not a reusable tool."
+  },
+  "regression": {
+    "status": "success",
+    "tool_chunk": "59f07a",
+    "wrapper_sha256": "dd34c5f203aa8bdf97d9b6e07140fbb51e31b1b7c4cb6f2e169d3edafd8aeeff",
+    "real_wrapper_cases": 9,
+    "reference_channel_comparisons": 5,
+    "environment_restoration_cases": 6,
+    "complete_log": "Final exact-candidate managed attempt captures full stdout/stderr; see the delivery PR for candidate and local attempt pointer."
+  },
+  "development_failures": [
+    {
+      "signature": "preflight master_not_verified:no_expectation_declared",
+      "repair": "Added expected_remote_master_head matching the freshly observed master; preflight then passed.",
+      "attempts": 1
+    },
+    {
+      "signature": "Unset environment value restored as empty string",
+      "repair": "Remove the environment item when the original value was null; added empty-value coverage.",
+      "attempts": 1
+    }
+  ],
+  "tool_economy": {
+    "boundary": "Observed start through final nine-case targeted regression and git diff --check, before candidate commit/managed verification/publication; includes interim evidence writing. Counts manually audited from this task tool trace.",
+    "outer_functions_exec_calls": 16,
+    "direct_exec_command_calls": 28,
+    "tool_polls": 3,
+    "tool_discovery_passes": 1,
+    "bounded_searches": 4,
+    "search_details": [
+      "Memory registry lookup, no hit",
+      "Relevant tools Registry entry",
+      "Files only in the existing check_jsonschema tool directory",
+      "Exact old calibration-run script filenames"
+    ],
+    "search_scope": "Four search commands including the required memory pass; three repository discovery searches.",
+    "repeated_identical_searches": 0,
+    "repeated_identical_file_slices": 0,
+    "run_specific_diagnostic_script_files": 1,
+    "test_generated_caller_script": "One parameterized script per regression run, reused across all restoration cases; three development suite runs generated three such files.",
+    "blocking_interface_repairs": 0,
+    "task_packet_repairs": 1,
+    "implementation_repairs": 1,
+    "model_provider_calls": "NOT_OBSERVABLE",
+    "token_usage": "NOT_OBSERVABLE",
+    "raw_native_stdout_stderr_bytes": "Available in boundary probe and managed logs; not estimated from truncated model output."
+  },
+  "context_limit": "Earlier conversation context is present. Human explicitly confirmed that this window may execute and the window choice belongs to Human. Timing is not an isolated fresh-window benchmark.",
+  "managed_plan_repair": {
+    "failed_candidate": "b5491fb809911275a2ac86f5240c104690f290a6",
+    "signature": "Python exit 2: verification plan named an absent canonical test file",
+    "repair": "Point the same required check to the actual run-scoped verify_unicode.py; preserve the failed attempt and reverify the final candidate.",
+    "attempts": 1
+  },
+  "minimum_work_unit_output": {
+    "role": "execution",
+    "work_performed_or_requested": "修复现有 Schema wrapper 返回中文错误路径乱码，保持真实校验语义、通道和退出码，并交付独立审核候选。",
+    "implementation_or_review_method": "对实际 CLI 与 PowerShell 子进程进行 CP936 和 UTF-8 原始字节比较；仅在 wrapper 调用期间设置并恢复 PYTHONIOENCODING，用真实 CLI 运行针对性回归。",
+    "supportability_rationale": "相同非法枚举输入修复后返回准确中文路径和退出码 1，五个真实 CLI 参考调用逐字节比较两通道；闭包、版本、文件与工具缺失门保持拒绝，六种成功或失败状态恢复检查通过。",
+    "feasibility_rationale": "当前宿主已有 PowerShell 7.6.4 与绑定版本 CLI，只新增十五行生产代码和五行说明，无需安装或全局配置；测试保留在 Run 内，精确候选由既有受管验证执行，独立审核仍待新窗口。",
+    "exact_result_or_candidate_ref": "Wrapper SHA256 dd34c5f203aa8bdf97d9b6e07140fbb51e31b1b7c4cb6f2e169d3edafd8aeeff; final commit is supplied by the delivery PR.",
+    "verification_evidence": "This results.json, verify_unicode.py, exact-candidate managed attempt and delivery PR.",
+    "residual_risk_or_unproved_limits": "当前窗口含历史上下文，Human 已允许在此执行；未独立证明 RDC 修复后显示及跨宿主性能，工程候选待隔离审核。"
+  },
+  "scope": {
+    "master_integration": false,
+    "game_or_domain_operations": false,
+    "installation": false,
+    "global_environment_change": false
+  }
+}

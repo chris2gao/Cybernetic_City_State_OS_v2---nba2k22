@@ -1,0 +1,189 @@
+{
+  "status": "OFFLINE_COMPARISON_PASSED",
+  "base": "953b3e34d5432b93f05cdff7215da49fe7f87833",
+  "workload": "seven fixed Windows offline operations; baseline split across seven outer calls, candidate grouped into two",
+  "modes": {
+    "baseline": {
+      "outer_tool_calls": 7,
+      "tool_wait_seconds": 9.8839525,
+      "observed_route_seconds": 55.881,
+      "first_visible_business_seconds": 34.117,
+      "hot_path_first_visible_business_seconds": 2.608,
+      "bounded_search_calls": 1,
+      "repeated_searches": 0,
+      "temporary_source_scripts": 0,
+      "unexpected_execution_errors": 0,
+      "diagnostic_failures_losing_known_parameter_details": 1
+    },
+    "candidate": {
+      "outer_tool_calls": 2,
+      "tool_wait_seconds": 8.178146,
+      "observed_route_seconds": 15.866,
+      "first_visible_business_seconds": 15.866,
+      "hot_path_first_visible_business_seconds": 7.392,
+      "bounded_search_calls": 1,
+      "repeated_searches": 0,
+      "temporary_source_scripts": 0,
+      "unexpected_execution_errors": 0,
+      "diagnostic_failures_losing_known_parameter_details": 0
+    }
+  },
+  "outer_call_reduction_percent": 71.42857142857143,
+  "tool_wait_reduction_percent": 17.258343764804618,
+  "equal_business_outputs": [
+    "discovery",
+    "git",
+    "history",
+    "reuse",
+    "static"
+  ],
+  "history_source": {
+    "blob": "97aa35d27d87549fa002cd0c267de618870f886d",
+    "sha256": "d3564fbc3b4dafafacdd18143d1b8c426869a89119ba2360a55bda0360abf65c",
+    "bytes": 13309
+  },
+  "static_result": {
+    "source": {
+      "size_bytes": 46464,
+      "sha256": "37c5725818d602e951ba2563b870d62763322956b73373da4c33a0b566a80bc9"
+    },
+    "parameters": {
+      "length": "4096"
+    },
+    "predicate_type": "rea.analysis",
+    "normalized_result": {
+      "artifact": {
+        "path": "C:\\Program Files\\Git\\cmd\\git.exe",
+        "bytes": 46464,
+        "sha256": "37c5725818d602e951ba2563b870d62763322956b73373da4c33a0b566a80bc9"
+      },
+      "block_size": 4096,
+      "window": {
+        "offset": 0,
+        "length": 4096
+      },
+      "file_entropy": 6.1869,
+      "thresholds": {
+        "high": 7.2,
+        "low": 1
+      },
+      "blocks": [
+        {
+          "offset": 0,
+          "length": 4096,
+          "entropy": 5.0685
+        }
+      ],
+      "runs": [],
+      "limitations": [
+        "Entropy does not prove encryption; compressed and encrypted bytes cannot be distinguished by this measure.",
+        "Entropy is rounded to four decimal places; thresholds classify those reported values. Small blocks can underestimate entropy.",
+        "The file-wide hash and entropy cover the entire file; blocks and runs cover only the selected window. Empty input has entropy 0 by convention."
+      ]
+    },
+    "raw_result": null,
+    "automatic_replay": false,
+    "version": "6.8.0"
+  },
+  "parameter_diagnostic_before": {
+    "status": "TOOL_FAILED",
+    "exit_code": 1,
+    "tool_code": "VALIDATION_ERROR"
+  },
+  "parameter_diagnostic_after": {
+    "status": "INVALID_REQUEST",
+    "exit_code": 1,
+    "tool_code": "VALIDATION_ERROR",
+    "tool_message": "REA could not read the command arguments. Check the named argument and its expected type, then try again.",
+    "field_errors": [
+      {
+        "path": "durationMs",
+        "code": "too_big",
+        "message": "Too big: expected number to be <=60000"
+      }
+    ]
+  },
+  "fixture_diagnostic": {
+    "parameter_error": {
+      "status": "INVALID_REQUEST",
+      "exit_code": 1,
+      "tool_code": "VALIDATION_ERROR",
+      "tool_message": "REA could not read the command arguments. Check the named argument and its expected type, then try again.",
+      "field_errors": [
+        {
+          "path": "durationMs",
+          "code": "too_big",
+          "message": "Too big: expected number to be <=60000"
+        }
+      ]
+    },
+    "synthetic_fixture_difference": [
+      {
+        "field": "away",
+        "expected": 28,
+        "observed": 27
+      }
+    ],
+    "historical_fixture_stage": "PRE_DISPATCH_PRECONDITION_FAILED",
+    "historical_field_values": "NOT_RECORDED",
+    "external_unknown_policy": "retain_original_unknown_no_automatic_replay"
+  },
+  "shell": {
+    "version": "7.6.4",
+    "edition": "Core",
+    "process_path": "C:\\Program Files\\PowerShell\\7\\pwsh.exe",
+    "os": "Microsoft Windows 10.0.19045",
+    "no_profile": true,
+    "non_interactive": true,
+    "windowsapps_pwsh_present": false,
+    "native_argument_passing": "Windows"
+  },
+  "measurement_input_hashes": [
+    {
+      "file": "baseline-diagnostics.json",
+      "sha256": "be5250f3ff2c8d2ecbd818bfae97928e51a388bec3b8e00e55d7cd801c0185ec"
+    },
+    {
+      "file": "baseline-discovery.json",
+      "sha256": "3536b14a25258a86b590fc11cdcf3b5d27001ad248f6691f11653cdf79526de7"
+    },
+    {
+      "file": "baseline-git.json",
+      "sha256": "993d28ca614f209ca2ec310bde8069a2256f0db997633c737ff97fb0b89d6d4d"
+    },
+    {
+      "file": "baseline-history.json",
+      "sha256": "ca435feb16d0fe0a095201306e66f8e9772e9cc5783fbb26070be57a4a054ce1"
+    },
+    {
+      "file": "baseline-reuse.json",
+      "sha256": "1f5d431774f67183f309402edb995fca015924ff44fe738708ef21ca2d8b0f4f"
+    },
+    {
+      "file": "baseline-shell.json",
+      "sha256": "5358fe554f697161117e050f5fe1373c285930c9a3775f9551b01081b704c369"
+    },
+    {
+      "file": "baseline-static.json",
+      "sha256": "2411ba1d6c231bbe30dea17ce20e13ccb67a0479a12a0e4a8934f1ce12657af1"
+    },
+    {
+      "file": "candidate-business.json",
+      "sha256": "35102404487819b85a09585fb649035ba0aff2846ee5db54ff623a77155b05ff"
+    },
+    {
+      "file": "candidate-discovery.json",
+      "sha256": "94e357dd599c854634ded77ce6f8861fa5491f31a293cb00530d112a28b47c77"
+    }
+  ],
+  "limitations": [
+    "Single controlled paired route, without randomized task assignment or a new model window.",
+    "Route times include observed inter-call model/tool scheduling; they do not isolate model inference time.",
+    "Hot path is the recorded reuse batch. Cold measurement includes bounded discovery of a fixed workload.",
+    "Repeated searches and temporary source scripts were already zero on the baseline.",
+    "Historical GE-01 statistics are executor assertions and are not comparable performance baselines for this workload.",
+    "Calendar diagnostic differences use an explicitly synthetic row; historical missing row values remain unknown.",
+    "Raw local shell receipts retain absolute host paths outside the repository; public projection omits personal paths.",
+    "No live Calendar execution, game effect, save persistence or independent final acceptance is established."
+  ]
+}

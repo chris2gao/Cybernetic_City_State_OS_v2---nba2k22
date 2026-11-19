@@ -29,8 +29,70 @@ payload:
   - Keep repository logical paths distinct from platform-native filesystem paths.
   Human_confirmation:
     confirmed: true
+    model_kind: requirement_result_A
+    model_id: A-PATH-001
     artifact_version: 1
-    confirmation_ref: Human_authorized_activation_repair_and_publication_chain_2026-08-05
+    content_sha256: 68c83be2ebade215891951aa983472ee34ab96690179433e3d04d266a426649b
+    confirmation_ref: SYNTHETIC_FIXTURE_COMPLETE_A_NOT_ACTUAL_HUMAN_APPROVAL
+  consensus_A0:
+    model_id: A0-PATH-001
+    version: 1
+    objective: Repository logical paths remain forward-slash strings on Windows and POSIX.
+    boundaries:
+    - Repository logical paths only; no platform runtime activation.
+    terms:
+      logical_path: A repository-relative forward-slash string.
+    success_direction: The same declared path can be inspected across supported platforms.
+  consensus_Human_confirmation:
+    confirmed: true
+    model_kind: consensus_A0
+    model_id: A0-PATH-001
+    artifact_version: 1
+    content_sha256: 7cfb675b415ba1a465868b85d72327871e0e402d3abc1e25fad1927cbbc84e0c
+    confirmation_ref: SYNTHETIC_FIXTURE_A0_NOT_ACTUAL_HUMAN_APPROVAL
+  requirement_result_A:
+    model_id: A-PATH-001
+    version: 1
+    consensus_ref:
+      model_id: A0-PATH-001
+      version: 1
+      sha256: 7cfb675b415ba1a465868b85d72327871e0e402d3abc1e25fad1927cbbc84e0c
+      confirmation_ref: SYNTHETIC_FIXTURE_A0_NOT_ACTUAL_HUMAN_APPROVAL
+    result_items:
+    - result_item_id: RES-PATH-001
+      title: Repository logical path validator
+      kind: function
+      expected_end_state: A caller obtains the declared forward-slash relative validator path.
+      components:
+      - Logical path construction
+      - Windows separator rejection
+      - Byte-exact static validation
+      relations:
+      - The output path identifies the existing context validator.
+      inputs_outputs:
+      - 'Input: repository parts; output: forward-slash validator path or explicit error.'
+      completeness_rule: Inspect exact expected path, absence of backslash and static zero exit independently.
+      known_facts:
+      - item: Forward-slash path is the required observable output.
+        evidence_status: human_requirement
+      unknowns: []
+      acceptance_criterion_ids:
+      - SC-1
+      - SC-2
+      - SC-3
+    coverage:
+    - success_criterion_id: SC-1
+      result_item_ids:
+      - RES-PATH-001
+      evidence_questions: []
+    - success_criterion_id: SC-2
+      result_item_ids:
+      - RES-PATH-001
+      evidence_questions: []
+    - success_criterion_id: SC-3
+      result_item_ids:
+      - RES-PATH-001
+      evidence_questions: []
 stage_control:
   action_id: pilot-stage-01
   current_model_ref:

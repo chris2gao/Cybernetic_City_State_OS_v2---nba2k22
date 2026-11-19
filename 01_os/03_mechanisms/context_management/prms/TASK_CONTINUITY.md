@@ -86,8 +86,9 @@ Model Routing 正式协作角色；`OS_PUBLIC_DEVELOPMENT_PLANNER` 等
 `role_instance_id` 只是可复用的岗位实例标识，既不新增角色类型，也不赋予新权限。
 模型提供商、OS 协作角色、岗位实例与领域业务人格不能混同。
 
-一个实际工作窗口仍遵守“一个窗口一个任务”；同一逻辑岗位可以先后接任不同
-`task_id`，但每个任务保留独立的 task packet、Human 决策来源、Run、证据与恢复记录。
+窗口是临时工作台；一个窗口承担一个任务还是一个任务系列，由 Human 决定（2026-11-18）。
+同一逻辑岗位可以先后接任不同 `task_id`，但每个任务保留独立的 task packet、Human 决策来源、
+Run、证据与恢复记录。
 不同岗位窗口不得把另一个任务的候选方案或私人工作叙事当作当前任务事实。
 
 推荐主动轮换工作台，而不是等上下文耗尽：从干净、经核实的公共基线建立新窗口，
@@ -110,4 +111,25 @@ T1（当前任务）、T2（必要历史）、K1/K2（直接相关经验）加�
 Fork 只产生分叉时的上下文快照；旧窗口之后的更新不会自动同步，
 receiver ack 也不证明模型理解、交班成功或执行授权。以上是已批准工作方式，
 **不是**宣称新平台自动集成、额外 PRMS 功能或真实交班试验已通过。
+
+## 实测恢复状态与基线增量（2026-11-10）
+
+下表补充上述工作方式的实测范围。研究门 G1/G2 分别检查任务恢复与恢复后的决策，
+与 PRMS 的发现目录分层使用各自的上下文解释。
+
+| 路径 | 来源与实测状态 | 证据边界 |
+| --- | --- | --- |
+| 空白 Codex 会话，经最小 seed 从 GitHub/Run 恢复 | #20 固定证据 `9b56abee9e8c8af78a7b2961944bedbdde97d7c4`。A 因默认 MCP 审批阻断而不可评估；仅调整 scoped 只读工具审批后的 B 为 G1 通过、G2 受限通过。 | B 恢复 Issue #19 的真实版本、Human 决策、历史审核、权限与下一步。执行侧原判 G2 部分满足，后续 GPT-6 实质审核改判 `PASS_WITH_NON_BLOCKING_GAPS`，保留显式 master 权限措辞缺口。成本最小与通用恢复成功率尚未验证。 |
+| 网页版 GPT 规划基线 Fork | #21 记录 Human 转交的真实回答经 GPT-6 检查，恢复准确且决策合理。标记 `HUMAN_RELAYED_MODEL_OUTPUT / INDEPENDENT_TOOL_TRACE_NOT_AVAILABLE`。 | 原始回答来源是 Human 转交至规划对话；现有 Git 引用只承载该报告。缺独立工具读取轨迹与跨平台效率对照。#20 空白会话试验自身的基线 Fork 状态仍为未测试。 |
+| 已批准隔离状态仓的 live PRMS save/list/resume | `PRMS_LIVE_NOT_TESTED`。 | 本轮 GitHub 恢复未执行该生产路径；生产授权迁移、自动化接班及平台内部身份/签名均未验证。 |
+
+使用规划基线 Fork 时，保留基线所绑定的来源版本，再从当前任务入口读取分叉后的
+Human 决策、候选、审核、未决事项与版本变化。重新核对远端状态，对差异按既有 stale
+规则处理；记录实际增量读取、来源与缺口。任务恢复后，具体动作仍依据当前授权与
+机制前置门判定。若评价效率，应同时记录检索量、输入与缓存用量、延迟及决策质量。
+
+固定来源为
+[原始实验档案](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/tree/9b56abee9e8c8af78a7b2961944bedbdde97d7c4/01_os/_runs/run-20261110-core-task-context-cold-recovery-001)、
+[GPT-6 实质审核](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/20#issuecomment-6767439407)、
+[Human 转交 Fork 状态的记录与本次同步合同](https://github.com/chris2gao/Cybernetic_City_State_OS_v2---core/issues/21)。
 

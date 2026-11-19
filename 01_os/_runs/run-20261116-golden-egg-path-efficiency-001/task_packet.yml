@@ -1,0 +1,56 @@
+task_packet:
+  task_id: OS-CORE-GOLDEN-EGG-F01-F02-20261116
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: bd185822822543350e9d3c07a1174285b47b788d
+  branch: task/core-golden-egg-path-efficiency-20261116
+  objective: Fix F01 unrelated preparation preemption and F02 optional busywork on a blocked business result; preserve existing assertions and run one final full Core regression after quick checks pass.
+  source_evidence:
+    - cb61ee8b257e8a4d7291bc1ec3837ae5dc966a92:01_os/_dev/golden_egg_workflow_20261116/GPT_CODE_REVIEW_BD185822_20261116.md
+    - bd185822822543350e9d3c07a1174285b47b788d:01_os/06_execution/workflow/minimum_operational_loop/run_minimum_operational_loop.py
+    - a3c4c1b7a80d22300a4644933c8689f423c61807:01_os/_dev/golden_egg_workflow_20261116/CODEX_BOUNDED_ENGINEERING_HANDOFF_v2.md
+    - a3c4c1b7a80d22300a4644933c8689f423c61807:01_os/_dev/golden_egg_workflow_20261116/GOLDEN_EGG_A0_A_B_AND_REVIEW_DECISION_v1.md
+    - a3c4c1b7a80d22300a4644933c8689f423c61807:01_os/_dev/golden_egg_workflow_20261116/OS_CORE_GOLDEN_EGG_ENGINEERING_TEST_CANDIDATE_v2.yml
+    - 6d97d2d3e2527f38e688998e9b8de03553046dbe:01_os/06_execution/task_orchestration/atomic_tasks.py
+  allowed_changed_paths:
+    - 01_os/06_execution/workflow/minimum_operational_loop/**
+    - 01_os/01_workflow/05_步骤拆分/**
+    - 01_os/01_workflow/06_执行/**
+    - 01_os/01_workflow/07_测试执行/**
+    - 01_os/_runs/run-20261116-golden-egg-path-efficiency-001/**
+  verification_plan: 01_os/_runs/run-20261116-golden-egg-path-efficiency-001/verification_plan.json
+  required_tests: [before_counterexamples, review_before, engineering, actual_decision_path, core_regression]
+  prohibitions: [modify_master_without_required_Human_confirmation, force_push, rebase, squash, native_operations, change_test_expectations, modify_fact_monitor]
+  required_completion_pointer: branch, exact_commit, changed_paths, actual_decision_entry, before_after, results_and_limits
+  big_task: true
+  terminal_lifecycle_state: candidate_ready_for_independent_review
+  development_loop:
+    mode: iterative_development
+    progress_evidence: before_counterexamples_and_managed_verification_attempts
+    convergence_condition: F01/F02 fail against bd185822 and pass after the fix; unchanged T01-T14 assertions, actual CLI and one final full Core regression pass; T15 remains deferred
+    series_id: golden-egg-workflow-20261116
+    review_mode: deferred_to_series
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 043ac4864bdc871b03929faafd8bc6bd47d4ee2f
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Codex
+    model: runtime_not_exposed
+    reasoning_effort: runtime_not_exposed
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: Human assigned execution in this chat; no model delegation
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: Human_and_GPT_per_current_Human_override
+    different_model_family: false
+    different_measurement_tool: false

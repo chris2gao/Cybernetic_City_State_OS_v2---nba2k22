@@ -1,0 +1,134 @@
+task_id: OS-CORE-ROLE-SKILLS-INTEGRATION-20261118-001
+run_id: run-20261118-role-skills-integration-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
+branch: task/core-role-skills-20261118
+ownership: core_system
+objective: >-
+  按角色加载的 Core OS skill 化，以及其前置的新旧内容整合（方案 v4 I1–I16）。
+task_packet: 01_任务输入/任务包_v1.yml
+inputs:
+  - 01_任务输入/角色化上下文与OS_Skill化方案_v4.md
+  - 01_任务输入/Human决策记录_20261118.md
+lifecycle: integrated_and_verified_on_demand
+integration:
+  pr: chris2gao/Cybernetic_City_State_OS_v2---core#38 (MERGED 2026-11-18T18:22:54Z)
+  master_before: e0bdd7fa2ab233bafa4c65644cadce475f66a1c7
+  pr_head_bound: 2677dd37a0f305e18087beb14788cdb9171198a9
+  master_after: 32b86057e872377594b991d0f51a910e7e8e0151
+  parents: [e0bdd7fa2ab233bafa4c65644cadce475f66a1c7, 2677dd37a0f305e18087beb14788cdb9171198a9]
+  readback: old master is an ancestor; merge tree equals PR head tree; 119 paths changed; no squash, rebase or force
+  confirmation: 08_结论/HUMAN_MASTER_INTEGRATION_CONFIRMATION_20261118.md
+b1_retest_after_integration:
+  session: b1-retest-reviewer, new Claude Code session on the main checkout at master 32b86057
+  told: 你的角色是审核。
+  skill_list: role-reviewer, citystate-os, all os-* and role-* skills listed as invocable
+  invoked: role-reviewer through the Skill tool, loaded from the main checkout .claude/skills/role-reviewer
+  loaded: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline]
+  startup_read: 14 files, 171,457 bytes (matches the 167 KB the catalog states for the reviewer role)
+  validators: 5 run, all exit 0
+  result: B1 closed - the app lists and invokes the role skills once they are on the checkout the app treats as the project root; worktree sessions before integration could not see them because that root was still on master without skills
+closure_record: 08_结论/completion_pointer.yml
+increments:
+  - commit: b225fb67
+    done: [I1, I6, I11, I12, I13, I15, CORE_MANIFEST part of I14/I16]
+  - commit: dfb019ba
+    done: [I2, I3, I4, I7, I8, I9, I10, I16, skills registry + generator + validator + 38 generated files]
+    checks_run_exit_0: [verify_context_structure, validate_working_set, validate_mechanism_activation static, verify_model_routing static, stage guard + v2 static, run_minimum_operational_loop static, validate_skills, pytest skills 5 passed, pytest model_routing 7 passed]
+boundary_corrections:
+  - date: 2026-11-18
+    finding: dispatch_boundary_defect
+    path: .gitignore
+    detected_by: managed_verify run on 3bec129d returned candidate_outside_packet_allowlist (exit 3); changed_path_ledger listed .gitignore as the only out-of-scope path of 112
+    cause: I16 moves the domain _runtime ignore rule to 08_Domain_Applications/_runs/*/_runtime/; the packet author (this executor) omitted .gitignore from allowed_changed_paths
+    resolution: Human chose to add .gitignore to allowed_changed_paths and rerun verification
+verification_attempts:
+  - attempt: attempt-001
+    candidate: 3bec129d9009926912d14ebe64a727d470babfe8
+    result: refused before any check (candidate_outside_packet_allowlist, exit 3); see boundary_corrections
+  - attempt: attempt-002
+    candidate: 07187f1c7e4ad87ad0e4f2431197c2324b16cb56
+    result: 16 of 19 checks success; pytest_mechanism_activation failed at collection (ModuleNotFoundError activation), 2 not_run; inspect exit 1
+    cause: verification plan defect - those unittest suites import their sibling module flat and are run with unittest discover -s <dir> (31 tests OK); the directory has __init__.py so pytest imports it as a package. No source in that directory changed in this task.
+    correction: the check id keeps its name; argv changed to python -m unittest discover. model_routing (7 passed) and communication_system (84 passed, 6 subtests) pre-checked under pytest before rerun.
+  - attempt: attempt-003
+    candidate: 3b1550b4aea011b7cd082d5134021fba18ada81a
+    result: all 19 required checks success; managed_verify run exit 0 and inspect exit 0
+    test_counts: {skills: 5, task_orchestration: '171 + 8 subtests', task_discipline: '140 + 147 subtests', workflow: '174 + 283 subtests', stage_deliberation: 225, context_management: 121, mechanism_activation: '31 (unittest)', model_routing: 7, communication: '84 + 6 subtests'}
+    raw_attempt: kept outside the repository in the executor's scratch evidence directory; executor evidence, not independently reproduced
+  - attempt: attempt-004
+    candidate: bf7cff059fcdea4a2f24f41e4d5a5a8d5695aeb5
+    result: stopped by the executor a few minutes in (no check finished) to fold three Human decisions into one final candidate; not a verification result
+  - attempt: attempt-005
+    candidate: a6fa2d5eca1280ee9f1873b2895e448f5c73253e
+    result: all 19 required checks success; managed_verify run exit 0 and inspect exit 0
+    test_counts: {skills: 7, task_orchestration: '171 + 8 subtests', task_discipline: '140 + 147 subtests', workflow: '174 + 283 subtests (1790 s of a 3600 s limit)', stage_deliberation: 225, context_management: 122, mechanism_activation: '31 (unittest)', model_routing: 7, communication: '84 + 6 subtests'}
+    raw_attempt: executor scratch evidence outside the repository; executor evidence, independent re-review pending
+independent_review:
+  - reviewed_head: 5e4083935d03d6401c88c8b1c4684936f209dee0
+    reviewer: fresh isolated Claude Code session role-test-reviewer (Claude Opus 5.5, same model family as executor - disclosed)
+    report: 07_测试执行/独立审核_5e408393.md
+    verdict: FIX_REQUIRED
+    reproduced: all 19 verification-plan checks exit 0, counts equal attempt-003; PRMS catalog PARTIAL on master, CONSISTENT on head
+    blocking: [B1 fresh-window Done has no evidence; in the reviewer's own fresh window .claude/skills were not offered as invocable skills]
+    nonblocking: [N1 scaffold_domain could overwrite 08 files, N2 PASS vs PASS_WITH_NON_BLOCKING_NOTES not checked against findings, N3 SD-09 mapping placed in 07 README, N4 commit author name unknown, N5 receipt provenance blob historical and format-checked only, N6 freeze lift is documentation only]
+role_tests:
+  - session: role-test-planner
+    told: 你的角色是任务规划。
+    loaded: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline, os-communication, os-model-routing, os-stage-deliberation]
+    matches_matrix: true
+    how: read the role skill and unit SKILL.md files through the CLAUDE.md router; did not invoke them as registered skills
+    validators: 7 run, all exit 0
+    reading: 98 of 103 files fully, 5 large stage-deliberation contracts outlined
+    found: [task_orchestration_v1.yml excluded block still said no boot, core.hooksPath absolute in new worktrees]
+  - session: role-test-developer
+    told: 你的角色是任务开发。
+    loaded: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline, os-publication]
+    matches_matrix: true
+    how: read SKILL.md files through the CLAUDE.md router
+    validators: 5 run, all exit 0
+    reading: about 34 of 71 files fully; reported ~430 KB required reading as too large to load in one window
+post_review_fixes:
+  - N1 scaffold_domain refuses when any target 08 file exists (test added)
+  - task_orchestration_v1.yml stale excluded block and workflow_publication_gate_v1.yml note closed
+  - reviewed_head: 5e4083935d03d6401c88c8b1c4684936f209dee0
+    reviewer: Human-assigned isolated review session (Claude Opus 5.5, same family - disclosed)
+    report: 07_测试执行/独立审核2_5e408393.md
+    verdict: FIX_REQUIRED
+    reproduced: managed_verify exit 3 because pytest_workflow hit the 1800 s limit (it needs ~1795 s); the 5 remaining suites passed when run directly; PRMS catalog CONSISTENT
+  - reviewed_range: 5e4083935d03d6401c88c8b1c4684936f209dee0..9c139d12e1b9eb3521e4486ab9ee2f9569608992
+    reviewer: Human-assigned isolated review session (Claude Opus 5.5, same family - disclosed)
+    report: 07_测试执行/复审_9c139d12.md
+    verdict: PASS
+    reproduced: managed_verify run and inspect exit 0 on a6fa2d5e (19/19, 2461 s), skills validator and generate --check exit 0, PRMS catalog CONSISTENT
+review_dispositions:
+  F1_task_continuity_single_window: fixed - TASK_CONTINUITY.md now says the window is a workbench and one task vs a series is the Human's call
+  F2_startup_reading_load: fixed by Human-approved three-tier loading; startup reading per role before -> after - planner 552 KB -> 174 KB, developer 419 -> 177, reviewer 395 -> 167, content developer 419 -> 177, content user 259 -> 152 (B0 is 124 KB of each); B0 split proposed as a separate task
+  F3_command_templates: fixed - publish_message, route_receiver, task_cli, managed_verify templates now carry every required option; test_skills checks this against each script's --help
+  F4_pr37_lifecycle_value: fixed by Human decision - PR #37 run lifecycle back to candidate_pending_validation with an integration note
+  F5_review_verdict_derivation: plan-vs-actual delta - runner enforces vocabulary and PASS-only completion; PASS vs PASS_WITH_NON_BLOCKING_NOTES is not machine-checked because the stage-07 schema has no findings field; schema also does not declare review_verdict
+  F6_existing_domain_catalog_path: fixed in CORE_MANIFEST merge_rule - migrating domains must repoint domain.yml global_mechanism_catalog, content_path and evidence_refs into 08
+  F7_skill_blob_pins: plan-vs-actual delta - validate_skills checks paths and tiers, not blob pins; the only pinned boot (stage deliberation) is checked by its own v2 static
+  F8_working_set_wording: fixed
+  F9_workflow_timeout: fixed - pytest_workflow timeout_seconds 1800 -> 3600
+  N1_scaffold_overwrite: fixed (earlier commit e0ea24f8)
+  N3_sd09_mapping_location: plan-vs-actual delta - mapping written in the stage-07 README instead of the state contract so the stage-deliberation boot pins did not have to change again
+  N4_commit_author_unknown: accepted by Human decision - commits stay as they are; author name is unset in the local git config
+  B1_skill_registration: accepted by Human decision as passing evidence - role tests loaded the matrix skill sets by reading SKILL.md through the vendor router; registration as invocable skills is unverified in worktree sessions and is retested after master integration in the main checkout
+  R1_subcommand_options: follow-up - test_command_templates parses top-level --help only; reviewer checked subcommand level by hand, no gaps now
+  R2_receipt_contract_on_action: follow-up - add 实现/加载与receipt契约_v1.yml to the stage-deliberation on-action read for stage checkpoints
+  R3_worktree_hooks_path: disposition - Claude Desktop worktrees get core.hooksPath set to the main checkout's absolute .githooks in config.worktree; the hook files are byte-identical, but the local_git gate expects exactly .githooks. An executor in such a worktree sets `git config --worktree core.hooksPath .githooks` before publishing (done in this task, recorded at its start); changing the gate to accept an equivalent absolute path is a separate decision
+  R4_tiers_in_boot: follow-up - move read tiers into boot manifests with the B0 split task
+plan_vs_actual:
+  - plan 4.3 put a skill block in each mechanism registry; actual is one registry skills_v1.yml (one source, simpler generator)
+  - plan 6 step 5 asked each role window to do a small real task; planner and developer tests did initialization only, the reviewer test did a real review
+remaining_after_integration:
+  done_in_this_task:
+    - managed verification on the final candidate, PRMS catalog recheck, role tests, independent review and re-review, push, Human-confirmed master integration, B1 retest
+  follow_up_tasks:
+    - R1 check subcommand-level required options in test_command_templates
+    - R2 add 实现/加载与receipt契约_v1.yml to the stage-deliberation on-action read for stage checkpoints
+    - R4 move read tiers into the boot manifests, together with splitting B0 into operating rules and evidence
+    - merge core into each domain repository under the 08-only rule and move domain 01/02/03/09/07_content material into 08
+    - decide whether the local_git hook gate should accept an absolute hooks path equal in content to .githooks (R3)

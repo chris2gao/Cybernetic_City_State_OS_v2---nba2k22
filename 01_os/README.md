@@ -6,18 +6,33 @@
 ## Repository-wide 新窗口入口
 
 根级 router 对每个 repository working window 启用 repository-wide always-on
-bootstrap：fresh-read 远端 `master` 当前精确 40 位 SHA，读取
-`AGENT_WORKING_DISCIPLINE.md` 与 `AGENTS.md`，然后无条件读取 `01_os/README.md`（本文件）和
+bootstrap：确认仓库、工作分支与 Human 目标，读取 `AGENT_WORKING_DISCIPLINE.md` 与
+`AGENTS.md`，然后无条件读取 `01_os/README.md`（本文件）和
 `01_os/开发入口与单窗口任务规范_v1.md`（[打开文件](开发入口与单窗口任务规范_v1.md)）。
-进入本 repository 工作本身就进入 OS discipline；这不表示其余 OS 内容被全部加载。
+远端 `master` 精确 40 位 SHA 只在 material write、不可变证据或发布/受保护动作边界
+fresh-read，不作为每个窗口的启动门。进入本 repository 工作本身就进入 OS discipline；
+这不表示其余 OS 内容被全部加载。
+
+**按角色加载。** Human 说明角色（任务规划、任务开发、审核；领域仓另有特色内容开发、
+特色内容教学或使用）后，模型调用对应角色 skill（`role-planner`、`role-developer`、
+`role-reviewer`、`role-content-developer`、`role-content-user`），由它加载该角色需要的
+全部机制 skill 并输出角色初始化回执。`citystate-os` skill 是整个 OS 的目录。skill 位于
+仓库根 `.agents/skills/`（Claude Code 读 `.claude/skills/` 镜像），由
+`06_execution/skills/generate_skills.py` 从 registry 生成，不手改。聊天窗口是临时工作台，
+一个窗口承担一个任务还是一个系列由 Human 决定。
 
 `current Human natural-language request` 本身就是有效 task input。已有
 `durable task packet` 时加载它；若尚无 packet 且工作会造成 `material repository
 mutation`，须按开发入口在第一次 business/canonical write 前建立 task packet 与 run
-evidence，不要求 Human 手工粘贴固定初始化包。随后只加载任务触发的 canonical 文件与
-registry；禁止 default-preload `01_os/_runs/**`。
+evidence，不要求 Human 手工粘贴固定初始化包。累计区（`_runs/`、`_communication/`、
+`_dev/`、`08_Domain_Applications/_runs/`）不做默认枚举或整区读取；已加载 skill、boot
+清单或当前任务精确列出的路径直接读取，没有另外的授权或禁载区。
 
-## The seven areas
+## The areas
+
+领域内容不在 `01_os/` 内：领域仓库 = 最新 core + 领域自有的 `08_Domain_Applications/`（领域内容、
+`domain.yml` 与领域运行记录）和 `09_Domain_Global_Mechanisms/`（领域加载配置，即领域机制目录
+`domain_mechanisms.yml`）。core 不带这两个目录，领域仓经合并 core 升级 OS（Human 决定 2026-11-18）。
 
 | Directory | Holds | Does not hold |
 | :--- | :--- | :--- |
@@ -26,18 +41,14 @@ registry；禁止 default-preload `01_os/_runs/**`。
 | `03_mechanisms/` | 可独立描述、加载和验证的全局通用机制 | 工作流阶段步骤 |
 | `04_skills_and_tools/` | External skills and tools that extend model capability | Mechanisms the system itself runs on |
 | `05_registry/` | 系统文件/path-set 的用途、加载者与故障显现方式 | `_runs/` 运行流量与私有 scratch |
-| `06_execution/` | 初始化、重载与验证入口 | 被加载的定义正文 |
-| `07_content/` | 领域内容 | 工作流与全局机制 |
-| `_dev/` | 活动开发设计与被取代版本 | 角色私有运行时 |
+| `06_execution/` | 初始化、重载、验证与 skill 生成入口 | 被加载的定义正文 |
+| `_dev/` | 活动开发设计与被取代版本 | 角色私有运行时、活动规则 |
 | `_runs/` | 共享 OS/workflow/mechanism 的开发、研究、迁移与验证记录 | 领域业务运行流量、注册对象或永久机制实例 |
 
 ## Two rules this structure exists to enforce
 
 **The registry is updated with the development, not after it.** Every file added under
-`01_os` gets a registry entry in the same change. A registry that lags is a registry
-that lies, and the previous system demonstrated exactly what that costs: two
-mechanism files were deleted by a correct reachability computation because nothing
-recorded that an external tool loaded them, and both were found by accident.
+`01_os` gets a registry entry in the same change. （依据：入口依据与事故记录_v1.md §R-1）
 
 **Intermediate files produced by task execution are not registered and are deleted.**
 The registry describes the system, not the traffic through it. If a file is scratch,
@@ -49,14 +60,14 @@ it does not get an entry; it gets removed.
 `03_mechanisms/context_management/`；启动清单位于
 `02_boot/context_management/`；加载和验证入口位于
 `06_execution/boot/context_management/`。共享 OS 的耐久开发证据位于 `_runs/`；
-领域业务与领域 workflow 的运行流量位于 `01_os/07_content/_runs/`。两类运行的私有
+领域业务与领域 workflow 的运行流量位于 `08_Domain_Applications/_runs/`。两类运行的私有
 `_runtime/` 均不跟踪。
 
 ## Ownership
 
 `CORE_MANIFEST.yml` 将 OS 机制区域和保存共享 OS 开发/验证历史的 `01_os/_runs/`
-列为 core-owned；`01_os/07_content/` 与领域运行根 `01_os/07_content/_runs/` 为
-domain-owned。两个集合不得重叠。
+列为 core-owned；`08_Domain_Applications/`（含领域运行根 `08_Domain_Applications/_runs/`）
+与 `09_Domain_Global_Mechanisms/` 是仅有的两个 domain-owned 路径。两个集合不得重叠。
 # 全局通讯机制接入
 
 供应商无关、Human 触发与 Human 中转的通讯契约位于

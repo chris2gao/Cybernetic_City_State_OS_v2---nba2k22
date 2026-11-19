@@ -1,0 +1,59 @@
+minimum_work_unit_output:
+  role: independent_review
+  work_performed_or_requested: >-
+    独立审核 PR #40（任务 OS-CORE-SKILLS-REVIEW-R1-R2-20261118-001，分支 task/core-skills-review-r1-r2-20261118，
+    远端头 996b6dfacf608cfa42b8f9227ee8968310aac334，base 232345a737f06f348ba8e4fb1ec096537d647a70，
+    受控验证候选 3039712c0fefb1cc606f6a0bdb7bf455b722fb07），核对 R1 子命令一级必填参数检查、
+    R2 阶段推演按动作读取 receipt 契约、diff 范围、证据与风险档位。
+  implementation_or_review_method: >-
+    在审核方自己的 worktree 以 detach 方式检出 3039712c，从不可变提交重建：逐条读 diff；用探测脚本记录 21 条
+    命令模板实际下探的层级与每次 --help 的退出码；在 scratchpad 副本上对 missing_required_options 做 6 个变异体
+    并运行两个 R1 测试；用假 argparse 脚本验证选项位置语义；运行 generate_skills --check、镜像逐字节比较、
+    stage_receipt 必填字段计数；运行 changed_path_ledger 与 git diff --check；按任务验证计划复跑
+    managed_verify run 与 inspect（attempt 目录在仓库外 scratchpad）；用 ls-remote 与 gh pr view 只读核对远端头。
+  supportability_rationale: >-
+    结论依据审核方本会话实测：managed_verify run 退出 0、inspect 退出 0，五项必需检查全部 success，pytest 8 passed，
+    plan_sha256 与执行者记录一致；变异体 M1、M2、M4、M5 都让负例测试失败，说明新检查确实能抓到子命令一级缺项；
+    prms/cli.py 与 task_cli.py 源码里是 add_argument choices 位置参数，与执行者说法一致；生成器 --check 退出 0，
+    十九对镜像逐字节一致，citystate-os 与各 role skill 未改动，启动必读量不变；九个变更路径全部落在 allowed_changed_paths 内。
+  feasibility_rationale: >-
+    所有被引对象都能在固定提交 3039712c 与 996b6dfa 读到，复跑命令只读仓库、证据写在仓库外，不需要受保护动作；
+    审核方没有读执行者会话，执行者私有证据（attempt 原始目录、hook 配置、改文件先后顺序）无法独立重现，已在下面列为未支撑项。
+  verdict: PASS
+  primary_evidence_examined:
+    - git diff 232345a7..3039712c（test_skills.py、skills_v1.yml、README.md、两份 os-stage-deliberation SKILL.md、run 记录三文件）
+    - git diff 3039712c..996b6dfa（只有 run.yml 与 08_结论/completion_pointer.yml）
+    - 01_os/_runs/run-20261118-skills-review-r1-r2-001/01_任务输入/任务包_v1.yml
+    - 01_os/_runs/run-20261118-skills-review-r1-r2-001/run.yml
+    - 01_os/_runs/run-20261118-skills-review-r1-r2-001/07_测试执行/verification_plan.json
+    - 01_os/_runs/run-20261118-skills-review-r1-r2-001/08_结论/completion_pointer.yml
+    - 01_os/_runs/run-20261118-role-skills-integration-001/07_测试执行/复审_9c139d12.md 的 R1、R2
+    - prms/cli.py 与 task_cli.py 的 argparse 定义
+    - 01_os/03_mechanisms/stage_collaborative_deliberation/实现/加载与receipt契约_v1.yml
+    - 审核方 managed_verify attempt mv-attempt-reviewer-001（run 退出 0，inspect 退出 0）
+    - 审核方 R1 变异测试结果与层级探测结果
+    - git ls-remote 与 gh pr view 40 的远端头读回
+  findings_and_residual_risk:
+    - N1 不阻断：选项匹配不看位置也不分层级，子命令选项写在子命令前面的模板能通过测试但运行时 argparse 退出 2；当前树没有子命令级必填参数，没有现实影响。
+    - N2 不阻断：变异体 M3（位置选择也一律下探）在两个测试中都存活，“至少下探三层”的断言不能证明 subparser 识别生效；对正确性无影响。
+    - N3 不阻断：usage_head 不检查 --help 的退出码，--help 崩溃得到空输出时该层静默通过（顶层继承自原测试）；实测 21 条模板的 --help 都退出 0 且有输出。
+    - N4 不阻断：只看 usage 里第一个大括号选择组，只认小写选择；位置选择型脚本按动作需要的参数 argparse 表达不了，测试也覆盖不到。
+    - N5 不阻断：执行者自报先改文件后建任务包，偏离开发入口第 1 节第 5 步；只有一个候选提交，git 历史无法证实也无法否定先后；任务包、候选与验证绑定同一内容，没有业务影响，属 LOCAL_FIX。
+    - 残余风险：审核方与执行者同为 Claude Opus 5.5 模型族，依据任务包 different_model_family false，是同族审核。
+    - 残余风险：R2 只证明 skill 在阶段检查点指示读取该契约，没有证明模型实际照做；阶段协同推演机制默认休眠。
+  executor_rationale_assessment:
+    supportability_assessment: >-
+      执行者关于 R1 实现、负例测试、真实 subparser 只有三处、当前无缺项，以及 R2 迁移层级与启动量不变的说法，
+      都经审核方复跑与源码核对得到支撑。
+    feasibility_assessment: >-
+      执行者称改动局部、可逆、在既定契约内，与实际 diff 相符；T1_standard 成立，因为没有改变产品 validator、契约、接口、所有权或结构。
+    primary_evidence_refs:
+      - git diff 232345a7..3039712c（test_skills.py、skills_v1.yml、README.md、两份 os-stage-deliberation SKILL.md、run 记录三文件）
+      - 审核方 managed_verify attempt mv-attempt-reviewer-001（run 退出 0，inspect 退出 0）
+      - 审核方 R1 变异测试结果与层级探测结果
+      - prms/cli.py 与 task_cli.py 的 argparse 定义
+      - 01_os/_runs/run-20261118-skills-review-r1-r2-001/08_结论/completion_pointer.yml
+    unsupported_or_inferred_claims:
+      - completion pointer 的 hook_guard passed 与 worktree_clean true 只有执行者证据，审核方未查看执行者 worktree。
+      - 执行者 attempt-001 的原始目录在执行者 scratchpad，审核方没读到，只复跑了自己的 attempt。
+      - 改文件先于建任务包的先后顺序只有执行者自报。

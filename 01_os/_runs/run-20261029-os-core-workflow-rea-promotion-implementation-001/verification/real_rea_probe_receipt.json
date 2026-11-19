@@ -1,0 +1,96 @@
+{
+  "schema_version": "citystate.rea.receipt.v1",
+  "operation": "probe",
+  "authority_effect": "none",
+  "evidence_scope": "local_tool_only",
+  "automatic_replay": false,
+  "observed_version": "6.8.0",
+  "providers": [
+    {
+      "id": "ghidra",
+      "status": "unavailable",
+      "code": "not_configured"
+    },
+    {
+      "id": "hopper",
+      "status": "unavailable",
+      "code": "unsupported_host"
+    },
+    {
+      "id": "ida",
+      "status": "unavailable",
+      "code": "not_configured"
+    },
+    {
+      "id": "kuna",
+      "status": "unavailable",
+      "code": "not_configured"
+    }
+  ],
+  "catalog": {
+    "counts": {
+      "cli_commands": 175,
+      "mcp_tools": 229,
+      "mcp_prompts": 6
+    },
+    "digests": {
+      "tools_sha256": "a98940ba69acd9c1781d180cee362d4ddab18f77eefdd3e3216f10e1bf98e5e9",
+      "prompts_sha256": "9609379442110570cd52fdea61a777242350873bc28958f54827ca3590e680b7",
+      "combined_sha256": "fe938a7c6eba3763b22ae2022de76dc4a7812d35d86f1d4efd36b9962b04da0b"
+    }
+  },
+  "tools": {
+    "inspect-go-binary": {
+      "status": "AVAILABLE_UNVERIFIED",
+      "schema_sha256": "f9f10e8a3d2467c13f687cb3cbe770d36976b9138abc1423008136d9d15b7e2b"
+    },
+    "inspect-byte-entropy": {
+      "status": "AVAILABLE_UNVERIFIED",
+      "schema_sha256": "d5b3636cc235a38d900c2043979e44734ff6977c80695e68588fe3d6e6300df7"
+    }
+  },
+  "status": "AVAILABLE_UNVERIFIED",
+  "exit_code": 0,
+  "raw_files": [
+    {
+      "path": "capabilities.stderr",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "capabilities.stdout",
+      "size_bytes": 54663,
+      "sha256": "6219430890a8cb82e632c93bcd9be68a3c8ea23ba6b377d455a6ecdabfae6932"
+    },
+    {
+      "path": "inspect-byte-entropy-schema.stderr",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "inspect-byte-entropy-schema.stdout",
+      "size_bytes": 1011,
+      "sha256": "d5b3636cc235a38d900c2043979e44734ff6977c80695e68588fe3d6e6300df7"
+    },
+    {
+      "path": "inspect-go-binary-schema.stderr",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "inspect-go-binary-schema.stdout",
+      "size_bytes": 1173,
+      "sha256": "f9f10e8a3d2467c13f687cb3cbe770d36976b9138abc1423008136d9d15b7e2b"
+    },
+    {
+      "path": "version.stderr",
+      "size_bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "version.stdout",
+      "size_bytes": 6,
+      "sha256": "4c7d245d1e1c2c70e26c15a790671f5aacaacfffafbcbe8e86ce9df0bbd835bf"
+    }
+  ]
+}

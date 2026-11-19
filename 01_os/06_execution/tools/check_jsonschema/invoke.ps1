@@ -21,6 +21,12 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
+# Python's Windows pipe default can be CP936 while callers consume UTF-8.
+# Limit the override to this invocation and restore even on a fail-closed exit.
+$previousPythonIOEncoding = [Environment]::GetEnvironmentVariable("PYTHONIOENCODING", "Process")
+try {
+[Environment]::SetEnvironmentVariable("PYTHONIOENCODING", "utf-8", "Process")
+
 function Stop-CheckJsonschemaInvocation {
     param(
         [Parameter(Mandatory = $true)]
@@ -121,3 +127,12 @@ if ($null -eq $toolExitCode) {
 }
 
 exit [int]$toolExitCode
+}
+finally {
+    if ($null -eq $previousPythonIOEncoding) {
+        Remove-Item Env:PYTHONIOENCODING -ErrorAction SilentlyContinue
+    }
+    else {
+        [Environment]::SetEnvironmentVariable("PYTHONIOENCODING", $previousPythonIOEncoding, "Process")
+    }
+}

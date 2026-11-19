@@ -1,6 +1,6 @@
 schema_version: citystate.model_routing.source_index.v1
 mechanism_version: 1
-source_index_version: 3
+source_index_version: 4
 status: active
 resolution_contract:
   token_scope: catalog_source_refs_and_surface_exposure_evidence
@@ -101,6 +101,17 @@ sources:
     supports:
       - exact active UI surface observed as Claude Desktop Cowork
       - exact active UI model label observed as Claude Opus 5
+    limitations:
+      - does_not_claim_provider_documentation_for_exact_model_label
+      - invalid_if_task_time_UI_model_or_surface_differs
+      - grants_no_authority
+  HUMAN_CLAUDE_CODE_OPUS55_20261118:
+    kind: Human_task_time_observation
+    title: Human task-time confirmation of Claude Code Desktop / Claude Opus 5.5
+    path: 01_os/_runs/run-20261118-role-skills-integration-001/01_任务输入/Human决策记录_20261118.md
+    verified_at: '2026-11-18'
+    supports:
+      - exact active UI model label confirmed by Human as Claude Opus 5.5 in a Claude Code Desktop session
     limitations:
       - does_not_claim_provider_documentation_for_exact_model_label
       - invalid_if_task_time_UI_model_or_surface_differs

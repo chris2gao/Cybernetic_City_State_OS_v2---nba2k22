@@ -2,6 +2,15 @@ schema_version: citystate.registry.v1
 registry_id: task_orchestration_v1
 mechanism_version: 1
 entries:
+  - path: 01_os/02_boot/task_orchestration/启动清单_v1.yml
+    purpose: exact read list of the task_orchestration mechanism for role initialization and skill generation
+    loader: 01_os/06_execution/skills/generate_skills.py and role skills
+    loader_class: in_repo_program
+    discovery: role skills generated into .agents/skills/ and .claude/skills/
+    evidence: 01_os/06_execution/skills/test_skills.py
+    cache_dirs: []
+    failure_surfacing: next validate_skills.py run
+    deletion_rule: protected
   - path: 01_os/03_mechanisms/task_orchestration/受控验证执行契约_v1.yml
     purpose: 候选绑定、必需检查实际执行、完整证据和消费者复算的前台契约；不授予发布或运行时权限
     loader: Human and task executor read; managed_verify implements this contract
@@ -13,8 +22,9 @@ entries:
     deletion_rule: protected
   - path: 01_os/03_mechanisms/task_orchestration/{README.md,大任务与长时执行契约_v1.yml}
     purpose: >-
-      默认大任务与长时执行的 canonical 契约：内部 continuation 集合、真停止集合、
-      闭合前检查必填项、终态生命周期声明要求。授予任何权限均不由本机制产生。
+      默认大任务与长时执行的 canonical 契约：证据驱动的增量 Loop、内部 continuation 集合、
+      真停止集合、闭合前检查必填项与终态生命周期声明；系列集中独立审核时机由
+      01_os/开发入口与单窗口任务规范_v1.md 第9节统一判定。授予任何权限均不由本机制产生。
     loader: 01_os/06_execution/task_orchestration/big_task/closure_preflight.py
     loader_class: in_repo_program
     discovery: referenced from AGENTS.md and 01_os/开发入口与单窗口任务规范_v1.md
@@ -33,9 +43,48 @@ entries:
     cache_dirs: []
     failure_surfacing: next explicit command or pytest run
     deletion_rule: protected
-excluded:
-  # 本机制目前没有 01_os/02_boot/ 启动清单：该路径不在产生本机制的任务的
-  # allowed_changed_paths 内，执行者不自行扩边界。是否需要 boot manifest 是一条
-  # 待处理 finding，见
-  # 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/08_结论/。
-  - 01_os/02_boot/task_orchestration/**
+  - path: 01_os/03_mechanisms/task_orchestration/loop_iteration_schema_v1.json
+    purpose: Strict opt-in development-Loop checkpoint fields, enums and evidence requirements; not a Workflow state.
+    loader: 01_os/06_execution/task_orchestration/big_task/loop_observability.py
+    loader_class: in_repo_program
+    discovery: 01_os/03_mechanisms/task_orchestration/README.md
+    evidence: 01_os/06_execution/task_orchestration/big_task/test_loop_observability.py
+    cache_dirs: []
+    failure_surfacing: explicit CLI exit 1 or 3; legacy gaps never promote to strict PASS
+    deletion_rule: protected
+  - path: 01_os/06_execution/task_orchestration/execution_fact_monitor/**
+    purpose: >-
+      只读解析 Codex 原生日志（rollout-*.jsonl），把可观测执行事件转成统一 JSONL
+      记录并生成 Human 可读 report.md 的前台 CLI；默认关闭，不修改源日志或 Codex 程序，
+      不捕获模型消息/推理，不判断行为是否合理。
+    loader: Human or authorized task executor
+    loader_class: external_tool_convention
+    discovery: 01_os/06_execution/task_orchestration/execution_fact_monitor/README.md
+    evidence: 01_os/06_execution/task_orchestration/execution_fact_monitor/test_factmon.py
+    cache_dirs: []
+    failure_surfacing: factmon.py replay/watch/report 非零退出或事件遗漏
+    deletion_rule: protected
+
+  - path: 01_os/03_mechanisms/task_orchestration/最小任务原型与执行编译契约_v1.md
+    purpose: 跨领域父子任务 Human 逐项审定最小 G/R/A/D、可复用任务原型、能力绑定、05到06编译与有界Loop边界
+    loader: 05_步骤拆分 and 06_执行 read, plus Human design review
+    loader_class: host_application
+    discovery: AGENT_WORKING_DISCIPLINE.md section 0.1 and task_orchestration README
+    evidence: 01_os/06_execution/task_orchestration/test_reviewed_prototypes.py and current Human design review
+    cache_dirs: []
+    failure_surfacing: first new/revised prototype review or 05 to 06 execution handoff
+    deletion_rule: protected
+  - path: 01_os/06_execution/task_orchestration/{atomic_tasks.py,test_atomic_tasks.py,reviewed_prototypes.py,test_reviewed_prototypes.py,review_prototype_cli.py,test_review_prototype_cli.py,execution_mode_gateway.py,test_execution_mode_gateway.py,execution_decision_audit.py,test_execution_decision_audit.py,agent_self_report.py,test_agent_self_report.py,prms_review_lookup.py,test_prms_review_lookup.py,REVIEWED_PROTOTYPES.md}
+    purpose: 标准库 G/R/A/D 参考执行、Human 已审原型编译及 Human 模式裁决路由；EXECUTION/DEVELOPMENT 有独立入口、受控准入拒绝审计、独立的 Agent 诚信自报与只读分析，无通用 Shell 回退
+    loader: explicit Human-approved task Host integration and Python unittest
+    loader_class: in_repo_program
+    discovery: 01_os/03_mechanisms/task_orchestration/README.md
+    evidence: 01_os/06_execution/task_orchestration/test_atomic_tasks.py and test_reviewed_prototypes.py
+    cache_dirs: []
+    failure_surfacing: compile_approved or ExecutionModeGateway refusal, explicit unittest; independent Host integration not yet demonstrated
+    deletion_rule: protected
+
+# The former finding "no 01_os/02_boot/ manifest for this mechanism" (see
+# 01_os/_runs/run-20260828-t3-archive-and-big-task-workflow-001/08_结论/) was closed on
+# 2026-11-18: 01_os/02_boot/task_orchestration/启动清单_v1.yml now exists and is
+# registered in entries above, so that path is no longer excluded.

@@ -1520,7 +1520,7 @@ def _scope_completion(model: dict[str, Any], repo: Path, candidate: str,
 
 
 def _scope_model(data: dict[str, Any], candidate: str, scope: dict[str, Any],
-                 profile: dict[str, Any], repo: Path, packet: dict[str, Any],
+                 profile: dict[str, Any] | None, repo: Path, packet: dict[str, Any],
                  action: dict[str, Any], source: Any, contract: dict[str, Any]) -> None:
     model = data.get("current_model")
     _scope_require(isinstance(model, dict), 16, "current_model_required")
@@ -1536,7 +1536,7 @@ def _scope_model(data: dict[str, Any], candidate: str, scope: dict[str, Any],
 
 
 def _scope_model_contents(data: dict[str, Any], candidate: str, scope: dict[str, Any],
-                          profile: dict[str, Any], repo: Path, packet: dict[str, Any],
+                          profile: dict[str, Any] | None, repo: Path, packet: dict[str, Any],
                           action: dict[str, Any], source: Any, contract: dict[str, Any]) -> None:
     """Readiness and decision content independent of a single-instance version binding."""
     model = data["current_model"]
@@ -1567,6 +1567,10 @@ def _scope_model_contents(data: dict[str, Any], candidate: str, scope: dict[str,
     _scope_completion(model, repo, candidate, scope, source)
     code = validate_model_readiness(data, _validated_task_scope=True)
     _scope_require(code == 0, code, "substantive_readiness_failed")
+    if profile is None:
+        # Ordinary work has no stage transition. An optional projection still
+        # needs the formal instance route before it can support progression.
+        return
     elements = model.get("stage_specific_model_elements")
     _scope_require(isinstance(elements, dict), 16, "stage_elements_required")
     for field in profile["required_model_fields"]:
@@ -1730,7 +1734,8 @@ def _scope_task_authority(scope: Any, repo: Path, candidate: str, source: Any) -
     return packet, action
 
 
-def validate_task_scope_instance(data: Any, repo_root: Path | None, candidate: str | None) -> int:
+def validate_task_scope_instance(data: Any, repo_root: Path | None, candidate: str | None,
+                                 *, ordinary_work: bool = False) -> int:
     """Validate declared stage/action readiness, not execute or authenticate it.
 
     Scope sources are exact candidate blobs; completion evidence has its own commit.
@@ -1756,6 +1761,18 @@ def validate_task_scope_instance(data: Any, repo_root: Path | None, candidate: s
             _scope_require(field not in data, 11, "route_override_prohibited")
         code = direct_error_code(data)
         _scope_require(code == 0, code, "declared_failure")
+        contract = source.load_yaml_text(source.tracked_blob(repo, candidate, PROFILE_CONTRACT_PATH).decode("utf-8"))
+        _scope_require(isinstance(contract, dict), 11, "profile_contract_mapping_required")
+        if ordinary_work:
+            _scope_require(action["kind"] == "ordinary_task_work", 15, "ordinary_action_required")
+            _scope_require(data["activation_mode"] in {"dormant", "incremental"}, 16, "ordinary_activation_mode")
+            _scope_require(not ({"receipt", "seven_stage_child", "completion_pointer",
+                                 "stage_profile_id_and_version"} & data.keys()), 11, "formal_claim_in_ordinary_work")
+            model = data.get("current_model")
+            _scope_require(isinstance(model, dict) and not ({"completion", "stage_specific_model_elements"}
+                           & model.keys()), 11, "formal_claim_in_ordinary_model")
+            _scope_model(data, candidate, scope, None, repo, packet, action, source, contract)
+            return 0
         receipt = data.get("receipt")
         _scope_require(isinstance(receipt, dict), 17, "receipt_required")
         profile_doc = source.load_yaml_text(source.tracked_blob(repo, candidate, PROFILE_SET_PATH).decode("utf-8"))
@@ -1765,8 +1782,6 @@ def validate_task_scope_instance(data: Any, repo_root: Path | None, candidate: s
         # second candidate read inside a per-field check and made it easy for a
         # future check to add a third. Never fall back to a worktree read: a
         # mutable file must not decide what the candidate is allowed to claim.
-        contract = source.load_yaml_text(source.tracked_blob(repo, candidate, PROFILE_CONTRACT_PATH).decode("utf-8"))
-        _scope_require(isinstance(contract, dict), 11, "profile_contract_mapping_required")
         if "stage_profile_id_and_version" in data:
             _scope_require(data["stage_profile_id_and_version"] == receipt["profile_id_and_version"], 16, "declared_profile_mismatch")
         _scope_model(data, candidate, scope, profile, repo, packet, action, source, contract)
@@ -1819,7 +1834,7 @@ def validate_review_execution(data: dict[str, Any]) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("mode", choices=("static","instance","legacy_instance","material_event","review_execution"))
+    parser.add_argument("mode", choices=("static","instance","ordinary-work","legacy_instance","material_event","review_execution"))
     parser.add_argument("target")
     parser.add_argument("--case-id")
     parser.add_argument("--json-output", action="store_true")
@@ -1831,7 +1846,7 @@ def main() -> int:
         if args.mode == "static" and target.is_dir():
             code = validate_static_repo(target)
         else:
-            loader = load_task_scope_doc if args.mode == "instance" else load_doc
+            loader = load_task_scope_doc if args.mode in {"instance", "ordinary-work"} else load_doc
             data = select_case(loader(target), args.case_id)
             if not isinstance(data, dict):
                 code = 11
@@ -1839,8 +1854,9 @@ def main() -> int:
                 payload = data.get("data", data)
                 if args.mode == "static":
                     code = validate_static_fixture(payload)
-                elif args.mode == "instance":
-                    code = validate_task_scope_instance(payload, args.repo_root, args.candidate)
+                elif args.mode in {"instance", "ordinary-work"}:
+                    code = validate_task_scope_instance(payload, args.repo_root, args.candidate,
+                                                        ordinary_work=args.mode == "ordinary-work")
                 elif args.mode == "legacy_instance":
                     code = validate_instance(payload, args.repo_root)
                 elif args.mode == "material_event":

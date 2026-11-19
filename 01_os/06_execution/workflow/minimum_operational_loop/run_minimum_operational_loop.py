@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Validate declared seven-stage artifacts; do not execute their business work."""
 from __future__ import annotations
-import argparse, hashlib, importlib.util, json, shutil, subprocess, sys
+import argparse, difflib, hashlib, importlib.util, json, os, shutil, subprocess, sys, tempfile
 from pathlib import Path
 from typing import Any
 import yaml
@@ -24,8 +24,19 @@ EXPECTED_STAGE_IDS=[
 "workflow_stage_07_test_execution"]
 PROHIBITED_OUTPUT_PREFIXES=("01_os/01_workflow/","01_os/02_boot/","01_os/03_mechanisms/","01_os/05_registry/","01_os/06_execution/")
 ACCEPTED_VERDICTS={"PASS","PASS_WITH_NON_BLOCKING_NOTES"}
+# The reviewer writes one OS-wide review verdict (MWU independent_review vocabulary,
+# Human decision 2026-11-18). The stage-07 completion value above is derived from it:
+# only a PASS review may complete the stage. Absent review_verdict keeps legacy runs readable.
+REVIEW_VERDICTS={"PASS","FIX_REQUIRED","REJECT"}
+STAGE01_SPEC="01_os/01_workflow/01_需求建模/方法论_v1.md"
+STAGE01_TEMPLATE="01_os/01_workflow/01_需求建模/实现/需求结果模型模板_v1.yml"
 EXPECTED_MECHANISM_ID="stage_collaborative_deliberation_and_incremental_reconfirmation"
 EXPECTED_WORKFLOW_ID="citystate_seven_stage_minimum_operational_loop"
+PREDECESSORS = dict(zip(EXPECTED_STAGE_IDS, (
+    [], EXPECTED_STAGE_IDS[:1], EXPECTED_STAGE_IDS[:2], EXPECTED_STAGE_IDS[:3],
+    EXPECTED_STAGE_IDS[3:4], EXPECTED_STAGE_IDS[3:5],
+    [EXPECTED_STAGE_IDS[i] for i in (2, 3, 5)],
+)))
 
 def load_yaml(path:Path)->Any:
     return yaml.safe_load(path.read_text(encoding="utf-8"))
@@ -36,6 +47,141 @@ def normalized_sha256(value:Any)->str:
     return hashlib.sha256(raw).hexdigest()
 def positive_int(v:Any)->bool:
     return isinstance(v,int) and not isinstance(v,bool) and v>0
+
+def requirement_confirmation_digest(payload:dict)->str:
+    """Bind the full proposed requirement, including criteria, not just its title."""
+    return normalized_sha256({k:v for k,v in payload.items()
+                              if k not in {"Human_confirmation","consensus_Human_confirmation"}})
+
+def requirement_findings(payload:dict,artifact_version:int)->list[str]:
+    """The one active Stage01 structural contract. Not Human authentication."""
+    def text(x):return isinstance(x,str) and bool(x.strip())
+    def strings(x,nonempty=False):
+        return isinstance(x,list) and (bool(x) or not nonempty) and all(text(v) for v in x)
+    def rows(x,nonempty=False):
+        return isinstance(x,list) and (bool(x) or not nonempty) and all(isinstance(v,dict) for v in x)
+    if not text(payload.get("requirement_id")) or not text(payload.get("objective")):
+        return ["stage1_identity"]
+    criteria=payload.get("success_criteria")
+    if not rows(criteria,True) or any(not text(c.get("criterion_id")) or not text(c.get("statement")) for c in criteria):
+        return ["stage1_success_criteria"]
+    criterion_ids=[c["criterion_id"] for c in criteria]
+    if len(set(criterion_ids))!=len(criterion_ids):return ["stage1_duplicate_criterion"]
+    if not strings(payload.get("constraints")):return ["stage1_constraints"]
+    a0=payload.get("consensus_A0");a=payload.get("requirement_result_A")
+    if not isinstance(a0,dict) or not isinstance(a,dict):return ["stage1_dual_models_required"]
+    if not positive_int(a0.get("version")) or not text(a0.get("model_id")):
+        return ["stage1_consensus_identity"]
+    for field in ("objective","success_direction"):
+        if not text(a0.get(field)):return [f"stage1_consensus:{field}"]
+    if not strings(a0.get("boundaries"),True) or not isinstance(a0.get("terms"),dict):
+        return ["stage1_consensus_scope"]
+    if any(not text(k) or not text(v) for k,v in a0["terms"].items()):return ["stage1_consensus_terms"]
+    if a.get("version")!=artifact_version or not positive_int(a.get("version")) or not text(a.get("model_id")) or a["model_id"]==a0["model_id"]:
+        return ["stage1_result_identity"]
+    h0=payload.get("consensus_Human_confirmation");ha=payload.get("Human_confirmation")
+    if not isinstance(h0,dict) or not isinstance(ha,dict):return ["stage1_dual_confirmations_required"]
+    for confirmation,model,kind,digest in (
+        (h0,a0,"consensus_A0",normalized_sha256(a0)),
+        (ha,a,"requirement_result_A",requirement_confirmation_digest(payload))):
+        if (confirmation.get("confirmed") is not True or confirmation.get("model_kind")!=kind
+                or confirmation.get("model_id")!=model["model_id"]
+                or type(confirmation.get("artifact_version")) is not int
+                or confirmation["artifact_version"]!=model["version"]
+                or confirmation.get("content_sha256")!=digest
+                or not text(confirmation.get("confirmation_ref"))):
+            return [f"stage1_confirmation_binding:{kind}"]
+    if h0["confirmation_ref"]==ha["confirmation_ref"]:return ["stage1_distinct_confirmations"]
+    expected_ref={"model_id":a0["model_id"],"version":a0["version"],
+                  "sha256":normalized_sha256(a0),"confirmation_ref":h0["confirmation_ref"]}
+    if a.get("consensus_ref")!=expected_ref:return ["stage1_consensus_ref"]
+    items=a.get("result_items")
+    if not rows(items,True):return ["stage1_result_items"]
+    ids=[];question_ids=set();item_criteria={}
+    for item in items:
+        identifier=item.get("result_item_id")
+        if not text(identifier) or identifier in ids:return ["stage1_result_item_identity"]
+        ids.append(identifier)
+        for field in ("title","kind","expected_end_state","completeness_rule"):
+            value=item.get(field)
+            if not text(value) or value.strip().casefold() in {"tbd","todo","complete system","完成一个系统","待定"} or value.strip().startswith("<"):
+                return [f"stage1_result_item:{identifier}:{field}"]
+        for field,nonempty in (("components",True),("relations",False),("inputs_outputs",True),("acceptance_criterion_ids",True)):
+            if not strings(item.get(field),nonempty):return [f"stage1_result_item:{identifier}:{field}"]
+        mapped=item["acceptance_criterion_ids"]
+        if len(mapped)!=len(set(mapped)) or not set(mapped).issubset(criterion_ids):return ["stage1_result_criterion_mapping"]
+        item_criteria[identifier]=set(mapped)
+        facts=item.get("known_facts");unknowns=item.get("unknowns")
+        if not rows(facts) or not rows(unknowns):return ["stage1_result_evidence"]
+        if any(not text(f.get("item")) or f.get("evidence_status") not in {"human_requirement","source_observed","static_source","offline_verified","live_effect_verified","independently_reviewed","candidate_inference"} for f in facts):
+            return ["stage1_known_fact_evidence"]
+        for q in unknowns:
+            if (not text(q.get("question_id")) or q["question_id"] in question_ids
+                    or not text(q.get("scope")) or not text(q.get("closure_evidence"))
+                    or q.get("status")!="UNKNOWN"):
+                return ["stage1_unknown_evidence_question"]
+            question_ids.add(q["question_id"])
+    if set().union(*item_criteria.values())!=set(criterion_ids):return ["stage1_criterion_coverage"]
+    coverage=a.get("coverage")
+    if not rows(coverage,True):return ["stage1_coverage"]
+    seen=set();covered_questions=set()
+    for row in coverage:
+        criterion=row.get("success_criterion_id")
+        if not text(criterion) or criterion in seen or criterion not in criterion_ids:return ["stage1_coverage_criterion"]
+        seen.add(criterion)
+        refs=row.get("result_item_ids");qs=row.get("evidence_questions")
+        if not strings(refs,True) or not strings(qs) or len(refs)!=len(set(refs)) or len(qs)!=len(set(qs)):
+            return ["stage1_coverage_references"]
+        if set(refs)!={identifier for identifier,mapped in item_criteria.items() if criterion in mapped}:
+            return ["stage1_coverage_result_binding"]
+        expected_questions={q["question_id"] for item in items if item["result_item_id"] in refs for q in item["unknowns"]}
+        if set(qs)!=expected_questions:return ["stage1_coverage_question_binding"]
+        covered_questions.update(qs)
+    if seen!=set(criterion_ids) or covered_questions!=question_ids:return ["stage1_coverage_complete"]
+    return []
+
+def evidence_findings(payload:dict,requirement:dict)->list[str]:
+    """Separate feasibility support from background and preserve exact source scope."""
+    import re
+    def text(v):return isinstance(v,str) and bool(v.strip())
+    def strings(v):return isinstance(v,list) and all(text(x) for x in v)
+    sources=payload.get("sources");claims=payload.get("claims")
+    if not isinstance(sources,list) or not sources or not all(isinstance(s,dict) for s in sources):return ["stage2_sources"]
+    source_ids=set()
+    for source in sources:
+        sid=source.get("source_id");ref=source.get("source_ref")
+        if not text(sid) or sid in source_ids or not isinstance(ref,dict):return ["stage2_source_identity"]
+        source_ids.add(sid)
+        if "repository" in ref:
+            if (not text(ref["repository"]) or not isinstance(ref.get("commit"),str)
+                    or re.fullmatch(r"[0-9a-f]{40}",ref["commit"]) is None or not text(ref.get("path"))):
+                return ["stage2_exact_source_ref"]
+        elif not all(text(ref.get(f)) for f in ("url","version","observed_at")):
+            return ["stage2_external_source_ref"]
+        if source.get("publication_status") not in {"MASTER_INCLUDED","SOURCE_BRANCH_NOT_MASTER","EXTERNAL_VERSIONED_SOURCE"}:
+            return ["stage2_source_publication_status"]
+    if not isinstance(claims,list) or not claims or not all(isinstance(c,dict) for c in claims):return ["stage2_claims"]
+    item_ids={x["result_item_id"] for x in requirement["requirement_result_A"]["result_items"]}
+    criteria={x["criterion_id"] for x in requirement["success_criteria"]}
+    kinds={"STATIC_SOURCE","OFFLINE_TEST","LIVE_TOOL_CALL","LIVE_TARGET_EFFECT","INDEPENDENT_REVIEW","UNKNOWN","BACKGROUND_REFERENCE"}
+    claim_ids=set();covered_items=set()
+    for claim in claims:
+        cid=claim.get("claim_id")
+        if not text(cid) or cid in claim_ids:return ["stage2_claim_identity"]
+        claim_ids.add(cid)
+        if claim.get("evidence_kind") not in kinds or claim.get("purpose") not in {"FEASIBILITY","BACKGROUND"}:
+            return ["stage2_evidence_classification"]
+        if not text(claim.get("limits")):return ["stage2_evidence_limits"]
+        if not strings(claim.get("source_ids")) or not claim["source_ids"] or not set(claim["source_ids"]).issubset(source_ids):
+            return ["stage2_claim_sources"]
+        for field,valid in (("result_item_ids",item_ids),("success_criterion_ids",criteria)):
+            if not strings(claim.get(field)) or not set(claim[field]).issubset(valid):return ["stage2_requirement_mapping"]
+            if claim["purpose"]=="FEASIBILITY" and not claim[field]:return ["stage2_feasibility_mapping"]
+        covered_items.update(claim["result_item_ids"])
+        if claim["evidence_kind"]=="UNKNOWN" and not text(claim.get("closure_evidence")):return ["stage2_unknown_closure"]
+        if claim["evidence_kind"]=="BACKGROUND_REFERENCE" and claim["purpose"]!="BACKGROUND":return ["stage2_background_not_feasibility"]
+    if covered_items!=item_ids:return ["stage2_result_coverage"]
+    return []
 def run_subvalidator(cmd:list[str],cwd:Path)->int:
     return subprocess.run(cmd,cwd=cwd,stdout=subprocess.PIPE,stderr=subprocess.PIPE,check=False).returncode
 
@@ -80,6 +226,8 @@ def validate_static(repo_root:Path,run_subvalidators:bool=True)->tuple[int,list[
     if boot.get("contract")!=CONTRACT_PATH or boot.get("runner")!=RUNNER_PATH or boot.get("registry")!=REGISTRY_PATH:
         findings.append("boot_binding")
     if boot.get("stage_schemas")!=[item.get("schema_path") for item in stages]:findings.append("boot_stage_schemas")
+    for key,path in (("stage01_active_semantic_spec",STAGE01_SPEC),("stage01_result_model_template",STAGE01_TEMPLATE)):
+        if boot.get(key)!=path or not (repo_root/path).is_file():findings.append(f"boot_{key}")
     if boot.get("default_deliberation_route")!="dormant" or boot.get("create_live_session_by_default") is not False:
         findings.append("boot_policy")
     if boot.get("canonical_live_instance_state")!="prohibited":findings.append("boot_canonical_state")
@@ -356,11 +504,6 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
     # not checked here would be exactly the declared-but-unenforced defect this
     # work exists to remove, so the contract and the checker change together.
     required={"stage_control","schema_version","run_id","stage_id","artifact_kind","artifact_version","status","input_refs","deliberation_receipt","payload"}
-    predecessors={
-      EXPECTED_STAGE_IDS[0]:[],EXPECTED_STAGE_IDS[1]:[EXPECTED_STAGE_IDS[0]],
-      EXPECTED_STAGE_IDS[2]:EXPECTED_STAGE_IDS[:2],EXPECTED_STAGE_IDS[3]:EXPECTED_STAGE_IDS[:3],
-      EXPECTED_STAGE_IDS[4]:[EXPECTED_STAGE_IDS[3]],EXPECTED_STAGE_IDS[5]:EXPECTED_STAGE_IDS[3:5],
-      EXPECTED_STAGE_IDS[6]:[EXPECTED_STAGE_IDS[2],EXPECTED_STAGE_IDS[3],EXPECTED_STAGE_IDS[5]]}
     kinds=dict(zip(EXPECTED_STAGE_IDS,["requirement_package","evidence_package","result_package","frozen_test_package","step_package","execution_package","verification_package"]))
     run_id=manifest.get("run_id")
     run_doc=read_yaml(run_root/"run.yml") if is_file(run_root/"run.yml") else {}
@@ -388,26 +531,29 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
         refs=art.get("input_refs",[])
         if not isinstance(refs,list):return 32,[f"refs:{sid}"]
         by_id={x.get("stage_id"):x for x in refs if isinstance(x,dict)}
-        if set(by_id)!=set(predecessors[sid]):return 32,[f"predecessors:{sid}"]
-        for pred in predecessors[sid]:
+        if set(by_id)!=set(PREDECESSORS[sid]):return 32,[f"predecessors:{sid}"]
+        for pred in PREDECESSORS[sid]:
             ref=by_id[pred]
             if ref.get("path")!=paths[pred].name or ref.get("sha256")!=hashes[pred] or ref.get("artifact_version")!=artifacts[pred].get("artifact_version"):
                 return 32,[f"binding:{sid}:{pred}"]
     p1,p2,p3,p4,p5,p6,p7=[artifacts[s]["payload"] for s in EXPECTED_STAGE_IDS]
-    hc=p1.get("Human_confirmation",{})
-    if hc.get("confirmed") is not True or hc.get("artifact_version")!=artifacts[EXPECTED_STAGE_IDS[0]].get("artifact_version") or not p1.get("success_criteria"):
-        return 33,["stage1"]
+    stage1_findings=requirement_findings(p1,artifacts[EXPECTED_STAGE_IDS[0]]["artifact_version"])
+    if stage1_findings:return 33,stage1_findings
+    stage2_findings=evidence_findings(p2,p1)
+    if stage2_findings:return 33,stage2_findings
     source_ids={x.get("source_id") for x in p2.get("sources",[]) if isinstance(x,dict)}
     if any(not set(x.get("source_ids",[])) or not set(x.get("source_ids",[])).issubset(source_ids) for x in p2.get("claims",[])):
         return 33,["stage2_claim_sources"]
     c2=p2.get("completion",{})
     if c2.get("feasibility_basis_complete") is not True or c2.get("conflicts_resolved_or_durable") is not True:return 33,["stage2_completion"]
     evidence_ids={x.get("claim_id") for x in p2.get("claims",[]) if isinstance(x,dict)}
+    feasibility_ids={x["claim_id"] for x in p2["claims"] if x["purpose"]=="FEASIBILITY" and x["evidence_kind"] not in {"UNKNOWN","BACKGROUND_REFERENCE"}}
     result_ids=set()
     for claim in p3.get("claims",[]):
         result_ids.add(claim.get("result_claim_id"))
         ids=set(claim.get("evidence_claim_ids",[]))
         if not ids or not ids.issubset(evidence_ids):return 33,["stage3_claim_evidence"]
+        if not ids.intersection(feasibility_ids):return 33,["stage3_feasibility_support_required"]
     criteria={x.get("criterion_id") for x in p1.get("success_criteria",[]) if isinstance(x,dict)}
     mapped=set()
     for item in p3.get("requirement_satisfaction",[]):
@@ -452,6 +598,9 @@ def _validate_run(run_root:Path,schemas:dict[str,dict],repo_root:Path|None=None,
         if nums!=list(range(1,max(nums)+1)) or max(rows)[1]!="pass":return 37,["stage6_attempt_sequence"]
     if not p7.get("reviewer_role") or p7.get("reviewer_role")==p6.get("executor_role"):return 38,["stage7_independence"]
     if p7.get("verdict") not in ACCEPTED_VERDICTS:return 38,["stage7_verdict"]
+    if "review_verdict" in p7:
+        if p7.get("review_verdict") not in REVIEW_VERDICTS:return 38,["stage7_review_verdict"]
+        if p7.get("review_verdict")!="PASS":return 38,["stage7_review_verdict_not_pass"]
     results=p7.get("test_results",[])
     if any(x.get("status")!="passed" for x in results) or {x.get("test_id") for x in results}!=test_ids:return 38,["stage7_tests"]
     for claim in p7.get("implementation_claims",[]):
@@ -467,6 +616,194 @@ def prohibited_output(repo_root:Path,output_root:Path)->bool:
     try:rel=output_root.resolve().relative_to(repo_root.resolve()).as_posix().rstrip("/")+"/"
     except ValueError:return False
     return any(rel.startswith(prefix) for prefix in PROHIBITED_OUTPUT_PREFIXES)
+
+def _draft_run(run_doc, run_id):
+    if (run_doc.get("run_id") != run_id or run_doc.get("lifecycle") != "candidate_pending_validation"
+            or {"closure_record", "final_stage_completion_commit", "completion_pointer",
+                "human_acceptance", "status"} & run_doc.keys()):
+        raise ValueError("draft_run_required")
+
+
+def _draft_artifact(artifact, run_id, sid, schemas):
+    if (artifact.get("schema_version"), artifact.get("run_id"), artifact.get("stage_id"),
+            artifact.get("artifact_kind"), artifact.get("status")) != (
+            "citystate.workflow.artifact.v1", run_id, sid, schemas[sid]["artifact_kind"], "planned"):
+        raise ValueError(f"planned_artifact_identity:{sid}")
+    if not positive_int(artifact.get("artifact_version")):
+        raise ValueError(f"artifact_version_invalid:{sid}")
+    control = artifact.get("stage_control", {})
+    if not isinstance(control, dict) or {"plan_acceptance", "completion_acceptance"} & control.keys():
+        raise ValueError(f"formal_stage_control:{sid}")
+
+
+def _draft_manifest_entries(manifest, run_id):
+    if (manifest.get("schema_version"), manifest.get("workflow_id"), manifest.get("workflow_version"),
+            manifest.get("run_id")) != ("citystate.workflow.run_manifest.v1", EXPECTED_WORKFLOW_ID, 1, run_id):
+        raise ValueError("manifest_identity")
+    if {"status", "final_stage_completion_commit", "completion_acceptance", "plan_acceptance"} & manifest.keys():
+        raise ValueError("draft_manifest_required")
+    entries = manifest["artifacts"]
+    stages = [entry["stage_id"] for entry in entries]
+    if not stages or stages != EXPECTED_STAGE_IDS[:len(stages)]:
+        raise ValueError("manifest_stage_order")
+    return entries
+
+
+def _draft_version_floors(repo, head, relative, run_id, owner, source, schemas):
+    if source.git(repo, "rev-parse", "--is-shallow-repository").strip() != b"false":
+        raise ValueError("full_candidate_history_required")
+    floors = {}
+    commits = source.git(repo, "log", "--full-history", "--format=%H", head, "--", relative).decode().splitlines()
+    for commit in commits:
+        def read_optional(name):
+            path = f"{relative}/{name}"
+            if not source.git(repo, "ls-tree", "-z", commit, "--", path):
+                return None
+            return source.load_yaml_text(source.tracked_blob(repo, commit, path).decode("utf-8"))
+
+        historical_run = read_optional("run.yml")
+        if historical_run is not None:
+            _draft_run(historical_run, run_id)
+        manifest = read_optional("manifest.yml")
+        if manifest is None:
+            continue
+        for entry in _draft_manifest_entries(manifest, run_id):
+            sid, name, version = entry["stage_id"], entry["path"], entry["artifact_version"]
+            if not owner._scope_path(name) or "/" in name or not positive_int(version):
+                raise ValueError(f"historical_artifact_binding:{sid}")
+            artifact = read_optional(name)
+            if artifact is None:
+                raise ValueError(f"historical_artifact_absent:{sid}")
+            _draft_artifact(artifact, run_id, sid, schemas)
+            floors[sid] = max(floors.get(sid, 0), version, artifact["artifact_version"])
+    return floors
+
+
+def sync_candidate(run_root: Path, repo_root: Path, *, apply: bool = False) -> tuple[int, list[str]]:
+    """Rebind draft artifact bytes only. This command never validates acceptance."""
+    source_errors = ()
+    try:
+        repo_root = repo_root.resolve()
+        run_root = run_root.absolute()
+        relative = run_root.relative_to(repo_root).as_posix()
+        if relative == "." or run_root.resolve() != run_root or prohibited_output(repo_root, run_root):
+            raise ValueError("unsafe_candidate_directory")
+        owner = load_deliberation_validator(Path(__file__).resolve().parents[4])
+        git = owner.task_scope_support()
+        source_errors = (git.VerificationError,)
+        if not owner._scope_path(relative):
+            raise ValueError("unsafe_candidate_directory")
+        if Path(git.git(repo_root, "rev-parse", "--show-toplevel").decode().strip()).resolve() != repo_root:
+            raise ValueError("repository_root_required")
+        head = git.git(repo_root, "rev-parse", "HEAD").decode().strip()
+        git.candidate_id(repo_root, head)
+        def committed_yaml(path):
+            return yaml.safe_load(git.tracked_blob(repo_root, head, path.relative_to(repo_root).as_posix()))
+
+        roots = committed_yaml(repo_root / CONTRACT_PATH)["run_roots"]
+        parents = {roots[key].split("/<run-id>/")[0] for key in ("shared_os_development", "domain_workflow")}
+        if relative.rpartition("/")[0] not in parents or run_root.name.casefold() == "_runtime":
+            raise ValueError("candidate_run_root_required")
+        schemas = payload_schemas(repo_root, committed_yaml)
+        # Search reachable history too: removing a receipt in the working tree
+        # must not turn an accepted Run back into a writable draft.
+        protected = r'(plan_acceptance|completion_acceptance|final_stage_completion_commit)["\x27]?[[:space:]]*:'
+        if git.git(repo_root, "log", "--all", "-1", "--format=%H", "-G", protected, "--", relative).strip():
+            raise ValueError("formal_history_present")
+        formal_names = {"plan_acceptance.yml", "completion_acceptance.yml", "workflow_completion.yml"}
+        formal_paths = [f":(glob){relative}/**/{name}" for name in sorted(formal_names)]
+        if git.git(repo_root, "log", "--all", "--full-history", "-1", "--format=%H", "--", *formal_paths).strip():
+            raise ValueError("formal_history_present")
+        if any(p.name.casefold() in formal_names for p in run_root.rglob("*")):
+            raise ValueError("formal_record_present")
+
+        original = {}
+        updated = {}
+
+        def read(name):
+            if not owner._scope_path(name) or "/" in name:
+                raise ValueError("artifact_path_must_be_local")
+            path = run_root / name
+            if path.is_symlink() or path.resolve() != path or not path.is_file() or path in original:
+                raise ValueError(f"invalid_or_duplicate_artifact:{name}")
+            original[path] = path.read_bytes()
+            doc = git.load_yaml_text(original[path].decode("utf-8"))
+            if not isinstance(doc, dict):
+                raise ValueError(f"artifact_mapping:{name}")
+            return path, doc
+
+        def refresh(path, before, after):
+            if before != after:
+                updated[path] = yaml.safe_dump(after, allow_unicode=True, sort_keys=False, width=120).encode("utf-8")
+            return hashlib.sha256(updated.get(path, original[path])).hexdigest()
+
+        _, run_doc = read("run.yml")
+        _draft_run(run_doc, run_root.name)
+        normalized = git.normalize_packet(git.load_yaml_text(
+            owner._scope_blob(repo_root, head, run_doc.get("task_packet_ref"), git).decode("utf-8")))
+        packet = normalized.body
+        branch = git.git(repo_root, "symbolic-ref", "HEAD").decode().strip()
+        if (normalized.source_format != "wrapped_v1" or packet["task_id"] != run_doc.get("task_id")
+                or not owner._scope_path(packet["branch"]) or packet["branch"] in {"master", "main"}
+                or branch != f"refs/heads/{packet['branch']}"):
+            raise ValueError("draft_task_scope_mismatch")
+        git.git(repo_root, "merge-base", "--is-ancestor", packet["exact_base_sha"], head)
+        allowed = packet["allowed_changed_paths"]
+        if not all(owner._scope_path(path, pattern=True) for path in allowed):
+            raise ValueError("invalid_candidate_allowlist")
+        manifest_path, manifest = read("manifest.yml")
+        entries = _draft_manifest_entries(manifest, run_root.name)
+        for path in [manifest_path.name, *(entry["path"] for entry in entries)]:
+            if not owner._scope_path(path) or "/" in path or not owner._scope_allowed(f"{relative}/{path}", allowed):
+                raise ValueError(f"candidate_path_not_authorized:{path}")
+        floors = _draft_version_floors(repo_root, head, relative, run_root.name, owner, git, schemas)
+        bindings = {}
+        for entry in entries:
+            sid = entry["stage_id"]
+            path, artifact = read(entry["path"])
+            version = artifact["artifact_version"]
+            _draft_artifact(artifact, run_root.name, sid, schemas)
+            if (not positive_int(entry["artifact_version"])
+                    or version < max(entry["artifact_version"], floors.get(sid, 0))):
+                raise ValueError(f"artifact_version_regression_or_invalid:{sid}")
+            refs = artifact["input_refs"]
+            if not isinstance(refs, list) or sorted(ref["stage_id"] for ref in refs) != sorted(PREDECESSORS[sid]):
+                raise ValueError(f"predecessors:{sid}")
+            for ref in refs:
+                expected = bindings[ref["stage_id"]]
+                if ref["path"] != expected["path"] or not positive_int(ref["artifact_version"]) or ref["artifact_version"] > expected["artifact_version"]:
+                    raise ValueError(f"dependency_identity_or_version:{sid}:{ref['stage_id']}")
+            new_refs = [ref | bindings[ref["stage_id"]] for ref in refs]
+            digest = refresh(path, artifact, artifact | {"input_refs": new_refs})
+            bindings[sid] = {"path": path.name, "artifact_version": version, "sha256": digest}
+        refresh(manifest_path, manifest, manifest | {"artifacts": [
+            entry | bindings[entry["stage_id"]] for entry in entries
+        ]})
+        diff = ["".join(difflib.unified_diff(
+            original[path].decode().splitlines(keepends=True), new.decode().splitlines(keepends=True),
+            fromfile=path.name, tofile=path.name,
+        )) for path, new in updated.items()]
+        if not apply:
+            return (1 if updated else 0), diff
+        if (git.git(repo_root, "rev-parse", "HEAD").decode().strip() != head
+                or git.git(repo_root, "symbolic-ref", "HEAD").decode().strip() != branch or any(
+               path.is_symlink() or path.resolve() != path or path.read_bytes() != data
+               for path, data in original.items())):
+            raise ValueError("candidate_changed_during_sync")
+        # Each replacement is atomic. Manifest goes last so an interrupted run
+        # cannot advertise hashes for replacements that have not yet happened.
+        for path, data in updated.items():
+            with tempfile.NamedTemporaryFile(dir=run_root, delete=False) as tmp:
+                temporary = Path(tmp.name)
+                try:
+                    tmp.write(data)
+                    tmp.close()
+                    os.replace(temporary, path)
+                finally:
+                    temporary.unlink(missing_ok=True)
+        return 0, diff
+    except (OSError, ValueError, TypeError, KeyError, AttributeError, yaml.YAMLError, RuntimeError, *source_errors) as exc:
+        return 33, [f"candidate_sync:{exc}"]
 
 def materialize_pilot(repo_root:Path,output_root:Path)->tuple[int,list[str]]:
     if prohibited_output(repo_root,output_root):return 40,["canonical_output_root"]
@@ -485,18 +822,160 @@ def materialize_pilot(repo_root:Path,output_root:Path)->tuple[int,list[str]]:
     (output_root/"workflow_completion.yml").write_text(yaml.safe_dump(completion,allow_unicode=True,sort_keys=False,width=120),encoding="utf-8",newline="\n")
     return 0,[]
 
+def next_business_action(state:dict)->dict:
+    """Choose ONE existing business step from explicit domain observations.
+
+    Opt-in engineering path: no tool execution, polling, permission issuance or
+    durable journal. The domain owns facts, exact scope/CAS, resource reservations
+    and reconciliation across restarts. As in PR23, Done is independent of child
+    flags; unlike its ordered walk, a blocked node does not hide safe siblings.
+    """
+    import copy
+    if not isinstance(state,dict) or not state.get("goal"):
+        raise ValueError("Business goal required")
+    context=state["context"];facts=state["facts"];steps=state["steps"]
+    if not isinstance(context,dict) or not isinstance(facts,dict) or not isinstance(steps,list):
+        raise ValueError("Context/facts mappings and finite steps required")
+    valid={};invalidated={}
+    for key,observation in facts.items():
+        if not isinstance(observation,dict) or not isinstance(observation.get("bindings"),dict) or not observation.get("source_ref"):
+            raise ValueError(f"Fact requires source_ref and explicit validity bindings: {key}")
+        changed=[k for k,v in observation["bindings"].items() if k not in context or context[k]!=v]
+        if changed:invalidated[key]=changed
+        else:valid[key]=observation.get("value")
+    def observed(key):return valid.get(key) is True
+    by_id={}
+    priority={"diagnostic":0,"preflight":1,"business":2,"optional":3}
+    for step in steps:
+        if not isinstance(step,dict) or not step.get("step_id") or not step.get("goal") or step["step_id"] in by_id:
+            raise ValueError("Unique step IDs and business goals required")
+        if step.get("kind") not in priority or not isinstance(step.get("requires"),list) or not isinstance(step.get("depends_on"),list) or not step.get("done"):
+            raise ValueError("Step kind, Ready requirements, dependencies and independent Done required")
+        by_id[step["step_id"]]=step
+    for step in steps:
+        if not set(step["depends_on"]).issubset(by_id):raise ValueError("Unknown step dependency")
+    # Reuse the Stage05 finite dependency invariant, without starting a scheduler.
+    resolved=set()
+    while True:
+        new={k for k,s in by_id.items() if set(s["depends_on"]).issubset(resolved)}-resolved
+        if not new:break
+        resolved.update(new)
+    if resolved!=set(by_id):raise ValueError("Business dependency cycle")
+    choices=copy.deepcopy(state.get("approved_choices",{}))
+    report={"goal":state["goal"],"status":"BLOCKED","step_id":None,
+            "invalidated":invalidated,"reused":sorted(valid),"blocked":{},
+            "approved_choices":choices,"authority_effect":"none"}
+    if observed(state["parent_done"]):
+        report["status"]="DONE"
+        return report
+    candidates=[];unfinished=0
+    for position,step in enumerate(steps):
+        key=step["step_id"]
+        if observed(step["done"]):continue
+        unfinished+=1;reasons=[]
+        if step.get("resource") in state.get("unknown_resources",[]):reasons.append("RECONCILE: domain journal/readback required for resource")
+        if key in state.get("attempted",[]):reasons.append("RECONCILE: attempted without observed Done; no replay")
+        if step.get("channel") in state.get("stopped_channels",[]):reasons.append("Human stopped channel")
+        blocker=state.get("blockers",{}).get(step.get("scope"))
+        if blocker and step["kind"]!="diagnostic":reasons.append(str(blocker))
+        missing=[name for name in step["requires"] if not observed(name)]
+        if missing:reasons.append("Ready missing/false/stale: "+",".join(missing))
+        if any(not observed(by_id[d]["done"]) for d in step["depends_on"]):reasons.append("Unfinished predecessor")
+        if "choice_ref" in step:
+            ref=step["choice_ref"]
+            if ref not in choices:reasons.append("Missing approved business choice")
+            elif "proposed_choice" in step and step["proposed_choice"]!=choices[ref]:reasons.append("Approved business choice changed; do not reseed on runtime rebind")
+        if reasons:report["blocked"][key]=reasons
+        else:candidates.append((priority[step["kind"]],position,key))
+    # kind alone gives preparation no privilege over real Ready work.
+    eligible=[c for c in candidates if by_id[c[2]]["kind"]=="business"]
+    if not eligible:
+        pending=[k for k,s in by_id.items() if s["kind"]=="business" and not observed(s["done"])]
+        if pending:
+            # Only declared, unfinished predecessors can unblock this business.
+            # A shared scope or a diagnostic/preflight label is not causality.
+            needed=set()
+            while pending:
+                for dep in by_id[pending.pop()]["depends_on"]:
+                    if dep not in needed and not observed(by_id[dep]["done"]):
+                        needed.add(dep);pending.append(dep)
+            eligible=[c for c in candidates if c[2] in needed]
+        else:
+            # A task may itself consist of required checks (e.g. verification).
+            # A blocked required check must not fall back to optional busywork.
+            required=any(s["kind"]!="optional" and not observed(s["done"]) for s in steps)
+            eligible=[c for c in candidates if not required or by_id[c[2]]["kind"]!="optional"]
+        for c in candidates:
+            if c not in eligible:report["blocked"][c[2]]=["Deferred: unrelated to unfinished required work"]
+    if eligible:
+        report.update(status="READY",step_id=min(eligible)[2])
+    elif not unfinished:report["status"]="PARENT_INCOMPLETE"
+    return report
+
+
+def business_time_quality(metrics:dict,*,first_event=None,first_blocker=None,capture_end=None)->dict:
+    """Stage07 labels existing evidence; it neither collects nor monitors events.
+
+    Counts/durations come from an existing source report. Reported ON intervals
+    and duration sums are NEVER interpreted as unique wall or reasoning time.
+    """
+    from decimal import Decimal, InvalidOperation
+    from datetime import datetime
+    def seconds(value):
+        try:number=Decimal(str(value))
+        except InvalidOperation as exc:raise ValueError("Numeric time required") from exc
+        if not number.is_finite() or number<0:raise ValueError("Nonnegative finite time required")
+        return number
+    counts={k:metrics.get(k) for k in ("tool_call","tool_result","command","file_change","mcp")}
+    if any(v is not None and (type(v) is not int or v<0) for v in counts.values()):raise ValueError("Nonnegative integer layer counts required")
+    executions=None if any(counts[k] is None for k in ("command","file_change","mcp")) else sum(counts[k] for k in ("command","file_change","mcp"))
+    def supplied_seconds(key):return None if metrics.get(key) is None else str(seconds(metrics[key]))
+    result={"layers":counts,"execution_items":executions,
+            "records":None if any(v is None for v in counts.values()) else sum(counts.values()),
+            "command_seconds_sum":supplied_seconds("command_seconds"),
+            "mcp_seconds_sum":supplied_seconds("mcp_seconds"),
+            "monitor_on_reported_seconds":None if metrics.get("monitor_on_seconds") is None else str(sum((seconds(v) for v in metrics["monitor_on_seconds"]),Decimal(0))),
+            "monitor_on_basis":"REPORTED_SOURCE_INTERVALS_NOT_INDEPENDENT_WALL_MEASUREMENT",
+            "capture_source_seconds":supplied_seconds("capture_seconds"),
+            "off_intervals":metrics.get("off_intervals","UNKNOWN"),
+            "human_wait_seconds":supplied_seconds("human_wait_seconds"),
+            "unique_tool_wall_seconds":None,"unobserved_attribution":"UNKNOWN","safety_effect":"none"}
+    def span(a,b):
+        start=datetime.fromisoformat(a.replace("Z","+00:00"));end=datetime.fromisoformat(b.replace("Z","+00:00"))
+        if start.utcoffset() is None or end.utcoffset() is None:raise ValueError("Evidence timestamps require explicit timezone")
+        delta=end-start
+        value=Decimal(delta.days*86400+delta.seconds)+Decimal(delta.microseconds)/1000000
+        return str(seconds(value))
+    if first_event and first_blocker:result["event_span_to_blocker_seconds"]=span(first_event,first_blocker)
+    if capture_end and first_blocker:result["capture_to_blocker_seconds"]=span(capture_end,first_blocker)
+    return result
+
+
 def main()->int:
     parser=argparse.ArgumentParser()
-    parser.add_argument("command",choices=("static","validate","materialize-pilot"))
+    parser.add_argument("command",choices=("static","validate","materialize-pilot","sync-candidate","next-business-action","business-time-quality"))
     parser.add_argument("target");parser.add_argument("output",nargs="?")
     parser.add_argument("--json-output",action="store_true");parser.add_argument("--skip-subvalidators",action="store_true",help=argparse.SUPPRESS)
     parser.add_argument("--repo-root",type=Path,default=None)
+    parser.add_argument("--apply",action="store_true",help="apply sync-candidate changes; default previews only")
     parser.add_argument("--candidate",default=None,
                         help="exact commit whose run artifacts and acceptance history are judged; "
                              "required for full validation, independent of dirty checkout bytes")
     args=parser.parse_args()
+    if args.apply and args.command!="sync-candidate":parser.error("--apply requires sync-candidate")
+    if args.command in {"next-business-action","business-time-quality"}:
+        try:
+            source=json.loads(Path(args.target).read_text(encoding="utf-8"))
+            result=next_business_action(source) if args.command=="next-business-action" else business_time_quality(**source)
+        except (KeyError,TypeError,ValueError,OSError) as exc:
+            print(json.dumps({"status":"INPUT_ERROR","reason":str(exc)},ensure_ascii=False))
+            return 33
+        print(json.dumps(result,ensure_ascii=False))
+        return 0
     if args.command=="static":code,findings=validate_static(Path(args.target),not args.skip_subvalidators)
     elif args.command=="validate":code,findings=validate_run(Path(args.target),args.repo_root,args.candidate)
+    elif args.command=="sync-candidate":
+        code,findings=sync_candidate(Path(args.target),args.repo_root or Path.cwd(),apply=args.apply)
     else:
         if not args.output:parser.error("materialize-pilot requires output")
         code,findings=materialize_pilot(Path(args.target),Path(args.output))

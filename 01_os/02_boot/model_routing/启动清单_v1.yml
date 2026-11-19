@@ -1,7 +1,7 @@
 schema_version: citystate.model_routing.boot_manifest.v1
 mechanism_version: 1
-catalog_version: 3
-source_index_version: 3
+catalog_version: 4
+source_index_version: 4
 failure_policy: fail_closed_on_missing_partial_stale_or_invalid
 load_order:
   - path: 01_os/03_mechanisms/model_routing/README.md
@@ -30,3 +30,31 @@ receipt_required:
   - validator_exit_code
   - selected_route_executor_profile_ref
   - receiver_setup
+# Read tiers (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001). The single
+# place that says what a model reads: startup at role initialization; on_action when the stated
+# action happens; program = read by validators / runners, a model reads it only to edit it or to
+# debug a validator failure; optional = startup read that may be absent. .py paths are entry
+# points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
+# fails on any repository file path this manifest names (outside optional_extensions) that is
+# in no tier, or in two. Any load_order in this manifest is
+# unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
+read_tiers:
+  startup:
+  - 01_os/03_mechanisms/model_routing/README.md
+  on_action:
+  - when: 选择执行者或独立审核者、写 receiver_setup 时
+    reads:
+    - 01_os/03_mechanisms/model_routing/路由契约_v1.yml
+    - 01_os/03_mechanisms/model_routing/协作角色与接收者设置契约_v1.yml
+    - 01_os/02_boot/协作伙伴.md
+    - 01_os/03_mechanisms/model_routing/模型与产品面目录_v1.yml
+    - 01_os/03_mechanisms/model_routing/项目观察证据_v1.yml
+  - when: 核对模型目录的来源时
+    reads:
+    - 01_os/03_mechanisms/model_routing/来源索引_v1.yml
+  - when: 写任务包 executor_profile 时：开发入口细则 §7.1 模型路由 preflight
+    reads:
+    - 01_os/02_boot/os_entry/开发入口_按动作细则_v1.md
+  program:
+  - 01_os/02_boot/model_routing/启动清单_v1.yml
+  - 01_os/05_registry/model_routing_v1.yml

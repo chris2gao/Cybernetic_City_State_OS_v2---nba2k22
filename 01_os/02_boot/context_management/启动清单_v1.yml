@@ -4,9 +4,7 @@ failure_policy: fail_closed_on_missing_partial_or_stale
 load_order:
   - path: 01_os/README.md
     purpose: OS 区域与所有权入口
-  - path: 01_os/_dev/开发产物与文件隔离规范_v1.md
-    purpose: 开发与运行文件分区
-  - path: 01_os/_dev/决定_谁执行_v0.2.md
+  - path: 01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md
     purpose: 活动 D2 执行角色与边界裁决
   - path: 01_os/03_mechanisms/context_management/README.md
     purpose: 全局机制入口
@@ -32,3 +30,35 @@ receipt_required:
   - mechanism_version
   - loaded_paths
   - validator_exit_code
+# Read tiers (Human decision 2026-11-18, OS-CORE-B0-SPLIT-BOOT-TIERS-20261118-001). The single
+# place that says what a model reads: startup at role initialization; on_action when the stated
+# action happens; program = read by validators / runners, a model reads it only to edit it or to
+# debug a validator failure; optional = startup read that may be absent. .py paths are entry
+# points and are not tiered. generate_skills.py renders this into the skills; validate_skills.py
+# fails on any repository file path this manifest names (outside optional_extensions) that is
+# in no tier, or in two. Any load_order in this manifest is
+# unchanged and remains what the mechanism's own validator consumes. authority_effect: none.
+read_tiers:
+  startup:
+  - 01_os/03_mechanisms/context_management/README.md
+  - 01_os/03_mechanisms/context_management/文件隔离与产物生命周期_v1.md
+  on_action:
+  - when: 需要理解三个信息平面、恢复与 stale 规则时
+    reads:
+    - 01_os/03_mechanisms/context_management/方法论_v1.md
+  - when: 枚举历史、判断可见性或归档 run 时
+    reads:
+    - 01_os/03_mechanisms/context_management/工作集与归档契约_v1.yml
+  - when: 涉及执行者、workspace 与访问边界时
+    reads:
+    - 01_os/03_mechanisms/context_management/决定_谁执行_v0.2.md
+  - when: 修改项目资料索引或模块记录时
+    reads:
+    - 01_os/03_mechanisms/context_management/项目资料发现与索引同步契约_v1.yml
+  - when: 新增、移动或删除文件、修改 registry 时：开发入口细则 §3 文件放置规则与 §4 registry 同步规则
+    reads:
+    - 01_os/02_boot/os_entry/开发入口_按动作细则_v1.md
+  program:
+  - 01_os/02_boot/context_management/启动清单_v1.yml
+  - 01_os/03_mechanisms/context_management/实现/文件布局契约_v1.yml
+  - 01_os/05_registry/context_management_v1.yml

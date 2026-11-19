@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import hashlib, importlib.util, shutil, tempfile, unittest
+import hashlib, importlib.util, os, shutil, subprocess, tempfile, unittest
 from pathlib import Path
 import yaml
 
@@ -39,7 +39,157 @@ def rebind(root:Path):
         item["sha256"]=hashes[item["stage_id"]]
     save(root/"manifest.yml",manifest)
 
+def resign_requirement_fixture(payload):
+    """Synthetic test bindings only; never manufacture a real Human decision."""
+    def digest(value):
+        return hashlib.sha256(yaml.safe_dump(value,allow_unicode=True,sort_keys=True,width=4096).encode("utf-8")).hexdigest()
+    a0=payload["consensus_A0"]
+    payload["consensus_Human_confirmation"]["content_sha256"]=digest(a0)
+    payload["requirement_result_A"]["consensus_ref"]["sha256"]=digest(a0)
+    payload["Human_confirmation"]["content_sha256"]=digest({k:v for k,v in payload.items() if k not in {"Human_confirmation","consensus_Human_confirmation"}})
+
 class MinimumLoopTests(unittest.TestCase):
+    @staticmethod
+    def git(repo, *args):
+        return subprocess.run(["git", "-C", str(repo), "-c", "core.autocrlf=false",
+                               "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid", *args],
+                              check=True, capture_output=True, text=True).stdout.strip()
+
+    def draft_fixture(self, repo, *, rel="01_os/_runs/draft", allowed=None, stages=7):
+        self.git(repo, "init", "-qb", "fixture")
+        self.copy_contract(repo)
+        self.git(repo, "add", "01_os")
+        self.git(repo, "commit", "-qm", "contract")
+        base = self.git(repo, "rev-parse", "HEAD")
+        save(repo / "task_packet.yml", {"task_packet": {
+            "task_id": "fixture", "branch": "fixture", "exact_base_sha": base,
+            "allowed_changed_paths": allowed or [f"{rel}/**"], "required_tests": ["fixture"],
+            "prohibitions": [],
+        }})
+        self.git(repo, "add", "task_packet.yml")
+        self.git(repo, "commit", "-qm", "authorized draft scope")
+        run = repo / rel
+        shutil.copytree(FIXTURE, run)
+        run_id = run.name
+        manifest = load(run / "manifest.yml")
+        manifest.update(run_id=run_id, artifacts=manifest["artifacts"][:stages])
+        save(run / "manifest.yml", manifest)
+        save(run / "run.yml", {"run_id": run_id, "task_id": "fixture",
+                              "lifecycle": "candidate_pending_validation", "task_packet_ref": {
+                                  "path": "task_packet.yml",
+                                  "blob_sha": self.git(repo, "rev-parse", "HEAD:task_packet.yml"),
+                              }})
+        for entry in manifest["artifacts"]:
+            path = run / entry["path"]
+            draft = load(path)
+            draft.update(run_id=run_id, status="planned")
+            draft["stage_control"].pop("plan_acceptance", None)
+            draft["stage_control"].pop("completion_acceptance", None)
+            save(path, draft)
+        return run
+
+    def test_candidate_sync_preview_apply_and_formal_history_refusal(self):
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder).resolve()
+            run = self.draft_fixture(repo)
+            stage = run / "05_steps.yml"
+            artifact = load(stage)
+            artifact["artifact_version"] += 1
+            save(stage, artifact)
+            original = {p.name: p.read_bytes() for p in run.iterdir()}
+            code, diff = loop.sync_candidate(run, repo)
+            self.assertEqual(code, 1, diff)
+            self.assertIn("06_execution.yml", "".join(diff))
+            self.assertEqual(original, {p.name: p.read_bytes() for p in run.iterdir()})
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True), (0, diff))
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True), (0, []))
+            self.assertEqual(next(ref["sha256"] for ref in load(run / "06_execution.yml")["input_refs"]
+                                  if ref["path"] == "05_steps.yml"),
+                             hashlib.sha256(stage.read_bytes()).hexdigest())
+            manifest = load(run / "manifest.yml")
+            self.assertEqual(manifest["artifacts"][4]["artifact_version"], 2)
+            self.assertEqual(manifest["artifacts"][6]["sha256"],
+                             hashlib.sha256((run / "07_verification.yml").read_bytes()).hexdigest())
+
+            artifact["stage_control"]["completion_acceptance"] = {"commit": "recorded"}
+            save(stage, artifact)
+            self.git(repo, "add", stage.relative_to(repo).as_posix())
+            self.git(repo, "commit", "-qm", "formal record")
+            del artifact["stage_control"]["completion_acceptance"]
+            save(stage, artifact)
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True), (33, ["candidate_sync:formal_history_present"]))
+
+    def test_candidate_sync_rejects_unsafe_or_unauthorized_drafts(self):
+        cases = (
+            (".git/scratch-probe", None, "unsafe_candidate_directory"),
+            ("01_os/04_skills_and_tools/scratch-probe", None, "candidate_run_root_required"),
+            ("01_os/_runs/unlisted", ["01_os/_runs/some-other-draft/**"], "candidate_path_not_authorized"),
+        )
+        for rel, allowed, reason in cases:
+            with self.subTest(rel=rel), tempfile.TemporaryDirectory() as folder:
+                repo = Path(folder).resolve()
+                run = self.draft_fixture(repo, rel=rel, allowed=allowed, stages=1)
+                before = (run / "manifest.yml").read_bytes()
+                code, findings = loop.sync_candidate(run, repo, apply=True)
+                self.assertEqual(code, 33)
+                self.assertIn(reason, findings[0])
+                self.assertEqual((run / "manifest.yml").read_bytes(), before)
+
+    def test_candidate_sync_uses_committed_version_floor_for_partial_draft(self):
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder).resolve()
+            run = self.draft_fixture(repo, stages=1)
+            manifest_path = run / "manifest.yml"
+            manifest = load(manifest_path)
+            entry = manifest["artifacts"][0]
+            artifact_path = run / entry["path"]
+            artifact = load(artifact_path)
+            def version(value):
+                artifact["artifact_version"] = entry["artifact_version"] = value
+                save(artifact_path, artifact)
+                save(manifest_path, manifest)
+            version(3)
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True)[0], 0)
+            self.git(repo, "add", manifest_path.relative_to(repo).as_posix(), artifact_path.relative_to(repo).as_posix())
+            self.git(repo, "commit", "-qm", "draft v3")
+            version(1)
+            code, findings = loop.sync_candidate(run, repo, apply=True)
+            self.assertEqual(code, 33)
+            self.assertIn("artifact_version_regression_or_invalid", findings[0])
+            version(4)
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True)[0], 0)
+            self.assertEqual(loop.sync_candidate(run, repo, apply=True), (0, []))
+
+    def test_candidate_sync_rejects_outside_and_linked_run(self):
+        with tempfile.TemporaryDirectory() as folder, tempfile.TemporaryDirectory() as external:
+            repo = Path(folder).resolve()
+            run = self.draft_fixture(repo, stages=1)
+            outside = Path(external).resolve()
+            self.assertEqual(loop.sync_candidate(outside, repo, apply=True)[0], 33)
+            link = run.parent / "linked"
+            if os.name == "nt":
+                from _winapi import CreateJunction
+                CreateJunction(str(outside), str(link))
+            else:
+                link.symlink_to(outside, target_is_directory=True)
+            self.assertEqual(loop.sync_candidate(link, repo, apply=True),
+                             (33, ["candidate_sync:unsafe_candidate_directory"]))
+
+    def test_candidate_sync_rejects_non_draft_status_and_wrong_kind(self):
+        with tempfile.TemporaryDirectory() as folder:
+            repo = Path(folder).resolve()
+            run = self.draft_fixture(repo, stages=1)
+            path = run / load(run / "manifest.yml")["artifacts"][0]["path"]
+            artifact = load(path)
+            for changes in ({"status": "published"}, {"status": "complete"}, {"artifact_kind": "step_package"}):
+                with self.subTest(changes=changes):
+                    save(path, artifact | changes)
+                    before = path.read_bytes()
+                    code, findings = loop.sync_candidate(run, repo, apply=True)
+                    self.assertEqual(code, 33)
+                    self.assertIn("planned_artifact_identity", findings[0])
+                    self.assertEqual(path.read_bytes(), before)
+
     def copy_contract(self,repo):
         source=HERE.parents[3]
         contract=load(source/loop.CONTRACT_PATH)
@@ -51,6 +201,85 @@ class MinimumLoopTests(unittest.TestCase):
     def mutate(self,name,fn):
         root=self.copy_fixture();p=root/name;data=load(p);fn(data);save(p,data);rebind(root);return root
     def test_positive_fixture(self):self.assertEqual(loop.validate_structure(FIXTURE)[0],0)
+    def stage1_case(self,fn,resign=False):
+        def change(doc):
+            fn(doc["payload"])
+            if resign:resign_requirement_fixture(doc["payload"])
+        return loop.validate_structure(self.mutate("01_requirement.yml",change))
+    def test_stage01_only_consensus_or_old_single_layer_refused(self):
+        for fields in (("Human_confirmation",),("consensus_A0","consensus_Human_confirmation","requirement_result_A")):
+            with self.subTest(fields=fields):
+                self.assertEqual(self.stage1_case(lambda p:[p.pop(f) for f in fields])[0],33)
+    def test_stage01_copied_A0_confirmation_is_not_complete_A(self):
+        self.assertEqual(self.stage1_case(lambda p:p.update(Human_confirmation=dict(p["consensus_Human_confirmation"])))[0],33)
+    def test_stage01_confirmation_versions_and_kinds_are_exact(self):
+        for field in ("Human_confirmation","consensus_Human_confirmation"):
+            for mutation in ({"artifact_version":2},{"artifact_version":True},{"model_kind":"other"},{"model_id":"other"},{"confirmed":1},{"confirmation_ref":""}):
+                with self.subTest(field=field,mutation=mutation):
+                    self.assertEqual(self.stage1_case(lambda p:p[field].update(mutation))[0],33)
+    def test_stage01_content_and_criteria_changes_invalidate_confirmations(self):
+        for fn in (
+            lambda p:p["consensus_A0"].update(objective="changed objective"),
+            lambda p:p["requirement_result_A"]["result_items"][0].update(expected_end_state="changed output"),
+            lambda p:p["success_criteria"][0].update(statement="changed acceptance"),
+            lambda p:p["constraints"].append("new constraint")):
+            with self.subTest(fn=fn):self.assertEqual(self.stage1_case(fn)[0],33)
+    def test_stage01_result_items_cannot_be_empty_or_generic(self):
+        cases=[lambda p:p["requirement_result_A"].update(result_items=[]),
+               lambda p:p["requirement_result_A"]["result_items"][0].update(expected_end_state="完成一个系统")]
+        for fn in cases:self.assertEqual(self.stage1_case(fn,True)[0],33)
+    def test_stage01_missing_result_specification_is_rejected(self):
+        for field in ("components","relations","inputs_outputs","completeness_rule","known_facts","unknowns","acceptance_criterion_ids"):
+            with self.subTest(field=field):
+                self.assertEqual(self.stage1_case(lambda p:p["requirement_result_A"]["result_items"][0].pop(field),True)[0],33)
+    def test_stage01_success_criteria_and_coverage_are_bidirectional(self):
+        for fn in (
+            lambda p:p["requirement_result_A"]["result_items"][0].update(acceptance_criterion_ids=["SC-1"]),
+            lambda p:p["requirement_result_A"]["coverage"].pop(),
+            lambda p:p["requirement_result_A"]["coverage"][0].update(result_item_ids=["MISSING"]),
+            lambda p:p["requirement_result_A"].update(coverage=[])):
+            with self.subTest(fn=fn):self.assertEqual(self.stage1_case(fn,True)[0],33)
+    def test_stage01_unknown_requires_closure_and_coverage(self):
+        def add(p):
+            p["requirement_result_A"]["result_items"][0]["unknowns"]=[{"question_id":"EVQ-1","scope":"Unknown platform separator behavior","closure_evidence":"Compare an actual platform observation","status":"UNKNOWN"}]
+            for c in p["requirement_result_A"]["coverage"]:c["evidence_questions"]=["EVQ-1"]
+        self.assertEqual(self.stage1_case(add,True)[0],0)
+        def missing_closure(p):
+            add(p);p["requirement_result_A"]["result_items"][0]["unknowns"][0].pop("closure_evidence")
+        self.assertEqual(self.stage1_case(missing_closure,True)[0],33)
+        def missing_coverage(p):
+            add(p);p["requirement_result_A"]["coverage"][0]["evidence_questions"]=[]
+        self.assertEqual(self.stage1_case(missing_coverage,True)[0],33)
+    def test_stage01_non_database_document_result_needs_no_sql(self):
+        self.assertEqual(self.stage1_case(lambda p:p["requirement_result_A"]["result_items"][0].update(kind="document"),True)[0],0)
+    def test_stage01_same_confirmation_reference_is_refused(self):
+        self.assertEqual(self.stage1_case(lambda p:p["Human_confirmation"].update(confirmation_ref=p["consensus_Human_confirmation"]["confirmation_ref"]),True)[0],33)
+    def test_stage02_maturity_scope_and_exact_source_are_required(self):
+        mutations=[
+            lambda p:p["claims"][0].pop("evidence_kind"),
+            lambda p:p["claims"][0].update(evidence_kind="DONE"),
+            lambda p:p["claims"][0].update(limits=""),
+            lambda p:p["claims"][0].update(result_item_ids=["MISSING"]),
+            lambda p:p["sources"][0]["source_ref"].update(commit="master"),
+            lambda p:p["sources"][0].update(publication_status="published probably")]
+        for fn in mutations:
+            with self.subTest(fn=fn):
+                root=self.mutate("02_evidence.yml",lambda d:fn(d["payload"]))
+                self.assertEqual(loop.validate_structure(root)[0],33)
+    def test_stage02_background_cannot_be_only_feasibility_support(self):
+        def background(doc):
+            for c in doc["payload"]["claims"]:c.update(purpose="BACKGROUND",evidence_kind="BACKGROUND_REFERENCE")
+        code,findings=loop.validate_structure(self.mutate("02_evidence.yml",background))
+        self.assertEqual(code,33);self.assertIn("stage3_feasibility_support_required",findings)
+    def test_stage02_unknown_requires_closure_and_remains_insufficient(self):
+        def unknown(doc):
+            for c in doc["payload"]["claims"]:c.update(evidence_kind="UNKNOWN",closure_evidence="Required independent observation not yet available")
+        code,findings=loop.validate_structure(self.mutate("02_evidence.yml",unknown))
+        self.assertEqual(code,33);self.assertIn("stage3_feasibility_support_required",findings)
+    def test_stage02_external_reference_does_not_require_invented_git_commit(self):
+        def external(doc):
+            doc["payload"]["sources"][0].update(source_ref={"url":"https://example.invalid/versioned-spec","version":"v1","observed_at":"2026-10-29"},publication_status="EXTERNAL_VERSIONED_SOURCE")
+        self.assertEqual(loop.validate_structure(self.mutate("02_evidence.yml",external))[0],0)
     def test_every_schema_required_payload_field_is_consumed(self):
         repo=HERE.parents[3]
         contract=load(repo/loop.CONTRACT_PATH)
@@ -159,6 +388,12 @@ class MinimumLoopTests(unittest.TestCase):
         self.assertEqual(loop.validate_structure(self.mutate("06_execution.yml",f))[0],37)
     def test_review_independence(self):
         self.assertEqual(loop.validate_structure(self.mutate("07_verification.yml",lambda d:d["payload"].update(reviewer_role="current_project_lead_model")))[0],38)
+    def test_review_verdict_derivation(self):
+        ok=self.mutate("07_verification.yml",lambda d:d["payload"].update(review_verdict="PASS"))
+        self.assertEqual(loop.validate_structure(ok)[0],0)
+        for bad in ("FIX_REQUIRED","REJECT","pass","PASS_WITH_NON_BLOCKING_NOTES",None):
+            root=self.mutate("07_verification.yml",lambda d,b=bad:d["payload"].update(review_verdict=b))
+            self.assertEqual(loop.validate_structure(root)[0],38,bad)
     def test_failed_test(self):
         def f(d):d["payload"]["test_results"][0]["status"]="failed"
         self.assertEqual(loop.validate_structure(self.mutate("07_verification.yml",f))[0],38)

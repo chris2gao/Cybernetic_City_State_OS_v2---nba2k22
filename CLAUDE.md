@@ -5,8 +5,9 @@ Routing adapter only. This file grants no authority and is not a source of truth
 After Claude Code loads this adapter, enter the repository-wide always-on
 bootstrap in this order:
 
-1. The current remote `master` 40-character SHA, read fresh. Never carry a SHA
-   forward from chat, a report or a document.
+1. Identify the active repository, working branch and Human objective. Read a
+   fresh remote master/base/head SHA when the actual material-write, immutable
+   evidence or publication boundary requires it, not before every routine task.
 2. `AGENT_WORKING_DISCIPLINE.md` — how to work here. Short, shared by every model
    in this project, and each rule names the incident that produced it.
 3. `AGENTS.md` — backend working rules, engineering design principles, Git and
@@ -20,12 +21,27 @@ bootstrap in this order:
 Load an existing durable task packet when present. If none exists and the work
 will cause material repository mutation, establish the task packet and run
 evidence before the first business/canonical write. Do not ask the Human for a
-fixed initialization bundle. Never default-preload `01_os/_runs/**`.
+fixed initialization bundle.
+
+**Role initialization.** When the Human names your role — 任务规划, 任务开发 or 审核
+in core; 特色内容开发 or 特色内容教学或使用 in a domain — invoke the matching role
+skill in `.claude/skills/`: `role-planner`, `role-developer`, `role-reviewer`,
+`role-content-developer` or `role-content-user`. It loads every mechanism skill
+that role needs and ends with a role-initialization receipt. `citystate-os` is the
+map of the whole OS. The chat window is a temporary workbench: decisions, results
+and evidence land in the repository or the brief vault as they form.
+
+Accumulating surfaces — `01_os/_runs/**`, `01_os/_communication/**`,
+`01_os/_dev/**`, `08_Domain_Applications/_runs/**` — are history: do not enumerate
+or bulk-read them. Any exact path that a loaded skill, a boot manifest or the
+current task names is read directly; there is no separate permission or
+forbidden zone.
 
 `01_os/**` is the permanent active OS namespace. Material elsewhere in this repository is
 retained global infrastructure — this file, `AGENTS.md`,
 `AGENT_WORKING_DISCIPLINE.md`, `GEMINI.md`, `README.md`, `CORE_MANIFEST.yml`,
-`.githooks/` — and nothing else is a current startup surface. Physical legacy
+`.githooks/`, and the generated skill adapters in `.agents/skills/` and
+`.claude/skills/` — and nothing else is a current startup surface. Physical legacy
 retirement is complete.
 
 Task-specific root-cause analyses, handovers and unverified hypotheses stay in

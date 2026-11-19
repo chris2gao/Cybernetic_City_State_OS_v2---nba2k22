@@ -1,0 +1,69 @@
+{
+ "schema_version": "citystate.verification_plan.v1",
+ "task_packet": "01_os/_runs/run-20261118-skills-review-r1-r2-001/01_任务输入/任务包_v1.yml",
+ "checks": [
+  {
+   "id": "skills_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/06_execution/skills/validate_skills.py",
+    "--repo-root",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "skills_generate_check",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/06_execution/skills/generate_skills.py",
+    "--repo-root",
+    ".",
+    "--check"
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "pytest_skills",
+   "argv": [
+    "@python",
+    "-B",
+    "-m",
+    "pytest",
+    "01_os/06_execution/skills",
+    "-q",
+    "-p",
+    "no:cacheprovider"
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "stage_deliberation_guard",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_no_canonical_live_state.py",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  },
+  {
+   "id": "stage_deliberation_static",
+   "argv": [
+    "@python",
+    "-B",
+    "01_os/03_mechanisms/stage_collaborative_deliberation/实现/verify_stage_collaborative_deliberation_v2.py",
+    "static",
+    "."
+   ],
+   "timeout_seconds": 600,
+   "expected_exit_code": 0
+  }
+ ]
+}
