@@ -1,0 +1,36 @@
+task_id: OS-CORE-RESTORE-09-20261118-001
+run_id: run-20261118-restore-09-001
+repository: chris2gao/Cybernetic_City_State_OS_v2---core
+risk_tier: T2_semantic
+base_commit: 5cb71b61b26917831978e84979a7bf5d9fce3765
+branch: task/core-restore-09-20261118
+ownership: core_system
+objective: 恢复 09_Domain_Global_Mechanisms/ 为领域自有（领域加载配置 / 引导系统），合并规则改为“领域仓保持原样、合并 core”。
+task_packet: 01_任务输入/任务包_v1.yml
+inputs:
+  - 01_任务输入/Human决策记录_20261118.md
+lifecycle: candidate_ready_for_independent_review
+candidate: b9946714bc310f43aaf7adef04615d8a4eb0b718
+increments:
+  - commit: b9946714
+    done: CORE_MANIFEST 领域所有 = 08 + 09，merge_rule 改为合并 core、不迁移；CM036 期望 {08, 09}；PRMS 领域机制目录在 09（08 下的目录被拒），条目正文可在 08 或 09，脚手架写 08/domain.yml、08/knowledge_catalog.yml、09/domain_mechanisms.yml、09/README.md，回执路径用 POSIX；os-domain-content boot、skills 登记、README、01_os/README、细则 §3、工作集可见根、new-domain.ps1 同步；重新生成 skill
+verification:
+  baseline_before_change: {prms_domain_tests: 5 passed, context_structure: PASS, skills_static: skills_valid files=38}
+  managed_verify: {candidate: b9946714bc310f43aaf7adef04615d8a4eb0b718, plan: 07_测试执行/verification_plan.json, plan_sha256: aa08c81a5b4c5a03748c50e515d3084161bd7e6f7e59194b69126d8edc3a75b0, run_exit: 0, inspect_exit: 0, checks: 19, success: 19, receipt: 07_测试执行/managed_verify_b9946714.json, attempt_dir: outside repo (executor scratchpad), executor_evidence_not_independent: true}
+  ad_hoc:
+    - PRMS 领域测试 7 passed（新增：目录在 09 / 08 目录被拒；条目正文在 09、指向 core 被拒；合并保留 08 与 09）
+    - 临时副本中把候选合并进 company2.0（无冲突）并放入 09 目录：skills / context_structure / workflow static 退出 0，PRMS domain 为 CATALOG_DISCOVERED_NOT_ACTIVATED（改动前为 DOMAIN_CATALOG_UNINITIALIZED）
+findings:
+  - task_preflight 报 worktree_dirty（预检在写入后才补跑）与 hook_guard：本仓 core.hooksPath 为主检出 `.githooks` 的绝对路径，不是 `.githooks`。两处 .githooks 逐文件一致；推送时用 `git -c core.hooksPath=.githooks push`，让本分支自己的守卫执行。
+  - 领域仓按方法二（git fetch core && git merge core/master）升级不需要额外检查（Human 2026-11-18）；本任务只改 core。
+review_round_0:
+  report: 07_测试执行/独立审核_b9946714.md
+  verdict: PASS
+  reviewer: 独立 Claude Code 会话（Opus 5.5，同族，已披露）；独立复跑 19/19 success
+  nonblocking: [F1 开发总结_v1.md 仍写“除 08 外完全一致”, F2 CORE_MANIFEST 两处注释只提 08, F3 completion pointer 在收尾时写]
+  observation_O2: domain.yml 未指定目录而目录在 08 时静默为 UNINITIALIZED；6 个本地领域仓都没有 domain_mechanisms.yml（执行者 2026-11-18 实测），当前无影响
+follow_up_candidates:
+  - F1、F2 文档补一句 09（下次改动 context_management / CORE_MANIFEST 时顺带）
+remaining:
+  - master 集成由 Human 在审核后另行确认
+  - 之后按方法二把 core 合并进各领域仓（领域仓的动作，推送前由 Human 确认）

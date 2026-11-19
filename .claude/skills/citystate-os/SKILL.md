@@ -56,7 +56,7 @@ description: "City-State Core OS 的地图与入口。新窗口开始工作、�
 | `os-task-discipline` | 任务纪律：任务包、验证、run 与完成指针 | — | 5 KB | 必 | 必 | 必 | 必 | — |
 | `os-publication` | 发布、Git 与受保护动作 | — | 9 KB | 触 | 必 | 触 | 必 | — |
 | `os-tools` | Windows 环境与可选外部工具 | — | 2 KB | — | 触 | 触 | 触 | — |
-| `os-domain-content` | 领域内容（08） | — | 0 KB | 触 | 触 | 触 | 必 | 必 |
+| `os-domain-content` | 领域内容（08、09） | — | 0 KB | 触 | 触 | 触 | 必 | 必 |
 
 图例：必 = 角色初始化时加载；触 = 命中触发条件时加载；— = 不加载。只有独立验收过的 L4 才可称 operationally_active；当前没有任何机制达到 L4。
 

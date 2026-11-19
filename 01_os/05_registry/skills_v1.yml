@@ -300,18 +300,18 @@ units:
       - 登记不等于加载；工具可用不等于任务允许
 
   - name: os-domain-content
-    title: 领域内容（08）
+    title: 领域内容（08、09）
     mechanism_id: domain_content
     description: >-
-      City-State 领域仓库的特色内容：08_Domain_Applications 下的 domain.yml、领域机制目录
-      domain_mechanisms.yml 与知识目录。在领域仓工作、开发或使用特色内容时使用；core 仓库没有 08 内容。
+      City-State 领域仓库的特色内容：08_Domain_Applications 下的 domain.yml 与知识目录、09_Domain_Global_Mechanisms
+      下的领域机制目录 domain_mechanisms.yml。在领域仓工作、开发或使用特色内容时使用；core 仓库没有 08、09 内容。
     when: 特色内容开发、特色内容教学或使用角色初始化；规划或审核领域任务时。
     boot: 01_os/02_boot/domain_content/启动清单_v1.yml
     commands:
       - command: python -B 01_os/06_execution/boot/context_management/prms/cli.py --repo-root . --commit <40-char> --repository <owner/repo> domain --domain-id <id> --output <outside-repo.json>
         expect: 领域目录 G2 发现；缺目录时为 DOMAIN_CATALOG_UNINITIALIZED
     boundaries:
-      - 领域只拥有 08_Domain_Applications/；其余路径与 core 一致，不得在领域仓改 core-owned 路径
+      - 领域只拥有 08_Domain_Applications/ 与 09_Domain_Global_Mechanisms/；其余路径经合并取自 core，不得在领域仓改 core-owned 路径
       - 按 domain_mechanisms.yml 列出的条目读取相关领域机制正文，不整目录读取
 
 roles:
@@ -380,10 +380,10 @@ roles:
     collaboration_role: execution
     description: >-
       City-State 领域仓库特色内容开发角色初始化。当 Human 说“你的角色是特色内容开发/内容开发”时使用。
-      与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与领域机制。
-    produces: 08_Domain_Applications 下的领域内容、领域机制与证据，以及交接
+      与任务开发使用同一套 OS 开发机制，并加载本领域 08 的内容与 09 的领域机制目录。
+    produces: 08_Domain_Applications 下的领域内容与证据、09_Domain_Global_Mechanisms 下的领域机制目录，以及交接
     must_not:
-      - 修改 08_Domain_Applications 以外的 core-owned 路径（需要 core 改动时向上游提）
+      - 修改 08_Domain_Applications、09_Domain_Global_Mechanisms 以外的 core-owned 路径（需要 core 改动时向上游提）
       - 自审为独立验收
     mode: DEVELOPMENT（Human 委托的领域内容开发）
     required: [citystate-os, os-context-management, os-task-continuity, os-task-orchestration, os-mechanism-activation, os-mwu-output, os-workflow, os-task-discipline, os-publication, os-domain-content]

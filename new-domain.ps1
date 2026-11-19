@@ -86,7 +86,7 @@ try {
     $scaffoldReceipt = Join-Path ([System.IO.Path]::GetTempPath()) ("prms-domain-" + [guid]::NewGuid().ToString() + ".json")
     python 01_os/06_execution/boot/context_management/prms/cli.py scaffold-domain --repo-root . --commit $inheritedCore --repository $repoFull --domain-id $Name --output $scaffoldReceipt
     if ($LASTEXITCODE -ne 0) { Fail "domain catalog initialization failed" }
-    git add -- 08_Domain_Applications/domain.yml 08_Domain_Applications/README.md 08_Domain_Applications/domain_mechanisms.yml 08_Domain_Applications/knowledge_catalog.yml
+    git add -- 08_Domain_Applications/domain.yml 08_Domain_Applications/knowledge_catalog.yml 09_Domain_Global_Mechanisms/domain_mechanisms.yml 09_Domain_Global_Mechanisms/README.md
     if ($LASTEXITCODE -ne 0) { Fail "domain catalog staging failed" }
     git commit --quiet -m "Initialize domain-owned mechanism catalogs"
     if ($LASTEXITCODE -ne 0) { Fail "domain catalog commit failed" }
@@ -109,7 +109,7 @@ try {
     Write-Host "    remotes: $remotes  (a plain 'git push' here reaches only this domain)"
     Write-Host ""
     Write-Host "next:"
-    Write-Host "  1. put this domain's material under 08_Domain_Applications/ and 03_Daily_Execution/"
+    Write-Host "  1. put this domain's content under 08_Domain_Applications/ and its loading configuration under 09_Domain_Global_Mechanisms/"
     Write-Host "  2. leave core-owned paths alone - see CORE_MANIFEST.yml"
     Write-Host "  3. to take a core upgrade later:  git fetch core; git merge core/master"
 }

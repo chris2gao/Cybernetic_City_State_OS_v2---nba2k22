@@ -1,0 +1,70 @@
+task_packet:
+  task_id: OS-CORE-RESTORE-09-20261118-001
+  repository: chris2gao/Cybernetic_City_State_OS_v2---core
+  risk_tier: T2_semantic
+  exact_base_sha: 5cb71b61b26917831978e84979a7bf5d9fce3765
+  branch: task/core-restore-09-20261118
+  approval_state: Human_approved_restore_09   # 01_任务输入/Human决策记录_20261118.md 第 2、5 条
+  objective: >-
+    恢复 09_Domain_Global_Mechanisms/ 为领域自有目录，作为领域仓放置加载配置（领域机制目录
+    domain_mechanisms.yml）的地方；core 不带 08、09，合并 core 不会覆盖它们。CORE_MANIFEST、结构校验、
+    PRMS 领域目录发现与脚手架、os-domain-content skill 与 B0 中“领域只有 08”的说法同步改为 08 与 09；
+    合并规则改为“领域仓保持原样、合并 core”，不再要求把 07_content / 09 等材料搬进 08。
+  design:
+    - 09_Domain_Global_Mechanisms/domain_mechanisms.yml 是领域机制目录的唯一位置（恢复 2026-11-18 之前的布局）；domain.yml 与 knowledge_catalog.yml 仍在 08（现有 6 个领域仓的 domain.yml 都在 08，不动领域仓）。
+    - 领域机制条目的 content_path / evidence_refs 可以在 08 或 09 下（恢复之前的规则）。
+    - 目前没有任何领域仓有领域机制目录，所以不保留 08 下目录的兼容读取。
+  source_evidence:
+    - 01_os/_runs/run-20261118-restore-09-001/01_任务输入/Human决策记录_20261118.md
+    - dfb019ba（2026-11-18 退役 09 的提交）
+    - 5cb71b61b26917831978e84979a7bf5d9fce3765
+  allowed_changed_paths:
+    - CORE_MANIFEST.yml
+    - README.md
+    - new-domain.ps1
+    - 01_os/README.md
+    - 01_os/02_boot/**
+    - 01_os/03_mechanisms/context_management/**
+    - 01_os/05_registry/skills_v1.yml
+    - 01_os/06_execution/boot/context_management/prms/**
+    - 01_os/06_execution/skills/**
+    - .agents/skills/**
+    - .claude/skills/**
+    - 01_os/_runs/run-20261118-restore-09-001/**
+  verification_plan: 01_os/_runs/run-20261118-restore-09-001/07_测试执行/verification_plan.json
+  required_tests: [context_structure, working_set, mechanism_activation_static, communication_static, mwu_static, model_routing_static, stage_deliberation_guard, stage_deliberation_static, workflow_static, skills_static, pytest_skills, pytest_task_orchestration, pytest_task_discipline, pytest_workflow, pytest_stage_deliberation, pytest_context_management, pytest_mechanism_activation, pytest_model_routing, pytest_communication]
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - rewrite_historical_run_evidence
+    - modify_domain_repositories
+  required_completion_pointer: 01_os/_runs/run-20261118-restore-09-001/08_结论/completion_pointer.yml
+  big_task: true
+  development_loop:
+    mode: iterative_development
+    review_mode: immediate_required
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 5cb71b61b26917831978e84979a7bf5d9fce3765
+  big_task_confirmation_closure:
+    enabled: true
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Anthropic
+    surface: claude_code_desktop
+    model: claude-opus-5-5
+    reasoning_effort: runtime_default
+    mode: standard
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: required
+    independent_reviewer: 新的隔离 Claude Code 会话
+    different_model_family: false
+    different_measurement_tool: false

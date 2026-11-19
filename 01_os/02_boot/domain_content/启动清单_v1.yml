@@ -17,9 +17,9 @@ authority_effect: none
 read_tiers:
   optional:
   - 08_Domain_Applications/domain.yml
-  - 08_Domain_Applications/domain_mechanisms.yml
+  - 09_Domain_Global_Mechanisms/domain_mechanisms.yml
   on_action:
-  - when: 按学习或使用进度加载具体内容时，先读 08_Domain_Applications/knowledge_catalog.yml 与 domain_mechanisms.yml 的条目，只加载当前模块或课次需要的那几份
+  - when: 按学习或使用进度加载具体内容时，先读 08_Domain_Applications/knowledge_catalog.yml 与 09_Domain_Global_Mechanisms/domain_mechanisms.yml 的条目，只加载当前模块或课次需要的那几份
     reads: []
   program:
   - 01_os/02_boot/domain_content/启动清单_v1.yml

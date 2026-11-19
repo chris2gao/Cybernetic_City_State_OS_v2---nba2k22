@@ -58,6 +58,8 @@ path a loaded skill, boot manifest or task names is read directly.
 
 `CORE_MANIFEST.yml` records what core owns, what each domain owns, how a domain
 merges, and how a new domain is created (`new-domain.ps1`, never a folder copy).
-A domain repository is identical to core except `08_Domain_Applications/`; a core
-merge overwrites everything else and leaves 08 untouched. The 2026-08-02 merge
+A domain repository is the latest core plus two directories it owns:
+`08_Domain_Applications/` (its content) and `09_Domain_Global_Mechanisms/` (its
+loading configuration). Core ships neither, so merging core upgrades the OS and
+leaves 08 and 09 untouched. The 2026-08-02 merge
 freeze and its lifting are recorded in that file.
