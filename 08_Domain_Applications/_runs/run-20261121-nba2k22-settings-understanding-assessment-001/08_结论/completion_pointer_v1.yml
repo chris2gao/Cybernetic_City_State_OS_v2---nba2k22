@@ -1,0 +1,46 @@
+# 本指针描述内容提交 33bb4f2e 的发布结果。指针自身在其后的单独提交中落盘，
+# 因此 source_head 指内容提交，而不是包含本文件的提交。
+completion_pointer:
+  packet_id: nba2k22-settings-understanding-assessment-20261121
+  status: ready_for_independent_review
+  source_branch: task/nba2k22-settings-understanding-assessment-20261121
+  source_base: 8c0f9fcd28817bcb92ffc45c78eef8601ccdc07b
+  source_head: 33bb4f2ebba7ea1d5d6258c40bc62710b19203d6
+  validation:
+    tests: "offline_settings_reader_tests: 6 passed, exit 0（07_测试执行/test_settings_运行记录.txt）"
+    candidate_caused_failures: 0
+    diff_scope: passed   # changed_path_ledger.py: paths=5 allowlist=ok packet_format=wrapped_v1, exit 0
+    hook_guard: passed   # core.hooksPath=.githooks（本工作区已从绝对路径改为 .githooks），push 未带 --no-verify
+  repository:
+    changed_paths:
+      - 08_Domain_Applications/_runs/run-20261121-nba2k22-settings-understanding-assessment-001/run.yml
+      - 08_Domain_Applications/_runs/run-20261121-nba2k22-settings-understanding-assessment-001/01_任务输入/任务包_v1.yml
+      - 08_Domain_Applications/_runs/run-20261121-nba2k22-settings-understanding-assessment-001/01_任务输入/Human请求记录_v1.md
+      - 08_Domain_Applications/_runs/run-20261121-nba2k22-settings-understanding-assessment-001/07_测试执行/test_settings_运行记录.txt
+      - 08_Domain_Applications/_runs/run-20261121-nba2k22-settings-understanding-assessment-001/08_结论/参数理解程度评估_v1.md
+    out_of_scope_paths: 0
+    binary_artifact_count: 0
+    worktree_clean: true
+  publication:
+    transport: local_git
+    replacement_gate: not_applicable
+    expected_remote_head: "<新分支，推送前远端无此分支>"
+    resulting_remote_head: 33bb4f2ebba7ea1d5d6258c40bc62710b19203d6   # git ls-remote 推送后读回
+    compare_and_swap: not_applicable
+    fast_forward_verified: not_applicable
+    push_performed: true
+    master_modified: false   # 推送前后 git ls-remote 读回 master 均为 8c0f9fcd28817bcb92ffc45c78eef8601ccdc07b
+    force_push: false
+  next_owner: Human
+  review_schedule:
+    review_mode: deferred_to_series
+    series_id: null
+    review_trigger: 评估被用作后续核验或效果测试任务的承重依据之前
+    must_review_before: 任何以本评估为依据的派单或 master 集成
+    candidate_head: 33bb4f2ebba7ea1d5d6258c40bc62710b19203d6
+    verification_receipt: 07_测试执行/test_settings_运行记录.txt
+    downstream_consumption: candidate_only
+  findings_not_fixed_in_this_task:
+    - "08_Domain_Applications/domain.yml 的 domain_run_root 与 README 写 01_os/07_content/_runs/，和 CORE_MANIFEST.yml 规定的 08_Domain_Applications/_runs/ 冲突"
+    - "本仓库缺少 09_Domain_Global_Mechanisms/，领域角色无处查找"
+    - "桌面应用创建的工作区把 core.hooksPath 设为主检出的绝对路径，与传输矩阵要求的 .githooks 不符；本工作区已用 git config --worktree 修正，其他工作区未改"
