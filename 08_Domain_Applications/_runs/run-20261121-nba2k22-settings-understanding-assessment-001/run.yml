@@ -1,0 +1,21 @@
+run_id: run-20261121-nba2k22-settings-understanding-assessment-001
+task: nba2k22-settings-understanding-assessment-20261121
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+base: 8c0f9fcd28817bcb92ffc45c78eef8601ccdc07b
+branch: task/nba2k22-settings-understanding-assessment-20261121
+ownership: domain-owned (08_Domain_Applications/)
+purpose: >-
+  评估外挂系统凭现有仓库信息对 NBA2K22 可设置参数的理解程度，以及现阶段能否做出正确测试；
+  按 Human 指示只落盘评估。
+outputs:
+  - 01_任务输入/任务包_v1.yml
+  - 01_任务输入/Human请求记录_v1.md
+  - 07_测试执行/test_settings_运行记录.txt
+  - 08_结论/参数理解程度评估_v1.md
+  - 08_结论/completion_pointer_v1.yml
+verification:
+  offline_settings_reader_tests: 见 07_测试执行/test_settings_运行记录.txt
+  changed_path_ledger_within_allowlist: 见 08_结论/completion_pointer_v1.yml
+  independent_review: not_run
+game_writes: false
+lifecycle: research_only

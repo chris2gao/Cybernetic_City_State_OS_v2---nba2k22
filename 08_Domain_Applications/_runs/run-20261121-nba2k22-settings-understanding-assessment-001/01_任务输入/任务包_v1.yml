@@ -1,0 +1,65 @@
+task_packet:
+  task_id: nba2k22-settings-understanding-assessment-20261121
+  repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+  risk_tier: T1_standard
+  exact_base_sha: 8c0f9fcd28817bcb92ffc45c78eef8601ccdc07b
+  branch: task/nba2k22-settings-understanding-assessment-20261121
+  objective: >-
+    把“外挂系统（前台模型）凭现有仓库信息能否理解 NBA2K22 全部可设置参数、理解到什么程度、
+    能否做出正确测试”的评估结论落盘为耐久记录。只落盘评估，不开展核验、不写游戏、不改参数目录。
+  source_evidence:
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R06A_WORLD_GAMEPLAY_SIMULATION_SETTINGS_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/game_mechanics/catalogs/R07_GAME_CAPABILITY_MATURITY_MATRIX_V1.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/fixtures/settings_20261024/manifest.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/tests/fixtures/settings_20261024/source_manifest.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/world_data_prototype/settings_reader.py
+    - 08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/settings.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/world.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/court.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/data/coach_settings.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/development_reviews/DEV_20261017_07_SLIDER_EVIDENCE.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/docs/10_GAME_SETTINGS_AND_SLIDERS.md
+  allowed_changed_paths:
+    - 08_Domain_Applications/_runs/run-20261121-nba2k22-settings-understanding-assessment-001/**
+  required_tests:
+    - offline_settings_reader_tests
+    - changed_path_ledger_within_allowlist
+  prohibitions:
+    - modify_master_without_required_Human_confirmation
+    - force_push
+    - rebase
+    - squash
+    - game_memory_or_save_write
+    - modify_parameter_catalogs_or_core_owned_paths
+  required_completion_pointer: 08_Domain_Applications/_runs/run-20261121-nba2k22-settings-understanding-assessment-001/08_结论/completion_pointer_v1.yml
+  big_task: false
+  development_loop:
+    mode: one_step_sufficient
+    progress_evidence: 08_结论/参数理解程度评估_v1.md
+    convergence_condition: 评估文档与证据引用落盘并推送任务分支
+    series_id: null
+    review_mode: deferred_to_series
+  publisher:
+    principal_binding: local_authenticated
+    publication_transport: local_git
+    source_branch_publication: task_scope_default
+    master_integration_confirmation: not_requested
+    expected_remote_master_head: 8c0f9fcd28817bcb92ffc45c78eef8601ccdc07b
+  big_task_confirmation_closure:
+    enabled: false
+    known_confirmation_required_actions: []
+    preconfirmed_actions: []
+    uncovered_actions: []
+  executor_profile:
+    provider: Anthropic
+    model: claude-opus-5-5
+    reasoning_effort: runtime_default
+    mode: standard
+    rollout_token_budget: null
+    routing_basis: 前台规划角色在本窗口完成的只读评估，由同一窗口落盘；不派发后端执行。
+    authority: routing_only
+  verification_profile:
+    reproduce_before_change: not_required
+    independent_reviewer: <未指定；由 Human 在系列审核时选定>
+    different_model_family: true
+    different_measurement_tool: false
