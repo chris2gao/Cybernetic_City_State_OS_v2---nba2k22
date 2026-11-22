@@ -11,8 +11,9 @@ from typing import Dict, Optional
 
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATABASE_DIR = os.path.join(PROJECT_DIR, "database")
-TEMPLATE_DIR = os.path.join(DATABASE_DIR, "templates")
+CANONICAL_DATABASE_DIR = os.path.join(PROJECT_DIR, "database")
+DATABASE_DIR = os.environ.get("NBA2K22_DATA_DIR", CANONICAL_DATABASE_DIR)
+TEMPLATE_DIR = os.path.join(CANONICAL_DATABASE_DIR, "templates")
 TEMPLATE_CONFIG = os.path.join(TEMPLATE_DIR, "save_template.json")
 TEMPLATE_VERSION = 2
 TEMPLATE_DB = os.path.join(TEMPLATE_DIR, f"league_template_v{TEMPLATE_VERSION}.sqlite")
@@ -43,7 +44,7 @@ def ensure_template_database() -> str:
             )
         return TEMPLATE_DB
 
-    schema_path = os.path.join(DATABASE_DIR, "schema.sql")
+    schema_path = os.path.join(CANONICAL_DATABASE_DIR, "schema.sql")
     temp_path = TEMPLATE_DB + ".tmp"
     if os.path.exists(temp_path):
         os.remove(temp_path)

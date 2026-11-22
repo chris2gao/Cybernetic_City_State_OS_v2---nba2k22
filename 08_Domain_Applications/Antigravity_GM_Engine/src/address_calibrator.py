@@ -225,9 +225,11 @@ class AddressCalibrator:
     def check_and_calibrate_player_pool(self) -> Tuple[bool, int]:
         """
         验证全量 3,320 人历史球员池物理基址。
-        通过 Slot 700 (迈克尔·乔丹) 与 Slot 1003 (哈基姆·奥拉朱旺) 进行双锚点毫秒级验证。
+        通过 Slot 700 / 590 (迈克尔·乔丹) 与 Slot 1003 / 1001 (哈基姆·奥拉朱旺) 进行双锚点毫秒级验证。
         """
         cached_pool = self._cached_hex("player_pool", "base_addr", 0x7FF4E6DFB2E8)
+        if cached_pool == 0:
+            cached_pool = 0x7FF4E6DFB2E8
         stride = self._cached_hex("player_pool", "stride", 0x4F0)
         from source_extensions import roster_directory
 
@@ -239,16 +241,28 @@ class AddressCalibrator:
                 return False
 
         # 1. 快速双锚点验证 (Fast-Path Check < 1ms)
+        # 支持官方默认名单 (Slot 700 / 1003) 与 终极联盟/自定义名单 (Slot 590 / 1001)
         slot_700 = cached_pool + 700 * stride
-        j_last = self.mem.read_utf16_string_safe(slot_700, 20)
-        j_first = self.mem.read_utf16_string_safe(slot_700 + 40, 20)
-        cf_id = self.mem.read_uint16_safe(slot_700 + 0x6C)
-
         slot_1003 = cached_pool + 1003 * stride
-        h_last = self.mem.read_utf16_string_safe(slot_1003, 20)
-        h_cf = self.mem.read_uint16_safe(slot_1003 + 0x6C)
+        is_std = (
+            self.mem.read_utf16_string_safe(slot_700, 20) == "Jordan" and
+            self.mem.read_utf16_string_safe(slot_700 + 40, 20) == "Michael" and
+            self.mem.read_uint16_safe(slot_700 + 0x6C) == 1759 and
+            self.mem.read_utf16_string_safe(slot_1003, 20) == "Olajuwon" and
+            self.mem.read_uint16_safe(slot_1003 + 0x6C) == 952
+        )
 
-        if j_last == "Jordan" and j_first == "Michael" and cf_id == 1759 and h_last == "Olajuwon" and h_cf == 952 and valid_directory(cached_pool):
+        slot_590 = (cached_pool + 0x4F0) + 590 * stride
+        slot_1001 = (cached_pool + 0x4F0) + 1001 * stride
+        is_myleague = (
+            self.mem.read_utf16_string_safe(slot_590, 20) == "Jordan" and
+            self.mem.read_utf16_string_safe(slot_590 + 40, 20) == "Michael" and
+            self.mem.read_uint16_safe(slot_590 + 0x6C) == 1759 and
+            self.mem.read_utf16_string_safe(slot_1001, 20) == "Olajuwon" and
+            self.mem.read_uint16_safe(slot_1001 + 0x6C) == 952
+        )
+
+        if (is_std or is_myleague) and valid_directory(cached_pool):
             return True, cached_pool
 
         # 2. 若不匹配，启动特征码扫描定位历史球员池
@@ -264,14 +278,15 @@ class AddressCalibrator:
             f_name = self.mem.read_utf16_string_safe(match + 40, 20)
             cf = self.mem.read_uint16_safe(match + 0x6C)
             if f_name == "Michael" and cf == 1759:
-                # 反推基址：假定为 slot 700
-                potential_base = match - 700 * stride
-                # 校验 slot 1003 是否为 Hakeem Olajuwon (Face 952)
-                h_slot = potential_base + 1003 * stride
-                h_last = self.mem.read_utf16_string_safe(h_slot, 20)
-                h_cf = self.mem.read_uint16_safe(h_slot + 0x6C)
-                if h_last == "Olajuwon" and h_cf == 952 and valid_directory(potential_base):
-                    validated_candidates.add(potential_base)
+                for potential_base in (match - 700 * stride, match - 590 * stride - 0x4F0):
+                    if valid_directory(potential_base):
+                        h_slot1 = potential_base + 1003 * stride
+                        h_slot2 = (potential_base + 0x4F0) + 1001 * stride
+                        if (
+                            (self.mem.read_utf16_string_safe(h_slot1, 20) == "Olajuwon" and self.mem.read_uint16_safe(h_slot1 + 0x6C) == 952) or
+                            (self.mem.read_utf16_string_safe(h_slot2, 20) == "Olajuwon" and self.mem.read_uint16_safe(h_slot2 + 0x6C) == 952)
+                        ):
+                            validated_candidates.add(potential_base)
 
         if len(validated_candidates) > 1:
             raise RuntimeError('Multiple valid roster directories; cannot choose an active save from names alone')

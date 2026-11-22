@@ -70,7 +70,8 @@ def _unknown_mirrors(c, known):
         for col in columns:
             if (col.endswith('_json') or col.endswith('Json')) and (table,col) not in {
                 ('player_pool','source_details_json'),('player_source_details','details_json'),
-                ('state_io_objects','object_json'),('player_potential_masks','policy_json')}:
+                ('state_io_objects','object_json'),('player_potential_masks','policy_json'),
+                ('state_io_captures','metadata_json')}:
                 qcol='"'+col.replace('"','""')+'"'
                 for row in c.execute('SELECT '+qcol+' FROM '+quoted+' WHERE '+qcol+' IS NOT NULL'):
                     # Catalogs contain a field name, not original player values.
@@ -81,7 +82,7 @@ def _unknown_mirrors(c, known):
 
 def _has_potential_value(value):
     if isinstance(value,dict):
-        return any(('potential' in k.casefold() and k not in ('potential_mask_version',))
+        return any(('potential' in k.casefold() and k not in ('potential_mask_version','world.contracts_and_finances.player_potential_factor','player_potential_factor'))
                    or _has_potential_value(v) for k,v in value.items())
     return isinstance(value,list) and any(_has_potential_value(v) for v in value)
 
