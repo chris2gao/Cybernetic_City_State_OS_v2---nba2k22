@@ -127,12 +127,23 @@ def run_cycle_injection(spec_path: str, commit: bool = False) -> Dict[str, Any]:
                 target_block = cw.get("target_block")
 
                 if target_block == "COACHDATA" and coach_ptr:
+                    # 严格安全守卫：COACHDATA 原生分配仅 0x160 (352 字节)，严禁越界写入！
+                    if off >= 0x160:
+                        continue
+
                     target_addr = coach_ptr + off
                     if commit:
-                        mem.write_bytes(target_addr, bytes([raw_val]))
+                        if fname == "active_system" and off == 267:
+                            # 267 为 uint8，bit 4..7 为 ActiveSystem
+                            cur_b = mem.read_bytes(target_addr, 1)[0]
+                            target_byte = (cur_b & 0x0F) | ((raw_val & 0x0F) << 4)
+                        else:
+                            target_byte = raw_val
+
+                        mem.write_bytes(target_addr, bytes([target_byte]))
                         rb = mem.read_bytes(target_addr, 1)[0]
-                        if rb != raw_val:
-                            mismatches.append(f"Team {tabbr} 教练字段 {fname} 写入核验失败: 写入 {raw_val}, 回读 {rb}")
+                        if rb != target_byte:
+                            mismatches.append(f"Team {tabbr} 教练字段 {fname} 写入核验失败: 写入 {target_byte}, 回读 {rb}")
                         else:
                             b_coach_writes += 1
                             total_coach_verified += 1
@@ -172,14 +183,26 @@ def run_cycle_injection(spec_path: str, commit: bool = False) -> Dict[str, Any]:
                 if playbook:
                     if "is_play_initiator" in playbook:
                         init_val = int(playbook["is_play_initiator"]) & 0x01
+                        # 360 为 uint32，IsPlayInitiator 位于 start_bit 18
+                        # 对应 byte 362 (360 + 2) 的 bit 2 (18 - 16 = 2)
+                        # 必须使用读-改-写 (Read-Modify-Write) 保护相邻状态位
                         if commit:
-                            mem.write_bytes(player_addr + 362, bytes([init_val]))
+                            cur_362 = mem.read_bytes(player_addr + 362, 1)[0]
+                            new_362 = (cur_362 & ~(1 << 2)) | (init_val << 2)
+                            mem.write_bytes(player_addr + 362, bytes([new_362]))
                         total_playbook_verified += 1
 
                     if "play_types" in playbook and len(playbook["play_types"]) >= 4:
                         pts = playbook["play_types"]
-                        b1 = (pts[0] & 0x0F) | ((pts[1] & 0x0F) << 4)
-                        b2 = (pts[2] & 0x0F) | ((pts[3] & 0x0F) << 4)
+                        # 严格守卫：2K22 原生有效枚举严格为 0..14！严禁 >= 15
+                        clean_pts = []
+                        for pt in pts:
+                            val = int(pt)
+                            if val >= 15:
+                                val = 14
+                            clean_pts.append(max(0, min(14, val)))
+                        b1 = (clean_pts[0] & 0x0F) | ((clean_pts[1] & 0x0F) << 4)
+                        b2 = (clean_pts[2] & 0x0F) | ((clean_pts[3] & 0x0F) << 4)
                         if commit:
                             mem.write_bytes(player_addr + 360, bytes([b1, b2]))
                         total_playbook_verified += 1

@@ -90,12 +90,35 @@ def get_team_tactical_profile(team_id: int) -> Dict[str, Any]:
     default_cfg = {"active_system": 6, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13}
     return profiles.get(team_id, default_cfg)
 
+def remap_play_types(pts: List[int]) -> List[int]:
+    """
+    修正 2K22 原生战术枚举：
+    原脚本误将 13 视为 Handoff Passer，导致 14(Mid Range) 与 15(3PT) 整体右移越界。
+    2K22 原生有效枚举严格为 0..14 (play_type_enum):
+    13: SCREEN_MID (中距离战术)
+    14: SCREEN_3PT (三分球战术)
+    任何 >= 15 的数值均属越界，必须纠正回原生合法值。
+    """
+    remapped = []
+    for x in pts:
+        if x == 15:
+            val = 14  # 原意为三分战术，映射为原生 14
+        elif x == 14:
+            val = 13  # 原意为中距离战术，映射为原生 13
+        else:
+            val = x
+        if val in [13, 14] and val in remapped:
+            val = 13 if val == 14 and 13 not in remapped else 0
+        remapped.append(min(14, max(0, val)))
+    return remapped
+
 def make_player_entry(name: str, slot: int, face: int, initiator: int, play_types: List[int],
                       intangibles: int, touches: int, shot: int,
                       extra_attrs: Dict[str, int] = None,
                       extra_tends: Dict[str, int] = None,
                       badges: Dict[str, int] = None) -> Dict[str, Any]:
     """标准化生成单一球员 v2.0 规格项 (扩展全量物理字典)"""
+    play_types = remap_play_types(play_types)
     attr_offsets = {
         "intangibles": 1088,
         "three_point": 1062,
@@ -1572,11 +1595,9 @@ def build_all_teams_spec() -> Dict[str, Any]:
                 },
                 "coaching_writes": [
                     { "field_name": "active_system", "target_block": "COACHDATA", "offset": 267, "val_raw": t_tactics["active_system"], "description": f"战术系统: {t_tactics['active_system']}" },
-                    { "field_name": "bench_depth", "target_block": "COACHDATA", "offset": 268, "val_raw": t_tactics["bench_depth"], "description": f"轮换人数: {t_tactics['bench_depth']}人" },
-                    { "field_name": "bench_utilization", "target_block": "COACHDATA", "offset": 269, "val_raw": t_tactics["bench_utilization"], "description": f"替补使用率: {t_tactics['bench_utilization']}" },
-                    { "field_name": "run_play_tendency", "target_block": "COACHDATA", "offset": 224, "val_raw": t_tactics["run_play"], "description": f"战术执行倾向: {t_tactics['run_play']}%" },
-                    { "field_name": "poe_offense", "target_block": "COACHDATA", "offset": 382, "val_raw": t_tactics["poe_offense"], "description": f"进攻重点: {t_tactics['poe_offense']}" },
-                    { "field_name": "poe_defense", "target_block": "COACHDATA", "offset": 385, "val_raw": t_tactics["poe_defense"], "description": f"防守重点: {t_tactics['poe_defense']}" }
+                    { "field_name": "bench_depth", "target_block": "COACHDATA", "offset": 222, "val_raw": t_tactics["bench_depth"], "description": f"轮换人数: {t_tactics['bench_depth']}人" },
+                    { "field_name": "bench_utilization", "target_block": "COACHDATA", "offset": 312, "val_raw": t_tactics["bench_utilization"], "description": f"替补使用率: {t_tactics['bench_utilization']}" },
+                    { "field_name": "run_play_tendency", "target_block": "COACHDATA", "offset": 224, "val_raw": t_tactics["run_play"], "description": f"战术执行倾向: {t_tactics['run_play']}%" }
                 ],
                 "player_writes": []
             }
