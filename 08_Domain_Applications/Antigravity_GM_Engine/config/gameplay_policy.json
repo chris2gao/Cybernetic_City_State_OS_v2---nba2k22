@@ -1,9 +1,41 @@
 {
   "schema_version": 1,
-  "policy_id": "PLAYER_RULES_20261021_V4",
+  "policy_id": "PLAYER_RULES_20261123_V5",
   "source": "PLAYER_EXPLICIT_INSTRUCTIONS",
   "game": "NBA2K22",
   "initial_season": "2021-2022",
+  "season_world_rules": {
+    "status": "ACTIVE_20261123",
+    "dual_timeline_trades": {
+      "execution_phase": "OFFSEASON_ONLY",
+      "active_players_timeline": "2022_TO_2026_HISTORICAL_MOVEMENTS",
+      "historical_rookies_timeline": "1984_TO_2021_SUBSEQUENT_CAREER_MOVEMENTS",
+      "in_season_roster_freeze": true,
+      "ai_free_agent_signing": "GAME_AI_AUTONOMOUS_ALLOWED"
+    },
+    "season_day_1_tactical_research": {
+      "trigger": "SEASON_DAY_1",
+      "teams_per_task": 2,
+      "total_tasks": 15,
+      "total_teams": 30,
+      "dimensions": [
+        "offensive_system",
+        "defensive_matrix",
+        "winning_philosophy",
+        "simulated_gameplan_focus"
+      ]
+    },
+    "draft_class_enhancement": {
+      "start_season": 2,
+      "execution_phase": "OFFSEASON_COMPLETION_REQUIRED",
+      "class_range": [1984, 2021],
+      "scope": [
+        "fill_missing_historical_players",
+        "restore_real_draft_order",
+        "reconstruct_real_career_attributes_tendencies_badges"
+      ]
+    }
+  },
   "phase_triggers": {
     "data_capture": "PLAYER_EXPLICIT_TRIGGER",
     "gm_decision": "PLAYER_EXPLICIT_SEPARATE_TRIGGER",
@@ -38,7 +70,7 @@
   },
   "historical_draft": {
     "first_class": 1984,
-    "last_class": 2020,
+    "last_class": 2021,
     "order": "ASCENDING_ONE_CLASS_PER_DRAFT",
     "after_last_class": "WRAP_TO_1984",
     "advance_only_after": "PLAYER_CONFIRMED_COMPLETED_DRAFT",
@@ -104,5 +136,5 @@
   "historical_draft_injection": "SEPARATE_APPROVED_ROSTER_IMPORT_NOT_GENERAL_PLAYER_EDIT_PERMISSION",
   "numeric_calculation": "PYTHON_SQL_OR_EQUIVALENT_DETERMINISTIC_TOOL",
   "web_access_acceptance": "PLAYER_HANDLED",
-  "policy_updated_at": "2026-10-21"
+  "policy_updated_at": "2026-11-23"
 }

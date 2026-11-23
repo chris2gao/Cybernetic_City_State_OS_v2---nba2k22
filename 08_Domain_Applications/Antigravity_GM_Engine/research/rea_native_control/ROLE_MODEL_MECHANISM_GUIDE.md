@@ -61,9 +61,11 @@
 
 读回该槽的focus、数量和UID，并确认其它槽与次数。**已有Goal setter只证明目标记录被设置**：Trip有另一个聚合目标缓存，原版DoScout会重新构建它；本轮不通过消耗行程证明完整消费链。分派成功不等于已经完成考察或新增完整球探报告。本轮的“Append满槽被拒绝”和“明确设置既有Goal”是两次不同请求，分别保留证据。
 
-## 4. 教练：当前可以设置的10项
+## 4. 教练设置与模拟侧重 (Coach Settings & Simulated Focus)
 
 使用 `COACH_SET_KNOWN_CURRENT_SETTINGS {team_id,settings}` 或 `control.coach_settings(team_id,settings)`。settings可包含下表中一个或多个键；不包含的已知字段从当前Coach保留。`COACH_SET_ROTATION_POLICY`只接受BenchDepth/BenchUtilization，不是首发或逐人分钟表。
+
+### 4.1 全局教练滑条与倾向 (10项已知字段)
 
 | 参数键 | 可传原生值 | 作用含义 |
 |---|---|---|
@@ -78,7 +80,16 @@
 | BenchDepth | 原生uint8；UI端点尚未确认 | 板凳深度，轮换人数上限含义；已观察9、10不代表最大值 |
 | BenchUtilization | UI有历史Human确认0..100；原生存储uint8 | 替补球员使用率倾向 |
 
+### 4.2 模拟侧重原生 12 字节受控数据块 (Scoring Options & POE Focus)
+
+主教练 `GAMEPLAN` 结构体（`stride 880`）自偏移 `0x178` 至 `0x183` 构成连续 12 字节数据块，对应 UI 中的 **“模拟侧重” (Simulated Focus / Gameplan Focus)** 页面：
+1. **ScoringOption 1 / 2 / 3**（`offset 0x178`、`0x17A`、`0x17C`，各 2 字节 `uint16`）：绑定球队第一、第二、第三得分核心的真实原生 `PLAYER UID16`（`face_id`），严禁使用 `65535` 占位；
+2. **六项 POE 攻防重点**（`offset 0x17E` 至 `0x183`，各 1 字节 `uint8`）：分别对应进攻重点 (`1..6`)、节奏 (`7..9`)、前板 (`10..12`)、防守重点 (`13..15`)、对抗 (`16..18`)、后板 (`19..21`)。
+
+详细协议与连续内存映射见 [模拟侧重原生规范指南](SIMULATED_GAMEPLAN_FOCUS_NATIVE_SPEC.md)。
+
 枚举来自[data/coach_settings.json](data/coach_settings.json)和仓库[coach_tactics_profile.json](../../config/coach_tactics_profile.json)。频率/板凳UI信息是以前的玩家确认，不是本轮重新做UI测试。源码当前验证存储值0..255；不要将整个uint8域解释成UI支持范围。这里只解释选项，不量化它们对胜率、回合、出场时间或具体AI行为的因果影响，相关公式和本轮比赛效果均UNKNOWN。
+
 
 执行机制：从当前球队解析Coach及默认Gameplan，复制私有880字节Gameplan，保留当前已知Coach投影，只替换输入字段；调用 `void Apply(Gameplan*,CoachData*)`，RVA `0x146eaa0`；核对整个352字节Coach预期投影和原始Gameplan未改，再另开只读会话回读。当前只闭合三个引用槽均NULL分支，非NULL引用所有权/赋值过程未恢复时不调用。
 
