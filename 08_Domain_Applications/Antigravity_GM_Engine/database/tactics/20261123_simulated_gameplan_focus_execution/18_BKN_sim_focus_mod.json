@@ -1,0 +1,154 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "spec_type": "SIMULATED_GAMEPLAN_FOCUS_MOD",
+  "team_id": 18,
+  "team_abbr": "BKN",
+  "team_name": "Brooklyn Nets",
+  "source_research_doc": "59_BKN_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+  "target_menu": "教练设置 - 模拟侧重 (Simulated Focus / Gameplan Focus)",
+  "execution_target": "GAMEPLAN (stride 880, continuous offset range 376-387 / 0x178-0x183)",
+  "conflict_resolution": "STRICT_LATEST_RESEARCH_DOC_PRIORITY",
+  "simulated_focus_summary": {
+    "scoring_options": [
+      {
+        "option_slot": 1,
+        "player_name": "Kevin Durant",
+        "player_id": 1411,
+        "roster_slot": 2,
+        "touch_proposal": 88
+      },
+      {
+        "option_slot": 2,
+        "player_name": "Kyrie Irving",
+        "player_id": 2122,
+        "roster_slot": 0,
+        "touch_proposal": 82
+      },
+      {
+        "option_slot": 3,
+        "player_name": "Andre Drummond",
+        "player_id": 2452,
+        "roster_slot": 12,
+        "touch_proposal": 65
+      }
+    ],
+    "poe_settings": {
+      "poe_offense": {
+        "id": 2,
+        "name": "GET_SHOOTERS_OPEN",
+        "desc": "为射手跑位 (Get Shooters Open)"
+      },
+      "poe_offense_tempo": {
+        "id": 9,
+        "name": "SHOOT_AT_WILL",
+        "desc": "尽早出手反击 (Shoot at Will / Fast Pace)"
+      },
+      "poe_offense_rebound": {
+        "id": 12,
+        "name": "LIMIT_TRANSITION",
+        "desc": "极速退防限制快攻 (Limit Transition)"
+      },
+      "poe_defense": {
+        "id": 15,
+        "name": "LIMIT_PERIMETER_SHOTS",
+        "desc": "贴防限制外线三分 (Limit Perimeter Shots)"
+      },
+      "poe_defense_physicality": {
+        "id": 17,
+        "name": "NEUTRAL_DEFENSE_TEMPO",
+        "desc": "中立身体对抗 (Neutral Physicality)"
+      },
+      "poe_defense_rebound": {
+        "id": 19,
+        "name": "CRASH_DEFENSIVE_BOARDS",
+        "desc": "全员保护防守篮板 (Crash Defensive Boards)"
+      }
+    }
+  },
+  "writes": [
+    {
+      "field_name": "scoring_option_1",
+      "target_block": "GAMEPLAN",
+      "offset": 376,
+      "type": "uint16",
+      "val_raw": 1411,
+      "val_human": "Kevin Durant",
+      "roster_slot": 2,
+      "description": "第一进攻选择 (Scoring Option 1): Kevin Durant (ID=1411, Slot=2)"
+    },
+    {
+      "field_name": "scoring_option_2",
+      "target_block": "GAMEPLAN",
+      "offset": 378,
+      "type": "uint16",
+      "val_raw": 2122,
+      "val_human": "Kyrie Irving",
+      "roster_slot": 0,
+      "description": "第二进攻选择 (Scoring Option 2): Kyrie Irving (ID=2122, Slot=0)"
+    },
+    {
+      "field_name": "scoring_option_3",
+      "target_block": "GAMEPLAN",
+      "offset": 380,
+      "type": "uint16",
+      "val_raw": 2452,
+      "val_human": "Andre Drummond",
+      "roster_slot": 12,
+      "description": "第三进攻选择 (Scoring Option 3): Andre Drummond (ID=2452, Slot=12)"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 2,
+      "val_human": "GET_SHOOTERS_OPEN",
+      "description": "进攻侧重/进攻重点 (POEOffense): 为射手跑位 (Get Shooters Open) (2)"
+    },
+    {
+      "field_name": "poe_offense_tempo",
+      "target_block": "GAMEPLAN",
+      "offset": 383,
+      "type": "uint8",
+      "val_raw": 9,
+      "val_human": "SHOOT_AT_WILL",
+      "description": "进攻节奏 (POEOffenseTempo): 尽早出手反击 (Shoot at Will / Fast Pace) (9)"
+    },
+    {
+      "field_name": "poe_offense_rebound",
+      "target_block": "GAMEPLAN",
+      "offset": 384,
+      "type": "uint8",
+      "val_raw": 12,
+      "val_human": "LIMIT_TRANSITION",
+      "description": "进攻篮板策略 (POEOffenseRebound): 极速退防限制快攻 (Limit Transition) (12)"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 15,
+      "val_human": "LIMIT_PERIMETER_SHOTS",
+      "description": "防守侧重/防守重点 (POEDefense): 贴防限制外线三分 (Limit Perimeter Shots) (15)"
+    },
+    {
+      "field_name": "poe_defense_physicality",
+      "target_block": "GAMEPLAN",
+      "offset": 386,
+      "type": "uint8",
+      "val_raw": 17,
+      "val_human": "NEUTRAL_DEFENSE_TEMPO",
+      "description": "防守对抗策略 (POEDefensePhysicality): 中立身体对抗 (Neutral Physicality) (17)"
+    },
+    {
+      "field_name": "poe_defense_rebound",
+      "target_block": "GAMEPLAN",
+      "offset": 387,
+      "type": "uint8",
+      "val_raw": 19,
+      "val_human": "CRASH_DEFENSIVE_BOARDS",
+      "description": "防守篮板策略 (POEDefenseRebound): 全员保护防守篮板 (Crash Defensive Boards) (19)"
+    }
+  ]
+}

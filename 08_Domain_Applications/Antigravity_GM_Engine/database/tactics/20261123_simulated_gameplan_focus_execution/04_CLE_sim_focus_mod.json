@@ -1,0 +1,154 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "spec_type": "SIMULATED_GAMEPLAN_FOCUS_MOD",
+  "team_id": 4,
+  "team_abbr": "CLE",
+  "team_name": "Cleveland Cavaliers",
+  "source_research_doc": "66_CLE_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+  "target_menu": "教练设置 - 模拟侧重 (Simulated Focus / Gameplan Focus)",
+  "execution_target": "GAMEPLAN (stride 880, continuous offset range 376-387 / 0x178-0x183)",
+  "conflict_resolution": "STRICT_LATEST_RESEARCH_DOC_PRIORITY",
+  "simulated_focus_summary": {
+    "scoring_options": [
+      {
+        "option_slot": 1,
+        "player_name": "Donovan Mitchell",
+        "player_id": 7510,
+        "roster_slot": 13,
+        "touch_proposal": 86
+      },
+      {
+        "option_slot": 2,
+        "player_name": "Darius Garland",
+        "player_id": 7824,
+        "roster_slot": 0,
+        "touch_proposal": 82
+      },
+      {
+        "option_slot": 3,
+        "player_name": "Caris LeVert",
+        "player_id": 7233,
+        "roster_slot": 12,
+        "touch_proposal": 68
+      }
+    ],
+    "poe_settings": {
+      "poe_offense": {
+        "id": 4,
+        "name": "PICK_AND_ROLL_OFFENSE",
+        "desc": "挡拆进攻 (Pick & Roll Offense)"
+      },
+      "poe_offense_tempo": {
+        "id": 7,
+        "name": "PATIENT_OFFENSE",
+        "desc": "耐心阵地战 (Patient Offense)"
+      },
+      "poe_offense_rebound": {
+        "id": 10,
+        "name": "CRASH_OFFENSIVE_BOARDS",
+        "desc": "全力拼抢前场篮板 (Crash Offensive Boards)"
+      },
+      "poe_defense": {
+        "id": 13,
+        "name": "PROTECT_PAINT",
+        "desc": "保护禁区油漆区 (Protect the Paint)"
+      },
+      "poe_defense_physicality": {
+        "id": 18,
+        "name": "PLAY_PHYSICAL",
+        "desc": "强硬身体对抗 (Play Physical)"
+      },
+      "poe_defense_rebound": {
+        "id": 19,
+        "name": "CRASH_DEFENSIVE_BOARDS",
+        "desc": "全员保护防守篮板 (Crash Defensive Boards)"
+      }
+    }
+  },
+  "writes": [
+    {
+      "field_name": "scoring_option_1",
+      "target_block": "GAMEPLAN",
+      "offset": 376,
+      "type": "uint16",
+      "val_raw": 7510,
+      "val_human": "Donovan Mitchell",
+      "roster_slot": 13,
+      "description": "第一进攻选择 (Scoring Option 1): Donovan Mitchell (ID=7510, Slot=13)"
+    },
+    {
+      "field_name": "scoring_option_2",
+      "target_block": "GAMEPLAN",
+      "offset": 378,
+      "type": "uint16",
+      "val_raw": 7824,
+      "val_human": "Darius Garland",
+      "roster_slot": 0,
+      "description": "第二进攻选择 (Scoring Option 2): Darius Garland (ID=7824, Slot=0)"
+    },
+    {
+      "field_name": "scoring_option_3",
+      "target_block": "GAMEPLAN",
+      "offset": 380,
+      "type": "uint16",
+      "val_raw": 7233,
+      "val_human": "Caris LeVert",
+      "roster_slot": 12,
+      "description": "第三进攻选择 (Scoring Option 3): Caris LeVert (ID=7233, Slot=12)"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 4,
+      "val_human": "PICK_AND_ROLL_OFFENSE",
+      "description": "进攻侧重/进攻重点 (POEOffense): 挡拆进攻 (Pick & Roll Offense) (4)"
+    },
+    {
+      "field_name": "poe_offense_tempo",
+      "target_block": "GAMEPLAN",
+      "offset": 383,
+      "type": "uint8",
+      "val_raw": 7,
+      "val_human": "PATIENT_OFFENSE",
+      "description": "进攻节奏 (POEOffenseTempo): 耐心阵地战 (Patient Offense) (7)"
+    },
+    {
+      "field_name": "poe_offense_rebound",
+      "target_block": "GAMEPLAN",
+      "offset": 384,
+      "type": "uint8",
+      "val_raw": 10,
+      "val_human": "CRASH_OFFENSIVE_BOARDS",
+      "description": "进攻篮板策略 (POEOffenseRebound): 全力拼抢前场篮板 (Crash Offensive Boards) (10)"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "val_human": "PROTECT_PAINT",
+      "description": "防守侧重/防守重点 (POEDefense): 保护禁区油漆区 (Protect the Paint) (13)"
+    },
+    {
+      "field_name": "poe_defense_physicality",
+      "target_block": "GAMEPLAN",
+      "offset": 386,
+      "type": "uint8",
+      "val_raw": 18,
+      "val_human": "PLAY_PHYSICAL",
+      "description": "防守对抗策略 (POEDefensePhysicality): 强硬身体对抗 (Play Physical) (18)"
+    },
+    {
+      "field_name": "poe_defense_rebound",
+      "target_block": "GAMEPLAN",
+      "offset": 387,
+      "type": "uint8",
+      "val_raw": 19,
+      "val_human": "CRASH_DEFENSIVE_BOARDS",
+      "description": "防守篮板策略 (POEDefenseRebound): 全员保护防守篮板 (Crash Defensive Boards) (19)"
+    }
+  ]
+}

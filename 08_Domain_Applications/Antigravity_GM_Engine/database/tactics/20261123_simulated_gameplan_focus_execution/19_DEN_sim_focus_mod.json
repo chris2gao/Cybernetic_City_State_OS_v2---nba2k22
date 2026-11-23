@@ -1,0 +1,154 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "spec_type": "SIMULATED_GAMEPLAN_FOCUS_MOD",
+  "team_id": 19,
+  "team_abbr": "DEN",
+  "team_name": "Denver Nuggets",
+  "source_research_doc": "57_DEN_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+  "target_menu": "教练设置 - 模拟侧重 (Simulated Focus / Gameplan Focus)",
+  "execution_target": "GAMEPLAN (stride 880, continuous offset range 376-387 / 0x178-0x183)",
+  "conflict_resolution": "STRICT_LATEST_RESEARCH_DOC_PRIORITY",
+  "simulated_focus_summary": {
+    "scoring_options": [
+      {
+        "option_slot": 1,
+        "player_name": "Nikola Jokic",
+        "player_id": 4170,
+        "roster_slot": 3,
+        "touch_proposal": 88
+      },
+      {
+        "option_slot": 2,
+        "player_name": "Jamal Murray",
+        "player_id": 7202,
+        "roster_slot": 0,
+        "touch_proposal": 76
+      },
+      {
+        "option_slot": 3,
+        "player_name": "Nah'Shon Hyland",
+        "player_id": 9918,
+        "roster_slot": 11,
+        "touch_proposal": 72
+      }
+    ],
+    "poe_settings": {
+      "poe_offense": {
+        "id": 3,
+        "name": "FEED_THE_POST",
+        "desc": "打低位内线 (Feed the Post)"
+      },
+      "poe_offense_tempo": {
+        "id": 8,
+        "name": "NEUTRAL_OFFENSE_TEMPO",
+        "desc": "中立进攻节奏 (Neutral Tempo)"
+      },
+      "poe_offense_rebound": {
+        "id": 10,
+        "name": "CRASH_OFFENSIVE_BOARDS",
+        "desc": "全力拼抢前场篮板 (Crash Offensive Boards)"
+      },
+      "poe_defense": {
+        "id": 13,
+        "name": "PROTECT_PAINT",
+        "desc": "保护禁区油漆区 (Protect the Paint)"
+      },
+      "poe_defense_physicality": {
+        "id": 18,
+        "name": "PLAY_PHYSICAL",
+        "desc": "强硬身体对抗 (Play Physical)"
+      },
+      "poe_defense_rebound": {
+        "id": 19,
+        "name": "CRASH_DEFENSIVE_BOARDS",
+        "desc": "全员保护防守篮板 (Crash Defensive Boards)"
+      }
+    }
+  },
+  "writes": [
+    {
+      "field_name": "scoring_option_1",
+      "target_block": "GAMEPLAN",
+      "offset": 376,
+      "type": "uint16",
+      "val_raw": 4170,
+      "val_human": "Nikola Jokic",
+      "roster_slot": 3,
+      "description": "第一进攻选择 (Scoring Option 1): Nikola Jokic (ID=4170, Slot=3)"
+    },
+    {
+      "field_name": "scoring_option_2",
+      "target_block": "GAMEPLAN",
+      "offset": 378,
+      "type": "uint16",
+      "val_raw": 7202,
+      "val_human": "Jamal Murray",
+      "roster_slot": 0,
+      "description": "第二进攻选择 (Scoring Option 2): Jamal Murray (ID=7202, Slot=0)"
+    },
+    {
+      "field_name": "scoring_option_3",
+      "target_block": "GAMEPLAN",
+      "offset": 380,
+      "type": "uint16",
+      "val_raw": 9918,
+      "val_human": "Nah'Shon Hyland",
+      "roster_slot": 11,
+      "description": "第三进攻选择 (Scoring Option 3): Nah'Shon Hyland (ID=9918, Slot=11)"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 3,
+      "val_human": "FEED_THE_POST",
+      "description": "进攻侧重/进攻重点 (POEOffense): 打低位内线 (Feed the Post) (3)"
+    },
+    {
+      "field_name": "poe_offense_tempo",
+      "target_block": "GAMEPLAN",
+      "offset": 383,
+      "type": "uint8",
+      "val_raw": 8,
+      "val_human": "NEUTRAL_OFFENSE_TEMPO",
+      "description": "进攻节奏 (POEOffenseTempo): 中立进攻节奏 (Neutral Tempo) (8)"
+    },
+    {
+      "field_name": "poe_offense_rebound",
+      "target_block": "GAMEPLAN",
+      "offset": 384,
+      "type": "uint8",
+      "val_raw": 10,
+      "val_human": "CRASH_OFFENSIVE_BOARDS",
+      "description": "进攻篮板策略 (POEOffenseRebound): 全力拼抢前场篮板 (Crash Offensive Boards) (10)"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "val_human": "PROTECT_PAINT",
+      "description": "防守侧重/防守重点 (POEDefense): 保护禁区油漆区 (Protect the Paint) (13)"
+    },
+    {
+      "field_name": "poe_defense_physicality",
+      "target_block": "GAMEPLAN",
+      "offset": 386,
+      "type": "uint8",
+      "val_raw": 18,
+      "val_human": "PLAY_PHYSICAL",
+      "description": "防守对抗策略 (POEDefensePhysicality): 强硬身体对抗 (Play Physical) (18)"
+    },
+    {
+      "field_name": "poe_defense_rebound",
+      "target_block": "GAMEPLAN",
+      "offset": 387,
+      "type": "uint8",
+      "val_raw": 19,
+      "val_human": "CRASH_DEFENSIVE_BOARDS",
+      "description": "防守篮板策略 (POEDefenseRebound): 全员保护防守篮板 (Crash Defensive Boards) (19)"
+    }
+  ]
+}

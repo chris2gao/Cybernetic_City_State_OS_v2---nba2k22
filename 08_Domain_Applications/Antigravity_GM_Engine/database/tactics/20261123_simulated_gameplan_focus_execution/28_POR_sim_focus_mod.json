@@ -1,0 +1,154 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "spec_type": "SIMULATED_GAMEPLAN_FOCUS_MOD",
+  "team_id": 28,
+  "team_abbr": "POR",
+  "team_name": "Portland Trail Blazers",
+  "source_research_doc": "69_POR_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+  "target_menu": "教练设置 - 模拟侧重 (Simulated Focus / Gameplan Focus)",
+  "execution_target": "GAMEPLAN (stride 880, continuous offset range 376-387 / 0x178-0x183)",
+  "conflict_resolution": "STRICT_LATEST_RESEARCH_DOC_PRIORITY",
+  "simulated_focus_summary": {
+    "scoring_options": [
+      {
+        "option_slot": 1,
+        "player_name": "Damian Lillard",
+        "player_id": 2449,
+        "roster_slot": 0,
+        "touch_proposal": 88
+      },
+      {
+        "option_slot": 2,
+        "player_name": "Jerami Grant",
+        "player_id": 4105,
+        "roster_slot": 12,
+        "touch_proposal": 76
+      },
+      {
+        "option_slot": 3,
+        "player_name": "Eric Bledsoe",
+        "player_id": 1818,
+        "roster_slot": 13,
+        "touch_proposal": 58
+      }
+    ],
+    "poe_settings": {
+      "poe_offense": {
+        "id": 4,
+        "name": "PICK_AND_ROLL_OFFENSE",
+        "desc": "挡拆进攻 (Pick & Roll Offense)"
+      },
+      "poe_offense_tempo": {
+        "id": 8,
+        "name": "NEUTRAL_OFFENSE_TEMPO",
+        "desc": "中立进攻节奏 (Neutral Tempo)"
+      },
+      "poe_offense_rebound": {
+        "id": 12,
+        "name": "LIMIT_TRANSITION",
+        "desc": "极速退防限制快攻 (Limit Transition)"
+      },
+      "poe_defense": {
+        "id": 13,
+        "name": "PROTECT_PAINT",
+        "desc": "保护禁区油漆区 (Protect the Paint)"
+      },
+      "poe_defense_physicality": {
+        "id": 18,
+        "name": "PLAY_PHYSICAL",
+        "desc": "强硬身体对抗 (Play Physical)"
+      },
+      "poe_defense_rebound": {
+        "id": 19,
+        "name": "CRASH_DEFENSIVE_BOARDS",
+        "desc": "全员保护防守篮板 (Crash Defensive Boards)"
+      }
+    }
+  },
+  "writes": [
+    {
+      "field_name": "scoring_option_1",
+      "target_block": "GAMEPLAN",
+      "offset": 376,
+      "type": "uint16",
+      "val_raw": 2449,
+      "val_human": "Damian Lillard",
+      "roster_slot": 0,
+      "description": "第一进攻选择 (Scoring Option 1): Damian Lillard (ID=2449, Slot=0)"
+    },
+    {
+      "field_name": "scoring_option_2",
+      "target_block": "GAMEPLAN",
+      "offset": 378,
+      "type": "uint16",
+      "val_raw": 4105,
+      "val_human": "Jerami Grant",
+      "roster_slot": 12,
+      "description": "第二进攻选择 (Scoring Option 2): Jerami Grant (ID=4105, Slot=12)"
+    },
+    {
+      "field_name": "scoring_option_3",
+      "target_block": "GAMEPLAN",
+      "offset": 380,
+      "type": "uint16",
+      "val_raw": 1818,
+      "val_human": "Eric Bledsoe",
+      "roster_slot": 13,
+      "description": "第三进攻选择 (Scoring Option 3): Eric Bledsoe (ID=1818, Slot=13)"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 4,
+      "val_human": "PICK_AND_ROLL_OFFENSE",
+      "description": "进攻侧重/进攻重点 (POEOffense): 挡拆进攻 (Pick & Roll Offense) (4)"
+    },
+    {
+      "field_name": "poe_offense_tempo",
+      "target_block": "GAMEPLAN",
+      "offset": 383,
+      "type": "uint8",
+      "val_raw": 8,
+      "val_human": "NEUTRAL_OFFENSE_TEMPO",
+      "description": "进攻节奏 (POEOffenseTempo): 中立进攻节奏 (Neutral Tempo) (8)"
+    },
+    {
+      "field_name": "poe_offense_rebound",
+      "target_block": "GAMEPLAN",
+      "offset": 384,
+      "type": "uint8",
+      "val_raw": 12,
+      "val_human": "LIMIT_TRANSITION",
+      "description": "进攻篮板策略 (POEOffenseRebound): 极速退防限制快攻 (Limit Transition) (12)"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "val_human": "PROTECT_PAINT",
+      "description": "防守侧重/防守重点 (POEDefense): 保护禁区油漆区 (Protect the Paint) (13)"
+    },
+    {
+      "field_name": "poe_defense_physicality",
+      "target_block": "GAMEPLAN",
+      "offset": 386,
+      "type": "uint8",
+      "val_raw": 18,
+      "val_human": "PLAY_PHYSICAL",
+      "description": "防守对抗策略 (POEDefensePhysicality): 强硬身体对抗 (Play Physical) (18)"
+    },
+    {
+      "field_name": "poe_defense_rebound",
+      "target_block": "GAMEPLAN",
+      "offset": 387,
+      "type": "uint8",
+      "val_raw": 19,
+      "val_human": "CRASH_DEFENSIVE_BOARDS",
+      "description": "防守篮板策略 (POEDefenseRebound): 全员保护防守篮板 (Crash Defensive Boards) (19)"
+    }
+  ]
+}
