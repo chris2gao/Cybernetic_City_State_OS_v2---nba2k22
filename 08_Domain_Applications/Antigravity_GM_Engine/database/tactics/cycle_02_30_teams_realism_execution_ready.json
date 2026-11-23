@@ -96,62 +96,104 @@
                 {
                   "field": "shot",
                   "offset": 1112,
-                  "val_raw": 95,
+                  "val_raw": 96,
                   "type": "uint8",
-                  "description": "持球终结出手倾向: 95 (决定真实持球得分侵略性)"
+                  "description": "持球终结出手倾向: 96 (决定真实持球得分侵略性)"
                 },
                 {
                   "field": "interior_def",
                   "offset": 1069,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 94"
+                  "description": "关键攻防属性 interior_def: 95"
                 },
                 {
                   "field": "block",
                   "offset": 1073,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 block: 92"
+                  "description": "关键攻防属性 block: 94"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 92"
+                  "description": "关键攻防属性 mid_range: 94"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 strength: 98"
+                },
+                {
+                  "field": "post_moves",
+                  "offset": 1058,
                   "val_raw": 213,
                   "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 96"
+                  "description": "关键攻防属性 post_moves: 96"
+                },
+                {
+                  "field": "post_fadeaway",
+                  "offset": 1056,
+                  "val_raw": 210,
+                  "human_val": 95,
+                  "type": "uint8",
+                  "description": "关键攻防属性 post_fadeaway: 95"
+                },
+                {
+                  "field": "def_rebound",
+                  "offset": 1068,
+                  "val_raw": 210,
+                  "human_val": 95,
+                  "type": "uint8",
+                  "description": "关键攻防属性 def_rebound: 95"
                 },
                 {
                   "field": "post_up",
                   "offset": 1178,
-                  "val_raw": 95,
+                  "val_raw": 96,
                   "type": "uint8",
-                  "description": "战术特征倾向 post_up: 95"
+                  "description": "战术特征倾向 post_up: 96"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 92"
                 },
                 {
                   "field": "contest_shot",
                   "offset": 1207,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 contest_shot: 95"
+                },
+                {
+                  "field": "block_shot",
+                  "offset": 1208,
                   "val_raw": 92,
                   "type": "uint8",
-                  "description": "战术特征倾向 contest_shot: 92"
+                  "description": "战术特征倾向 block_shot: 92"
                 }
               ],
               "badges": {
                 "BackdownPunisher": 4,
-                "Dropstepper": 4,
+                "PostDropStepper": 4,
                 "RimProtector": 4,
-                "Intimidator": 4
+                "Intimidator": 4,
+                "DifficultShots": 4,
+                "Deadeye": 4,
+                "DreamShake": 4,
+                "HookSpecialist": 4
               }
             },
             {
@@ -215,6 +257,14 @@
                   "description": "关键攻防属性 ball_control: 95"
                 },
                 {
+                  "field": "three_point",
+                  "offset": 1062,
+                  "val_raw": 189,
+                  "human_val": 88,
+                  "type": "uint8",
+                  "description": "关键攻防属性 three_point: 88"
+                },
+                {
                   "field": "dish_to_open_man",
                   "offset": 1176,
                   "val_raw": 96,
@@ -227,13 +277,22 @@
                   "val_raw": 90,
                   "type": "uint8",
                   "description": "战术特征倾向 drive: 90"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 90"
                 }
               ],
               "badges": {
                 "Dimer": 4,
                 "FloorGeneral": 4,
                 "HandlesForDays": 4,
-                "Deadeye": 3
+                "Deadeye": 3,
+                "SpaceCreator": 4,
+                "StopAndPop": 4
               }
             },
             {
@@ -291,18 +350,18 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 198,
-                  "human_val": 91,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 91"
+                  "description": "关键攻防属性 three_point: 92"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 92"
+                  "description": "关键攻防属性 driving_layup: 94"
                 },
                 {
                   "field": "ball_control",
@@ -332,7 +391,7 @@
                 "Downhill": 4,
                 "Sniper": 4,
                 "Chef": 3,
-                "FearlessFinisher": 3
+                "FearlessFinisher": 4
               }
             },
             {
@@ -565,33 +624,88 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 90"
+                  "description": "关键攻防属性 three_point: 92"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 90"
+                  "description": "关键攻防属性 mid_range: 92"
+                },
+                {
+                  "field": "driving_layup",
+                  "offset": 1055,
+                  "val_raw": 201,
+                  "human_val": 92,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_layup: 92"
                 },
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 88"
+                  "description": "关键攻防属性 perimeter_def: 92"
+                },
+                {
+                  "field": "lateral_quick",
+                  "offset": 1071,
+                  "val_raw": 195,
+                  "human_val": 90,
+                  "type": "uint8",
+                  "description": "关键攻防属性 lateral_quick: 90"
+                },
+                {
+                  "field": "ball_control",
+                  "offset": 1064,
+                  "val_raw": 195,
+                  "human_val": 90,
+                  "type": "uint8",
+                  "description": "关键攻防属性 ball_control: 90"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 92"
+                },
+                {
+                  "field": "spot_up_three",
+                  "offset": 1139,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 spot_up_three: 92"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 92"
+                },
+                {
+                  "field": "contest_shot",
+                  "offset": 1207,
+                  "val_raw": 88,
+                  "type": "uint8",
+                  "description": "战术特征倾向 contest_shot: 88"
                 }
               ],
               "badges": {
                 "Deadeye": 4,
                 "Sniper": 4,
-                "DifficultShots": 3,
-                "Clamps": 3
+                "DifficultShots": 4,
+                "Clamps": 4,
+                "Blinders": 4,
+                "CatchAndShoot": 4,
+                "HandlesForDays": 3
               }
             },
             {
@@ -631,12 +745,20 @@
                   "description": "持球终结出手倾向: 94 (决定真实持球得分侵略性)"
                 },
                 {
+                  "field": "driving_dunk",
+                  "offset": 1078,
+                  "val_raw": 210,
+                  "human_val": 95,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_dunk: 95"
+                },
+                {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 92"
+                  "description": "关键攻防属性 driving_layup: 94"
                 },
                 {
                   "field": "three_point",
@@ -649,16 +771,17 @@
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 88"
+                  "description": "关键攻防属性 perimeter_def: 90"
                 }
               ],
               "badges": {
                 "Posterizer": 4,
-                "Clamps": 3,
-                "FearlessFinisher": 4
+                "Clamps": 4,
+                "FearlessFinisher": 4,
+                "FastTwitch": 4
               }
             },
             {
@@ -708,10 +831,10 @@
                 {
                   "field": "steal",
                   "offset": 1074,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 steal: 92"
+                  "description": "关键攻防属性 steal: 94"
                 },
                 {
                   "field": "lateral_quick",
@@ -725,7 +848,8 @@
               "badges": {
                 "Clamps": 4,
                 "Menace": 4,
-                "DefensiveLeader": 4
+                "DefensiveLeader": 4,
+                "PickPocket": 4
               }
             },
             {
@@ -791,7 +915,7 @@
               ],
               "badges": {
                 "Clamps": 4,
-                "CatchAndShoot": 3,
+                "CatchAndShoot": 4,
                 "Sniper": 3
               }
             },
@@ -964,26 +1088,26 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 95"
+                  "description": "关键攻防属性 mid_range: 96"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 88"
+                  "description": "关键攻防属性 three_point: 90"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 95"
+                  "description": "关键攻防属性 driving_layup: 96"
                 },
                 {
                   "field": "pass_accuracy",
@@ -1002,18 +1126,33 @@
                   "description": "关键攻防属性 strength: 78"
                 },
                 {
+                  "field": "post_moves",
+                  "offset": 1058,
+                  "val_raw": 201,
+                  "human_val": 92,
+                  "type": "uint8",
+                  "description": "关键攻防属性 post_moves: 92"
+                },
+                {
                   "field": "drive",
                   "offset": 1155,
-                  "val_raw": 95,
+                  "val_raw": 96,
                   "type": "uint8",
-                  "description": "战术特征倾向 drive: 95"
+                  "description": "战术特征倾向 drive: 96"
                 },
                 {
                   "field": "post_up",
                   "offset": 1178,
-                  "val_raw": 85,
+                  "val_raw": 90,
                   "type": "uint8",
-                  "description": "战术特征倾向 post_up: 85"
+                  "description": "战术特征倾向 post_up: 90"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 95"
                 },
                 {
                   "field": "dish_to_open_man",
@@ -1103,7 +1242,7 @@
               ],
               "badges": {
                 "BackdownPunisher": 3,
-                "Dropstepper": 3
+                "PostDropStepper": 3
               }
             },
             {
@@ -1281,7 +1420,7 @@
                 }
               ],
               "badges": {
-                "TearDropper": 3,
+                "TearDropper": 4,
                 "Sniper": 3
               }
             }
@@ -1387,24 +1526,56 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
+                  "val_raw": 207,
+                  "human_val": 94,
+                  "type": "uint8",
+                  "description": "关键攻防属性 three_point: 94"
+                },
+                {
+                  "field": "driving_layup",
+                  "offset": 1055,
                   "val_raw": 201,
                   "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 92"
+                  "description": "关键攻防属性 driving_layup: 92"
                 },
                 {
                   "field": "block",
                   "offset": 1073,
-                  "val_raw": 180,
-                  "human_val": 85,
+                  "val_raw": 183,
+                  "human_val": 86,
                   "type": "uint8",
-                  "description": "关键攻防属性 block: 85"
+                  "description": "关键攻防属性 block: 86"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 99"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 94,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 94"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 90"
                 }
               ],
               "badges": {
                 "Deadeye": 4,
                 "DifficultShots": 4,
-                "Sniper": 4
+                "Sniper": 4,
+                "Blinders": 4,
+                "CatchAndShoot": 4,
+                "VolumeShooter": 4
               }
             },
             {
@@ -1454,18 +1625,18 @@
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 98"
+                  "description": "关键攻防属性 driving_layup: 99"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 94"
+                  "description": "关键攻防属性 mid_range: 95"
                 },
                 {
                   "field": "three_point",
@@ -1479,7 +1650,9 @@
               "badges": {
                 "AnkleBreaker": 4,
                 "HandlesForDays": 4,
-                "DifficultShots": 4
+                "DifficultShots": 4,
+                "TearDropper": 4,
+                "CircusThrees": 4
               }
             },
             {
@@ -1775,40 +1948,55 @@
                 {
                   "field": "pass_vision",
                   "offset": 1107,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 90"
+                  "description": "关键攻防属性 pass_vision: 92"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 88"
+                  "description": "关键攻防属性 strength: 90"
                 },
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 88"
+                  "description": "关键攻防属性 perimeter_def: 90"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 88"
+                  "description": "关键攻防属性 driving_layup: 90"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 92"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 dish_to_open_man: 90"
                 }
               ],
               "badges": {
-                "Dimer": 3,
-                "Clamps": 3,
-                "Bully": 3
+                "Dimer": 4,
+                "Clamps": 4,
+                "BackdownPunisher": 3,
+                "FearlessFinisher": 3
               }
             },
             {
@@ -2154,18 +2342,42 @@
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 96"
+                  "description": "关键攻防属性 driving_layup: 98"
+                },
+                {
+                  "field": "driving_dunk",
+                  "offset": 1078,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_dunk: 98"
+                },
+                {
+                  "field": "standing_dunk",
+                  "offset": 1077,
+                  "val_raw": 210,
+                  "human_val": 95,
+                  "type": "uint8",
+                  "description": "关键攻防属性 standing_dunk: 95"
                 },
                 {
                   "field": "interior_def",
                   "offset": 1069,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 95"
+                  "description": "关键攻防属性 interior_def: 96"
+                },
+                {
+                  "field": "block",
+                  "offset": 1073,
+                  "val_raw": 207,
+                  "human_val": 94,
+                  "type": "uint8",
+                  "description": "关键攻防属性 block: 94"
                 },
                 {
                   "field": "perimeter_def",
@@ -2176,28 +2388,69 @@
                   "description": "关键攻防属性 perimeter_def: 88"
                 },
                 {
-                  "field": "block",
-                  "offset": 1073,
-                  "val_raw": 201,
-                  "human_val": 92,
-                  "type": "uint8",
-                  "description": "关键攻防属性 block: 92"
-                },
-                {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 96"
+                  "description": "关键攻防属性 strength: 98"
+                },
+                {
+                  "field": "speed",
+                  "offset": 1079,
+                  "val_raw": 189,
+                  "human_val": 88,
+                  "type": "uint8",
+                  "description": "关键攻防属性 speed: 88"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 99"
+                },
+                {
+                  "field": "attack_strong_on_drive",
+                  "offset": 1175,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 attack_strong_on_drive: 99"
+                },
+                {
+                  "field": "post_up",
+                  "offset": 1178,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 post_up: 90"
+                },
+                {
+                  "field": "block_shot",
+                  "offset": 1208,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 block_shot: 92"
+                },
+                {
+                  "field": "contest_shot",
+                  "offset": 1207,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 contest_shot: 95"
                 }
               ],
               "badges": {
                 "Posterizer": 4,
+                "LimitlessTakeoff": 4,
+                "FastTwitch": 4,
+                "FearlessFinisher": 4,
                 "Intimidator": 4,
                 "RimProtector": 4,
                 "Clamps": 4,
-                "ChasedownArtist": 4
+                "ChasedownArtist": 4,
+                "BackdownPunisher": 4,
+                "PostDropStepper": 4,
+                "Downhill": 4
               }
             },
             {
@@ -2239,23 +2492,24 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 92"
+                  "description": "关键攻防属性 mid_range: 94"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 88"
+                  "description": "关键攻防属性 three_point: 90"
                 }
               ],
               "badges": {
-                "DifficultShots": 3,
-                "Deadeye": 3
+                "DifficultShots": 4,
+                "Deadeye": 4,
+                "Sniper": 4
               }
             },
             {
@@ -2297,32 +2551,33 @@
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 96"
+                  "description": "关键攻防属性 perimeter_def: 98"
                 },
                 {
                   "field": "steal",
                   "offset": 1074,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 steal: 92"
+                  "description": "关键攻防属性 steal: 95"
                 },
                 {
                   "field": "lateral_quick",
                   "offset": 1071,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 lateral_quick: 94"
+                  "description": "关键攻防属性 lateral_quick: 96"
                 }
               ],
               "badges": {
                 "Clamps": 4,
                 "Menace": 4,
-                "PickPocket": 4
+                "PickPocket": 4,
+                "Interceptor": 4
               }
             },
             {
@@ -2540,23 +2795,55 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 96"
+                  "description": "关键攻防属性 mid_range: 98"
+                },
+                {
+                  "field": "post_fadeaway",
+                  "offset": 1056,
+                  "val_raw": 210,
+                  "human_val": 95,
+                  "type": "uint8",
+                  "description": "关键攻防属性 post_fadeaway: 95"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 92"
+                  "description": "关键攻防属性 driving_layup: 94"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 99"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 94,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 94"
+                },
+                {
+                  "field": "post_up",
+                  "offset": 1178,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 post_up: 90"
                 }
               ],
               "badges": {
                 "DifficultShots": 4,
-                "Deadeye": 3
+                "Deadeye": 4,
+                "ClutchShooter": 4,
+                "SpaceCreator": 4,
+                "StopAndPop": 4
               }
             },
             {
@@ -2598,23 +2885,47 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 90"
+                  "description": "关键攻防属性 three_point: 92"
                 },
                 {
                   "field": "speed",
                   "offset": 1079,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 speed: 95"
+                  "description": "关键攻防属性 speed: 96"
+                },
+                {
+                  "field": "driving_dunk",
+                  "offset": 1078,
+                  "val_raw": 213,
+                  "human_val": 96,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_dunk: 96"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 92"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 94,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 94"
                 }
               ],
               "badges": {
                 "Posterizer": 4,
-                "Sniper": 3
+                "LimitlessTakeoff": 4,
+                "Sniper": 4,
+                "QuickFirstStep": 4
               }
             },
             {
@@ -2887,41 +3198,57 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 92"
+                  "description": "关键攻防属性 three_point: 94"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 94"
+                  "description": "关键攻防属性 driving_layup: 96"
                 },
                 {
                   "field": "speed",
                   "offset": 1079,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 speed: 94"
+                  "description": "关键攻防属性 speed: 95"
                 },
                 {
                   "field": "ball_control",
                   "offset": 1064,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 ball_control: 92"
+                  "description": "关键攻防属性 ball_control: 94"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 95"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 95"
                 }
               ],
               "badges": {
-                "Chef": 3,
+                "Chef": 4,
                 "Sniper": 4,
+                "DifficultShots": 4,
+                "QuickFirstStep": 4,
                 "FearlessFinisher": 4,
-                "DifficultShots": 4
+                "CircusThrees": 4
               }
             },
             {
@@ -2963,32 +3290,32 @@
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 92"
+                  "description": "关键攻防属性 pass_accuracy: 94"
                 },
                 {
                   "field": "pass_vision",
                   "offset": 1107,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 92"
+                  "description": "关键攻防属性 pass_vision: 94"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 88"
+                  "description": "关键攻防属性 three_point: 90"
                 }
               ],
               "badges": {
                 "Dimer": 4,
                 "Sniper": 3,
-                "FloaterSpecialist": 4
+                "TearDropper": 4
               }
             },
             {
@@ -3030,40 +3357,41 @@
                 {
                   "field": "interior_def",
                   "offset": 1069,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 94"
+                  "description": "关键攻防属性 interior_def: 95"
                 },
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 88"
+                  "description": "关键攻防属性 perimeter_def: 90"
                 },
                 {
                   "field": "block",
                   "offset": 1073,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 block: 92"
+                  "description": "关键攻防属性 block: 94"
                 },
                 {
                   "field": "lateral_quick",
                   "offset": 1071,
-                  "val_raw": 177,
-                  "human_val": 84,
+                  "val_raw": 183,
+                  "human_val": 86,
                   "type": "uint8",
-                  "description": "关键攻防属性 lateral_quick: 84"
+                  "description": "关键攻防属性 lateral_quick: 86"
                 }
               ],
               "badges": {
                 "RimProtector": 4,
                 "Intimidator": 4,
-                "Clamps": 3
+                "Clamps": 4,
+                "ChasedownArtist": 4
               }
             },
             {
@@ -3281,64 +3609,74 @@
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 98"
+                  "description": "关键攻防属性 pass_accuracy: 99"
                 },
                 {
                   "field": "pass_vision",
                   "offset": 1107,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 98"
+                  "description": "关键攻防属性 pass_vision: 99"
                 },
                 {
                   "field": "pass_iq",
                   "offset": 1065,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_iq: 98"
+                  "description": "关键攻防属性 pass_iq: 99"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 92"
+                  "description": "关键攻防属性 three_point: 94"
                 },
                 {
                   "field": "ball_control",
                   "offset": 1064,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 ball_control: 92"
+                  "description": "关键攻防属性 ball_control: 94"
                 },
                 {
                   "field": "dish_to_open_man",
                   "offset": 1176,
-                  "val_raw": 98,
+                  "val_raw": 99,
                   "type": "uint8",
-                  "description": "战术特征倾向 dish_to_open_man: 98"
+                  "description": "战术特征倾向 dish_to_open_man: 99"
                 },
                 {
                   "field": "spot_up_three",
                   "offset": 1139,
-                  "val_raw": 90,
+                  "val_raw": 95,
                   "type": "uint8",
-                  "description": "战术特征倾向 spot_up_three: 90"
+                  "description": "战术特征倾向 spot_up_three: 95"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 92"
                 }
               ],
               "badges": {
                 "Dimer": 4,
                 "FloorGeneral": 4,
                 "NeedleThreader": 4,
+                "BulletPasser": 4,
                 "Sniper": 4,
-                "QuickFirstStep": 3
+                "BailOut": 4,
+                "QuickFirstStep": 4,
+                "SpecialDelivery": 4
               }
             },
             {
@@ -3413,7 +3751,7 @@
               "badges": {
                 "DifficultShots": 3,
                 "FearlessFinisher": 4,
-                "FastBreakFinisher": 4
+                "FastTwitch": 4
               }
             },
             {
@@ -3701,40 +4039,55 @@
                 {
                   "field": "ball_control",
                   "offset": 1064,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 ball_control: 92"
+                  "description": "关键攻防属性 ball_control: 94"
                 },
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 92"
+                  "description": "关键攻防属性 pass_accuracy: 94"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 88"
+                  "description": "关键攻防属性 mid_range: 90"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 88"
+                  "description": "关键攻防属性 driving_layup: 90"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 92"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 dish_to_open_man: 92"
                 }
               ],
               "badges": {
-                "Dimer": 3,
-                "HandlesForDays": 3,
-                "QuickFirstStep": 3
+                "Dimer": 4,
+                "HandlesForDays": 4,
+                "QuickFirstStep": 4,
+                "DifficultShots": 3
               }
             },
             {
@@ -4065,31 +4418,47 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 92"
+                  "description": "关键攻防属性 mid_range: 94"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 88"
+                  "description": "关键攻防属性 three_point: 90"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 90"
+                  "description": "关键攻防属性 driving_layup: 92"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 92"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 92"
                 }
               ],
               "badges": {
                 "DifficultShots": 4,
-                "Sniper": 3
+                "Sniper": 4,
+                "QuickFirstStep": 4,
+                "Deadeye": 3
               }
             },
             {
@@ -4139,23 +4508,24 @@
                 {
                   "field": "block",
                   "offset": 1073,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 block: 90"
+                  "description": "关键攻防属性 block: 92"
                 },
                 {
                   "field": "interior_def",
                   "offset": 1069,
-                  "val_raw": 183,
-                  "human_val": 86,
+                  "val_raw": 189,
+                  "human_val": 88,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 86"
+                  "description": "关键攻防属性 interior_def: 88"
                 }
               ],
               "badges": {
                 "RimProtector": 4,
-                "CatchAndShoot": 3
+                "CatchAndShoot": 4,
+                "Intimidator": 3
               }
             },
             {
@@ -4436,40 +4806,57 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 92"
+                  "description": "关键攻防属性 three_point: 94"
                 },
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 96"
+                  "description": "关键攻防属性 pass_accuracy: 98"
                 },
                 {
                   "field": "pass_vision",
                   "offset": 1107,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 pass_vision: 98"
+                },
+                {
+                  "field": "ball_control",
+                  "offset": 1064,
                   "val_raw": 213,
                   "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 96"
+                  "description": "关键攻防属性 ball_control: 96"
                 },
                 {
                   "field": "dish_to_open_man",
                   "offset": 1176,
+                  "val_raw": 98,
+                  "type": "uint8",
+                  "description": "战术特征倾向 dish_to_open_man: 98"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
                   "val_raw": 96,
                   "type": "uint8",
-                  "description": "战术特征倾向 dish_to_open_man: 96"
+                  "description": "战术特征倾向 shot_three: 96"
                 }
               ],
               "badges": {
                 "Dimer": 4,
                 "Sniper": 4,
-                "Chef": 3,
-                "TearDropper": 4
+                "Chef": 4,
+                "TearDropper": 4,
+                "FloorGeneral": 4,
+                "NeedleThreader": 4
               }
             },
             {
@@ -4804,26 +5191,26 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 92"
+                  "description": "关键攻防属性 mid_range: 94"
                 },
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 216,
+                  "human_val": 97,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 96"
+                  "description": "关键攻防属性 perimeter_def: 97"
                 },
                 {
                   "field": "steal",
                   "offset": 1074,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 steal: 92"
+                  "description": "关键攻防属性 steal: 95"
                 },
                 {
                   "field": "strength",
@@ -4832,13 +5219,59 @@
                   "human_val": 88,
                   "type": "uint8",
                   "description": "关键攻防属性 strength: 88"
+                },
+                {
+                  "field": "stamina",
+                  "offset": 1084,
+                  "val_raw": 222,
+                  "human_val": 99,
+                  "type": "uint8",
+                  "description": "关键攻防属性 stamina: 99"
+                },
+                {
+                  "field": "hustle",
+                  "offset": 1085,
+                  "val_raw": 222,
+                  "human_val": 99,
+                  "type": "uint8",
+                  "description": "关键攻防属性 hustle: 99"
+                },
+                {
+                  "field": "on_ball_steal",
+                  "offset": 1206,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 on_ball_steal: 95"
+                },
+                {
+                  "field": "contest_shot",
+                  "offset": 1207,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 contest_shot: 96"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 95"
+                },
+                {
+                  "field": "post_up",
+                  "offset": 1178,
+                  "val_raw": 88,
+                  "type": "uint8",
+                  "description": "战术特征倾向 post_up: 88"
                 }
               ],
               "badges": {
                 "Clamps": 4,
                 "Menace": 4,
+                "PickPocket": 4,
                 "FearlessFinisher": 4,
-                "ClutchShooter": 4
+                "ClutchShooter": 4,
+                "DifficultShots": 4
               }
             },
             {
@@ -4880,39 +5313,40 @@
                 {
                   "field": "interior_def",
                   "offset": 1069,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 94"
+                  "description": "关键攻防属性 interior_def: 96"
                 },
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
+                  "val_raw": 195,
+                  "human_val": 90,
+                  "type": "uint8",
+                  "description": "关键攻防属性 perimeter_def: 90"
+                },
+                {
+                  "field": "lateral_quick",
+                  "offset": 1071,
                   "val_raw": 189,
                   "human_val": 88,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 88"
-                },
-                {
-                  "field": "mid_range",
-                  "offset": 1061,
-                  "val_raw": 183,
-                  "human_val": 86,
-                  "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 86"
+                  "description": "关键攻防属性 lateral_quick: 88"
                 },
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 183,
-                  "human_val": 86,
+                  "val_raw": 189,
+                  "human_val": 88,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 86"
+                  "description": "关键攻防属性 pass_accuracy: 88"
                 }
               ],
               "badges": {
                 "RimProtector": 4,
                 "Intimidator": 4,
+                "Clamps": 4,
                 "Dimer": 3
               }
             },
@@ -5182,31 +5616,45 @@
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 92"
+                  "description": "关键攻防属性 driving_layup: 94"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 183,
-                  "human_val": 86,
+                  "val_raw": 189,
+                  "human_val": 88,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 86"
+                  "description": "关键攻防属性 three_point: 88"
                 },
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 88"
+                  "description": "关键攻防属性 pass_accuracy: 90"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 94,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 94"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 dish_to_open_man: 90"
                 }
               ],
               "badges": {
-                "FearlessFinisher": 3,
-                "Sniper": 3,
+                "FearlessFinisher": 4,
+                "Sniper": 4,
                 "Dimer": 3
               }
             },
@@ -5535,47 +5983,56 @@
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 96"
+                  "description": "关键攻防属性 pass_accuracy: 98"
                 },
                 {
                   "field": "pass_vision",
                   "offset": 1107,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 96"
+                  "description": "关键攻防属性 pass_vision: 98"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 90"
+                  "description": "关键攻防属性 three_point: 92"
                 },
                 {
                   "field": "ball_control",
                   "offset": 1064,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 ball_control: 92"
+                  "description": "关键攻防属性 ball_control: 94"
                 },
                 {
                   "field": "dish_to_open_man",
                   "offset": 1176,
-                  "val_raw": 96,
+                  "val_raw": 98,
                   "type": "uint8",
-                  "description": "战术特征倾向 dish_to_open_man: 96"
+                  "description": "战术特征倾向 dish_to_open_man: 98"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 94,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 94"
                 }
               ],
               "badges": {
                 "Dimer": 4,
                 "FloorGeneral": 4,
-                "Sniper": 3
+                "SpecialDelivery": 4,
+                "BulletPasser": 4,
+                "Sniper": 4
               }
             },
             {
@@ -5908,10 +6365,10 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 90"
+                  "description": "关键攻防属性 three_point: 92"
                 },
                 {
                   "field": "mid_range",
@@ -5924,24 +6381,39 @@
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 183,
-                  "human_val": 86,
+                  "val_raw": 189,
+                  "human_val": 88,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 86"
+                  "description": "关键攻防属性 driving_layup: 88"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 171,
-                  "human_val": 82,
+                  "val_raw": 177,
+                  "human_val": 84,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 82"
+                  "description": "关键攻防属性 strength: 84"
+                },
+                {
+                  "field": "spot_up_three",
+                  "offset": 1139,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 spot_up_three: 96"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 94,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 94"
                 }
               ],
               "badges": {
                 "CatchAndShoot": 4,
                 "CornerSpecialist": 4,
-                "Sniper": 4
+                "Sniper": 4,
+                "Deadeye": 3
               }
             },
             {
@@ -6326,18 +6798,50 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 94"
+                  "description": "关键攻防属性 mid_range: 96"
+                },
+                {
+                  "field": "shot_close",
+                  "offset": 1060,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 shot_close: 98"
+                },
+                {
+                  "field": "post_hook",
+                  "offset": 1057,
+                  "val_raw": 213,
+                  "human_val": 96,
+                  "type": "uint8",
+                  "description": "关键攻防属性 post_hook: 96"
+                },
+                {
+                  "field": "post_fadeaway",
+                  "offset": 1056,
+                  "val_raw": 210,
+                  "human_val": 95,
+                  "type": "uint8",
+                  "description": "关键攻防属性 post_fadeaway: 95"
+                },
+                {
+                  "field": "post_moves",
+                  "offset": 1058,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 post_moves: 98"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 92"
+                  "description": "关键攻防属性 strength: 94"
                 },
                 {
                   "field": "dish_to_open_man",
@@ -6349,9 +6853,9 @@
                 {
                   "field": "post_up",
                   "offset": 1178,
-                  "val_raw": 92,
+                  "val_raw": 95,
                   "type": "uint8",
-                  "description": "战术特征倾向 post_up: 92"
+                  "description": "战术特征倾向 post_up: 95"
                 }
               ],
               "badges": {
@@ -6360,7 +6864,14 @@
                 "PostPlaymaker": 4,
                 "BreakStarter": 4,
                 "BulletPasser": 4,
-                "Dropstepper": 4
+                "NeedleThreader": 4,
+                "PostDropStepper": 4,
+                "BackdownPunisher": 4,
+                "DreamShake": 4,
+                "HookSpecialist": 4,
+                "Unpluckable": 4,
+                "DifficultShots": 4,
+                "ProTouch": 4
               }
             },
             {
@@ -6402,10 +6913,10 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 92"
+                  "description": "关键攻防属性 mid_range: 94"
                 },
                 {
                   "field": "three_point",
@@ -6418,16 +6929,17 @@
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 90"
+                  "description": "关键攻防属性 driving_layup: 92"
                 }
               ],
               "badges": {
                 "DifficultShots": 4,
-                "Deadeye": 3,
-                "QuickFirstStep": 3
+                "Deadeye": 4,
+                "Sniper": 4,
+                "ClutchShooter": 4
               }
             },
             {
@@ -6712,72 +7224,73 @@
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 96"
+                  "description": "关键攻防属性 driving_layup: 98"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 95"
+                  "description": "关键攻防属性 mid_range: 96"
                 },
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 88"
+                  "description": "关键攻防属性 perimeter_def: 90"
                 },
                 {
                   "field": "steal",
                   "offset": 1074,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 steal: 92"
+                  "description": "关键攻防属性 steal: 94"
                 },
                 {
                   "field": "lateral_quick",
                   "offset": 1071,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 lateral_quick: 90"
+                  "description": "关键攻防属性 lateral_quick: 92"
                 },
                 {
                   "field": "drive",
                   "offset": 1155,
-                  "val_raw": 98,
+                  "val_raw": 99,
                   "type": "uint8",
-                  "description": "战术特征倾向 drive: 98"
+                  "description": "战术特征倾向 drive: 99"
                 },
                 {
                   "field": "dish_to_open_man",
                   "offset": 1176,
-                  "val_raw": 88,
+                  "val_raw": 90,
                   "type": "uint8",
-                  "description": "战术特征倾向 dish_to_open_man: 88"
+                  "description": "战术特征倾向 dish_to_open_man: 90"
                 },
                 {
                   "field": "on_ball_steal",
                   "offset": 1206,
-                  "val_raw": 85,
+                  "val_raw": 92,
                   "type": "uint8",
-                  "description": "战术特征倾向 on_ball_steal: 85"
+                  "description": "战术特征倾向 on_ball_steal: 92"
                 }
               ],
               "badges": {
                 "DifficultShots": 4,
                 "QuickFirstStep": 4,
                 "HandlesForDays": 4,
-                "Clamps": 3,
+                "Clamps": 4,
                 "Interceptor": 4,
-                "FearlessFinisher": 4
+                "FearlessFinisher": 4,
+                "Unpluckable": 4
               }
             },
             {
@@ -7115,12 +7628,20 @@
                   "description": "持球终结出手倾向: 96 (决定真实持球得分侵略性)"
                 },
                 {
-                  "field": "driving_layup",
-                  "offset": 1055,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "field": "driving_dunk",
+                  "offset": 1078,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 96"
+                  "description": "关键攻防属性 driving_dunk: 98"
+                },
+                {
+                  "field": "vertical",
+                  "offset": 1082,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 vertical: 98"
                 },
                 {
                   "field": "three_point",
@@ -7133,62 +7654,64 @@
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 90"
+                  "description": "关键攻防属性 perimeter_def: 92"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 183,
-                  "human_val": 86,
+                  "val_raw": 189,
+                  "human_val": 88,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 86"
+                  "description": "关键攻防属性 strength: 88"
                 },
                 {
                   "field": "speed",
                   "offset": 1079,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 speed: 95"
+                  "description": "关键攻防属性 speed: 96"
                 },
                 {
                   "field": "acceleration",
                   "offset": 1081,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 acceleration: 95"
+                  "description": "关键攻防属性 acceleration: 96"
                 },
                 {
                   "field": "drive",
                   "offset": 1155,
-                  "val_raw": 96,
+                  "val_raw": 98,
                   "type": "uint8",
-                  "description": "战术特征倾向 drive: 96"
+                  "description": "战术特征倾向 drive: 98"
                 },
                 {
-                  "field": "spot_up_three",
-                  "offset": 1139,
-                  "val_raw": 88,
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 92,
                   "type": "uint8",
-                  "description": "战术特征倾向 spot_up_three: 88"
+                  "description": "战术特征倾向 shot_three: 92"
                 },
                 {
                   "field": "contest_shot",
                   "offset": 1207,
-                  "val_raw": 88,
+                  "val_raw": 90,
                   "type": "uint8",
-                  "description": "战术特征倾向 contest_shot: 88"
+                  "description": "战术特征倾向 contest_shot: 90"
                 }
               ],
               "badges": {
                 "Posterizer": 4,
+                "LimitlessTakeoff": 4,
                 "QuickFirstStep": 4,
                 "FearlessFinisher": 4,
-                "Clamps": 3
+                "Clamps": 4,
+                "Sniper": 3
               }
             },
             {
@@ -7230,31 +7753,32 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 90"
+                  "description": "关键攻防属性 three_point: 92"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 88"
+                  "description": "关键攻防属性 mid_range: 90"
                 },
                 {
-                  "field": "interior_def",
-                  "offset": 1069,
-                  "val_raw": 165,
-                  "human_val": 80,
+                  "field": "post_moves",
+                  "offset": 1058,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 80"
+                  "description": "关键攻防属性 post_moves: 90"
                 }
               ],
               "badges": {
                 "CatchAndShoot": 4,
-                "Sniper": 4
+                "Sniper": 4,
+                "Deadeye": 4
               }
             },
             {
@@ -7312,16 +7836,25 @@
                 {
                   "field": "strength",
                   "offset": 1083,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 strength: 98"
+                },
+                {
+                  "field": "def_rebound",
+                  "offset": 1068,
                   "val_raw": 213,
                   "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 96"
+                  "description": "关键攻防属性 def_rebound: 96"
                 }
               ],
               "badges": {
                 "RimProtector": 4,
                 "Intimidator": 4,
-                "BrickWall": 4
+                "BrickWall": 4,
+                "ReboundChaser": 4
               }
             },
             {
@@ -7539,10 +8072,10 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 216,
+                  "human_val": 97,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 96"
+                  "description": "关键攻防属性 three_point: 97"
                 },
                 {
                   "field": "driving_layup",
@@ -7559,13 +8092,36 @@
                   "human_val": 92,
                   "type": "uint8",
                   "description": "关键攻防属性 pass_accuracy: 92"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 98,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 98"
+                },
+                {
+                  "field": "spot_up_three",
+                  "offset": 1139,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 spot_up_three: 96"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 92"
                 }
               ],
               "badges": {
                 "Chef": 4,
                 "LimitlessSpotUp": 4,
                 "ClutchShooter": 4,
-                "Sniper": 4
+                "Sniper": 4,
+                "StopAndPop": 4,
+                "Deadeye": 4
               }
             },
             {
@@ -7902,40 +8458,71 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 216,
+                  "human_val": 97,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 96"
+                  "description": "关键攻防属性 mid_range: 97"
                 },
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 216,
-                  "human_val": 97,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 97"
+                  "description": "关键攻防属性 perimeter_def: 98"
                 },
                 {
                   "field": "steal",
                   "offset": 1074,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 steal: 92"
+                  "description": "关键攻防属性 steal: 95"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 90"
+                  "description": "关键攻防属性 strength: 92"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 96"
+                },
+                {
+                  "field": "on_ball_steal",
+                  "offset": 1206,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 on_ball_steal: 95"
+                },
+                {
+                  "field": "contest_shot",
+                  "offset": 1207,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 contest_shot: 96"
+                },
+                {
+                  "field": "post_up",
+                  "offset": 1178,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 post_up: 90"
                 }
               ],
               "badges": {
                 "Clamps": 4,
                 "DifficultShots": 4,
-                "Deadeye": 4
+                "Deadeye": 4,
+                "PickPocket": 4,
+                "Intimidator": 4,
+                "Menace": 4
               }
             },
             {
@@ -7977,32 +8564,33 @@
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 90"
+                  "description": "关键攻防属性 three_point: 92"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 90"
+                  "description": "关键攻防属性 mid_range: 92"
                 },
                 {
                   "field": "perimeter_def",
                   "offset": 1070,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 92"
+                  "description": "关键攻防属性 perimeter_def: 94"
                 }
               ],
               "badges": {
                 "Sniper": 4,
-                "Clamps": 3,
-                "DifficultShots": 3
+                "Clamps": 4,
+                "DifficultShots": 3,
+                "Deadeye": 3
               }
             },
             {
@@ -8283,40 +8871,56 @@
                 {
                   "field": "speed",
                   "offset": 1079,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 speed: 98"
+                  "description": "关键攻防属性 speed: 99"
                 },
                 {
                   "field": "acceleration",
                   "offset": 1081,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 acceleration: 98"
+                  "description": "关键攻防属性 acceleration: 99"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 92"
+                  "description": "关键攻防属性 mid_range: 94"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 94"
+                  "description": "关键攻防属性 driving_layup: 96"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 98,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 98"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 92"
                 }
               ],
               "badges": {
                 "Downhill": 4,
                 "QuickFirstStep": 4,
-                "ClutchShooter": 4
+                "ClutchShooter": 4,
+                "TearDropper": 4,
+                "FearlessFinisher": 4
               }
             },
             {
@@ -8358,54 +8962,64 @@
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 94"
+                  "description": "关键攻防属性 pass_accuracy: 95"
                 },
                 {
                   "field": "pass_vision",
                   "offset": 1107,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 94"
+                  "description": "关键攻防属性 pass_vision: 95"
                 },
                 {
                   "field": "interior_def",
                   "offset": 1069,
-                  "val_raw": 180,
-                  "human_val": 85,
+                  "val_raw": 183,
+                  "human_val": 86,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 85"
+                  "description": "关键攻防属性 interior_def: 86"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 94"
+                  "description": "关键攻防属性 strength: 95"
+                },
+                {
+                  "field": "def_rebound",
+                  "offset": 1068,
+                  "val_raw": 213,
+                  "human_val": 96,
+                  "type": "uint8",
+                  "description": "关键攻防属性 def_rebound: 96"
                 },
                 {
                   "field": "dish_to_open_man",
                   "offset": 1176,
-                  "val_raw": 95,
+                  "val_raw": 96,
                   "type": "uint8",
-                  "description": "战术特征倾向 dish_to_open_man: 95"
+                  "description": "战术特征倾向 dish_to_open_man: 96"
                 },
                 {
                   "field": "post_up",
                   "offset": 1178,
-                  "val_raw": 88,
+                  "val_raw": 90,
                   "type": "uint8",
-                  "description": "战术特征倾向 post_up: 88"
+                  "description": "战术特征倾向 post_up: 90"
                 }
               ],
               "badges": {
                 "PostPlaymaker": 4,
                 "Dimer": 4,
-                "BreakStarter": 4
+                "BreakStarter": 4,
+                "ReboundChaser": 4,
+                "BrickWall": 4
               }
             },
             {
@@ -8665,40 +9279,82 @@
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 96"
+                  "description": "关键攻防属性 pass_accuracy: 98"
                 },
                 {
                   "field": "pass_vision",
                   "offset": 1107,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 219,
+                  "human_val": 98,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 96"
+                  "description": "关键攻防属性 pass_vision: 98"
+                },
+                {
+                  "field": "pass_iq",
+                  "offset": 1065,
+                  "val_raw": 222,
+                  "human_val": 99,
+                  "type": "uint8",
+                  "description": "关键攻防属性 pass_iq: 99"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 92"
+                  "description": "关键攻防属性 strength: 94"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 95"
+                  "description": "关键攻防属性 driving_layup: 96"
+                },
+                {
+                  "field": "three_point",
+                  "offset": 1062,
+                  "val_raw": 183,
+                  "human_val": 86,
+                  "type": "uint8",
+                  "description": "关键攻防属性 three_point: 86"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 98,
+                  "type": "uint8",
+                  "description": "战术特征倾向 dish_to_open_man: 98"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 95"
+                },
+                {
+                  "field": "post_up",
+                  "offset": 1178,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 post_up: 90"
                 }
               ],
               "badges": {
                 "Dimer": 4,
                 "FloorGeneral": 4,
-                "ChasedownArtist": 4
+                "ChasedownArtist": 4,
+                "BulletPasser": 4,
+                "HandlesForDays": 4,
+                "FearlessFinisher": 4,
+                "QuickFirstStep": 4,
+                "Unpluckable": 4
               }
             },
             {
@@ -8760,11 +9416,21 @@
                   "human_val": 88,
                   "type": "uint8",
                   "description": "关键攻防属性 mid_range: 88"
+                },
+                {
+                  "field": "def_rebound",
+                  "offset": 1068,
+                  "val_raw": 210,
+                  "human_val": 95,
+                  "type": "uint8",
+                  "description": "关键攻防属性 def_rebound: 95"
                 }
               ],
               "badges": {
                 "RimProtector": 4,
-                "Intimidator": 4
+                "Intimidator": 4,
+                "ReboundChaser": 4,
+                "FastTwitch": 4
               }
             },
             {
@@ -9038,18 +9704,18 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "val_raw": 216,
+                  "human_val": 97,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 96"
+                  "description": "关键攻防属性 mid_range: 97"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 88"
+                  "description": "关键攻防属性 three_point: 90"
                 },
                 {
                   "field": "driving_layup",
@@ -9058,12 +9724,44 @@
                   "human_val": 92,
                   "type": "uint8",
                   "description": "关键攻防属性 driving_layup: 92"
+                },
+                {
+                  "field": "ball_control",
+                  "offset": 1064,
+                  "val_raw": 201,
+                  "human_val": 92,
+                  "type": "uint8",
+                  "description": "关键攻防属性 ball_control: 92"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 96"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 90"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 92"
                 }
               ],
               "badges": {
                 "DifficultShots": 4,
                 "Sniper": 4,
-                "Deadeye": 4
+                "Deadeye": 4,
+                "StopAndPop": 4,
+                "Blinders": 4,
+                "ClutchShooter": 4
               }
             },
             {
@@ -9105,32 +9803,41 @@
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 98"
+                  "description": "关键攻防属性 pass_accuracy: 99"
                 },
                 {
                   "field": "pass_vision",
                   "offset": 1107,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 98"
+                  "description": "关键攻防属性 pass_vision: 99"
                 },
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 94"
+                  "description": "关键攻防属性 mid_range: 96"
+                },
+                {
+                  "field": "ball_control",
+                  "offset": 1064,
+                  "val_raw": 213,
+                  "human_val": 96,
+                  "type": "uint8",
+                  "description": "关键攻防属性 ball_control: 96"
                 }
               ],
               "badges": {
                 "Dimer": 4,
                 "FloorGeneral": 4,
-                "NeedleThreader": 4
+                "NeedleThreader": 4,
+                "PickPocket": 4
               }
             },
             {
@@ -9396,22 +10103,6 @@
                   "description": "关键攻防属性 strength: 75"
                 },
                 {
-                  "field": "perimeter_def",
-                  "offset": 1070,
-                  "val_raw": 165,
-                  "human_val": 80,
-                  "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 80"
-                },
-                {
-                  "field": "interior_def",
-                  "offset": 1069,
-                  "val_raw": 105,
-                  "human_val": 60,
-                  "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 60"
-                },
-                {
                   "field": "stamina",
                   "offset": 1084,
                   "val_raw": 222,
@@ -9428,6 +10119,78 @@
                   "description": "关键攻防属性 three_point: 99"
                 },
                 {
+                  "field": "mid_range",
+                  "offset": 1061,
+                  "val_raw": 207,
+                  "human_val": 94,
+                  "type": "uint8",
+                  "description": "关键攻防属性 mid_range: 94"
+                },
+                {
+                  "field": "driving_layup",
+                  "offset": 1055,
+                  "val_raw": 207,
+                  "human_val": 94,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_layup: 94"
+                },
+                {
+                  "field": "ball_control",
+                  "offset": 1064,
+                  "val_raw": 216,
+                  "human_val": 97,
+                  "type": "uint8",
+                  "description": "关键攻防属性 ball_control: 97"
+                },
+                {
+                  "field": "pass_accuracy",
+                  "offset": 1066,
+                  "val_raw": 201,
+                  "human_val": 92,
+                  "type": "uint8",
+                  "description": "关键攻防属性 pass_accuracy: 92"
+                },
+                {
+                  "field": "pass_vision",
+                  "offset": 1107,
+                  "val_raw": 201,
+                  "human_val": 92,
+                  "type": "uint8",
+                  "description": "关键攻防属性 pass_vision: 92"
+                },
+                {
+                  "field": "perimeter_def",
+                  "offset": 1070,
+                  "val_raw": 165,
+                  "human_val": 80,
+                  "type": "uint8",
+                  "description": "关键攻防属性 perimeter_def: 80"
+                },
+                {
+                  "field": "steal",
+                  "offset": 1074,
+                  "val_raw": 189,
+                  "human_val": 88,
+                  "type": "uint8",
+                  "description": "关键攻防属性 steal: 88"
+                },
+                {
+                  "field": "lateral_quick",
+                  "offset": 1071,
+                  "val_raw": 171,
+                  "human_val": 82,
+                  "type": "uint8",
+                  "description": "关键攻防属性 lateral_quick: 82"
+                },
+                {
+                  "field": "hustle",
+                  "offset": 1085,
+                  "val_raw": 213,
+                  "human_val": 96,
+                  "type": "uint8",
+                  "description": "关键攻防属性 hustle: 96"
+                },
+                {
                   "field": "spot_up_three",
                   "offset": 1139,
                   "val_raw": 99,
@@ -9435,18 +10198,39 @@
                   "description": "战术特征倾向 spot_up_three: 99"
                 },
                 {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 99"
+                },
+                {
                   "field": "dish_to_open_man",
                   "offset": 1176,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 dish_to_open_man: 90"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
                   "val_raw": 88,
                   "type": "uint8",
-                  "description": "战术特征倾向 dish_to_open_man: 88"
+                  "description": "战术特征倾向 drive: 88"
                 },
                 {
                   "field": "contest_shot",
                   "offset": 1207,
-                  "val_raw": 75,
+                  "val_raw": 80,
                   "type": "uint8",
-                  "description": "战术特征倾向 contest_shot: 75"
+                  "description": "战术特征倾向 contest_shot: 80"
+                },
+                {
+                  "field": "on_ball_steal",
+                  "offset": 1206,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "战术特征倾向 on_ball_steal: 85"
                 }
               ],
               "badges": {
@@ -9456,8 +10240,19 @@
                 "Deadeye": 4,
                 "LimitlessSpotUp": 4,
                 "Sniper": 4,
+                "StopAndPop": 4,
+                "Blinders": 4,
+                "GreenMachine": 4,
+                "ClutchShooter": 4,
+                "SlipperyOffball": 4,
                 "HandlesForDays": 4,
-                "ClutchShooter": 4
+                "QuickFirstStep": 4,
+                "Unpluckable": 4,
+                "TearDropper": 4,
+                "FearlessFinisher": 4,
+                "Dimer": 3,
+                "Clamps": 3,
+                "PickPocket": 3
               }
             },
             {
@@ -9859,32 +10654,73 @@
                 {
                   "field": "speed",
                   "offset": 1079,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 speed: 98"
+                  "description": "关键攻防属性 speed: 99"
                 },
                 {
                   "field": "acceleration",
                   "offset": 1081,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 acceleration: 98"
+                  "description": "关键攻防属性 acceleration: 99"
+                },
+                {
+                  "field": "vertical",
+                  "offset": 1082,
+                  "val_raw": 222,
+                  "human_val": 99,
+                  "type": "uint8",
+                  "description": "关键攻防属性 vertical: 99"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_layup: 98"
+                },
+                {
+                  "field": "driving_dunk",
+                  "offset": 1078,
                   "val_raw": 213,
                   "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 96"
+                  "description": "关键攻防属性 driving_dunk: 96"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 99"
+                },
+                {
+                  "field": "attack_strong_on_drive",
+                  "offset": 1175,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 attack_strong_on_drive: 99"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 dish_to_open_man: 90"
                 }
               ],
               "badges": {
                 "Posterizer": 4,
+                "LimitlessTakeoff": 4,
                 "QuickFirstStep": 4,
-                "FearlessFinisher": 4
+                "Downhill": 4,
+                "TearDropper": 4,
+                "FearlessFinisher": 4,
+                "FastTwitch": 4
               }
             },
             {
@@ -9926,31 +10762,47 @@
                 {
                   "field": "block",
                   "offset": 1073,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 block: 98"
+                  "description": "关键攻防属性 block: 99"
                 },
                 {
                   "field": "interior_def",
                   "offset": 1069,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "val_raw": 210,
+                  "human_val": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 94"
+                  "description": "关键攻防属性 interior_def: 95"
                 },
                 {
                   "field": "three_point",
                   "offset": 1062,
-                  "val_raw": 171,
-                  "human_val": 82,
+                  "val_raw": 177,
+                  "human_val": 84,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 82"
+                  "description": "关键攻防属性 three_point: 84"
+                },
+                {
+                  "field": "block_shot",
+                  "offset": 1208,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 block_shot: 99"
+                },
+                {
+                  "field": "contest_shot",
+                  "offset": 1207,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 contest_shot: 96"
                 }
               ],
               "badges": {
                 "RimProtector": 4,
-                "Intimidator": 4
+                "Intimidator": 4,
+                "ChasedownArtist": 4,
+                "Clamps": 3
               }
             },
             {
@@ -10221,18 +11073,26 @@
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 98"
+                  "description": "关键攻防属性 driving_layup: 99"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 98"
+                  "description": "关键攻防属性 strength: 99"
+                },
+                {
+                  "field": "vertical",
+                  "offset": 1082,
+                  "val_raw": 213,
+                  "human_val": 96,
+                  "type": "uint8",
+                  "description": "关键攻防属性 vertical: 96"
                 },
                 {
                   "field": "speed",
@@ -10241,12 +11101,35 @@
                   "human_val": 88,
                   "type": "uint8",
                   "description": "关键攻防属性 speed: 88"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 99"
+                },
+                {
+                  "field": "post_up",
+                  "offset": 1178,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 post_up: 90"
+                },
+                {
+                  "field": "attack_strong_on_drive",
+                  "offset": 1175,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 attack_strong_on_drive: 99"
                 }
               ],
               "badges": {
-                "Bully": 4,
+                "BackdownPunisher": 4,
                 "Posterizer": 4,
-                "FearlessFinisher": 4
+                "FearlessFinisher": 4,
+                "FastTwitch": 4,
+                "Downhill": 4
               }
             },
             {
@@ -10288,31 +11171,32 @@
                 {
                   "field": "mid_range",
                   "offset": 1061,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "val_raw": 213,
+                  "human_val": 96,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 95"
+                  "description": "关键攻防属性 mid_range: 96"
                 },
                 {
                   "field": "driving_layup",
                   "offset": 1055,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "val_raw": 201,
+                  "human_val": 92,
                   "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 90"
+                  "description": "关键攻防属性 driving_layup: 92"
                 },
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 189,
-                  "human_val": 88,
+                  "val_raw": 195,
+                  "human_val": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 88"
+                  "description": "关键攻防属性 pass_accuracy: 90"
                 }
               ],
               "badges": {
                 "DifficultShots": 4,
-                "Deadeye": 4
+                "Deadeye": 4,
+                "Sniper": 4
               }
             },
             {
@@ -10594,6 +11478,14 @@
                   "description": "持球终结出手倾向: 98 (决定真实持球得分侵略性)"
                 },
                 {
+                  "field": "ball_control",
+                  "offset": 1064,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 ball_control: 98"
+                },
+                {
                   "field": "pass_accuracy",
                   "offset": 1066,
                   "val_raw": 222,
@@ -10610,12 +11502,36 @@
                   "description": "关键攻防属性 pass_vision: 99"
                 },
                 {
-                  "field": "ball_control",
-                  "offset": 1064,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "field": "pass_iq",
+                  "offset": 1065,
+                  "val_raw": 222,
+                  "human_val": 99,
                   "type": "uint8",
-                  "description": "关键攻防属性 ball_control: 98"
+                  "description": "关键攻防属性 pass_iq: 99"
+                },
+                {
+                  "field": "three_point",
+                  "offset": 1062,
+                  "val_raw": 195,
+                  "human_val": 90,
+                  "type": "uint8",
+                  "description": "关键攻防属性 three_point: 90"
+                },
+                {
+                  "field": "mid_range",
+                  "offset": 1061,
+                  "val_raw": 201,
+                  "human_val": 92,
+                  "type": "uint8",
+                  "description": "关键攻防属性 mid_range: 92"
+                },
+                {
+                  "field": "driving_layup",
+                  "offset": 1055,
+                  "val_raw": 207,
+                  "human_val": 94,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_layup: 94"
                 },
                 {
                   "field": "strength",
@@ -10624,13 +11540,57 @@
                   "human_val": 90,
                   "type": "uint8",
                   "description": "关键攻防属性 strength: 90"
+                },
+                {
+                  "field": "post_moves",
+                  "offset": 1058,
+                  "val_raw": 201,
+                  "human_val": 92,
+                  "type": "uint8",
+                  "description": "关键攻防属性 post_moves: 92"
+                },
+                {
+                  "field": "drive",
+                  "offset": 1155,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 drive: 96"
+                },
+                {
+                  "field": "post_up",
+                  "offset": 1178,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 post_up: 90"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 96,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 96"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "战术特征倾向 dish_to_open_man: 99"
                 }
               ],
               "badges": {
                 "Dimer": 4,
                 "FloorGeneral": 4,
                 "HandlesForDays": 4,
-                "Deadeye": 4
+                "SpaceCreator": 4,
+                "Deadeye": 4,
+                "DifficultShots": 4,
+                "Sniper": 4,
+                "NeedleThreader": 4,
+                "BulletPasser": 4,
+                "Unpluckable": 4,
+                "ClutchShooter": 4,
+                "BailOut": 4
               }
             },
             {
@@ -10919,72 +11879,6 @@
           ],
           "player_writes": [
             {
-              "player_name": "Jalen Green",
-              "roster_index": 1,
-              "cyberface_id": 8053,
-              "tactical_playbook": {
-                "is_play_initiator": 1,
-                "play_types": [
-                  1,
-                  4,
-                  15,
-                  11
-                ]
-              },
-              "modifications": [
-                {
-                  "field": "intangibles",
-                  "offset": 1088,
-                  "val_raw": 207,
-                  "human_val": 94,
-                  "type": "uint8",
-                  "description": "无形资产设定: 94 (控制轮换地位与AI上场时间)"
-                },
-                {
-                  "field": "touches",
-                  "offset": 1177,
-                  "val_raw": 94,
-                  "type": "uint8",
-                  "description": "触球呼叫倾向: 94 (决定战术发起比率)"
-                },
-                {
-                  "field": "shot",
-                  "offset": 1112,
-                  "val_raw": 95,
-                  "type": "uint8",
-                  "description": "持球终结出手倾向: 95 (决定真实持球得分侵略性)"
-                },
-                {
-                  "field": "speed",
-                  "offset": 1079,
-                  "val_raw": 213,
-                  "human_val": 96,
-                  "type": "uint8",
-                  "description": "关键攻防属性 speed: 96"
-                },
-                {
-                  "field": "driving_layup",
-                  "offset": 1055,
-                  "val_raw": 201,
-                  "human_val": 92,
-                  "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 92"
-                },
-                {
-                  "field": "three_point",
-                  "offset": 1062,
-                  "val_raw": 189,
-                  "human_val": 88,
-                  "type": "uint8",
-                  "description": "关键攻防属性 three_point: 88"
-                }
-              ],
-              "badges": {
-                "QuickFirstStep": 4,
-                "Posterizer": 3
-              }
-            },
-            {
               "player_name": "Alperen Sengun",
               "roster_index": 5,
               "cyberface_id": 9908,
@@ -11023,54 +11917,140 @@
                 {
                   "field": "pass_accuracy",
                   "offset": 1066,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "val_raw": 207,
+                  "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_accuracy: 92"
+                  "description": "关键攻防属性 pass_accuracy: 94"
                 },
                 {
                   "field": "pass_vision",
                   "offset": 1107,
+                  "val_raw": 210,
+                  "human_val": 95,
+                  "type": "uint8",
+                  "description": "关键攻防属性 pass_vision: 95"
+                },
+                {
+                  "field": "post_moves",
+                  "offset": 1058,
                   "val_raw": 207,
                   "human_val": 94,
                   "type": "uint8",
-                  "description": "关键攻防属性 pass_vision: 94"
+                  "description": "关键攻防属性 post_moves: 94"
                 },
                 {
                   "field": "interior_def",
                   "offset": 1069,
-                  "val_raw": 177,
-                  "human_val": 84,
+                  "val_raw": 183,
+                  "human_val": 86,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 84"
+                  "description": "关键攻防属性 interior_def: 86"
                 },
                 {
                   "field": "strength",
                   "offset": 1083,
-                  "val_raw": 183,
-                  "human_val": 86,
+                  "val_raw": 189,
+                  "human_val": 88,
                   "type": "uint8",
-                  "description": "关键攻防属性 strength: 86"
+                  "description": "关键攻防属性 strength: 88"
                 },
                 {
                   "field": "dish_to_open_man",
                   "offset": 1176,
-                  "val_raw": 95,
+                  "val_raw": 96,
                   "type": "uint8",
-                  "description": "战术特征倾向 dish_to_open_man: 95"
+                  "description": "战术特征倾向 dish_to_open_man: 96"
                 },
                 {
                   "field": "post_up",
                   "offset": 1178,
-                  "val_raw": 90,
+                  "val_raw": 92,
                   "type": "uint8",
-                  "description": "战术特征倾向 post_up: 90"
+                  "description": "战术特征倾向 post_up: 92"
                 }
               ],
               "badges": {
                 "PostPlaymaker": 4,
                 "Dimer": 4,
-                "Dropstepper": 3
+                "DreamShake": 4,
+                "PostDropStepper": 4,
+                "BreakStarter": 3
+              }
+            },
+            {
+              "player_name": "Jalen Green",
+              "roster_index": 1,
+              "cyberface_id": 8053,
+              "tactical_playbook": {
+                "is_play_initiator": 1,
+                "play_types": [
+                  1,
+                  4,
+                  15,
+                  11
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "intangibles",
+                  "offset": 1088,
+                  "val_raw": 207,
+                  "human_val": 94,
+                  "type": "uint8",
+                  "description": "无形资产设定: 94 (控制轮换地位与AI上场时间)"
+                },
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 94,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 94 (决定战术发起比率)"
+                },
+                {
+                  "field": "shot",
+                  "offset": 1112,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "持球终结出手倾向: 95 (决定真实持球得分侵略性)"
+                },
+                {
+                  "field": "speed",
+                  "offset": 1079,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 speed: 98"
+                },
+                {
+                  "field": "acceleration",
+                  "offset": 1081,
+                  "val_raw": 219,
+                  "human_val": 98,
+                  "type": "uint8",
+                  "description": "关键攻防属性 acceleration: 98"
+                },
+                {
+                  "field": "driving_dunk",
+                  "offset": 1078,
+                  "val_raw": 207,
+                  "human_val": 94,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_dunk: 94"
+                },
+                {
+                  "field": "three_point",
+                  "offset": 1062,
+                  "val_raw": 189,
+                  "human_val": 88,
+                  "type": "uint8",
+                  "description": "关键攻防属性 three_point: 88"
+                }
+              ],
+              "badges": {
+                "Posterizer": 4,
+                "QuickFirstStep": 4,
+                "Downhill": 4,
+                "LimitlessTakeoff": 4
               }
             },
             {
@@ -11294,6 +12274,87 @@
           ],
           "player_writes": [
             {
+              "player_name": "Devin Vassell",
+              "roster_index": 5,
+              "cyberface_id": 8003,
+              "tactical_playbook": {
+                "is_play_initiator": 1,
+                "play_types": [
+                  4,
+                  14,
+                  15,
+                  1
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "intangibles",
+                  "offset": 1088,
+                  "val_raw": 201,
+                  "human_val": 92,
+                  "type": "uint8",
+                  "description": "无形资产设定: 92 (控制轮换地位与AI上场时间)"
+                },
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 90 (决定战术发起比率)"
+                },
+                {
+                  "field": "shot",
+                  "offset": 1112,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "持球终结出手倾向: 92 (决定真实持球得分侵略性)"
+                },
+                {
+                  "field": "mid_range",
+                  "offset": 1061,
+                  "val_raw": 207,
+                  "human_val": 94,
+                  "type": "uint8",
+                  "description": "关键攻防属性 mid_range: 94"
+                },
+                {
+                  "field": "three_point",
+                  "offset": 1062,
+                  "val_raw": 195,
+                  "human_val": 90,
+                  "type": "uint8",
+                  "description": "关键攻防属性 three_point: 90"
+                },
+                {
+                  "field": "driving_layup",
+                  "offset": 1055,
+                  "val_raw": 189,
+                  "human_val": 88,
+                  "type": "uint8",
+                  "description": "关键攻防属性 driving_layup: 88"
+                },
+                {
+                  "field": "shot_mid_range",
+                  "offset": 1130,
+                  "val_raw": 92,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_mid_range: 92"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1138,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术特征倾向 shot_three: 90"
+                }
+              ],
+              "badges": {
+                "DifficultShots": 4,
+                "Sniper": 4,
+                "Deadeye": 3
+              }
+            },
+            {
               "player_name": "Keldon Johnson",
               "roster_index": 0,
               "cyberface_id": 7848,
@@ -11356,64 +12417,6 @@
               ],
               "badges": {
                 "FearlessFinisher": 3
-              }
-            },
-            {
-              "player_name": "Devin Vassell",
-              "roster_index": 5,
-              "cyberface_id": 8003,
-              "tactical_playbook": {
-                "is_play_initiator": 1,
-                "play_types": [
-                  4,
-                  14,
-                  15,
-                  1
-                ]
-              },
-              "modifications": [
-                {
-                  "field": "intangibles",
-                  "offset": 1088,
-                  "val_raw": 201,
-                  "human_val": 92,
-                  "type": "uint8",
-                  "description": "无形资产设定: 92 (控制轮换地位与AI上场时间)"
-                },
-                {
-                  "field": "touches",
-                  "offset": 1177,
-                  "val_raw": 90,
-                  "type": "uint8",
-                  "description": "触球呼叫倾向: 90 (决定战术发起比率)"
-                },
-                {
-                  "field": "shot",
-                  "offset": 1112,
-                  "val_raw": 92,
-                  "type": "uint8",
-                  "description": "持球终结出手倾向: 92 (决定真实持球得分侵略性)"
-                },
-                {
-                  "field": "mid_range",
-                  "offset": 1061,
-                  "val_raw": 201,
-                  "human_val": 92,
-                  "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 92"
-                },
-                {
-                  "field": "three_point",
-                  "offset": 1062,
-                  "val_raw": 189,
-                  "human_val": 88,
-                  "type": "uint8",
-                  "description": "关键攻防属性 three_point: 88"
-                }
-              ],
-              "badges": {
-                "DifficultShots": 3,
-                "Sniper": 3
               }
             },
             {

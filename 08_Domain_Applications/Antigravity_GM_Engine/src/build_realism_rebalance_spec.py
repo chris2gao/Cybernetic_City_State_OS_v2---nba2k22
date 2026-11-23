@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-NBA 2K22 30 支球队核心五虎现实化与标志性 DNA 重构规格书构建器 (v2.0 全维通用规范 - 真实交易后完整 30 队版)
-(Build 30-Team Top 5 Realism & Signature DNA Rebalance Spec v2.0 - Post-Trades Edition)
+NBA 2K22 30 支球队核心五虎现实化与标志性 DNA 重构规格书构建器 (v2.0 全维通用规范 - 2022~2026 核心巨星深度现实化校准版)
+(Build 30-Team Top 5 Realism & Signature DNA Rebalance Spec v2.0 - 2022-2026 Core Calibration Edition)
 
 目标：
-1. 覆盖全联盟 30 支球队真实交易名单后的全部 Top 5 核心球员 (共 150 名球员 100% 定制)；
-2. 深度融入现实爆发与换队巨星（哈利伯顿、西亚卡姆、布伦森、米切尔、戈贝尔、萨博尼斯、哈登、西蒙斯、波尔津吉斯、怀特、布罗格登、马尔卡宁、穆雷、格兰特、麦科勒姆、伍德、丁威迪、鲍威尔、申京、爱德华兹、SGA、马克西、小瓦格纳等）；
-3. 彻底修复原生 2K 对历史巨星与现代打法的偏见（如库里力量 75、无球跑位体系、大个子策应与空间属性等）；
-4. 严格执行“球权双核铁律”：触球倾向 (touches at 1177) 与出手倾向 (shot at 1112) 双驱绑定，实现战术发起与个人终结权重的精准分配；
-5. 严格遵循《NBA 2K22 全维度战术、教练与球员资产 REA Native 批量注入标准接口协议 (v2.0)》；
-6. 输出至 C:\\nba2k22\\exports\\cycle_02_30_teams_realism_execution_ready.json 及仓内归档目录。
+1. 聚焦 30 支球队绝对核心（如勇士库里、掘金约基奇、独行侠东契奇、雄鹿字母哥、凯尔特人塔图姆、76人恩比德等），深度注入 2022 夺冠/巅峰打法与 2026 成长轨迹；
+2. 彻底重构库里 FMVP 标志性特征：增肌至力量 75、体能 99、无球掩护反跑 (Cutter 11) + 追梦手递手 (Handoff 12) + 跑位三分 (3PT 15) + 决胜挡拆 (PnR 4)；
+3. 严格执行“球权双核铁律”：触球倾向 (touches at 1177) 与出手倾向 (shot at 1112) 双驱绑定；
+4. 修正并扩充 29 项攻防属性、29 项战术倾向与 80 项技能等级徽章（100% 匹配底层二进制字典与位域）；
+5. 输出至 C:\\nba2k22\\exports\\cycle_02_30_teams_realism_execution_ready.json 及仓内归档目录。
 """
 
 import os
@@ -57,65 +56,35 @@ DIVISIONS = {
 def get_team_tactical_profile(team_id: int) -> Dict[str, Any]:
     """返回球队默认战术系统、轮换与攻防重点"""
     profiles = {
-        # 0: PHI 恩比德哈登内外挡拆低位
         0: {"active_system": 4, "bench_depth": 9, "bench_utilization": 50, "run_play": 82, "poe_offense": 3, "poe_tempo": 7, "poe_defense": 13},
-        # 1: MIL 字母哥冲击与射手空间
         1: {"active_system": 0, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 1, "poe_tempo": 9, "poe_defense": 13},
-        # 2: WAS 波神比尔高炮台挡拆
         2: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13},
-        # 3: CHI 德罗赞中距离与拉文反击
         3: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13},
-        # 4: CLE 双塔护筐与米切尔加兰后场双枪
         4: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 84, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13},
-        # 5: BOS 双探花五外攻防一体与怀特布罗格登深度
         5: {"active_system": 0, "bench_depth": 10, "bench_utilization": 52, "run_play": 85, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 15},
-        # 6: LAC 小卡乔治鲍威尔三巨头锋线单打
         6: {"active_system": 2, "bench_depth": 10, "bench_utilization": 52, "run_play": 82, "poe_offense": 4, "poe_tempo": 7, "poe_defense": 15},
-        # 8: MEM 莫兰特暴力冲击与小贾伦DPOY防守
         8: {"active_system": 2, "bench_depth": 10, "bench_utilization": 52, "run_play": 80, "poe_offense": 1, "poe_tempo": 9, "poe_defense": 13},
-        # 9: ATL 特雷杨穆雷双持球发起
         9: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 82, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13},
-        # 10: MIA 巴特勒阿德巴约强硬防守与强侧手递手
         10: {"active_system": 5, "bench_depth": 9, "bench_utilization": 52, "run_play": 85, "poe_offense": 4, "poe_tempo": 7, "poe_defense": 18},
-        # 11: NOP 锡安英格拉姆麦科勒姆进攻狂潮
         11: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 82, "poe_offense": 1, "poe_tempo": 8, "poe_defense": 13},
-        # 12: UTA 马尔卡宁高炮台与塞克斯顿冲击
         12: {"active_system": 0, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 2, "poe_tempo": 8, "poe_defense": 13},
-        # 13: SAC 福克斯萨博尼斯现代普林斯顿手递手体系
         13: {"active_system": 0, "bench_depth": 9, "bench_utilization": 50, "run_play": 85, "poe_offense": 2, "poe_tempo": 9, "poe_defense": 13},
-        # 14: NYK 布伦森持球大核与锡伯杜铁血阵地
         14: {"active_system": 2, "bench_depth": 9, "bench_utilization": 48, "run_play": 85, "poe_offense": 4, "poe_tempo": 7, "poe_defense": 13},
-        # 15: LAL 詹眉挡拆与里夫斯创造力
         15: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 82, "poe_offense": 1, "poe_tempo": 8, "poe_defense": 13},
-        # 16: ORL 小瓦格纳高大组织与萨格斯外线铁闸
         16: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13},
-        # 17: DAL 东契奇极度持球与伍德丁威迪空间
         17: {"active_system": 0, "bench_depth": 9, "bench_utilization": 50, "run_play": 82, "poe_offense": 4, "poe_tempo": 7, "poe_defense": 13},
-        # 18: BKN KD欧文无解单打与西蒙斯串联
         18: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 15},
-        # 19: DEN 约基奇穆雷高低位轴心
         19: {"active_system": 4, "bench_depth": 9, "bench_utilization": 50, "run_play": 85, "poe_offense": 3, "poe_tempo": 7, "poe_defense": 13},
-        # 20: IND 哈利伯顿控球之神与西亚卡姆特纳全能空间
         20: {"active_system": 0, "bench_depth": 10, "bench_utilization": 54, "run_play": 86, "poe_offense": 2, "poe_tempo": 9, "poe_defense": 15},
-        # 21: DET 坎宁安大控卫挡拆
         21: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13},
-        # 22: TOR 斯科蒂巴恩斯全能锋线群
         22: {"active_system": 0, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 15},
-        # 23: HOU 申京轴心与杰伦格林冲击
         23: {"active_system": 4, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 3, "poe_tempo": 8, "poe_defense": 13},
-        # 24: OKC SGA中距离与多特死亡缠绕
         24: {"active_system": 0, "bench_depth": 10, "bench_utilization": 52, "run_play": 82, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 15},
-        # 25: SAS 凯尔登瓦塞尔青年军
         25: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13},
-        # 26: PHX 保罗布克中距离挡拆
         26: {"active_system": 2, "bench_depth": 9, "bench_utilization": 50, "run_play": 85, "poe_offense": 4, "poe_tempo": 7, "poe_defense": 15},
-        # 27: MIN 爱德华兹戈贝尔双塔攻防
         27: {"active_system": 4, "bench_depth": 9, "bench_utilization": 50, "run_play": 82, "poe_offense": 1, "poe_tempo": 8, "poe_defense": 13},
-        # 28: POR 利拉德超远三分与格兰特侧翼
         28: {"active_system": 0, "bench_depth": 9, "bench_utilization": 50, "run_play": 82, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13},
-        # 29: GSW 传切空间流与水花库里跑位
         29: {"active_system": 0, "bench_depth": 10, "bench_utilization": 54, "run_play": 88, "poe_offense": 2, "poe_tempo": 9, "poe_defense": 15},
-        # 31: CHA 三球快攻轰炸与布里奇斯
         31: {"active_system": 0, "bench_depth": 9, "bench_utilization": 52, "run_play": 80, "poe_offense": 2, "poe_tempo": 9, "poe_defense": 13}
     }
     default_cfg = {"active_system": 6, "bench_depth": 9, "bench_utilization": 50, "run_play": 80, "poe_offense": 4, "poe_tempo": 8, "poe_defense": 13}
@@ -126,7 +95,7 @@ def make_player_entry(name: str, slot: int, face: int, initiator: int, play_type
                       extra_attrs: Dict[str, int] = None,
                       extra_tends: Dict[str, int] = None,
                       badges: Dict[str, int] = None) -> Dict[str, Any]:
-    """标准化生成单一球员 v2.0 规格项"""
+    """标准化生成单一球员 v2.0 规格项 (扩展全量物理字典)"""
     attr_offsets = {
         "intangibles": 1088,
         "three_point": 1062,
@@ -145,8 +114,16 @@ def make_player_entry(name: str, slot: int, face: int, initiator: int, play_type
         "strength": 1083,
         "speed": 1079,
         "acceleration": 1081,
+        "vertical": 1082,
         "stamina": 1084,
-        "hustle": 1085
+        "hustle": 1085,
+        "driving_dunk": 1078,
+        "standing_dunk": 1077,
+        "post_hook": 1057,
+        "post_fadeaway": 1056,
+        "post_moves": 1058,
+        "def_rebound": 1068,
+        "off_rebound": 1067
     }
     tend_offsets = {
         "touches": 1177,
@@ -155,10 +132,14 @@ def make_player_entry(name: str, slot: int, face: int, initiator: int, play_type
         "dish_to_open_man": 1176,
         "shot_three": 1138,
         "spot_up_three": 1139,
+        "shot_mid_range": 1130,
+        "shot_close": 1126,
         "post_up": 1178,
         "contest_shot": 1207,
         "block_shot": 1208,
-        "on_ball_steal": 1206
+        "on_ball_steal": 1206,
+        "pass_interception": 1204,
+        "attack_strong_on_drive": 1175
     }
 
     mods = [
@@ -222,38 +203,38 @@ def make_player_entry(name: str, slot: int, face: int, initiator: int, play_type
     }
 
 def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict[str, Any]]:
-    """根据真实联盟战力和赋能目标构建每支球队核心五虎 (全联盟 30 队 100% 定制)"""
+    """根据真实联盟战力和赋能目标构建每支球队核心五虎 (全联盟 30 队核心深度现实化校准)"""
     writes = []
 
     # ==================== BATCH 01: ATLANTIC ====================
     # 0: PHI (Philadelphia 76ers)
     if team_id == 0:
-        # 恩比德 Joel Embiid (Slot 2, Face 4090)
+        # 乔尔·恩比德 Joel Embiid (Slot 2, Face 4090) - 2022 得分王中锋 (30.6 PPG)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[8, 1, 7, 4], # Post Low, Iso, PnR Roll, PnR Handler
-            intangibles=99, touches=96, shot=95,
-            extra_attrs={"interior_def": 94, "block": 92, "mid_range": 92, "strength": 96},
-            extra_tends={"post_up": 95, "contest_shot": 92},
-            badges={"BackdownPunisher": 4, "Dropstepper": 4, "RimProtector": 4, "Intimidator": 4}
+            intangibles=99, touches=96, shot=96,
+            extra_attrs={"interior_def": 95, "block": 94, "mid_range": 94, "strength": 98, "post_moves": 96, "post_fadeaway": 95, "def_rebound": 95},
+            extra_tends={"post_up": 96, "shot_mid_range": 92, "contest_shot": 95, "block_shot": 92},
+            badges={"BackdownPunisher": 4, "PostDropStepper": 4, "RimProtector": 4, "Intimidator": 4, "DifficultShots": 4, "Deadeye": 4, "DreamShake": 4, "HookSpecialist": 4}
         ))
-        # 哈登 James Harden (Slot 12, Face 1603)
+        # 詹姆斯·哈登 James Harden (Slot 12, Face 1603)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=1,
-            play_types=[4, 1, 15, 0], # PnR, Iso, 3PT
+            play_types=[4, 1, 15, 0],
             intangibles=96, touches=92, shot=88,
-            extra_attrs={"pass_accuracy": 96, "pass_vision": 96, "ball_control": 95},
-            extra_tends={"dish_to_open_man": 96, "drive": 90},
-            badges={"Dimer": 4, "FloorGeneral": 4, "HandlesForDays": 4, "Deadeye": 3}
+            extra_attrs={"pass_accuracy": 96, "pass_vision": 96, "ball_control": 95, "three_point": 88},
+            extra_tends={"dish_to_open_man": 96, "drive": 90, "shot_three": 90},
+            badges={"Dimer": 4, "FloorGeneral": 4, "HandlesForDays": 4, "Deadeye": 3, "SpaceCreator": 4, "StopAndPop": 4}
         ))
-        # 马克西 Tyrese Maxey (Slot 5, Face 8011) - 极速爆发超巨
+        # 泰雷斯·马克西 Tyrese Maxey (Slot 5, Face 8011) - 极速爆发超巨
         writes.append(make_player_entry(
             name=roster[5][0], slot=5, face=roster[5][1], initiator=1,
             play_types=[4, 1, 15, 11],
             intangibles=95, touches=90, shot=90,
-            extra_attrs={"speed": 98, "acceleration": 98, "three_point": 91, "driving_layup": 92, "ball_control": 90},
+            extra_attrs={"speed": 98, "acceleration": 98, "three_point": 92, "driving_layup": 94, "ball_control": 90},
             extra_tends={"drive": 95, "spot_up_three": 90},
-            badges={"QuickFirstStep": 4, "Downhill": 4, "Sniper": 4, "Chef": 3, "FearlessFinisher": 3}
+            badges={"QuickFirstStep": 4, "Downhill": 4, "Sniper": 4, "Chef": 3, "FearlessFinisher": 4}
         ))
         # 托比亚斯·哈里斯 (Slot 1, Face 2149)
         writes.append(make_player_entry(
@@ -262,7 +243,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             intangibles=85, touches=78, shot=80,
             extra_attrs={"mid_range": 86, "three_point": 82}
         ))
-        # 塞布尔 Matisse Thybulle (Slot 3, Face 7839)
+        # 马蒂斯·塞布尔 Matisse Thybulle (Slot 3, Face 7839)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=0,
             play_types=[11, 15, 0, 0],
@@ -274,39 +255,40 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 5: BOS (Boston Celtics)
     elif team_id == 5:
-        # 塔图姆 Jayson Tatum (Slot 3, Face 7504)
+        # 杰森·塔图姆 Jayson Tatum (Slot 3, Face 7504) - 2022 总决赛领袖 / 最佳一阵
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[1, 4, 15, 14],
             intangibles=99, touches=96, shot=96,
-            extra_attrs={"three_point": 90, "mid_range": 90, "perimeter_def": 88},
-            badges={"Deadeye": 4, "Sniper": 4, "DifficultShots": 3, "Clamps": 3}
+            extra_attrs={"three_point": 92, "mid_range": 92, "driving_layup": 92, "perimeter_def": 92, "lateral_quick": 90, "ball_control": 90},
+            extra_tends={"shot_three": 92, "spot_up_three": 92, "drive": 92, "contest_shot": 88},
+            badges={"Deadeye": 4, "Sniper": 4, "DifficultShots": 4, "Clamps": 4, "Blinders": 4, "CatchAndShoot": 4, "HandlesForDays": 3}
         ))
-        # 布朗 Jaylen Brown (Slot 2, Face 7206)
+        # 杰伦·布朗 Jaylen Brown (Slot 2, Face 7206)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[1, 4, 11, 15],
             intangibles=96, touches=92, shot=94,
-            extra_attrs={"driving_layup": 92, "three_point": 86, "perimeter_def": 88},
-            badges={"Posterizer": 4, "Clamps": 3, "FearlessFinisher": 4}
+            extra_attrs={"driving_dunk": 95, "driving_layup": 94, "three_point": 86, "perimeter_def": 90},
+            badges={"Posterizer": 4, "Clamps": 4, "FearlessFinisher": 4, "FastTwitch": 4}
         ))
-        # 斯玛特 Marcus Smart (Slot 1, Face 4092)
+        # 马库斯·斯玛特 Marcus Smart (Slot 1, Face 4092) - 2022 DPOY 最佳防守球员
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[4, 12, 15, 0],
             intangibles=92, touches=80, shot=75,
-            extra_attrs={"perimeter_def": 96, "steal": 92, "lateral_quick": 94},
-            badges={"Clamps": 4, "Menace": 4, "DefensiveLeader": 4}
+            extra_attrs={"perimeter_def": 96, "steal": 94, "lateral_quick": 94},
+            badges={"Clamps": 4, "Menace": 4, "DefensiveLeader": 4, "PickPocket": 4}
         ))
-        # 怀特 Derrick White (Slot 11, Face 7536) - 攻防一体核心粘合剂
+        # 德里克·怀特 Derrick White (Slot 11, Face 7536)
         writes.append(make_player_entry(
             name=roster[11][0], slot=11, face=roster[11][1], initiator=1,
             play_types=[4, 15, 11, 12],
             intangibles=92, touches=82, shot=82,
             extra_attrs={"three_point": 88, "perimeter_def": 92, "pass_accuracy": 88},
-            badges={"Clamps": 4, "CatchAndShoot": 3, "Sniper": 3}
+            badges={"Clamps": 4, "CatchAndShoot": 4, "Sniper": 3}
         ))
-        # 布罗格登 Malcolm Brogdon (Slot 12, Face 7239) - 超级第六人
+        # 马尔科姆·布罗格登 Malcolm Brogdon (Slot 12, Face 7239)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=1,
             play_types=[4, 15, 1, 14],
@@ -317,24 +299,24 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 14: NYK (New York Knicks)
     elif team_id == 14:
-        # 布伦森 Jalen Brunson (Slot 14, Face 7732) - 2026 纽约大头最佳阵容一阵超巨！
+        # 加伦·布伦森 Jalen Brunson (Slot 14, Face 7732) - 2026 纽约大头最佳阵容一阵超巨！
         writes.append(make_player_entry(
             name=roster[14][0], slot=14, face=roster[14][1], initiator=1,
             play_types=[4, 1, 8, 14], # PnR, Iso, Post Low, Mid-Range
             intangibles=98, touches=96, shot=95,
-            extra_attrs={"ball_control": 95, "mid_range": 95, "three_point": 88, "driving_layup": 95, "pass_accuracy": 92, "strength": 78},
-            extra_tends={"drive": 95, "post_up": 85, "dish_to_open_man": 88},
+            extra_attrs={"ball_control": 95, "mid_range": 96, "three_point": 90, "driving_layup": 96, "pass_accuracy": 92, "strength": 78, "post_moves": 92},
+            extra_tends={"drive": 96, "post_up": 90, "shot_mid_range": 95, "dish_to_open_man": 88},
             badges={"DifficultShots": 4, "FearlessFinisher": 4, "TearDropper": 4, "HandlesForDays": 4, "ClutchShooter": 4, "QuickFirstStep": 4}
         ))
-        # 兰德尔 Julius Randle (Slot 3, Face 4094)
+        # 朱利叶斯·兰德尔 Julius Randle (Slot 3, Face 4094)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[8, 1, 4, 15],
             intangibles=92, touches=90, shot=90,
             extra_attrs={"strength": 92, "driving_layup": 88, "mid_range": 86, "three_point": 82},
-            badges={"BackdownPunisher": 3, "Dropstepper": 3}
+            badges={"BackdownPunisher": 3, "PostDropStepper": 3}
         ))
-        # 巴雷特 R.J. Barrett (Slot 2, Face 7822)
+        # R.J. 巴雷特 R.J. Barrett (Slot 2, Face 7822)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[11, 4, 15, 1],
@@ -349,34 +331,35 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"interior_def": 90, "block": 94},
             badges={"RimProtector": 4, "Intimidator": 4}
         ))
-        # 奎克利 Immanuel Quickley (Slot 7, Face 8014)
+        # 伊曼纽尔·奎克利 Immanuel Quickley (Slot 7, Face 8014)
         writes.append(make_player_entry(
             name=roster[7][0], slot=7, face=roster[7][1], initiator=1,
             play_types=[4, 15, 1, 14],
             intangibles=88, touches=82, shot=84,
             extra_attrs={"three_point": 88, "speed": 92, "driving_layup": 88},
-            badges={"TearDropper": 3, "Sniper": 3}
+            badges={"TearDropper": 4, "Sniper": 3}
         ))
 
     # 18: BKN (Brooklyn Nets)
     elif team_id == 18:
-        # 杜兰特 Kevin Durant (Slot 2, Face 1411)
+        # 凯文·杜兰特 Kevin Durant (Slot 2, Face 1411) - 2022 极度高效无解死神 (29.9 PPG)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[1, 14, 15, 4],
             intangibles=99, touches=98, shot=98,
-            extra_attrs={"mid_range": 99, "three_point": 92, "block": 85},
-            badges={"Deadeye": 4, "DifficultShots": 4, "Sniper": 4}
+            extra_attrs={"mid_range": 99, "three_point": 94, "driving_layup": 92, "block": 86},
+            extra_tends={"shot_mid_range": 99, "shot_three": 94, "drive": 90},
+            badges={"Deadeye": 4, "DifficultShots": 4, "Sniper": 4, "Blinders": 4, "CatchAndShoot": 4, "VolumeShooter": 4}
         ))
-        # 欧文 Kyrie Irving (Slot 0, Face 2122)
+        # 凯里·欧文 Kyrie Irving (Slot 0, Face 2122)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[1, 4, 14, 15],
             intangibles=97, touches=95, shot=95,
-            extra_attrs={"ball_control": 99, "driving_layup": 98, "mid_range": 94, "three_point": 92},
-            badges={"AnkleBreaker": 4, "HandlesForDays": 4, "DifficultShots": 4}
+            extra_attrs={"ball_control": 99, "driving_layup": 99, "mid_range": 95, "three_point": 92},
+            badges={"AnkleBreaker": 4, "HandlesForDays": 4, "DifficultShots": 4, "TearDropper": 4, "CircusThrees": 4}
         ))
-        # 本·西蒙斯 Ben Simmons (Slot 10, Face 7200) - 防守与反击持球点
+        # 本·西蒙斯 Ben Simmons (Slot 10, Face 7200)
         writes.append(make_player_entry(
             name=roster[10][0], slot=10, face=roster[10][1], initiator=1,
             play_types=[4, 11, 7, 13],
@@ -393,7 +376,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 94},
             badges={"CatchAndShoot": 4, "CornerSpecialist": 4, "Sniper": 4}
         ))
-        # 克拉克斯顿 Nicolas Claxton (Slot 7, Face 7850)
+        # 尼古拉斯·克拉克斯顿 Nicolas Claxton (Slot 7, Face 7850)
         writes.append(make_player_entry(
             name=roster[7][0], slot=7, face=roster[7][1], initiator=0,
             play_types=[7, 11, 0, 0],
@@ -404,15 +387,16 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 22: TOR (Toronto Raptors)
     elif team_id == 22:
-        # 斯科蒂·巴恩斯 Scottie Barnes (Slot 3, Face 8060) - 未来的最佳阵容前锋大核
+        # 斯科蒂·巴恩斯 Scottie Barnes (Slot 3, Face 8060) - 2022 ROY 年度最佳新秀 -> 2026 全能前锋
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[4, 1, 8, 11],
             intangibles=95, touches=92, shot=88,
-            extra_attrs={"pass_vision": 90, "strength": 88, "perimeter_def": 88, "driving_layup": 88},
-            badges={"Dimer": 3, "Clamps": 3, "Bully": 3}
+            extra_attrs={"pass_vision": 92, "strength": 90, "perimeter_def": 90, "driving_layup": 90},
+            extra_tends={"drive": 92, "dish_to_open_man": 90},
+            badges={"Dimer": 4, "Clamps": 4, "BackdownPunisher": 3, "FearlessFinisher": 3}
         ))
-        # 范弗利特 Fred VanVleet (Slot 1, Face 7288)
+        # 弗雷德·范弗利特 Fred VanVleet (Slot 1, Face 7288)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[4, 15, 1, 14],
@@ -420,7 +404,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 90, "steal": 92, "pass_accuracy": 90},
             badges={"CatchAndShoot": 4, "Sniper": 3, "PickPocket": 3}
         ))
-        # 阿奴诺比 OG Anunoby (Slot 2, Face 7515)
+        # OG·阿奴诺比 OG Anunoby (Slot 2, Face 7515)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[15, 11, 1, 0],
@@ -428,14 +412,14 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"perimeter_def": 95, "steal": 92, "three_point": 86},
             badges={"Clamps": 4, "CornerSpecialist": 4}
         ))
-        # 小特伦特 Gary Trent Jr. (Slot 5, Face 7736)
+        # 加里·特伦特 Gary Trent Jr. (Slot 5, Face 7736)
         writes.append(make_player_entry(
             name=roster[5][0], slot=5, face=roster[5][1], initiator=0,
             play_types=[15, 14, 12, 1],
             intangibles=86, touches=80, shot=85,
             extra_attrs={"three_point": 88, "mid_range": 85}
         ))
-        # 布歇 Chris Boucher (Slot 4, Face 7590)
+        # 克里斯·布歇 Chris Boucher (Slot 4, Face 7590)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=0,
             play_types=[15, 7, 0, 0],
@@ -446,31 +430,32 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
     # ==================== BATCH 02: CENTRAL ====================
     # 1: MIL (Milwaukee Bucks)
     elif team_id == 1:
-        # 字母哥 Giannis Antetokounmpo (Slot 3, Face 2701)
+        # 扬尼斯·阿德托昆博 Giannis Antetokounmpo (Slot 3, Face 2701) - 巅峰希腊怪兽统治力
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[1, 7, 8, 4],
             intangibles=99, touches=98, shot=96,
-            extra_attrs={"driving_layup": 96, "interior_def": 95, "perimeter_def": 88, "block": 92, "strength": 96},
-            badges={"Posterizer": 4, "Intimidator": 4, "RimProtector": 4, "Clamps": 4, "ChasedownArtist": 4}
+            extra_attrs={"driving_layup": 98, "driving_dunk": 98, "standing_dunk": 95, "interior_def": 96, "block": 94, "perimeter_def": 88, "strength": 98, "speed": 88},
+            extra_tends={"drive": 99, "attack_strong_on_drive": 99, "post_up": 90, "block_shot": 92, "contest_shot": 95},
+            badges={"Posterizer": 4, "LimitlessTakeoff": 4, "FastTwitch": 4, "FearlessFinisher": 4, "Intimidator": 4, "RimProtector": 4, "Clamps": 4, "ChasedownArtist": 4, "BackdownPunisher": 4, "PostDropStepper": 4, "Downhill": 4}
         ))
-        # 米德尔顿 Khris Middleton (Slot 2, Face 2482)
+        # 克里斯·米德尔顿 Khris Middleton (Slot 2, Face 2482)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[1, 4, 14, 15],
             intangibles=94, touches=88, shot=90,
-            extra_attrs={"mid_range": 92, "three_point": 88},
-            badges={"DifficultShots": 3, "Deadeye": 3}
+            extra_attrs={"mid_range": 94, "three_point": 90},
+            badges={"DifficultShots": 4, "Deadeye": 4, "Sniper": 4}
         ))
-        # 霍勒迪 Jrue Holiday (Slot 0, Face 1607)
+        # 朱·霍勒迪 Jrue Holiday (Slot 0, Face 1607)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 8, 1, 14],
             intangibles=94, touches=86, shot=84,
-            extra_attrs={"perimeter_def": 96, "steal": 92, "lateral_quick": 94},
-            badges={"Clamps": 4, "Menace": 4, "PickPocket": 4}
+            extra_attrs={"perimeter_def": 98, "steal": 95, "lateral_quick": 96},
+            badges={"Clamps": 4, "Menace": 4, "PickPocket": 4, "Interceptor": 4}
         ))
-        # 大洛佩兹 Brook Lopez (Slot 4, Face 1516)
+        # 布鲁克·洛佩兹 Brook Lopez (Slot 4, Face 1516)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=0,
             play_types=[15, 7, 0, 0],
@@ -478,7 +463,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"block": 94, "interior_def": 92, "three_point": 82},
             badges={"RimProtector": 4, "Intimidator": 4}
         ))
-        # 波蒂斯 Bobby Portis Jr. (Slot 6, Face 4454)
+        # 鲍比·波蒂斯 Bobby Portis Jr. (Slot 6, Face 4454)
         writes.append(make_player_entry(
             name=roster[6][0], slot=6, face=roster[6][1], initiator=0,
             play_types=[15, 8, 7, 0],
@@ -488,30 +473,32 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 3: CHI (Chicago Bulls)
     elif team_id == 3:
-        # 德罗赞 DeMar DeRozan (Slot 1, Face 1605)
+        # 德马尔·德罗赞 DeMar DeRozan (Slot 1, Face 1605) - 2022 MVP 候选 / 绝杀之王 (中投之神)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[1, 4, 14, 8],
             intangibles=96, touches=95, shot=95,
-            extra_attrs={"mid_range": 96, "driving_layup": 92},
-            badges={"DifficultShots": 4, "Deadeye": 3}
+            extra_attrs={"mid_range": 98, "post_fadeaway": 95, "driving_layup": 94},
+            extra_tends={"shot_mid_range": 99, "drive": 94, "post_up": 90},
+            badges={"DifficultShots": 4, "Deadeye": 4, "ClutchShooter": 4, "SpaceCreator": 4, "StopAndPop": 4}
         ))
-        # 拉文 Zach LaVine (Slot 0, Face 4101)
+        # 扎克·拉文 Zach LaVine (Slot 0, Face 4101)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 15, 11],
             intangibles=94, touches=92, shot=92,
-            extra_attrs={"three_point": 90, "speed": 95},
-            badges={"Posterizer": 4, "Sniper": 3}
+            extra_attrs={"three_point": 92, "speed": 96, "driving_dunk": 96},
+            extra_tends={"shot_three": 92, "drive": 94},
+            badges={"Posterizer": 4, "LimitlessTakeoff": 4, "Sniper": 4, "QuickFirstStep": 4}
         ))
-        # 武切维奇 Nikola Vucevic (Slot 3, Face 2144)
+        # 尼古拉·武切维奇 Nikola Vucevic (Slot 3, Face 2144)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=0,
             play_types=[8, 15, 7, 0],
             intangibles=88, touches=84, shot=85,
             extra_attrs={"mid_range": 88, "three_point": 82}
         ))
-        # 科比·怀特 Coby White (Slot 4, Face 7826) - 爆发先发控卫
+        # 科比·怀特 Coby White (Slot 4, Face 7826)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=1,
             play_types=[4, 15, 1, 14],
@@ -529,29 +516,30 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 4: CLE (Cleveland Cavaliers)
     elif team_id == 4:
-        # 米切尔 Donovan Mitchell (Slot 13, Face 7510) - 71 分超巨与第一火力！
+        # 多诺万·米切尔 Donovan Mitchell (Slot 13, Face 7510) - 71 分爆炸得分手
         writes.append(make_player_entry(
             name=roster[13][0], slot=13, face=roster[13][1], initiator=1,
             play_types=[4, 1, 15, 11],
             intangibles=98, touches=96, shot=96,
-            extra_attrs={"three_point": 92, "driving_layup": 94, "speed": 94, "ball_control": 92},
-            badges={"Chef": 3, "Sniper": 4, "FearlessFinisher": 4, "DifficultShots": 4}
+            extra_attrs={"three_point": 94, "driving_layup": 96, "speed": 95, "ball_control": 94},
+            extra_tends={"shot_three": 95, "drive": 95},
+            badges={"Chef": 4, "Sniper": 4, "DifficultShots": 4, "QuickFirstStep": 4, "FearlessFinisher": 4, "CircusThrees": 4}
         ))
-        # 加兰 Darius Garland (Slot 0, Face 7824)
+        # 达里厄斯·加兰 Darius Garland (Slot 0, Face 7824)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 15, 1, 14],
             intangibles=94, touches=92, shot=88,
-            extra_attrs={"pass_accuracy": 92, "pass_vision": 92, "three_point": 88},
-            badges={"Dimer": 4, "Sniper": 3, "FloaterSpecialist": 4}
+            extra_attrs={"pass_accuracy": 94, "pass_vision": 94, "three_point": 90},
+            badges={"Dimer": 4, "Sniper": 3, "TearDropper": 4}
         ))
-        # 莫布利 Evan Mobley (Slot 3, Face 8052) - DPOY 级防守独角兽
+        # 埃文·莫布利 Evan Mobley (Slot 3, Face 8052)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[7, 9, 8, 11],
             intangibles=94, touches=84, shot=82,
-            extra_attrs={"interior_def": 94, "perimeter_def": 88, "block": 92, "lateral_quick": 84},
-            badges={"RimProtector": 4, "Intimidator": 4, "Clamps": 3}
+            extra_attrs={"interior_def": 95, "perimeter_def": 90, "block": 94, "lateral_quick": 86},
+            badges={"RimProtector": 4, "Intimidator": 4, "Clamps": 4, "ChasedownArtist": 4}
         ))
         # 贾勒特·阿伦 Jarrett Allen (Slot 2, Face 7517)
         writes.append(make_player_entry(
@@ -561,7 +549,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"interior_def": 92, "block": 90, "strength": 90},
             badges={"RimProtector": 4, "Intimidator": 4}
         ))
-        # 勒韦尔 Caris LeVert (Slot 12, Face 7233)
+        # 卡里斯·勒韦尔 Caris LeVert (Slot 12, Face 7233)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=1,
             play_types=[4, 1, 14, 15],
@@ -571,24 +559,24 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 20: IND (Indiana Pacers)
     elif team_id == 20:
-        # 哈利伯顿 Tyrese Haliburton (Slot 2, Face 8001) - 控球之神！
+        # 泰雷斯·哈利伯顿 Tyrese Haliburton (Slot 2, Face 8001) - 2026 控球之神！
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[4, 15, 1, 12],
             intangibles=98, touches=96, shot=85,
-            extra_attrs={"pass_accuracy": 98, "pass_vision": 98, "pass_iq": 98, "three_point": 92, "ball_control": 92},
-            extra_tends={"dish_to_open_man": 98, "spot_up_three": 90},
-            badges={"Dimer": 4, "FloorGeneral": 4, "NeedleThreader": 4, "Sniper": 4, "QuickFirstStep": 3}
+            extra_attrs={"pass_accuracy": 99, "pass_vision": 99, "pass_iq": 99, "three_point": 94, "ball_control": 94},
+            extra_tends={"dish_to_open_man": 99, "spot_up_three": 95, "shot_three": 92},
+            badges={"Dimer": 4, "FloorGeneral": 4, "NeedleThreader": 4, "BulletPasser": 4, "Sniper": 4, "BailOut": 4, "QuickFirstStep": 4, "SpecialDelivery": 4}
         ))
-        # 西亚卡姆 Pascal Siakam (Slot 3, Face 7236) - 冠军前锋！
+        # 帕斯卡尔·西亚卡姆 Pascal Siakam (Slot 3, Face 7236)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[1, 8, 4, 11],
             intangibles=96, touches=92, shot=92,
             extra_attrs={"mid_range": 88, "driving_layup": 90, "interior_def": 85, "strength": 86},
-            badges={"DifficultShots": 3, "FearlessFinisher": 4, "FastBreakFinisher": 4}
+            badges={"DifficultShots": 3, "FearlessFinisher": 4, "FastTwitch": 4}
         ))
-        # 特纳 Myles Turner (Slot 0, Face 4474) - 盖帽王高炮台
+        # 迈尔斯·特纳 Myles Turner (Slot 0, Face 4474)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=0,
             play_types=[15, 7, 0, 0],
@@ -596,7 +584,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"block": 96, "interior_def": 88, "three_point": 82},
             badges={"RimProtector": 4, "Intimidator": 4}
         ))
-        # 希尔德 Buddy Hield (Slot 9, Face 7204) - 历史级三分产量
+        # 巴迪·希尔德 Buddy Hield (Slot 9, Face 7204)
         writes.append(make_player_entry(
             name=roster[9][0], slot=9, face=roster[9][1], initiator=0,
             play_types=[15, 12, 14, 0],
@@ -605,7 +593,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_tends={"spot_up_three": 95},
             badges={"CatchAndShoot": 4, "CornerSpecialist": 4, "Sniper": 4}
         ))
-        # 卡鲁索 Alex Caruso (Slot 5, Face 7570) - 最佳防守一阵
+        # 亚历克斯·卡鲁索 Alex Caruso (Slot 5, Face 7570)
         writes.append(make_player_entry(
             name=roster[5][0], slot=5, face=roster[5][1], initiator=1,
             play_types=[4, 11, 15, 0],
@@ -616,13 +604,14 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 21: DET (Detroit Pistons)
     elif team_id == 21:
-        # 坎宁安 Cade Cunningham (Slot 0, Face 8050)
+        # 凯德·坎宁安 Cade Cunningham (Slot 0, Face 8050)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 14, 15],
             intangibles=96, touches=95, shot=92,
-            extra_attrs={"ball_control": 92, "pass_accuracy": 92, "mid_range": 88, "driving_layup": 88},
-            badges={"Dimer": 3, "HandlesForDays": 3, "QuickFirstStep": 3}
+            extra_attrs={"ball_control": 94, "pass_accuracy": 94, "mid_range": 90, "driving_layup": 90},
+            extra_tends={"drive": 92, "dish_to_open_man": 92},
+            badges={"Dimer": 4, "HandlesForDays": 4, "QuickFirstStep": 4, "DifficultShots": 3}
         ))
         # 萨迪克·贝 Saddiq Bey (Slot 2, Face 8010)
         writes.append(make_player_entry(
@@ -631,21 +620,21 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             intangibles=86, touches=82, shot=85,
             extra_attrs={"three_point": 86, "strength": 84}
         ))
-        # 斯图尔特 Isaiah Stewart (Slot 6, Face 8008)
+        # 以赛亚·斯图尔特 Isaiah Stewart (Slot 6, Face 8008)
         writes.append(make_player_entry(
             name=roster[6][0], slot=6, face=roster[6][1], initiator=0,
             play_types=[7, 15, 8, 0],
             intangibles=86, touches=76, shot=76,
             extra_attrs={"interior_def": 88, "strength": 92, "three_point": 78}
         ))
-        # 杜阿尔特 Chris Duarte (Slot 12, Face 9905)
+        # 克里斯·杜阿尔特 Chris Duarte (Slot 12, Face 9905)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=0,
             play_types=[15, 14, 4, 12],
             intangibles=85, touches=80, shot=82,
             extra_attrs={"three_point": 85, "mid_range": 85}
         ))
-        # 奥利尼克 Kelly Olynyk (Slot 3, Face 2699)
+        # 凯利·奥利尼克 Kelly Olynyk (Slot 3, Face 2699)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=0,
             play_types=[15, 7, 13, 8],
@@ -656,23 +645,24 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
     # ==================== BATCH 03: SOUTHEAST ====================
     # 2: WAS (Washington Wizards)
     elif team_id == 2:
-        # 比尔 Bradley Beal (Slot 0, Face 2446)
+        # 布拉德利·比尔 Bradley Beal (Slot 0, Face 2446) - 30 分得分机器
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 14, 15],
             intangibles=96, touches=94, shot=94,
-            extra_attrs={"mid_range": 92, "three_point": 88, "driving_layup": 90},
-            badges={"DifficultShots": 4, "Sniper": 3}
+            extra_attrs={"mid_range": 94, "three_point": 90, "driving_layup": 92},
+            extra_tends={"shot_mid_range": 92, "drive": 92},
+            badges={"DifficultShots": 4, "Sniper": 4, "QuickFirstStep": 4, "Deadeye": 3}
         ))
-        # 波尔津吉斯 Kristaps Porzingis (Slot 13, Face 4455)
+        # 克里斯塔普斯·波尔津吉斯 Kristaps Porzingis (Slot 13, Face 4455)
         writes.append(make_player_entry(
             name=roster[13][0], slot=13, face=roster[13][1], initiator=0,
             play_types=[15, 8, 7, 14],
             intangibles=94, touches=90, shot=90,
-            extra_attrs={"three_point": 88, "block": 90, "interior_def": 86},
-            badges={"RimProtector": 4, "CatchAndShoot": 3}
+            extra_attrs={"three_point": 88, "block": 92, "interior_def": 88},
+            badges={"RimProtector": 4, "CatchAndShoot": 4, "Intimidator": 3}
         ))
-        # 库兹马 Kyle Kuzma (Slot 6, Face 7535)
+        # 凯尔·库兹马 Kyle Kuzma (Slot 6, Face 7535)
         writes.append(make_player_entry(
             name=roster[6][0], slot=6, face=roster[6][1], initiator=1,
             play_types=[1, 4, 15, 11],
@@ -687,7 +677,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 86, "perimeter_def": 88},
             badges={"Clamps": 3, "CornerSpecialist": 3}
         ))
-        # 阿夫迪亚 Deni Avdija (Slot 1, Face 7998)
+        # 德尼·阿夫迪亚 Deni Avdija (Slot 1, Face 7998)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[4, 11, 15, 0],
@@ -697,14 +687,14 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 9: ATL (Atlanta Hawks)
     elif team_id == 9:
-        # 特雷·杨 Trae Young (Slot 0, Face 7706)
+        # 特雷·杨 Trae Young (Slot 0, Face 7706) - 2022 得分总榜+助攻总榜双冠王
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 15, 0],
             intangibles=96, touches=96, shot=94,
-            extra_attrs={"three_point": 92, "pass_accuracy": 96, "pass_vision": 96},
-            extra_tends={"dish_to_open_man": 96},
-            badges={"Dimer": 4, "Sniper": 4, "Chef": 3, "TearDropper": 4}
+            extra_attrs={"three_point": 94, "pass_accuracy": 98, "pass_vision": 98, "ball_control": 96},
+            extra_tends={"dish_to_open_man": 98, "shot_three": 96},
+            badges={"Dimer": 4, "Sniper": 4, "Chef": 4, "TearDropper": 4, "FloorGeneral": 4, "NeedleThreader": 4}
         ))
         # 德章泰·穆雷 Dejounte Murray (Slot 13, Face 7222)
         writes.append(make_player_entry(
@@ -714,7 +704,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"mid_range": 90, "steal": 95, "perimeter_def": 92},
             badges={"PickPocket": 4, "Clamps": 3, "DifficultShots": 3}
         ))
-        # 卡佩拉 Clint Capela (Slot 4, Face 4115)
+        # 克林特·卡佩拉 Clint Capela (Slot 4, Face 4115)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=0,
             play_types=[7, 11, 0, 0],
@@ -740,23 +730,24 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 10: MIA (Miami Heat)
     elif team_id == 10:
-        # 吉米·巴特勒 Jimmy Butler (Slot 1, Face 2165)
+        # 吉米·巴特勒 Jimmy Butler (Slot 1, Face 2165) - 2022 东决天神下凡 (47分超巨)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[1, 4, 8, 14],
             intangibles=99, touches=95, shot=92,
-            extra_attrs={"mid_range": 92, "perimeter_def": 96, "steal": 92, "strength": 88},
-            badges={"Clamps": 4, "Menace": 4, "FearlessFinisher": 4, "ClutchShooter": 4}
+            extra_attrs={"mid_range": 94, "perimeter_def": 97, "steal": 95, "strength": 88, "stamina": 99, "hustle": 99},
+            extra_tends={"on_ball_steal": 95, "contest_shot": 96, "drive": 95, "post_up": 88},
+            badges={"Clamps": 4, "Menace": 4, "PickPocket": 4, "FearlessFinisher": 4, "ClutchShooter": 4, "DifficultShots": 4}
         ))
-        # 阿德巴约 Bam Adebayo (Slot 3, Face 7519)
+        # 巴姆·阿德巴约 Bam Adebayo (Slot 3, Face 7519)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[13, 7, 8, 14],
             intangibles=96, touches=88, shot=84,
-            extra_attrs={"interior_def": 94, "perimeter_def": 88, "mid_range": 86, "pass_accuracy": 86},
-            badges={"RimProtector": 4, "Intimidator": 4, "Dimer": 3}
+            extra_attrs={"interior_def": 96, "perimeter_def": 90, "lateral_quick": 88, "pass_accuracy": 88},
+            badges={"RimProtector": 4, "Intimidator": 4, "Clamps": 4, "Dimer": 3}
         ))
-        # 希罗 Tyler Herro (Slot 4, Face 7832)
+        # 泰勒·希罗 Tyler Herro (Slot 4, Face 7832)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=1,
             play_types=[15, 4, 12, 14],
@@ -764,14 +755,14 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 90, "mid_range": 90, "driving_layup": 88},
             badges={"CatchAndShoot": 4, "Sniper": 4, "DifficultShots": 3}
         ))
-        # 洛瑞 Kyle Lowry (Slot 0, Face 1357)
+        # 凯尔·洛瑞 Kyle Lowry (Slot 0, Face 1357)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 15, 12, 0],
             intangibles=90, touches=80, shot=76,
             extra_attrs={"pass_accuracy": 90, "three_point": 84}
         ))
-        # 斯特鲁斯 Max Strus (Slot 7, Face 7920)
+        # 马克斯·斯特鲁斯 Max Strus (Slot 7, Face 7920)
         writes.append(make_player_entry(
             name=roster[7][0], slot=7, face=roster[7][1], initiator=0,
             play_types=[15, 12, 11, 0],
@@ -782,15 +773,16 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 16: ORL (Orlando Magic)
     elif team_id == 16:
-        # 小瓦格纳 Franz Wagner (Slot 9, Face 8062)
+        # 弗朗茨·瓦格纳 Franz Wagner (Slot 9, Face 8062) - 2026 世界杯冠军核心 / 全明星前锋
         writes.append(make_player_entry(
             name=roster[9][0], slot=9, face=roster[9][1], initiator=1,
             play_types=[4, 11, 15, 1],
             intangibles=96, touches=92, shot=90,
-            extra_attrs={"driving_layup": 92, "three_point": 86, "pass_accuracy": 88},
-            badges={"FearlessFinisher": 3, "Sniper": 3, "Dimer": 3}
+            extra_attrs={"driving_layup": 94, "three_point": 88, "pass_accuracy": 90},
+            extra_tends={"drive": 94, "dish_to_open_man": 90},
+            badges={"FearlessFinisher": 4, "Sniper": 4, "Dimer": 3}
         ))
-        # 萨格斯 Jalen Suggs (Slot 0, Face 8051)
+        # 杰伦·萨格斯 Jalen Suggs (Slot 0, Face 8051)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 11, 15, 0],
@@ -812,7 +804,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             intangibles=88, touches=84, shot=86,
             extra_attrs={"three_point": 86, "driving_layup": 86}
         ))
-        # 富尔茨 Markelle Fultz (Slot 1, Face 7500)
+        # 马克尔·富尔茨 Markelle Fultz (Slot 1, Face 7500)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[4, 14, 0, 0],
@@ -822,16 +814,16 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 31: CHA (Charlotte Hornets)
     elif team_id == 31:
-        # 拉梅洛·鲍尔 LaMelo Ball (Slot 0, Face 7953)
+        # 拉梅洛·鲍尔 LaMelo Ball (Slot 0, Face 7953) - 20 岁全明星天才指挥官
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 15, 1, 11],
             intangibles=96, touches=96, shot=90,
-            extra_attrs={"pass_accuracy": 96, "pass_vision": 96, "three_point": 90, "ball_control": 92},
-            extra_tends={"dish_to_open_man": 96},
-            badges={"Dimer": 4, "FloorGeneral": 4, "Sniper": 3}
+            extra_attrs={"pass_accuracy": 98, "pass_vision": 98, "three_point": 92, "ball_control": 94},
+            extra_tends={"dish_to_open_man": 98, "shot_three": 94},
+            badges={"Dimer": 4, "FloorGeneral": 4, "SpecialDelivery": 4, "BulletPasser": 4, "Sniper": 4}
         ))
-        # 布里奇斯 Miles Bridges (Slot 4, Face 7711)
+        # 迈尔斯·布里奇斯 Miles Bridges (Slot 4, Face 7711)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=1,
             play_types=[11, 1, 15, 7],
@@ -839,21 +831,21 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"driving_layup": 92, "three_point": 85, "speed": 88},
             badges={"Posterizer": 4}
         ))
-        # 罗齐尔 Terry Rozier III (Slot 1, Face 4460)
+        # 特里·罗齐尔 Terry Rozier III (Slot 1, Face 4460)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[4, 15, 1, 14],
             intangibles=90, touches=88, shot=90,
             extra_attrs={"three_point": 88, "mid_range": 86}
         ))
-        # 海沃德 Gordon Hayward (Slot 2, Face 1809)
+        # 戈登·海沃德 Gordon Hayward (Slot 2, Face 1809)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[14, 15, 4, 12],
             intangibles=88, touches=80, shot=82,
             extra_attrs={"mid_range": 88, "three_point": 84}
         ))
-        # 华盛顿 P.J. Washington (Slot 3, Face 7831)
+        # P.J. 华盛顿 P.J. Washington (Slot 3, Face 7831)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=0,
             play_types=[15, 11, 7, 0],
@@ -864,15 +856,16 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
     # ==================== BATCH 04: NORTHWEST ====================
     # 12: UTA (Utah Jazz)
     elif team_id == 12:
-        # 马尔卡宁 Lauri Markkanen (Slot 12, Face 7508) - 全明星 7 尺高炮台！
+        # 劳里·马尔卡宁 Lauri Markkanen (Slot 12, Face 7508) - 2023 MIP & 2024 全明星 7 尺高炮台！
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=0,
             play_types=[15, 11, 7, 8],
             intangibles=96, touches=94, shot=94,
-            extra_attrs={"three_point": 90, "mid_range": 88, "driving_layup": 86, "strength": 82},
-            badges={"CatchAndShoot": 4, "CornerSpecialist": 4, "Sniper": 4}
+            extra_attrs={"three_point": 92, "mid_range": 88, "driving_layup": 88, "strength": 84},
+            extra_tends={"spot_up_three": 96, "shot_three": 94},
+            badges={"CatchAndShoot": 4, "CornerSpecialist": 4, "Sniper": 4, "Deadeye": 3}
         ))
-        # 塞克斯顿 Collin Sexton (Slot 8, Face 7707)
+        # 科林·塞克斯顿 Collin Sexton (Slot 8, Face 7707)
         writes.append(make_player_entry(
             name=roster[8][0], slot=8, face=roster[8][1], initiator=1,
             play_types=[4, 1, 11, 14],
@@ -880,7 +873,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"speed": 94, "driving_layup": 90, "three_point": 84},
             badges={"Downhill": 4, "FearlessFinisher": 3}
         ))
-        # 克拉克森 Jordan Clarkson (Slot 2, Face 4175)
+        # 乔丹·克拉克森 Jordan Clarkson (Slot 2, Face 4175)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[1, 4, 15, 14],
@@ -888,7 +881,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 86, "driving_layup": 88, "mid_range": 88},
             badges={"DifficultShots": 3, "Sniper": 3}
         ))
-        # 康利 Mike Conley (Slot 0, Face 1413)
+        # 迈克·康利 Mike Conley (Slot 0, Face 1413)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 15, 14, 0],
@@ -896,7 +889,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"pass_accuracy": 92, "pass_vision": 90, "three_point": 86},
             badges={"Dimer": 3, "FloorGeneral": 3}
         ))
-        # 范德比尔特 Jarred Vanderbilt (Slot 13, Face 7740)
+        # 贾里德·范德比尔特 Jarred Vanderbilt (Slot 13, Face 7740)
         writes.append(make_player_entry(
             name=roster[13][0], slot=13, face=roster[13][1], initiator=0,
             play_types=[7, 11, 0, 0],
@@ -907,24 +900,24 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 19: DEN (Denver Nuggets)
     elif team_id == 19:
-        # 约基奇 Nikola Jokic (Slot 3, Face 4170) - 3届 MVP 中枢
+        # 尼古拉·约基奇 Nikola Jokic (Slot 3, Face 4170) - 2022 连庄常规赛 MVP / 历史级组织中锋
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
-            play_types=[8, 9, 7, 13],
+            play_types=[8, 9, 7, 13], # Post Low, Post High, PnR Roll, Handoff Passer
             intangibles=99, touches=98, shot=92,
-            extra_attrs={"pass_accuracy": 99, "pass_vision": 99, "pass_iq": 99, "mid_range": 94, "strength": 92},
-            extra_tends={"dish_to_open_man": 99, "post_up": 92},
-            badges={"Dimer": 4, "FloorGeneral": 4, "PostPlaymaker": 4, "BreakStarter": 4, "BulletPasser": 4, "Dropstepper": 4}
+            extra_attrs={"pass_accuracy": 99, "pass_vision": 99, "pass_iq": 99, "mid_range": 96, "shot_close": 98, "post_hook": 96, "post_fadeaway": 95, "post_moves": 98, "strength": 94},
+            extra_tends={"dish_to_open_man": 99, "post_up": 95},
+            badges={"Dimer": 4, "FloorGeneral": 4, "PostPlaymaker": 4, "BreakStarter": 4, "BulletPasser": 4, "NeedleThreader": 4, "PostDropStepper": 4, "BackdownPunisher": 4, "DreamShake": 4, "HookSpecialist": 4, "Unpluckable": 4, "DifficultShots": 4, "ProTouch": 4}
         ))
-        # 穆雷 Jamal Murray (Slot 0, Face 7202)
+        # 贾马尔·穆雷 Jamal Murray (Slot 0, Face 7202)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 12, 1, 14],
             intangibles=96, touches=92, shot=94,
-            extra_attrs={"mid_range": 92, "three_point": 90, "driving_layup": 90},
-            badges={"DifficultShots": 4, "Deadeye": 3, "QuickFirstStep": 3}
+            extra_attrs={"mid_range": 94, "three_point": 90, "driving_layup": 92},
+            badges={"DifficultShots": 4, "Deadeye": 4, "Sniper": 4, "ClutchShooter": 4}
         ))
-        # 小波特 Michael Porter Jr. (Slot 1, Face 7713)
+        # 小迈克尔·波特 Michael Porter Jr. (Slot 1, Face 7713)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=0,
             play_types=[15, 11, 14, 0],
@@ -932,7 +925,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 92, "mid_range": 88},
             badges={"CatchAndShoot": 4, "Sniper": 4}
         ))
-        # 戈登 Aaron Gordon (Slot 2, Face 4095)
+        # 阿隆·戈登 Aaron Gordon (Slot 2, Face 4095)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[11, 7, 1, 8],
@@ -950,16 +943,16 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 24: OKC (Oklahoma City Thunder)
     elif team_id == 24:
-        # 亚历山大 Shai Gilgeous-Alexander (Slot 0, Face 7710) - 2024-2026 MVP 级大核！
+        # 谢伊·吉尔杰斯-亚历山大 Shai Gilgeous-Alexander (Slot 0, Face 7710) - 2024-2026 MVP 级大核！
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[1, 4, 14, 8],
             intangibles=99, touches=98, shot=96,
-            extra_attrs={"ball_control": 96, "driving_layup": 96, "mid_range": 95, "perimeter_def": 88, "steal": 92, "lateral_quick": 90},
-            extra_tends={"drive": 98, "dish_to_open_man": 88, "on_ball_steal": 85},
-            badges={"DifficultShots": 4, "QuickFirstStep": 4, "HandlesForDays": 4, "Clamps": 3, "Interceptor": 4, "FearlessFinisher": 4}
+            extra_attrs={"ball_control": 96, "driving_layup": 98, "mid_range": 96, "perimeter_def": 90, "steal": 94, "lateral_quick": 92},
+            extra_tends={"drive": 99, "dish_to_open_man": 90, "on_ball_steal": 92},
+            badges={"DifficultShots": 4, "QuickFirstStep": 4, "HandlesForDays": 4, "Clamps": 4, "Interceptor": 4, "FearlessFinisher": 4, "Unpluckable": 4}
         ))
-        # 吉迪 Josh Giddey (Slot 6, Face 8064)
+        # 约什·吉迪 Josh Giddey (Slot 6, Face 8064)
         writes.append(make_player_entry(
             name=roster[6][0], slot=6, face=roster[6][1], initiator=1,
             play_types=[4, 9, 11, 1],
@@ -967,7 +960,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"pass_accuracy": 94, "pass_vision": 94, "ball_control": 88},
             badges={"Dimer": 4, "NeedleThreader": 3}
         ))
-        # 多特 Luguentz Dort (Slot 1, Face 7910)
+        # 卢冈茨·多特 Luguentz Dort (Slot 1, Face 7910)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=0,
             play_types=[15, 11, 1, 0],
@@ -982,7 +975,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             intangibles=85, touches=80, shot=82,
             extra_attrs={"three_point": 86, "speed": 90}
         ))
-        # 贝兹利 Darius Bazley (Slot 3, Face 7842)
+        # 达柳斯·贝兹利 Darius Bazley (Slot 3, Face 7842)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=0,
             play_types=[11, 7, 15, 0],
@@ -992,39 +985,39 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 27: MIN (Minnesota Timberwolves)
     elif team_id == 27:
-        # 爱德华兹 Anthony Edwards (Slot 1, Face 7954) - 2026 门面球星模板！
+        # 安东尼·爱德华兹 Anthony Edwards (Slot 1, Face 7954) - 2026 联盟门面球星模板！
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[1, 4, 15, 11],
             intangibles=98, touches=96, shot=96,
-            extra_attrs={"driving_layup": 96, "three_point": 90, "perimeter_def": 90, "strength": 86, "speed": 95, "acceleration": 95},
-            extra_tends={"drive": 96, "spot_up_three": 88, "contest_shot": 88},
-            badges={"Posterizer": 4, "QuickFirstStep": 4, "FearlessFinisher": 4, "Clamps": 3}
+            extra_attrs={"driving_dunk": 98, "vertical": 98, "three_point": 90, "perimeter_def": 92, "strength": 88, "speed": 96, "acceleration": 96},
+            extra_tends={"drive": 98, "shot_three": 92, "contest_shot": 90},
+            badges={"Posterizer": 4, "LimitlessTakeoff": 4, "QuickFirstStep": 4, "FearlessFinisher": 4, "Clamps": 4, "Sniper": 3}
         ))
-        # 唐斯 Karl-Anthony Towns (Slot 3, Face 4472)
+        # 卡尔-安东尼·唐斯 Karl-Anthony Towns (Slot 3, Face 4472)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=0,
             play_types=[15, 8, 7, 14],
             intangibles=95, touches=90, shot=92,
-            extra_attrs={"three_point": 90, "mid_range": 88, "interior_def": 80},
-            badges={"CatchAndShoot": 4, "Sniper": 4}
+            extra_attrs={"three_point": 92, "mid_range": 90, "post_moves": 90},
+            badges={"CatchAndShoot": 4, "Sniper": 4, "Deadeye": 4}
         ))
-        # 戈贝尔 Rudy Gobert (Slot 12, Face 2713) - 4届 DPOY 护筐霸主
+        # 鲁迪·戈贝尔 Rudy Gobert (Slot 12, Face 2713) - 4届 DPOY 护筐霸主
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=0,
             play_types=[7, 11, 0, 0],
             intangibles=95, touches=70, shot=68,
-            extra_attrs={"interior_def": 98, "block": 98, "strength": 96},
-            badges={"RimProtector": 4, "Intimidator": 4, "BrickWall": 4}
+            extra_attrs={"interior_def": 98, "block": 98, "strength": 98, "def_rebound": 96},
+            badges={"RimProtector": 4, "Intimidator": 4, "BrickWall": 4, "ReboundChaser": 4}
         ))
-        # 拉塞尔 D'Angelo Russell (Slot 0, Face 4461)
+        # 迪安吉洛·拉塞尔 D'Angelo Russell (Slot 0, Face 4461)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 14, 15, 1],
             intangibles=90, touches=85, shot=85,
             extra_attrs={"pass_accuracy": 90, "three_point": 86}
         ))
-        # 麦克丹尼尔斯 Jaden McDaniels (Slot 2, Face 8017)
+        # 杰登·麦克丹尼尔斯 Jaden McDaniels (Slot 2, Face 8017)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[15, 11, 0, 0],
@@ -1035,15 +1028,16 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 28: POR (Portland Trail Blazers)
     elif team_id == 28:
-        # 利拉德 Damian Lillard (Slot 0, Face 2449) - 表时刻大心脏
+        # 达米安·利拉德 Damian Lillard (Slot 0, Face 2449) - 表时刻历史级超远三分
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 15, 1, 11],
             intangibles=99, touches=98, shot=98,
-            extra_attrs={"three_point": 96, "driving_layup": 94, "pass_accuracy": 92},
-            badges={"Chef": 4, "LimitlessSpotUp": 4, "ClutchShooter": 4, "Sniper": 4}
+            extra_attrs={"three_point": 97, "driving_layup": 94, "pass_accuracy": 92},
+            extra_tends={"shot_three": 98, "spot_up_three": 96, "drive": 92},
+            badges={"Chef": 4, "LimitlessSpotUp": 4, "ClutchShooter": 4, "Sniper": 4, "StopAndPop": 4, "Deadeye": 4}
         ))
-        # 格兰特 Jerami Grant (Slot 12, Face 4105) - 攻防兼备二当家
+        # 杰拉米·格兰特 Jerami Grant (Slot 12, Face 4105)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=1,
             play_types=[1, 15, 4, 11],
@@ -1051,14 +1045,14 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 88, "perimeter_def": 86, "driving_layup": 88},
             badges={"CornerSpecialist": 3, "DifficultShots": 3}
         ))
-        # 努尔基奇 Jusuf Nurkic (Slot 1, Face 4111)
+        # 优素福·努尔基奇 Jusuf Nurkic (Slot 1, Face 4111)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=0,
             play_types=[7, 8, 13, 0],
             intangibles=88, touches=78, shot=78,
             extra_attrs={"strength": 92, "interior_def": 86}
         ))
-        # 哈特 Josh Hart (Slot 11, Face 7528) - 篮板怪兽后卫
+        # 约什·哈特 Josh Hart (Slot 11, Face 7528)
         writes.append(make_player_entry(
             name=roster[11][0], slot=11, face=roster[11][1], initiator=0,
             play_types=[11, 15, 0, 0],
@@ -1066,7 +1060,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"hustle": 98, "perimeter_def": 86},
             badges={"Hustler": 4, "Clamps": 3}
         ))
-        # 利特尔 Nassir Little (Slot 2, Face 7844)
+        # 纳西尔·利特尔 Nassir Little (Slot 2, Face 7844)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[15, 11, 0, 0],
@@ -1077,23 +1071,24 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
     # ==================== BATCH 05: PACIFIC ====================
     # 6: LAC (Los Angeles Clippers)
     elif team_id == 6:
-        # 伦纳德 Kawhi Leonard (Slot 2, Face 2143)
+        # 科怀·伦纳德 Kawhi Leonard (Slot 2, Face 2143) - 中距离机器人 / 死亡缠绕巨掌
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[1, 4, 8, 14],
             intangibles=99, touches=96, shot=95,
-            extra_attrs={"mid_range": 96, "perimeter_def": 97, "steal": 92, "strength": 90},
-            badges={"Clamps": 4, "DifficultShots": 4, "Deadeye": 4}
+            extra_attrs={"mid_range": 97, "perimeter_def": 98, "steal": 95, "strength": 92},
+            extra_tends={"shot_mid_range": 96, "on_ball_steal": 95, "contest_shot": 96, "post_up": 90},
+            badges={"Clamps": 4, "DifficultShots": 4, "Deadeye": 4, "PickPocket": 4, "Intimidator": 4, "Menace": 4}
         ))
-        # 乔治 Paul George (Slot 1, Face 1810)
+        # 保罗·乔治 Paul George (Slot 1, Face 1810)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[1, 4, 15, 14],
             intangibles=96, touches=94, shot=94,
-            extra_attrs={"three_point": 90, "mid_range": 90, "perimeter_def": 92},
-            badges={"Sniper": 4, "Clamps": 3, "DifficultShots": 3}
+            extra_attrs={"three_point": 92, "mid_range": 92, "perimeter_def": 94},
+            badges={"Sniper": 4, "Clamps": 4, "DifficultShots": 3, "Deadeye": 3}
         ))
-        # 鲍威尔 Norman Powell (Slot 13, Face 4456) - 突击重炮
+        # 诺曼·鲍威尔 Norman Powell (Slot 13, Face 4456)
         writes.append(make_player_entry(
             name=roster[13][0], slot=13, face=roster[13][1], initiator=1,
             play_types=[4, 15, 1, 11],
@@ -1108,7 +1103,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             intangibles=88, touches=84, shot=85,
             extra_attrs={"three_point": 85, "mid_range": 86}
         ))
-        # 祖巴茨 Ivica Zubac (Slot 4, Face 7237)
+        # 伊维察·祖巴茨 Ivica Zubac (Slot 4, Face 7237)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=0,
             play_types=[7, 8, 0, 0],
@@ -1118,31 +1113,32 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 13: SAC (Sacramento Kings)
     elif team_id == 13:
-        # 福克斯 De'Aaron Fox (Slot 0, Face 7503) - 关键先生
+        # 达龙·福克斯 De'Aaron Fox (Slot 0, Face 7503) - 2023 年度关键球员 (极速中投之王)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 14, 11],
             intangibles=98, touches=96, shot=95,
-            extra_attrs={"speed": 98, "acceleration": 98, "mid_range": 92, "driving_layup": 94},
-            badges={"Downhill": 4, "QuickFirstStep": 4, "ClutchShooter": 4}
+            extra_attrs={"speed": 99, "acceleration": 99, "mid_range": 94, "driving_layup": 96},
+            extra_tends={"drive": 98, "shot_mid_range": 92},
+            badges={"Downhill": 4, "QuickFirstStep": 4, "ClutchShooter": 4, "TearDropper": 4, "FearlessFinisher": 4}
         ))
-        # 萨博尼斯 Domantas Sabonis (Slot 11, Face 7212) - 三双中枢
+        # 多曼塔斯·萨博尼斯 Domantas Sabonis (Slot 11, Face 7212) - 普林斯顿三双轴心
         writes.append(make_player_entry(
             name=roster[11][0], slot=11, face=roster[11][1], initiator=1,
             play_types=[13, 8, 7, 9],
             intangibles=96, touches=94, shot=86,
-            extra_attrs={"pass_accuracy": 94, "pass_vision": 94, "interior_def": 85, "strength": 94},
-            extra_tends={"dish_to_open_man": 95, "post_up": 88},
-            badges={"PostPlaymaker": 4, "Dimer": 4, "BreakStarter": 4}
+            extra_attrs={"pass_accuracy": 95, "pass_vision": 95, "interior_def": 86, "strength": 95, "def_rebound": 96},
+            extra_tends={"dish_to_open_man": 96, "post_up": 90},
+            badges={"PostPlaymaker": 4, "Dimer": 4, "BreakStarter": 4, "ReboundChaser": 4, "BrickWall": 4}
         ))
-        # 巴恩斯 Harrison Barnes (Slot 1, Face 2450)
+        # 哈里森·巴恩斯 Harrison Barnes (Slot 1, Face 2450)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=0,
             play_types=[15, 8, 14, 0],
             intangibles=88, touches=80, shot=82,
             extra_attrs={"three_point": 86, "mid_range": 85}
         ))
-        # 许尔特 Kevin Huerter (Slot 13, Face 7718)
+        # 凯文·许尔特 Kevin Huerter (Slot 13, Face 7718)
         writes.append(make_player_entry(
             name=roster[13][0], slot=13, face=roster[13][1], initiator=0,
             play_types=[15, 12, 14, 0],
@@ -1161,30 +1157,31 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 15: LAL (Los Angeles Lakers)
     elif team_id == 15:
-        # 詹姆斯 LeBron James (Slot 2, Face 1013)
+        # 勒布朗·詹姆斯 LeBron James (Slot 2, Face 1013) - 2022 30.3分历史级常青得分手 / 全能控场
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[4, 1, 9, 8],
             intangibles=99, touches=98, shot=96,
-            extra_attrs={"pass_accuracy": 96, "pass_vision": 96, "strength": 92, "driving_layup": 95},
-            badges={"Dimer": 4, "FloorGeneral": 4, "ChasedownArtist": 4}
+            extra_attrs={"pass_accuracy": 98, "pass_vision": 98, "pass_iq": 99, "strength": 94, "driving_layup": 96, "three_point": 86},
+            extra_tends={"dish_to_open_man": 98, "drive": 95, "post_up": 90},
+            badges={"Dimer": 4, "FloorGeneral": 4, "ChasedownArtist": 4, "BulletPasser": 4, "HandlesForDays": 4, "FearlessFinisher": 4, "QuickFirstStep": 4, "Unpluckable": 4}
         ))
-        # 戴维斯 Anthony Davis (Slot 3, Face 2444)
+        # 安东尼·戴维斯 Anthony Davis (Slot 3, Face 2444)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[8, 7, 14, 1],
             intangibles=98, touches=95, shot=92,
-            extra_attrs={"interior_def": 96, "block": 96, "mid_range": 88},
-            badges={"RimProtector": 4, "Intimidator": 4}
+            extra_attrs={"interior_def": 96, "block": 96, "mid_range": 88, "def_rebound": 95},
+            badges={"RimProtector": 4, "Intimidator": 4, "ReboundChaser": 4, "FastTwitch": 4}
         ))
-        # 威斯布鲁克 Russell Westbrook (Slot 0, Face 1510)
+        # 拉塞尔·威斯布鲁克 Russell Westbrook (Slot 0, Face 1510)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 11, 0],
             intangibles=90, touches=88, shot=84,
             extra_attrs={"speed": 92, "driving_layup": 88}
         ))
-        # 里夫斯 Austin Reaves (Slot 12, Face 7720) - 湖人关键大心脏
+        # 奥斯汀·里夫斯 Austin Reaves (Slot 12, Face 7720)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=1,
             play_types=[4, 1, 15, 14],
@@ -1192,7 +1189,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"pass_accuracy": 88, "three_point": 86, "driving_layup": 88},
             badges={"QuickFirstStep": 3, "DifficultShots": 2, "ClutchShooter": 3}
         ))
-        # 蒙克 Malik Monk (Slot 1, Face 7506)
+        # 马利克·蒙克 Malik Monk (Slot 1, Face 7506)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=0,
             play_types=[15, 11, 4, 0],
@@ -1202,30 +1199,31 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 26: PHX (Phoenix Suns)
     elif team_id == 26:
-        # 布克 Devin Booker (Slot 1, Face 4387)
+        # 德文·布克 Devin Booker (Slot 1, Face 4387) - 2022 64胜太阳得分领袖 / 中距离刺客
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[1, 4, 14, 15],
             intangibles=98, touches=96, shot=96,
-            extra_attrs={"mid_range": 96, "three_point": 88, "driving_layup": 92},
-            badges={"DifficultShots": 4, "Sniper": 4, "Deadeye": 4}
+            extra_attrs={"mid_range": 97, "three_point": 90, "driving_layup": 92, "ball_control": 92},
+            extra_tends={"shot_mid_range": 96, "shot_three": 90, "drive": 92},
+            badges={"DifficultShots": 4, "Sniper": 4, "Deadeye": 4, "StopAndPop": 4, "Blinders": 4, "ClutchShooter": 4}
         ))
-        # 保罗 Chris Paul (Slot 0, Face 1259)
+        # 克里斯·保罗 Chris Paul (Slot 0, Face 1259) - 控卫之神
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 14, 1, 15],
             intangibles=98, touches=90, shot=80,
-            extra_attrs={"pass_accuracy": 98, "pass_vision": 98, "mid_range": 94},
-            badges={"Dimer": 4, "FloorGeneral": 4, "NeedleThreader": 4}
+            extra_attrs={"pass_accuracy": 99, "pass_vision": 99, "mid_range": 96, "ball_control": 96},
+            badges={"Dimer": 4, "FloorGeneral": 4, "NeedleThreader": 4, "PickPocket": 4}
         ))
-        # 艾顿 Deandre Ayton (Slot 4, Face 7700)
+        # 德安德烈·艾顿 Deandre Ayton (Slot 4, Face 7700)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=0,
             play_types=[7, 8, 14, 0],
             intangibles=90, touches=84, shot=84,
             extra_attrs={"mid_range": 88, "interior_def": 88}
         ))
-        # 布里奇斯 Mikal Bridges (Slot 2, Face 7709)
+        # 米卡尔·布里奇斯 Mikal Bridges (Slot 2, Face 7709)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[15, 11, 14, 1],
@@ -1244,16 +1242,42 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 29: GSW (Golden State Warriors)
     elif team_id == 29:
-        # 库里 Stephen Curry (Slot 0, Face 1612) - FMVP 力量与跑位终极重塑！
+        # 斯蒂芬·库里 Stephen Curry (Slot 0, Face 1612) - 2022 FMVP 增肌与跑位终极重塑！
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[11, 12, 15, 4], # Cutter, Handoff, 3PT, PnR Handler
             intangibles=99, touches=98, shot=98,
-            extra_attrs={"strength": 75, "perimeter_def": 80, "interior_def": 60, "stamina": 99, "three_point": 99},
-            extra_tends={"spot_up_three": 99, "dish_to_open_man": 88, "contest_shot": 75},
-            badges={"Chef": 4, "CircusThrees": 4, "CatchAndShoot": 4, "Deadeye": 4, "LimitlessSpotUp": 4, "Sniper": 4, "HandlesForDays": 4, "ClutchShooter": 4}
+            extra_attrs={
+                "strength": 75,           # 彻底推翻 2K 默认力量 54 的荒谬偏见，还原 2022 核心增肌
+                "stamina": 99,            # 历史最强心肺耐力
+                "three_point": 99,        # 历史第一射手
+                "mid_range": 94,          # 高效干拔中投
+                "driving_layup": 94,      # 顶级篮下终结
+                "ball_control": 97,       # 顶尖运球变向
+                "pass_accuracy": 92,
+                "pass_vision": 92,
+                "perimeter_def": 80,      # 总决赛主防外线后卫表现
+                "steal": 88,
+                "lateral_quick": 82,
+                "hustle": 96
+            },
+            extra_tends={
+                "spot_up_three": 99,
+                "shot_three": 99,
+                "dish_to_open_man": 90,   # 引发 35 尺包夹后迅速分球短顺下
+                "drive": 88,
+                "contest_shot": 80,
+                "on_ball_steal": 85
+            },
+            badges={
+                "Chef": 4, "CircusThrees": 4, "CatchAndShoot": 4, "Deadeye": 4,
+                "LimitlessSpotUp": 4, "Sniper": 4, "StopAndPop": 4, "Blinders": 4,
+                "GreenMachine": 4, "ClutchShooter": 4, "SlipperyOffball": 4,
+                "HandlesForDays": 4, "QuickFirstStep": 4, "Unpluckable": 4,
+                "TearDropper": 4, "FearlessFinisher": 4, "Dimer": 3, "Clamps": 3, "PickPocket": 3
+            }
         ))
-        # 汤普森 Klay Thompson (Slot 1, Face 2137)
+        # 克莱·汤普森 Klay Thompson (Slot 1, Face 2137)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=0,
             play_types=[15, 11, 14, 12],
@@ -1261,7 +1285,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 92, "perimeter_def": 82},
             badges={"CatchAndShoot": 4, "CornerSpecialist": 4, "Sniper": 3}
         ))
-        # 追梦格林 Draymond Green (Slot 3, Face 2478)
+        # 德雷蒙德·格林 Draymond Green (Slot 3, Face 2478) - 勇士传切策应与防守核心
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=1,
             play_types=[13, 7, 0, 0],
@@ -1270,7 +1294,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_tends={"dish_to_open_man": 96, "block_shot": 80, "contest_shot": 95},
             badges={"Dimer": 4, "FloorGeneral": 4, "BrickWall": 4, "DefensiveLeader": 4, "Intimidator": 4}
         ))
-        # 维金斯 Andrew Wiggins (Slot 2, Face 4091)
+        # 安德鲁·维金斯 Andrew Wiggins (Slot 2, Face 4091)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[15, 11, 1, 4],
@@ -1278,7 +1302,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"perimeter_def": 90, "lateral_quick": 88, "driving_layup": 86},
             badges={"Clamps": 4, "Intimidator": 3, "CatchAndShoot": 3}
         ))
-        # 普尔 Jordan Poole (Slot 8, Face 7847)
+        # 乔丹·普尔 Jordan Poole (Slot 8, Face 7847)
         writes.append(make_player_entry(
             name=roster[8][0], slot=8, face=roster[8][1], initiator=1,
             play_types=[4, 1, 15, 12],
@@ -1290,23 +1314,25 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
     # ==================== BATCH 06: SOUTHWEST ====================
     # 8: MEM (Memphis Grizzlies)
     elif team_id == 8:
-        # 莫兰特 Ja Morant (Slot 0, Face 7821)
+        # 贾·莫兰特 Ja Morant (Slot 0, Face 7821) - 2022 MIP / 最佳二阵 (暴力美学突破之神)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 11, 0],
             intangibles=98, touches=98, shot=96,
-            extra_attrs={"speed": 98, "acceleration": 98, "driving_layup": 96},
-            badges={"Posterizer": 4, "QuickFirstStep": 4, "FearlessFinisher": 4}
+            extra_attrs={"speed": 99, "acceleration": 99, "vertical": 99, "driving_layup": 98, "driving_dunk": 96},
+            extra_tends={"drive": 99, "attack_strong_on_drive": 99, "dish_to_open_man": 90},
+            badges={"Posterizer": 4, "LimitlessTakeoff": 4, "QuickFirstStep": 4, "Downhill": 4, "TearDropper": 4, "FearlessFinisher": 4, "FastTwitch": 4}
         ))
-        # 贾伦·杰克逊 Jaren Jackson Jr (Slot 3, Face 7703) - DPOY
+        # 小贾伦·杰克逊 Jaren Jackson Jr (Slot 3, Face 7703) - DPOY 盖帽王
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=0,
             play_types=[15, 7, 8, 0],
             intangibles=95, touches=86, shot=86,
-            extra_attrs={"block": 98, "interior_def": 94, "three_point": 82},
-            badges={"RimProtector": 4, "Intimidator": 4}
+            extra_attrs={"block": 99, "interior_def": 95, "three_point": 84},
+            extra_tends={"block_shot": 99, "contest_shot": 96},
+            badges={"RimProtector": 4, "Intimidator": 4, "ChasedownArtist": 4, "Clamps": 3}
         ))
-        # 贝恩 Desmond Bane (Slot 6, Face 8019)
+        # 戴斯蒙德·贝恩 Desmond Bane (Slot 6, Face 8019)
         writes.append(make_player_entry(
             name=roster[6][0], slot=6, face=roster[6][1], initiator=1,
             play_types=[15, 4, 1, 12],
@@ -1322,7 +1348,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"perimeter_def": 92},
             badges={"Clamps": 4, "Menace": 4}
         ))
-        # 亚当斯 Steven Adams (Slot 4, Face 2698)
+        # 史蒂文·亚当斯 Steven Adams (Slot 4, Face 2698)
         writes.append(make_player_entry(
             name=roster[4][0], slot=4, face=roster[4][1], initiator=0,
             play_types=[7, 0, 0, 0],
@@ -1333,23 +1359,24 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 11: NOP (New Orleans Pelicans)
     elif team_id == 11:
-        # 锡安 Zion Williamson (Slot 2, Face 7820)
+        # 锡安·威廉姆森 Zion Williamson (Slot 2, Face 7820) - 禁区 60%+ 命中率不可阻挡霸主
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=1,
             play_types=[1, 4, 8, 11],
             intangibles=98, touches=96, shot=96,
-            extra_attrs={"driving_layup": 98, "strength": 98, "speed": 88},
-            badges={"Bully": 4, "Posterizer": 4, "FearlessFinisher": 4}
+            extra_attrs={"driving_layup": 99, "strength": 99, "vertical": 96, "speed": 88},
+            extra_tends={"drive": 99, "post_up": 90, "attack_strong_on_drive": 99},
+            badges={"BackdownPunisher": 4, "Posterizer": 4, "FearlessFinisher": 4, "FastTwitch": 4, "Downhill": 4}
         ))
-        # 英格拉姆 Brandon Ingram (Slot 1, Face 7201)
+        # 布兰登·英格拉姆 Brandon Ingram (Slot 1, Face 7201)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[1, 4, 14, 15],
             intangibles=96, touches=94, shot=94,
-            extra_attrs={"mid_range": 95, "driving_layup": 90, "pass_accuracy": 88},
-            badges={"DifficultShots": 4, "Deadeye": 4}
+            extra_attrs={"mid_range": 96, "driving_layup": 92, "pass_accuracy": 90},
+            badges={"DifficultShots": 4, "Deadeye": 4, "Sniper": 4}
         ))
-        # 麦科勒姆 C.J. McCollum (Slot 12, Face 2696)
+        # C.J. 麦科勒姆 C.J. McCollum (Slot 12, Face 2696)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=1,
             play_types=[4, 1, 15, 14],
@@ -1357,14 +1384,14 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 90, "mid_range": 90, "ball_control": 90},
             badges={"Sniper": 4, "DifficultShots": 3}
         ))
-        # 瓦兰丘纳斯 Jonas Valanciunas (Slot 3, Face 2128)
+        # 约纳斯·瓦兰丘纳斯 Jonas Valanciunas (Slot 3, Face 2128)
         writes.append(make_player_entry(
             name=roster[3][0], slot=3, face=roster[3][1], initiator=0,
             play_types=[8, 7, 15, 0],
             intangibles=88, touches=82, shot=82,
             extra_attrs={"strength": 94, "interior_def": 86}
         ))
-        # 赫伯特·琼斯 Herbert Jones (Slot 10, Face 9927) - 抢断盖帽铁闸
+        # 赫伯特·琼斯 Herbert Jones (Slot 10, Face 9927)
         writes.append(make_player_entry(
             name=roster[10][0], slot=10, face=roster[10][1], initiator=0,
             play_types=[11, 15, 0, 0],
@@ -1375,15 +1402,16 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 17: DAL (Dallas Mavericks)
     elif team_id == 17:
-        # 东契奇 Luka Doncic (Slot 0, Face 7702) - 持球大核战术宇宙
+        # 卢卡·东契奇 Luka Doncic (Slot 0, Face 7702) - 2022 西决宇宙级持球大核！
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 9, 8],
             intangibles=99, touches=99, shot=98,
-            extra_attrs={"pass_accuracy": 99, "pass_vision": 99, "ball_control": 98, "strength": 90},
-            badges={"Dimer": 4, "FloorGeneral": 4, "HandlesForDays": 4, "Deadeye": 4}
+            extra_attrs={"ball_control": 98, "pass_accuracy": 99, "pass_vision": 99, "pass_iq": 99, "three_point": 90, "mid_range": 92, "driving_layup": 94, "strength": 90, "post_moves": 92},
+            extra_tends={"drive": 96, "post_up": 90, "shot_three": 96, "dish_to_open_man": 99},
+            badges={"Dimer": 4, "FloorGeneral": 4, "HandlesForDays": 4, "SpaceCreator": 4, "Deadeye": 4, "DifficultShots": 4, "Sniper": 4, "NeedleThreader": 4, "BulletPasser": 4, "Unpluckable": 4, "ClutchShooter": 4, "BailOut": 4}
         ))
-        # 丁威迪 Spencer Dinwiddie (Slot 10, Face 4168) - 次级持球终结点
+        # 斯宾塞·丁威迪 Spencer Dinwiddie (Slot 10, Face 4168)
         writes.append(make_player_entry(
             name=roster[10][0], slot=10, face=roster[10][1], initiator=1,
             play_types=[4, 1, 15, 14],
@@ -1391,7 +1419,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 86, "driving_layup": 88, "ball_control": 88},
             badges={"QuickFirstStep": 3, "ClutchShooter": 3}
         ))
-        # 伍德 Christian Wood (Slot 12, Face 4485) - 空间进攻型内线
+        # 克里斯蒂安·伍德 Christian Wood (Slot 12, Face 4485)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=0,
             play_types=[15, 7, 8, 1],
@@ -1399,7 +1427,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 86, "driving_layup": 86},
             badges={"CatchAndShoot": 3}
         ))
-        # 小哈达威 Tim Hardaway Jr (Slot 1, Face 2710)
+        # 小蒂姆·哈达威 Tim Hardaway Jr (Slot 1, Face 2710)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=0,
             play_types=[15, 12, 1, 0],
@@ -1407,7 +1435,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"three_point": 88},
             badges={"CatchAndShoot": 4}
         ))
-        # 芬尼-史密斯 Dorian Finney-Smith (Slot 2, Face 7286)
+        # 多里安·芬尼-史密斯 Dorian Finney-Smith (Slot 2, Face 7286)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[15, 11, 0, 0],
@@ -1418,22 +1446,22 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 23: HOU (Houston Rockets)
     elif team_id == 23:
+        # 阿尔佩伦·申京 Alperen Sengun (Slot 5, Face 9908) - 小约基奇内线战术母体！
+        writes.append(make_player_entry(
+            name=roster[5][0], slot=5, face=roster[5][1], initiator=1,
+            play_types=[8, 9, 7, 13],
+            intangibles=96, touches=92, shot=88,
+            extra_attrs={"pass_accuracy": 94, "pass_vision": 95, "post_moves": 94, "interior_def": 86, "strength": 88},
+            extra_tends={"dish_to_open_man": 96, "post_up": 92},
+            badges={"PostPlaymaker": 4, "Dimer": 4, "DreamShake": 4, "PostDropStepper": 4, "BreakStarter": 3}
+        ))
         # 杰伦·格林 Jalen Green (Slot 1, Face 8053)
         writes.append(make_player_entry(
             name=roster[1][0], slot=1, face=roster[1][1], initiator=1,
             play_types=[1, 4, 15, 11],
             intangibles=94, touches=94, shot=95,
-            extra_attrs={"speed": 96, "driving_layup": 92, "three_point": 88},
-            badges={"QuickFirstStep": 4, "Posterizer": 3}
-        ))
-        # 申京 Alperen Sengun (Slot 5, Face 9908) - 小约基奇体系中枢
-        writes.append(make_player_entry(
-            name=roster[5][0], slot=5, face=roster[5][1], initiator=1,
-            play_types=[8, 9, 7, 13],
-            intangibles=96, touches=92, shot=88,
-            extra_attrs={"pass_accuracy": 92, "pass_vision": 94, "interior_def": 84, "strength": 86},
-            extra_tends={"dish_to_open_man": 95, "post_up": 90},
-            badges={"PostPlaymaker": 4, "Dimer": 4, "Dropstepper": 3}
+            extra_attrs={"speed": 98, "acceleration": 98, "driving_dunk": 94, "three_point": 88},
+            badges={"Posterizer": 4, "QuickFirstStep": 4, "Downhill": 4, "LimitlessTakeoff": 4}
         ))
         # 小凯文·波特 Kevin Porter Jr. (Slot 3, Face 7849)
         writes.append(make_player_entry(
@@ -1442,14 +1470,14 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             intangibles=88, touches=88, shot=88,
             extra_attrs={"ball_control": 88, "three_point": 86}
         ))
-        # 泰特 Jae'Sean Tate (Slot 2, Face 8020)
+        # 杰肖恩·泰特 Jae'Sean Tate (Slot 2, Face 8020)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[11, 8, 0, 0],
             intangibles=86, touches=76, shot=76,
             extra_attrs={"strength": 88, "perimeter_def": 85}
         ))
-        # 沃尔 John Wall (Slot 0, Face 1801)
+        # 约翰·沃尔 John Wall (Slot 0, Face 1801)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[4, 1, 14, 0],
@@ -1459,7 +1487,16 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
 
     # 25: SAS (San Antonio Spurs)
     elif team_id == 25:
-        # 凯尔登·约翰逊 Keldon Johnson (Slot 0, Face 7848) - 强力锋线
+        # 德文·瓦塞尔 Devin Vassell (Slot 5, Face 8003) - 纯粹跳投得分手
+        writes.append(make_player_entry(
+            name=roster[5][0], slot=5, face=roster[5][1], initiator=1,
+            play_types=[4, 14, 15, 1],
+            intangibles=92, touches=90, shot=92,
+            extra_attrs={"mid_range": 94, "three_point": 90, "driving_layup": 88},
+            extra_tends={"shot_mid_range": 92, "shot_three": 90},
+            badges={"DifficultShots": 4, "Sniper": 4, "Deadeye": 3}
+        ))
+        # 凯尔登·约翰逊 Keldon Johnson (Slot 0, Face 7848)
         writes.append(make_player_entry(
             name=roster[0][0], slot=0, face=roster[0][1], initiator=1,
             play_types=[1, 4, 15, 11],
@@ -1467,15 +1504,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             extra_attrs={"driving_layup": 92, "three_point": 86, "strength": 88},
             badges={"FearlessFinisher": 3}
         ))
-        # 瓦塞尔 Devin Vassell (Slot 5, Face 8003) - 纯射手中距离
-        writes.append(make_player_entry(
-            name=roster[5][0], slot=5, face=roster[5][1], initiator=1,
-            play_types=[4, 14, 15, 1],
-            intangibles=92, touches=90, shot=92,
-            extra_attrs={"mid_range": 92, "three_point": 88},
-            badges={"DifficultShots": 3, "Sniper": 3}
-        ))
-        # 珀尔特尔 Jakob Poeltl (Slot 2, Face 7207)
+        # 雅各布·珀尔特尔 Jakob Poeltl (Slot 2, Face 7207)
         writes.append(make_player_entry(
             name=roster[2][0], slot=2, face=roster[2][1], initiator=0,
             play_types=[7, 8, 13, 0],
@@ -1489,7 +1518,7 @@ def build_team_top5_players(team_id: int, roster: Dict[int, tuple]) -> List[Dict
             intangibles=86, touches=82, shot=84,
             extra_attrs={"speed": 94, "driving_layup": 86}
         ))
-        # 理查德森 Josh Richardson (Slot 12, Face 4459)
+        # 约什·理查德森 Josh Richardson (Slot 12, Face 4459)
         writes.append(make_player_entry(
             name=roster[12][0], slot=12, face=roster[12][1], initiator=0,
             play_types=[15, 11, 4, 0],
@@ -1507,12 +1536,10 @@ def build_all_teams_spec() -> Dict[str, Any]:
     con = sqlite3.connect(db_path)
     cur = con.cursor()
 
-    # 获取球队基础信息
     teams_meta = {}
     for tid, abbr, name, city in cur.execute("SELECT team_id, abbreviation, name, city FROM teams").fetchall():
         teams_meta[tid] = {"abbr": abbr, "name": f"{city} {name}", "city": city}
 
-    # 获取每队球员名单
     team_players = {}
     for tid in teams_meta.keys():
         rows = cur.execute(
@@ -1524,7 +1551,6 @@ def build_all_teams_spec() -> Dict[str, Any]:
     batches_list = []
     total_players_count = 0
 
-    # 逐赛区构建
     for b_key, b_info in DIVISIONS.items():
         batch_obj = {
             "batch_id": b_key,
@@ -1576,7 +1602,7 @@ def build_all_teams_spec() -> Dict[str, Any]:
 
 def main():
     print("=" * 80)
-    print("正在构建 NBA 2K22 30 队五虎现实化重构规格书 (v2.0 全维通用规范 - 真实交易后完整 30 队版)...")
+    print("正在构建 NBA 2K22 30 队五虎现实化重构规格书 (v2.0 - 2022~2026 核心巨星深度现实化校准版)...")
     print("=" * 80)
 
     spec = build_all_teams_spec()
@@ -1601,7 +1627,7 @@ def main():
     print("规格书生成完毕统计：")
     print(f"  - 覆盖赛区数: {len(spec['batches'])} (六大赛区)")
     print(f"  - 覆盖球队数: {spec['total_teams']} 支")
-    print(f"  - 覆盖球员数: {spec['total_players']} 名核心五虎 (100% 深度定制)")
+    print(f"  - 覆盖球员数: {spec['total_players']} 名核心五虎 (100% 深度现实化定制)")
     print("=" * 80)
 
 if __name__ == "__main__":
