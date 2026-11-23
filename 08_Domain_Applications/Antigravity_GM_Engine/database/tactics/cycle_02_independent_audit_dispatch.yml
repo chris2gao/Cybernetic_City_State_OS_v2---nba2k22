@@ -1,0 +1,45 @@
+task_id: TASK_CYCLE_02_30_TEAMS_INDEPENDENT_AUDIT
+target_cycle: season_2021_2022_cycle_02
+repository: chris2gao/Cybernetic_City_State_OS_v2---nba2k22
+branch: task/nba2k22-v2-full-dimensional-realism-rebalance
+base_commit: cb39e9f8
+commissioning_role: decision_architecture
+assigned_role: independent_review
+task_package_ref: 08_Domain_Applications/Antigravity_GM_Engine/docs/80_CYCLE_02_30_TEAMS_INDEPENDENT_AUDIT_TASK_PACKAGE.md
+standard_ref: 08_Domain_Applications/Antigravity_GM_Engine/docs/49_NBA2K22_TACTICAL_SYSTEM_AND_GAME_THEORETIC_TUNING_STANDARD.md
+primary_evidence_surfaces:
+  global_spec: 08_Domain_Applications/Antigravity_GM_Engine/database/tactics/cycle_02_30_teams_realism_execution_ready.json
+  batch_specs:
+    - 08_Domain_Applications/Antigravity_GM_Engine/database/tactics/BATCH_01_ATLANTIC_FULL_DIMENSIONAL_SPEC.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/database/tactics/BATCH_02_CENTRAL_FULL_DIMENSIONAL_SPEC.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/database/tactics/BATCH_03_SOUTHEAST_FULL_DIMENSIONAL_SPEC.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/database/tactics/BATCH_04_PACIFIC_FULL_DIMENSIONAL_SPEC.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/database/tactics/BATCH_05_NORTHWEST_FULL_DIMENSIONAL_SPEC.json
+    - 08_Domain_Applications/Antigravity_GM_Engine/database/tactics/BATCH_06_SOUTHWEST_FULL_DIMENSIONAL_SPEC.json
+  proposal_docs_range: "08_Domain_Applications/Antigravity_GM_Engine/docs/50_GSW to 79_HOU"
+minimum_work_unit_output:
+  role: decision_architecture
+  work_performed_or_requested: >-
+    Dispatch the independent review task for the 30-team full-dimensional tactical
+    and game-theoretic batch modification files (cycle_02 and BATCH_01..06 specs),
+    verifying numerical accuracy, touches conservation, and cross-document serialization fidelity.
+  implementation_or_review_method: >-
+    Formulate a deterministic 4-tier audit matrix (touches conservation intervals,
+    uint8 value bounds, key tactical fix invariants, and cross-document serialization fidelity),
+    bind evidence surfaces to exact repository paths, and define strict PASS/FIX_REQUIRED/REJECT exit gates.
+  supportability_rationale: >-
+    Full-dimensional realism rebalance touches 464+ players and 30 coaching blocks; an
+    independent pre-execution numerical audit is required to prevent live database corruption,
+    simulation crashes, or player role trampling before live modification execution.
+  feasibility_rationale: >-
+    All target JSON specs and markdown proposal documents are fully generated, mirrored
+    in exports, and pushed to remote branch task/nba2k22-v2-full-dimensional-realism-rebalance;
+    independent reviewer can deterministically validate the entire corpus using standard JSON and text parsers.
+  task_constraints_and_boundaries:
+    - Independent reviewer inspects numerical correctness and consistency; does not modify live save during review.
+    - Review verdict must be one of PASS, FIX_REQUIRED, or REJECT.
+    - Live memory/database execution remains blocked until review passes.
+  stop_or_return_conditions:
+    - Discovery of any out-of-bounds uint8 value or invalid play type enum (>= 15).
+    - Unresolved starter touches trampling (> 330) in any of the 30 teams.
+    - Contradiction between proposal docs and serialized execution JSON.
