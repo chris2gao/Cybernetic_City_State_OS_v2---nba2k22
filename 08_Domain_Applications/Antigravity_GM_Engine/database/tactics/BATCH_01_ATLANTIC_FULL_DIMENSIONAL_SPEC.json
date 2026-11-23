@@ -1,0 +1,2191 @@
+{
+  "batch_id": "BATCH_01_ATLANTIC",
+  "division": "01 Atlantic",
+  "teams_count": 5,
+  "teams": {
+    "0": {
+      "team_id": 0,
+      "team_abbr": "PHI",
+      "team_name": "Philadelphia 76ers",
+      "coaching_system": {
+        "active_system": "Post Centric",
+        "active_system_id": 4,
+        "preferred_system": "Defense First",
+        "preferred_system_id": 7,
+        "freelance_sets": [
+          18,
+          5,
+          28,
+          3
+        ],
+        "run_play_tendency": 80,
+        "help_defense": 65,
+        "bench_depth": 9,
+        "bench_utilization": 65,
+        "poe_offense": "FEED_THE_POST (3)",
+        "poe_offense_tempo": "PATIENT_OFFENSE (7)",
+        "poe_offense_rebound": "LIMIT_TRANSITION (12)",
+        "poe_defense": "PROTECT_PAINT (13)",
+        "poe_defense_physicality": "PLAY_PHYSICAL (18)",
+        "poe_defense_rebound": "CRASH_DEFENSIVE_BOARDS (19)"
+      },
+      "lineups": {
+        "starting_5": [
+          "Ben Simmons",
+          "Seth Curry",
+          "Danny Green",
+          "Tobias Harris",
+          "Joel Embiid"
+        ],
+        "clutch_5": [
+          "Ben Simmons",
+          "Seth Curry",
+          "Matisse Thybulle",
+          "Tobias Harris",
+          "Joel Embiid"
+        ]
+      },
+      "play_types_and_initiator": {
+        "Ben Simmons": {
+          "initiator": true,
+          "slots": [
+            "P&R Ball Handler (4)",
+            "Isolation Point (2)",
+            "Handoff Passer (13)",
+            "Cutter (11)"
+          ]
+        },
+        "Joel Embiid": {
+          "initiator": true,
+          "slots": [
+            "Post Up Low (8)",
+            "Post Up High (9)",
+            "P&R Roll Man (7)",
+            "Mid Range (14)"
+          ]
+        },
+        "Seth Curry": {
+          "initiator": false,
+          "slots": [
+            "3 PT (15)",
+            "Handoff Receiver (12)",
+            "Cutter (11)",
+            "P&R Ball Handler (4)"
+          ]
+        },
+        "Tobias Harris": {
+          "initiator": false,
+          "slots": [
+            "Isolation Wing (3)",
+            "Post Up Low (8)",
+            "3 PT (15)",
+            "Mid Range (14)"
+          ]
+        },
+        "Tyrese Maxey": {
+          "initiator": true,
+          "slots": [
+            "P&R Ball Handler (4)",
+            "Isolation Point (2)",
+            "3 PT (15)",
+            "Cutter (11)"
+          ]
+        },
+        "Matisse Thybulle": {
+          "initiator": false,
+          "slots": [
+            "Cutter (11)",
+            "3 PT (15)",
+            "None (0)",
+            "None (0)"
+          ]
+        }
+      },
+      "player_tendencies_tuning": {
+        "Joel Embiid": {
+          "touches": 96,
+          "shot_tendency": 92,
+          "post_up": 95,
+          "shot_mid": 75,
+          "shot_three": 45,
+          "block_shot": 65,
+          "contest_shot": 95
+        },
+        "Ben Simmons": {
+          "touches": 90,
+          "shot_tendency": 55,
+          "drive_tendency": 88,
+          "dish_to_open_man": 96,
+          "shot_mid": 10,
+          "shot_three": 0,
+          "on_ball_steal": 85,
+          "contest_shot": 92
+        },
+        "Seth Curry": {
+          "touches": 80,
+          "shot_tendency": 85,
+          "shot_three": 95,
+          "spot_up_shot": 96,
+          "off_screen_shot": 92,
+          "shot_mid": 65,
+          "drive_tendency": 45
+        },
+        "Matisse Thybulle": {
+          "touches": 45,
+          "shot_tendency": 50,
+          "shot_three": 75,
+          "spot_up_shot": 80,
+          "on_ball_steal": 95,
+          "pass_perception": 96,
+          "contest_shot": 98
+        },
+        "Tobias Harris": {
+          "touches": 85,
+          "shot_tendency": 86,
+          "shot_mid": 80,
+          "shot_three": 80,
+          "drive_tendency": 75,
+          "post_up": 70
+        }
+      },
+      "defensive_gameplan": {
+        "PressureOnball": "TIGHT",
+        "PressureOffball": "DENY_BALL",
+        "ScreenDefenseOnBall": "GO_OVER",
+        "ScreenDefenseHedge": "DROP",
+        "ScreenDefenseOnBall5": "GO_OVER",
+        "ScreenDefenseHedge5": "DROP",
+        "StayAttached": "YES",
+        "SwitchRule": "NO_SWITCH",
+        "TagOnRoll": "YES",
+        "PreRotate": 1,
+        "DoubleTeamPerimeter": "NEVER",
+        "DoubleTeamPost": "NEVER"
+      },
+      "rotation_minutes": {
+        "Joel Embiid": 37,
+        "Ben Simmons": 36,
+        "Tobias Harris": 33,
+        "Danny Green": 28,
+        "Seth Curry": 28,
+        "Matisse Thybulle": 26,
+        "Tyrese Maxey": 22,
+        "Georges Niang": 16,
+        "Andre Drummond": 14
+      },
+      "intangibles_adjustments": {
+        "Joel Embiid": {
+          "position": "C",
+          "target_minutes": 37.0,
+          "base_ovr": 88.2,
+          "current": 85,
+          "target": 50,
+          "delta": -35,
+          "realized_eff_ovr": 88.2,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(37.0m)，锚定队内最高综评阶梯"
+        },
+        "Ben Simmons": {
+          "position": "PG",
+          "target_minutes": 36.0,
+          "base_ovr": 79.4,
+          "current": 95,
+          "target": 99,
+          "delta": 4,
+          "realized_eff_ovr": 83.4,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(36.0m)，锚定队内最高综评阶梯"
+        },
+        "Tobias Harris": {
+          "position": "PF",
+          "target_minutes": 33.0,
+          "base_ovr": 71.5,
+          "current": 75,
+          "target": 99,
+          "delta": 24,
+          "realized_eff_ovr": 75.5,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(33.0m)，锚定队内最高综评阶梯"
+        },
+        "Seth Curry": {
+          "position": "SG",
+          "target_minutes": 28.0,
+          "base_ovr": 71.9,
+          "current": 95,
+          "target": 99,
+          "delta": 4,
+          "realized_eff_ovr": 76.0,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(28.0m)，压制同位置轮换竞争"
+        },
+        "Danny Green": {
+          "position": "SF",
+          "target_minutes": 28.0,
+          "base_ovr": 67.4,
+          "current": 60,
+          "target": 99,
+          "delta": 39,
+          "realized_eff_ovr": 71.4,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(28.0m)，压制同位置轮换竞争"
+        },
+        "Matisse Thybulle": {
+          "position": "SF",
+          "target_minutes": 26.0,
+          "base_ovr": 67.7,
+          "current": 40,
+          "target": 99,
+          "delta": 59,
+          "realized_eff_ovr": 71.8,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(26.0m)，压制同位置轮换竞争"
+        },
+        "Tyrese Maxey": {
+          "position": "PG",
+          "target_minutes": 22.0,
+          "base_ovr": 72.7,
+          "current": 88,
+          "target": 99,
+          "delta": 11,
+          "realized_eff_ovr": 76.7,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(22.0m)"
+        },
+        "Georges Niang": {
+          "position": "PF",
+          "target_minutes": 16.0,
+          "base_ovr": 60.0,
+          "current": 75,
+          "target": 99,
+          "delta": 24,
+          "realized_eff_ovr": 64.0,
+          "role_tier": "BENCH_DEPTH",
+          "reason": "角色球员补充特定功能时间(16.0m)"
+        },
+        "Andre Drummond": {
+          "position": "C",
+          "target_minutes": 14.0,
+          "base_ovr": 72.2,
+          "current": 60,
+          "target": 38,
+          "delta": -22,
+          "realized_eff_ovr": 71.2,
+          "role_tier": "BENCH_DEPTH",
+          "reason": "角色球员补充特定功能时间(14.0m)"
+        },
+        "Shake Milton": {
+          "position": "SG",
+          "target_minutes": 0.0,
+          "base_ovr": 72.3,
+          "current": 60,
+          "target": 25,
+          "delta": -35,
+          "realized_eff_ovr": 70.3,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Furkan Korkmaz": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 62.1,
+          "current": 93,
+          "target": 25,
+          "delta": -68,
+          "realized_eff_ovr": 60.0,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Isaiah Joe": {
+          "position": "SG",
+          "target_minutes": 0.0,
+          "base_ovr": 69.5,
+          "current": 80,
+          "target": 25,
+          "delta": -55,
+          "realized_eff_ovr": 67.4,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Paul Reed": {
+          "position": "PF",
+          "target_minutes": 0.0,
+          "base_ovr": 61.7,
+          "current": 71,
+          "target": 25,
+          "delta": -46,
+          "realized_eff_ovr": 59.6,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Charles Bassey": {
+          "position": "C",
+          "target_minutes": 0.0,
+          "base_ovr": 65.0,
+          "current": 25,
+          "target": 25,
+          "delta": 0,
+          "realized_eff_ovr": 62.9,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Jaden Springer": {
+          "position": "PG",
+          "target_minutes": 0.0,
+          "base_ovr": 72.5,
+          "current": 55,
+          "target": 25,
+          "delta": -30,
+          "realized_eff_ovr": 70.5,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Grant Riller": {
+          "position": "PG",
+          "target_minutes": 0.0,
+          "base_ovr": 73.8,
+          "current": 50,
+          "target": 25,
+          "delta": -25,
+          "realized_eff_ovr": 71.8,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        }
+      },
+      "mentorship_progression": {
+        "mentor": "Danny Green",
+        "mentee": "Tyrese Maxey",
+        "target_badges": [
+          "Catch & Shoot (接球投篮)",
+          "Corner Specialist (底角专家)",
+          "Clamps (死亡缠绕)"
+        ],
+        "growth_objective": "帮助年轻双能卫 Maxey 强化外线无球投射稳定性与外线横移贴防，加速全明星潜能兑现"
+      }
+    },
+    "5": {
+      "team_id": 5,
+      "team_abbr": "BOS",
+      "team_name": "Boston Celtics",
+      "coaching_system": {
+        "active_system": "Perimeter / Five-Out Spread PnR & Switch-All Defense",
+        "active_system_id": 3,
+        "preferred_system": 3,
+        "preferred_system_id": 3,
+        "freelance_sets": [
+          5,
+          28,
+          21,
+          18
+        ],
+        "run_play_tendency": 75,
+        "help_defense": 85,
+        "bench_depth": 9,
+        "bench_utilization": 50,
+        "zone_usage": 2,
+        "tempo": 70,
+        "poe_offense": "ID_6",
+        "poe_offense_tempo": "ID_8",
+        "poe_offense_rebound": "ID_12",
+        "poe_defense": "ID_15",
+        "poe_defense_physicality": "ID_18",
+        "poe_defense_rebound": "ID_19"
+      },
+      "lineups": {
+        "starting_5": [
+          "Marcus Smart",
+          "Jaylen Brown",
+          "Jayson Tatum",
+          "Al Horford",
+          "Robert Williams"
+        ],
+        "clutch_5": [
+          "Marcus Smart",
+          "Jaylen Brown",
+          "Jayson Tatum",
+          "Grant Williams",
+          "Robert Williams"
+        ]
+      },
+      "play_types_and_initiator": {
+        "Jayson Tatum": {
+          "is_play_initiator": 1,
+          "play_types": [
+            6,
+            1,
+            14,
+            3
+          ],
+          "roster_slot": 3,
+          "role": "Starters SF / Alpha Wing Creator & Mismatch Assassin"
+        },
+        "Jaylen Brown": {
+          "is_play_initiator": 0,
+          "play_types": [
+            6,
+            1,
+            11,
+            13
+          ],
+          "roster_slot": 2,
+          "role": "Starters SG / Explosive Transition Slasher & Midrange Hard-Shooter"
+        },
+        "Marcus Smart": {
+          "is_play_initiator": 1,
+          "play_types": [
+            4,
+            10,
+            14,
+            1
+          ],
+          "roster_slot": 1,
+          "role": "Starters PG / Defensive Anchor, Lead Distributor & Hustle Soul"
+        },
+        "Al Horford": {
+          "is_play_initiator": 0,
+          "play_types": [
+            9,
+            14,
+            7,
+            8
+          ],
+          "roster_slot": 4,
+          "role": "Starters PF/C / Stretch-5 Playmaker & Post Anchor"
+        },
+        "Robert Williams": {
+          "is_play_initiator": 0,
+          "play_types": [
+            7,
+            11,
+            10,
+            0
+          ],
+          "roster_slot": 5,
+          "role": "Starters C / Time Lord, Lob Menace & Weakside Eraser"
+        },
+        "Malcolm Brogdon": {
+          "is_play_initiator": 1,
+          "play_types": [
+            4,
+            1,
+            14,
+            12
+          ],
+          "roster_slot": 12,
+          "role": "6th Man PG/SG / Sixth Man Slasher & Midrange Master"
+        },
+        "Derrick White": {
+          "is_play_initiator": 1,
+          "play_types": [
+            4,
+            14,
+            11,
+            0
+          ],
+          "roster_slot": 11,
+          "role": "Bench Guard / Two-Way Connector & Perimeter Clamp"
+        },
+        "Grant Williams": {
+          "is_play_initiator": 0,
+          "play_types": [
+            14,
+            7,
+            0,
+            0
+          ],
+          "roster_slot": 7,
+          "role": "Bench Forward / Batman, Corner Sniper & Heavy Post Anchor"
+        },
+        "Payton Pritchard": {
+          "is_play_initiator": 0,
+          "play_types": [
+            14,
+            4,
+            0,
+            0
+          ],
+          "roster_slot": 8,
+          "role": "Bench Guard / Microwave Deep Shooter & Pace Injector"
+        },
+        "Dennis Schroder": {
+          "is_play_initiator": 1,
+          "play_types": [
+            4,
+            1,
+            12,
+            0
+          ],
+          "roster_slot": 0,
+          "role": "Bench Guard / Fast-Break Penetrator & On-Ball Pest"
+        },
+        "Derrick Jones Jr.": {
+          "is_play_initiator": 0,
+          "play_types": [
+            11,
+            7,
+            0,
+            0
+          ],
+          "roster_slot": 14,
+          "role": "Bench Forward / Transition Lob Finisher & Length Disruptor"
+        },
+        "Enes Kanter": {
+          "is_play_initiator": 0,
+          "play_types": [
+            8,
+            7,
+            0,
+            0
+          ],
+          "roster_slot": 6,
+          "role": "Reserve Center / Offensive Rebounder & Low Post Bruiser"
+        },
+        "Kris Dunn": {
+          "is_play_initiator": 0,
+          "play_types": [
+            4,
+            11,
+            0,
+            0
+          ],
+          "roster_slot": 9,
+          "role": "Reserve Guard / Elite On-Ball Perimeter Clamp"
+        },
+        "Jabari Parker": {
+          "is_play_initiator": 0,
+          "play_types": [
+            1,
+            8,
+            0,
+            0
+          ],
+          "roster_slot": 10,
+          "role": "Reserve Forward / Backup Half-Court Scoring Wing"
+        },
+        "Cory Joseph": {
+          "is_play_initiator": 0,
+          "play_types": [
+            4,
+            14,
+            0,
+            0
+          ],
+          "roster_slot": 13,
+          "role": "Reserve Guard / Veteran Steady Ball Handler"
+        }
+      },
+      "player_tendencies_tuning": {
+        "Jayson Tatum": {
+          "touches": 88,
+          "dish_to_open_man": 78,
+          "play_discipline": 95,
+          "roll_vs_pop": 65,
+          "shot_three": 88
+        },
+        "Jaylen Brown": {
+          "touches": 72,
+          "dish_to_open_man": 45,
+          "play_discipline": 90,
+          "roll_vs_pop": 50,
+          "shot_three": 85
+        },
+        "Marcus Smart": {
+          "touches": 68,
+          "dish_to_open_man": 88,
+          "play_discipline": 95,
+          "roll_vs_pop": 35,
+          "shot_three": 75
+        },
+        "Al Horford": {
+          "touches": 55,
+          "dish_to_open_man": 80,
+          "play_discipline": 95,
+          "roll_vs_pop": 85,
+          "shot_three": 82
+        },
+        "Robert Williams": {
+          "touches": 38,
+          "dish_to_open_man": 35,
+          "play_discipline": 99,
+          "roll_vs_pop": 5,
+          "shot_three": 0
+        },
+        "Malcolm Brogdon": {
+          "touches": 62,
+          "dish_to_open_man": 75,
+          "play_discipline": 90,
+          "roll_vs_pop": 25,
+          "shot_three": 84
+        },
+        "Derrick White": {
+          "touches": 55,
+          "dish_to_open_man": 80,
+          "play_discipline": 95,
+          "roll_vs_pop": 15,
+          "shot_three": 80
+        },
+        "Grant Williams": {
+          "touches": 45,
+          "dish_to_open_man": 40,
+          "play_discipline": 95,
+          "roll_vs_pop": 85,
+          "shot_three": 90
+        },
+        "Payton Pritchard": {
+          "touches": 42,
+          "dish_to_open_man": 50,
+          "play_discipline": 85,
+          "roll_vs_pop": 25,
+          "shot_three": 90
+        },
+        "Dennis Schroder": {
+          "touches": 42,
+          "dish_to_open_man": 60,
+          "play_discipline": 85,
+          "roll_vs_pop": 50,
+          "shot_three": 74
+        },
+        "Derrick Jones Jr.": {
+          "touches": 30,
+          "dish_to_open_man": 25,
+          "play_discipline": 90,
+          "roll_vs_pop": 15,
+          "shot_three": 70
+        },
+        "Enes Kanter": {
+          "touches": 22,
+          "dish_to_open_man": 30,
+          "play_discipline": 90,
+          "roll_vs_pop": 15,
+          "shot_three": 0
+        },
+        "Kris Dunn": {
+          "touches": 20,
+          "dish_to_open_man": 50,
+          "play_discipline": 95,
+          "roll_vs_pop": 30,
+          "shot_three": 65
+        },
+        "Jabari Parker": {
+          "touches": 20,
+          "dish_to_open_man": 35,
+          "play_discipline": 85,
+          "roll_vs_pop": 35,
+          "shot_three": 60
+        },
+        "Cory Joseph": {
+          "touches": 18,
+          "dish_to_open_man": 55,
+          "play_discipline": 95,
+          "roll_vs_pop": 25,
+          "shot_three": 75
+        }
+      },
+      "defensive_gameplan": {
+        "PressureOnball": "TIGHT",
+        "PressureOffball": "TIGHT",
+        "ScreenDefenseOnBall": "SWITCH",
+        "ScreenDefenseHedge": "SOFT_HEDGE",
+        "ScreenDefenseOnBall5": "GO_OVER",
+        "ScreenDefenseHedge5": "DROP",
+        "StayAttached": "YES",
+        "SwitchRule": "SWITCH_ALL",
+        "TagOnRoll": "YES",
+        "PreRotate": 1,
+        "DoubleTeamPerimeter": "NEVER",
+        "DoubleTeamPost": "NEVER"
+      },
+      "rotation_minutes": {
+        "Jayson Tatum": 37,
+        "Jaylen Brown": 35,
+        "Marcus Smart": 34,
+        "Robert Williams": 30,
+        "Al Horford": 26,
+        "Dennis Schroder": 24,
+        "Grant Williams": 22,
+        "Josh Richardson": 18,
+        "Payton Pritchard": 14
+      },
+      "intangibles_adjustments": {
+        "Jayson Tatum": {
+          "position": "SF",
+          "target_minutes": 37.0,
+          "base_ovr": 80.2,
+          "current": 95,
+          "target": 87,
+          "delta": -8,
+          "realized_eff_ovr": 83.2,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(37.0m)，锚定队内最高综评阶梯"
+        },
+        "Jaylen Brown": {
+          "position": "SG",
+          "target_minutes": 35.0,
+          "base_ovr": 83.9,
+          "current": 70,
+          "target": 25,
+          "delta": -45,
+          "realized_eff_ovr": 81.8,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(35.0m)，锚定队内最高综评阶梯"
+        },
+        "Marcus Smart": {
+          "position": "PG",
+          "target_minutes": 34.0,
+          "base_ovr": 75.1,
+          "current": 40,
+          "target": 99,
+          "delta": 59,
+          "realized_eff_ovr": 79.1,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(34.0m)，锚定队内最高综评阶梯"
+        },
+        "Robert Williams": {
+          "position": "C",
+          "target_minutes": 30.0,
+          "base_ovr": 73.3,
+          "current": 50,
+          "target": 99,
+          "delta": 49,
+          "realized_eff_ovr": 77.3,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(30.0m)，压制同位置轮换竞争"
+        },
+        "Al Horford": {
+          "position": "PF",
+          "target_minutes": 26.0,
+          "base_ovr": 71.6,
+          "current": 46,
+          "target": 92,
+          "delta": 46,
+          "realized_eff_ovr": 75.0,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(26.0m)，压制同位置轮换竞争"
+        },
+        "Dennis Schroder": {
+          "position": "PG",
+          "target_minutes": 24.0,
+          "base_ovr": 75.2,
+          "current": 85,
+          "target": 30,
+          "delta": -55,
+          "realized_eff_ovr": 73.6,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(24.0m)"
+        },
+        "Grant Williams": {
+          "position": "SF",
+          "target_minutes": 22.0,
+          "base_ovr": 63.6,
+          "current": 79,
+          "target": 99,
+          "delta": 20,
+          "realized_eff_ovr": 67.6,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(22.0m)"
+        },
+        "Josh Richardson": {
+          "position": "SG",
+          "target_minutes": 18.0,
+          "base_ovr": 74.5,
+          "current": 70,
+          "target": 25,
+          "delta": -45,
+          "realized_eff_ovr": 72.4,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(18.0m)"
+        },
+        "Payton Pritchard": {
+          "position": "PG",
+          "target_minutes": 14.0,
+          "base_ovr": 71.8,
+          "current": 79,
+          "target": 25,
+          "delta": -54,
+          "realized_eff_ovr": 69.7,
+          "role_tier": "BENCH_DEPTH",
+          "reason": "角色球员补充特定功能时间(14.0m)"
+        },
+        "Enes Kanter": {
+          "position": "C",
+          "target_minutes": 0.0,
+          "base_ovr": 68.0,
+          "current": 50,
+          "target": 25,
+          "delta": -25,
+          "realized_eff_ovr": 66.0,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Aaron Nesmith": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 63.0,
+          "current": 79,
+          "target": 25,
+          "delta": -54,
+          "realized_eff_ovr": 60.9,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Kris Dunn": {
+          "position": "PG",
+          "target_minutes": 0.0,
+          "base_ovr": 72.4,
+          "current": 25,
+          "target": 25,
+          "delta": 0,
+          "realized_eff_ovr": 70.3,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Romeo Langford": {
+          "position": "SG",
+          "target_minutes": 0.0,
+          "base_ovr": 69.7,
+          "current": 80,
+          "target": 25,
+          "delta": -55,
+          "realized_eff_ovr": 67.6,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Jabari Parker": {
+          "position": "PF",
+          "target_minutes": 0.0,
+          "base_ovr": 64.0,
+          "current": 35,
+          "target": 25,
+          "delta": -10,
+          "realized_eff_ovr": 61.9,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Drew Eubanks": {
+          "position": "C",
+          "target_minutes": 0.0,
+          "base_ovr": 68.0,
+          "current": 50,
+          "target": 25,
+          "delta": -25,
+          "realized_eff_ovr": 65.9,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        }
+      },
+      "mentorship_progression": {
+        "mentor": "Al Horford",
+        "mentee": "Robert Williams",
+        "target_badges": [
+          "Post Playmaker (低位策应)",
+          "Brick Wall (强力掩护)",
+          "Post Lockdown (低位锁防)"
+        ],
+        "growth_objective": "将时间领主罗威打磨为兼具掩护策应与禁区防守的全能中锋"
+      },
+      "player_modifications": [
+        {
+          "roster_slot": 3,
+          "player_name": "Jayson Tatum",
+          "role": "Starters SF / Alpha Wing Creator & Mismatch Assassin",
+          "touches": 88,
+          "dish": 78,
+          "play_discipline": 95,
+          "roll_pop": 65,
+          "shot_three": 88,
+          "is_initiator": true,
+          "play_types": [
+            6,
+            1,
+            14,
+            3
+          ]
+        },
+        {
+          "roster_slot": 2,
+          "player_name": "Jaylen Brown",
+          "role": "Starters SG / Explosive Transition Slasher & Midrange Hard-Shooter",
+          "touches": 72,
+          "dish": 45,
+          "play_discipline": 90,
+          "roll_pop": 50,
+          "shot_three": 85,
+          "is_initiator": false,
+          "play_types": [
+            6,
+            1,
+            11,
+            13
+          ]
+        },
+        {
+          "roster_slot": 1,
+          "player_name": "Marcus Smart",
+          "role": "Starters PG / Defensive Anchor, Lead Distributor & Hustle Soul",
+          "touches": 68,
+          "dish": 88,
+          "play_discipline": 95,
+          "roll_pop": 35,
+          "shot_three": 75,
+          "is_initiator": true,
+          "play_types": [
+            4,
+            10,
+            14,
+            1
+          ]
+        },
+        {
+          "roster_slot": 4,
+          "player_name": "Al Horford",
+          "role": "Starters PF/C / Stretch-5 Playmaker & Post Anchor",
+          "touches": 55,
+          "dish": 80,
+          "play_discipline": 95,
+          "roll_pop": 85,
+          "shot_three": 82,
+          "is_initiator": false,
+          "play_types": [
+            9,
+            14,
+            7,
+            8
+          ]
+        },
+        {
+          "roster_slot": 5,
+          "player_name": "Robert Williams",
+          "role": "Starters C / Time Lord, Lob Menace & Weakside Eraser",
+          "touches": 38,
+          "dish": 35,
+          "play_discipline": 99,
+          "roll_pop": 5,
+          "shot_three": 0,
+          "is_initiator": false,
+          "play_types": [
+            7,
+            11,
+            10,
+            0
+          ]
+        },
+        {
+          "roster_slot": 12,
+          "player_name": "Malcolm Brogdon",
+          "role": "6th Man PG/SG / Sixth Man Slasher & Midrange Master",
+          "touches": 62,
+          "dish": 75,
+          "play_discipline": 90,
+          "roll_pop": 25,
+          "shot_three": 84,
+          "is_initiator": true,
+          "play_types": [
+            4,
+            1,
+            14,
+            12
+          ]
+        },
+        {
+          "roster_slot": 11,
+          "player_name": "Derrick White",
+          "role": "Bench Guard / Two-Way Connector & Perimeter Clamp",
+          "touches": 55,
+          "dish": 80,
+          "play_discipline": 95,
+          "roll_pop": 15,
+          "shot_three": 80,
+          "is_initiator": true,
+          "play_types": [
+            4,
+            14,
+            11,
+            0
+          ]
+        },
+        {
+          "roster_slot": 7,
+          "player_name": "Grant Williams",
+          "role": "Bench Forward / Batman, Corner Sniper & Heavy Post Anchor",
+          "touches": 45,
+          "dish": 40,
+          "play_discipline": 95,
+          "roll_pop": 85,
+          "shot_three": 90,
+          "is_initiator": false,
+          "play_types": [
+            14,
+            7,
+            0,
+            0
+          ]
+        },
+        {
+          "roster_slot": 8,
+          "player_name": "Payton Pritchard",
+          "role": "Bench Guard / Microwave Deep Shooter & Pace Injector",
+          "touches": 42,
+          "dish": 50,
+          "play_discipline": 85,
+          "roll_pop": 25,
+          "shot_three": 90,
+          "is_initiator": false,
+          "play_types": [
+            14,
+            4,
+            0,
+            0
+          ]
+        },
+        {
+          "roster_slot": 0,
+          "player_name": "Dennis Schroder",
+          "role": "Bench Guard / Fast-Break Penetrator & On-Ball Pest",
+          "touches": 42,
+          "dish": 60,
+          "play_discipline": 85,
+          "roll_pop": 50,
+          "shot_three": 74,
+          "is_initiator": true,
+          "play_types": [
+            4,
+            1,
+            12,
+            0
+          ]
+        },
+        {
+          "roster_slot": 14,
+          "player_name": "Derrick Jones Jr.",
+          "role": "Bench Forward / Transition Lob Finisher & Length Disruptor",
+          "touches": 30,
+          "dish": 25,
+          "play_discipline": 90,
+          "roll_pop": 15,
+          "shot_three": 70,
+          "is_initiator": false,
+          "play_types": [
+            11,
+            7,
+            0,
+            0
+          ]
+        },
+        {
+          "roster_slot": 6,
+          "player_name": "Enes Kanter",
+          "role": "Reserve Center / Offensive Rebounder & Low Post Bruiser",
+          "touches": 22,
+          "dish": 30,
+          "play_discipline": 90,
+          "roll_pop": 15,
+          "shot_three": 0,
+          "is_initiator": false,
+          "play_types": [
+            8,
+            7,
+            0,
+            0
+          ]
+        },
+        {
+          "roster_slot": 9,
+          "player_name": "Kris Dunn",
+          "role": "Reserve Guard / Elite On-Ball Perimeter Clamp",
+          "touches": 20,
+          "dish": 50,
+          "play_discipline": 95,
+          "roll_pop": 30,
+          "shot_three": 65,
+          "is_initiator": false,
+          "play_types": [
+            4,
+            11,
+            0,
+            0
+          ]
+        },
+        {
+          "roster_slot": 10,
+          "player_name": "Jabari Parker",
+          "role": "Reserve Forward / Backup Half-Court Scoring Wing",
+          "touches": 20,
+          "dish": 35,
+          "play_discipline": 85,
+          "roll_pop": 35,
+          "shot_three": 60,
+          "is_initiator": false,
+          "play_types": [
+            1,
+            8,
+            0,
+            0
+          ]
+        },
+        {
+          "roster_slot": 13,
+          "player_name": "Cory Joseph",
+          "role": "Reserve Guard / Veteran Steady Ball Handler",
+          "touches": 18,
+          "dish": 55,
+          "play_discipline": 95,
+          "roll_pop": 25,
+          "shot_three": 75,
+          "is_initiator": false,
+          "play_types": [
+            4,
+            14,
+            0,
+            0
+          ]
+        }
+      ],
+      "coaching_modifications": {
+        "active_system": 3,
+        "preferred_system": 3,
+        "help_defense": 85,
+        "run_play_tendency": 75,
+        "bench_depth": 9,
+        "bench_utilization": 50,
+        "poe_offense": 6,
+        "poe_offense_tempo": 8,
+        "poe_offense_transition": 12,
+        "poe_defense": 15,
+        "poe_defense_physicality": 18,
+        "poe_defense_rebound": 19,
+        "zone_usage": 2,
+        "tempo": 70
+      }
+    },
+    "14": {
+      "team_id": 14,
+      "team_abbr": "NYK",
+      "team_name": "New York Knicks",
+      "coaching_system": {
+        "active_system": "Grit & Grind",
+        "active_system_id": 1,
+        "preferred_system": "Defense First",
+        "preferred_system_id": 7,
+        "freelance_sets": [
+          18,
+          3,
+          5,
+          28
+        ],
+        "run_play_tendency": 75,
+        "help_defense": 70,
+        "bench_depth": 9,
+        "bench_utilization": 65,
+        "poe_offense": "RUN_OFFENSE_THROUGH_SCORER (6)",
+        "poe_offense_tempo": "PATIENT_OFFENSE (7)",
+        "poe_offense_rebound": "CRASH_OFFENSIVE_BOARDS (10)",
+        "poe_defense": "PROTECT_PAINT (13)",
+        "poe_defense_physicality": "PLAY_PHYSICAL (18)",
+        "poe_defense_rebound": "CRASH_DEFENSIVE_BOARDS (19)"
+      },
+      "lineups": {
+        "starting_5": [
+          "Kemba Walker",
+          "Evan Fournier",
+          "R.J. Barrett",
+          "Julius Randle",
+          "Mitchell Robinson"
+        ],
+        "clutch_5": [
+          "Derrick Rose",
+          "Alec Burks",
+          "R.J. Barrett",
+          "Julius Randle",
+          "Mitchell Robinson"
+        ]
+      },
+      "play_types_and_initiator": {
+        "Julius Randle": {
+          "initiator": true,
+          "slots": [
+            "Isolation Wing (3)",
+            "Post Up High (9)",
+            "P&R Ball Handler (4)",
+            "3 PT (15)"
+          ]
+        },
+        "Derrick Rose": {
+          "initiator": true,
+          "slots": [
+            "P&R Ball Handler (4)",
+            "Isolation Point (2)",
+            "Mid Range (14)",
+            "Cutter (11)"
+          ]
+        },
+        "Kemba Walker": {
+          "initiator": true,
+          "slots": [
+            "P&R Ball Handler (4)",
+            "Isolation Point (2)",
+            "3 PT (15)",
+            "Handoff Receiver (12)"
+          ]
+        },
+        "Evan Fournier": {
+          "initiator": false,
+          "slots": [
+            "3 PT (15)",
+            "Handoff Receiver (12)",
+            "Cutter (11)",
+            "Mid Range (14)"
+          ]
+        },
+        "R.J. Barrett": {
+          "initiator": false,
+          "slots": [
+            "Isolation Wing (3)",
+            "Cutter (11)",
+            "3 PT (15)",
+            "Transition"
+          ]
+        },
+        "Mitchell Robinson": {
+          "initiator": false,
+          "slots": [
+            "P&R Roll Man (7)",
+            "Cutter (11)",
+            "Putback",
+            "None (0)"
+          ]
+        }
+      },
+      "player_tendencies_tuning": {
+        "Julius Randle": {
+          "touches": 94,
+          "shot_tendency": 90,
+          "dish_to_open_man": 88,
+          "post_up": 85,
+          "shot_three": 80,
+          "shot_mid": 75,
+          "contest_shot": 88
+        },
+        "Derrick Rose": {
+          "touches": 88,
+          "shot_tendency": 86,
+          "drive_tendency": 92,
+          "dish_to_open_man": 90,
+          "tear_dropper": 95,
+          "clutch_execution": 95
+        },
+        "R.J. Barrett": {
+          "touches": 82,
+          "shot_tendency": 84,
+          "drive_tendency": 88,
+          "attack_strong": 90,
+          "shot_three": 78,
+          "contest_shot": 85
+        },
+        "Evan Fournier": {
+          "touches": 75,
+          "shot_tendency": 82,
+          "shot_three": 90,
+          "spot_up_shot": 92,
+          "shot_mid": 65
+        },
+        "Mitchell Robinson": {
+          "touches": 40,
+          "shot_tendency": 45,
+          "crash_offensive_rebound": 98,
+          "block_shot": 72,
+          "contest_shot": 96
+        }
+      },
+      "defensive_gameplan": {
+        "PressureOnball": "MODERATE",
+        "PressureOffball": "TIGHT",
+        "ScreenDefenseOnBall": "GO_OVER",
+        "ScreenDefenseHedge": "DROP",
+        "ScreenDefenseOnBall5": "GO_OVER",
+        "ScreenDefenseHedge5": "DROP",
+        "StayAttached": "YES",
+        "SwitchRule": "NO_SWITCH",
+        "TagOnRoll": "YES",
+        "PreRotate": 1,
+        "DoubleTeamPerimeter": "NEVER",
+        "DoubleTeamPost": "NEVER"
+      },
+      "rotation_minutes": {
+        "Julius Randle": 37,
+        "R.J. Barrett": 34,
+        "Derrick Rose": 28,
+        "Mitchell Robinson": 28,
+        "Evan Fournier": 26,
+        "Alec Burks": 24,
+        "Kemba Walker": 24,
+        "Immanuel Quickley": 21,
+        "Obi Toppin": 18
+      },
+      "intangibles_adjustments": {
+        "Julius Randle": {
+          "position": "PF",
+          "target_minutes": 37.0,
+          "base_ovr": 75.7,
+          "current": 75,
+          "target": 87,
+          "delta": 12,
+          "realized_eff_ovr": 78.8,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(37.0m)，锚定队内最高综评阶梯"
+        },
+        "R.J. Barrett": {
+          "position": "SF",
+          "target_minutes": 34.0,
+          "base_ovr": 73.1,
+          "current": 86,
+          "target": 92,
+          "delta": 6,
+          "realized_eff_ovr": 76.5,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(34.0m)，锚定队内最高综评阶梯"
+        },
+        "Mitchell Robinson": {
+          "position": "C",
+          "target_minutes": 28.0,
+          "base_ovr": 72.4,
+          "current": 85,
+          "target": 46,
+          "delta": -39,
+          "realized_eff_ovr": 72.0,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(28.0m)，压制同位置轮换竞争"
+        },
+        "Derrick Rose": {
+          "position": "PG",
+          "target_minutes": 28.0,
+          "base_ovr": 76.7,
+          "current": 50,
+          "target": 25,
+          "delta": -25,
+          "realized_eff_ovr": 74.6,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(28.0m)，压制同位置轮换竞争"
+        },
+        "Evan Fournier": {
+          "position": "SG",
+          "target_minutes": 26.0,
+          "base_ovr": 74.5,
+          "current": 85,
+          "target": 25,
+          "delta": -60,
+          "realized_eff_ovr": 72.4,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(26.0m)，压制同位置轮换竞争"
+        },
+        "Kemba Walker": {
+          "position": "PG",
+          "target_minutes": 24.0,
+          "base_ovr": 76.5,
+          "current": 93,
+          "target": 25,
+          "delta": -68,
+          "realized_eff_ovr": 74.4,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(24.0m)"
+        },
+        "Alec Burks": {
+          "position": "SF",
+          "target_minutes": 24.0,
+          "base_ovr": 69.2,
+          "current": 62,
+          "target": 48,
+          "delta": -14,
+          "realized_eff_ovr": 69.1,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(24.0m)"
+        },
+        "Immanuel Quickley": {
+          "position": "SG",
+          "target_minutes": 21.0,
+          "base_ovr": 72.7,
+          "current": 90,
+          "target": 25,
+          "delta": -65,
+          "realized_eff_ovr": 70.6,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(21.0m)"
+        },
+        "Obi Toppin": {
+          "position": "PF",
+          "target_minutes": 18.0,
+          "base_ovr": 62.6,
+          "current": 75,
+          "target": 75,
+          "delta": 0,
+          "realized_eff_ovr": 64.6,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(18.0m)"
+        },
+        "Kevin Knox II": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 62.2,
+          "current": 98,
+          "target": 25,
+          "delta": -73,
+          "realized_eff_ovr": 60.1,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Quentin Grimes": {
+          "position": "SG",
+          "target_minutes": 0.0,
+          "base_ovr": 72.2,
+          "current": 60,
+          "target": 25,
+          "delta": -35,
+          "realized_eff_ovr": 70.1,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Miles McBride": {
+          "position": "SG",
+          "target_minutes": 0.0,
+          "base_ovr": 70.6,
+          "current": 60,
+          "target": 25,
+          "delta": -35,
+          "realized_eff_ovr": 68.6,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Talen Horton-Tuc": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 68.2,
+          "current": 75,
+          "target": 25,
+          "delta": -50,
+          "realized_eff_ovr": 66.1,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "DeMarcus Cousins": {
+          "position": "C",
+          "target_minutes": 0.0,
+          "base_ovr": 74.5,
+          "current": 35,
+          "target": 25,
+          "delta": -10,
+          "realized_eff_ovr": 72.4,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Sterling Brown": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 66.3,
+          "current": 83,
+          "target": 25,
+          "delta": -58,
+          "realized_eff_ovr": 64.3,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        }
+      },
+      "mentorship_progression": {
+        "mentor": "Derrick Rose",
+        "mentee": "Immanuel Quickley",
+        "target_badges": [
+          "Quick First Step (第一步大师)",
+          "Dimer (十美分)",
+          "Tear Dropper (抛投大师)"
+        ],
+        "growth_objective": "将 Quickley 培养为兼具爆发突破与组织大局观的新一代后场支柱"
+      }
+    },
+    "18": {
+      "team_id": 18,
+      "team_abbr": "BKN",
+      "team_name": "Brooklyn Nets",
+      "coaching_system": {
+        "active_system": "Pace & Space",
+        "active_system_id": 2,
+        "preferred_system": "Seven Seconds",
+        "preferred_system_id": 6,
+        "freelance_sets": [
+          5,
+          18,
+          24,
+          21
+        ],
+        "run_play_tendency": 50,
+        "help_defense": 50,
+        "bench_depth": 9,
+        "bench_utilization": 60,
+        "poe_offense": "GET_SHOOTERS_OPEN (2)",
+        "poe_offense_tempo": "SHOOT_AT_WILL (9)",
+        "poe_offense_rebound": "LIMIT_TRANSITION (12)",
+        "poe_defense": "LIMIT_PERIMETER_SHOTS (15)",
+        "poe_defense_physicality": "NEUTRAL_DEFENSE_TEMPO (17)",
+        "poe_defense_rebound": "RUN_IN_TRANSITION (21)"
+      },
+      "lineups": {
+        "starting_5": [
+          "Kyrie Irving",
+          "James Harden",
+          "Joe Harris",
+          "Kevin Durant",
+          "Nicolas Claxton"
+        ],
+        "clutch_5": [
+          "Kyrie Irving",
+          "James Harden",
+          "Joe Harris",
+          "Nicolas Batum",
+          "Kevin Durant"
+        ]
+      },
+      "play_types_and_initiator": {
+        "James Harden": {
+          "initiator": true,
+          "slots": [
+            "P&R Ball Handler (4)",
+            "Isolation Point (2)",
+            "3 PT (15)",
+            "Handoff Passer (13)"
+          ]
+        },
+        "Kevin Durant": {
+          "initiator": true,
+          "slots": [
+            "Isolation Wing (3)",
+            "Post Up High (9)",
+            "P&R Ball Handler (4)",
+            "3 PT (15)"
+          ]
+        },
+        "Kyrie Irving": {
+          "initiator": true,
+          "slots": [
+            "Isolation Point (2)",
+            "P&R Ball Handler (4)",
+            "3 PT (15)",
+            "Mid Range (14)"
+          ]
+        },
+        "Joe Harris": {
+          "initiator": false,
+          "slots": [
+            "3 PT (15)",
+            "Handoff Receiver (12)",
+            "Cutter (11)",
+            "Spot Up"
+          ]
+        },
+        "Nicolas Batum": {
+          "initiator": false,
+          "slots": [
+            "3 PT (15)",
+            "Handoff Receiver (12)",
+            "Cutter (11)",
+            "Post Up High (9)"
+          ]
+        },
+        "Nicolas Claxton": {
+          "initiator": false,
+          "slots": [
+            "P&R Roll Man (7)",
+            "Cutter (11)",
+            "Putback",
+            "None (0)"
+          ]
+        }
+      },
+      "player_tendencies_tuning": {
+        "James Harden": {
+          "touches": 96,
+          "shot_tendency": 90,
+          "dish_to_open_man": 98,
+          "drive_tendency": 90,
+          "stepback_three": 95,
+          "shot_three": 92,
+          "shot_mid": 40
+        },
+        "Kevin Durant": {
+          "touches": 96,
+          "shot_tendency": 96,
+          "shot_mid": 92,
+          "shot_three": 90,
+          "mid_pullup": 95,
+          "isolation": 94,
+          "contest_shot": 92
+        },
+        "Kyrie Irving": {
+          "touches": 92,
+          "shot_tendency": 92,
+          "isolation": 92,
+          "drive_pullup": 92,
+          "shot_three": 88,
+          "shot_mid": 85
+        },
+        "Joe Harris": {
+          "touches": 75,
+          "shot_tendency": 85,
+          "shot_three": 98,
+          "spot_up_shot": 98,
+          "drive_tendency": 30,
+          "shot_mid": 45
+        },
+        "Nicolas Batum": {
+          "touches": 55,
+          "shot_tendency": 65,
+          "shot_three": 90,
+          "spot_up_shot": 92,
+          "pass_perception": 88
+        }
+      },
+      "defensive_gameplan": {
+        "PressureOnball": "TIGHT",
+        "PressureOffball": "TIGHT",
+        "ScreenDefenseOnBall": "SWITCH",
+        "ScreenDefenseHedge": "SWITCH",
+        "ScreenDefenseOnBall5": "SWITCH",
+        "ScreenDefenseHedge5": "SWITCH",
+        "StayAttached": "YES",
+        "SwitchRule": "SWITCH_ALL",
+        "TagOnRoll": "YES",
+        "PreRotate": 1,
+        "DoubleTeamPerimeter": "NEVER",
+        "DoubleTeamPost": "NEVER"
+      },
+      "rotation_minutes": {
+        "Kevin Durant": 37,
+        "James Harden": 37,
+        "Kyrie Irving": 35,
+        "Joe Harris": 30,
+        "Nicolas Claxton": 26,
+        "Nicolas Batum": 24,
+        "Bruce Brown": 18,
+        "Patrick Mills": 18,
+        "Blake Griffin": 15
+      },
+      "intangibles_adjustments": {
+        "James Harden": {
+          "position": "SG",
+          "target_minutes": 37.0,
+          "base_ovr": 82.9,
+          "current": 97,
+          "target": 87,
+          "delta": -10,
+          "realized_eff_ovr": 85.9,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(37.0m)，锚定队内最高综评阶梯"
+        },
+        "Kevin Durant": {
+          "position": "PF",
+          "target_minutes": 37.0,
+          "base_ovr": 78.2,
+          "current": 97,
+          "target": 99,
+          "delta": 2,
+          "realized_eff_ovr": 82.2,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(37.0m)，锚定队内最高综评阶梯"
+        },
+        "Kyrie Irving": {
+          "position": "PG",
+          "target_minutes": 35.0,
+          "base_ovr": 82.8,
+          "current": 80,
+          "target": 69,
+          "delta": -11,
+          "realized_eff_ovr": 84.4,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(35.0m)，锚定队内最高综评阶梯"
+        },
+        "Joe Harris": {
+          "position": "SF",
+          "target_minutes": 30.0,
+          "base_ovr": 67.1,
+          "current": 82,
+          "target": 99,
+          "delta": 17,
+          "realized_eff_ovr": 71.1,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(30.0m)，压制同位置轮换竞争"
+        },
+        "Nicolas Claxton": {
+          "position": "C",
+          "target_minutes": 26.0,
+          "base_ovr": 68.5,
+          "current": 60,
+          "target": 99,
+          "delta": 39,
+          "realized_eff_ovr": 72.5,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(26.0m)，压制同位置轮换竞争"
+        },
+        "Nicolas Batum": {
+          "position": "PF",
+          "target_minutes": 24.0,
+          "base_ovr": 62.3,
+          "current": 78,
+          "target": 99,
+          "delta": 21,
+          "realized_eff_ovr": 66.3,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(24.0m)"
+        },
+        "Patrick Mills": {
+          "position": "PG",
+          "target_minutes": 18.0,
+          "base_ovr": 70.7,
+          "current": 78,
+          "target": 63,
+          "delta": -15,
+          "realized_eff_ovr": 71.8,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(18.0m)"
+        },
+        "Bruce Brown": {
+          "position": "SG",
+          "target_minutes": 18.0,
+          "base_ovr": 69.6,
+          "current": 91,
+          "target": 77,
+          "delta": -14,
+          "realized_eff_ovr": 71.8,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(18.0m)"
+        },
+        "Blake Griffin": {
+          "position": "C",
+          "target_minutes": 15.0,
+          "base_ovr": 64.9,
+          "current": 79,
+          "target": 99,
+          "delta": 20,
+          "realized_eff_ovr": 68.9,
+          "role_tier": "BENCH_DEPTH",
+          "reason": "角色球员补充特定功能时间(15.0m)"
+        },
+        "Paul Millsap": {
+          "position": "PF",
+          "target_minutes": 0.0,
+          "base_ovr": 67.0,
+          "current": 45,
+          "target": 25,
+          "delta": -20,
+          "realized_eff_ovr": 65.0,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "LaMarcus Aldridge": {
+          "position": "C",
+          "target_minutes": 0.0,
+          "base_ovr": 65.8,
+          "current": 25,
+          "target": 25,
+          "delta": 0,
+          "realized_eff_ovr": 63.8,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "James Johnson": {
+          "position": "PF",
+          "target_minutes": 0.0,
+          "base_ovr": 63.4,
+          "current": 60,
+          "target": 25,
+          "delta": -35,
+          "realized_eff_ovr": 61.3,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "DeAndre Bembry": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 65.3,
+          "current": 65,
+          "target": 25,
+          "delta": -40,
+          "realized_eff_ovr": 63.3,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Cameron Thomas": {
+          "position": "SG",
+          "target_minutes": 0.0,
+          "base_ovr": 71.2,
+          "current": 50,
+          "target": 25,
+          "delta": -25,
+          "realized_eff_ovr": 69.1,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Justise Winslow": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 67.6,
+          "current": 75,
+          "target": 25,
+          "delta": -50,
+          "realized_eff_ovr": 65.5,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        }
+      },
+      "mentorship_progression": {
+        "mentor": "Patrick Mills",
+        "mentee": "Cameron Thomas",
+        "target_badges": [
+          "Sniper (狙击手)",
+          "Catch & Shoot (接球投篮)",
+          "Difficult Shots (高难度投篮)"
+        ],
+        "growth_objective": "将 Cam Thomas 培养为板凳席高效微波炉终结杀手"
+      }
+    },
+    "22": {
+      "team_id": 22,
+      "team_abbr": "TOR",
+      "team_name": "Toronto Raptors",
+      "coaching_system": {
+        "active_system": "Pace & Space",
+        "active_system_id": 2,
+        "preferred_system": "Defense First",
+        "preferred_system_id": 7,
+        "freelance_sets": [
+          18,
+          5,
+          21,
+          28
+        ],
+        "run_play_tendency": 60,
+        "help_defense": 75,
+        "bench_depth": 9,
+        "bench_utilization": 65,
+        "poe_offense": "PICK_AND_ROLL_OFFENSE (4)",
+        "poe_offense_tempo": "SHOOT_AT_WILL (9)",
+        "poe_offense_rebound": "CRASH_OFFENSIVE_BOARDS (10)",
+        "poe_defense": "LIMIT_PERIMETER_SHOTS (15)",
+        "poe_defense_physicality": "PLAY_PHYSICAL (18)",
+        "poe_defense_rebound": "RUN_IN_TRANSITION (21)"
+      },
+      "lineups": {
+        "starting_5": [
+          "Malcolm Brogdon",
+          "Fred VanVleet",
+          "OG Anunoby",
+          "Scottie Barnes",
+          "Chris Boucher"
+        ],
+        "clutch_5": [
+          "Malcolm Brogdon",
+          "Fred VanVleet",
+          "Gary Trent Jr.",
+          "OG Anunoby",
+          "Scottie Barnes"
+        ]
+      },
+      "play_types_and_initiator": {
+        "Fred VanVleet": {
+          "initiator": true,
+          "slots": [
+            "P&R Ball Handler (4)",
+            "3 PT (15)",
+            "Isolation Point (2)",
+            "Handoff Receiver (12)"
+          ]
+        },
+        "Malcolm Brogdon": {
+          "initiator": true,
+          "slots": [
+            "P&R Ball Handler (4)",
+            "Mid Range (14)",
+            "3 PT (15)",
+            "Drive"
+          ]
+        },
+        "Scottie Barnes": {
+          "initiator": true,
+          "slots": [
+            "P&R Roll Man (7)",
+            "Post Up High (9)",
+            "Cutter (11)",
+            "Handoff Passer (13)"
+          ]
+        },
+        "OG Anunoby": {
+          "initiator": false,
+          "slots": [
+            "3 PT (15)",
+            "Cutter (11)",
+            "Isolation Wing (3)",
+            "Spot Up"
+          ]
+        },
+        "Gary Trent Jr.": {
+          "initiator": false,
+          "slots": [
+            "3 PT (15)",
+            "Handoff Receiver (12)",
+            "Mid Range (14)",
+            "Cutter (11)"
+          ]
+        },
+        "Chris Boucher": {
+          "initiator": false,
+          "slots": [
+            "P&R Roll Man (7)",
+            "3 PT (15)",
+            "Cutter (11)",
+            "Putback"
+          ]
+        }
+      },
+      "player_tendencies_tuning": {
+        "Fred VanVleet": {
+          "touches": 92,
+          "shot_tendency": 88,
+          "dish_to_open_man": 94,
+          "shot_three": 90,
+          "shot_mid": 55,
+          "on_ball_steal": 92,
+          "contest_shot": 95
+        },
+        "Malcolm Brogdon": {
+          "touches": 88,
+          "shot_tendency": 85,
+          "dish_to_open_man": 92,
+          "shot_mid": 80,
+          "shot_three": 82,
+          "drive_tendency": 80
+        },
+        "Scottie Barnes": {
+          "touches": 88,
+          "shot_tendency": 78,
+          "dish_to_open_man": 90,
+          "pass_vision": 92,
+          "post_up": 75,
+          "crash_offensive_rebound": 92,
+          "contest_shot": 92
+        },
+        "OG Anunoby": {
+          "touches": 85,
+          "shot_tendency": 85,
+          "shot_three": 88,
+          "spot_up_shot": 92,
+          "shot_mid": 50,
+          "on_ball_steal": 90,
+          "contest_shot": 98
+        },
+        "Gary Trent Jr.": {
+          "touches": 80,
+          "shot_tendency": 90,
+          "shot_three": 94,
+          "spot_up_shot": 95,
+          "shot_mid": 75
+        }
+      },
+      "defensive_gameplan": {
+        "PressureOnball": "TIGHT",
+        "PressureOffball": "DENY_BALL",
+        "ScreenDefenseOnBall": "SWITCH",
+        "ScreenDefenseHedge": "SOFT_HEDGE",
+        "ScreenDefenseOnBall5": "SWITCH",
+        "ScreenDefenseHedge5": "SOFT_HEDGE",
+        "StayAttached": "YES",
+        "SwitchRule": "SWITCH_ALL",
+        "TagOnRoll": "YES",
+        "PreRotate": 1,
+        "DoubleTeamPerimeter": "NEVER",
+        "DoubleTeamPost": "NEVER"
+      },
+      "rotation_minutes": {
+        "Fred VanVleet": 36,
+        "Malcolm Brogdon": 34,
+        "OG Anunoby": 34,
+        "Scottie Barnes": 32,
+        "Gary Trent Jr.": 28,
+        "Chris Boucher": 24,
+        "Precious Achiuwa": 20,
+        "Goran Dragic": 16,
+        "Khem Birch": 16
+      },
+      "intangibles_adjustments": {
+        "Fred VanVleet": {
+          "position": "SG",
+          "target_minutes": 36.0,
+          "base_ovr": 77.7,
+          "current": 98,
+          "target": 87,
+          "delta": -11,
+          "realized_eff_ovr": 80.7,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(36.0m)，锚定队内最高综评阶梯"
+        },
+        "OG Anunoby": {
+          "position": "SF",
+          "target_minutes": 34.0,
+          "base_ovr": 73.2,
+          "current": 55,
+          "target": 99,
+          "delta": 44,
+          "realized_eff_ovr": 77.2,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(34.0m)，锚定队内最高综评阶梯"
+        },
+        "Malcolm Brogdon": {
+          "position": "PG",
+          "target_minutes": 34.0,
+          "base_ovr": 78.4,
+          "current": 70,
+          "target": 59,
+          "delta": -11,
+          "realized_eff_ovr": 79.2,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(34.0m)，锚定队内最高综评阶梯"
+        },
+        "Scottie Barnes": {
+          "position": "PF",
+          "target_minutes": 32.0,
+          "base_ovr": 68.4,
+          "current": 55,
+          "target": 99,
+          "delta": 44,
+          "realized_eff_ovr": 72.4,
+          "role_tier": "FRANCHISE_STAR",
+          "reason": "保障球队头号核心出场时间(32.0m)，锚定队内最高综评阶梯"
+        },
+        "Gary Trent Jr.": {
+          "position": "SG",
+          "target_minutes": 28.0,
+          "base_ovr": 71.6,
+          "current": 98,
+          "target": 88,
+          "delta": -10,
+          "realized_eff_ovr": 74.7,
+          "role_tier": "CORE_STARTER",
+          "reason": "稳固主力首发地位(28.0m)，压制同位置轮换竞争"
+        },
+        "Chris Boucher": {
+          "position": "PF",
+          "target_minutes": 24.0,
+          "base_ovr": 72.6,
+          "current": 50,
+          "target": 41,
+          "delta": -9,
+          "realized_eff_ovr": 71.8,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(24.0m)"
+        },
+        "Precious Achiuwa": {
+          "position": "C",
+          "target_minutes": 20.0,
+          "base_ovr": 70.3,
+          "current": 45,
+          "target": 31,
+          "delta": -14,
+          "realized_eff_ovr": 68.8,
+          "role_tier": "KEY_ROTATION",
+          "reason": "第六人/主力轮换吃满核心替补时间(20.0m)"
+        },
+        "Goran Dragic": {
+          "position": "PG",
+          "target_minutes": 16.0,
+          "base_ovr": 71.6,
+          "current": 75,
+          "target": 25,
+          "delta": -50,
+          "realized_eff_ovr": 69.5,
+          "role_tier": "BENCH_DEPTH",
+          "reason": "角色球员补充特定功能时间(16.0m)"
+        },
+        "Khem Birch": {
+          "position": "C",
+          "target_minutes": 16.0,
+          "base_ovr": 69.8,
+          "current": 60,
+          "target": 25,
+          "delta": -35,
+          "realized_eff_ovr": 67.8,
+          "role_tier": "BENCH_DEPTH",
+          "reason": "角色球员补充特定功能时间(16.0m)"
+        },
+        "Sviatoslav Mykhailiuk": {
+          "position": "SG",
+          "target_minutes": 0.0,
+          "base_ovr": 66.9,
+          "current": 95,
+          "target": 25,
+          "delta": -70,
+          "realized_eff_ovr": 64.9,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Yuta Watanabe": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 62.0,
+          "current": 98,
+          "target": 25,
+          "delta": -73,
+          "realized_eff_ovr": 59.9,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Malachi Flynn": {
+          "position": "PG",
+          "target_minutes": 0.0,
+          "base_ovr": 70.2,
+          "current": 90,
+          "target": 25,
+          "delta": -65,
+          "realized_eff_ovr": 68.2,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Isaac Bonga": {
+          "position": "SF",
+          "target_minutes": 0.0,
+          "base_ovr": 60.0,
+          "current": 70,
+          "target": 25,
+          "delta": -45,
+          "realized_eff_ovr": 58.0,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Freddie Gillespie": {
+          "position": "C",
+          "target_minutes": 0.0,
+          "base_ovr": 60.0,
+          "current": 98,
+          "target": 25,
+          "delta": -73,
+          "realized_eff_ovr": 58.0,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        },
+        "Maurice Harkless": {
+          "position": "PF",
+          "target_minutes": 0.0,
+          "base_ovr": 60.0,
+          "current": 85,
+          "target": 25,
+          "delta": -60,
+          "realized_eff_ovr": 58.0,
+          "role_tier": "RESERVE_INACTIVE",
+          "reason": "压低非轮换边缘球员综评，确保游戏AI自动雪藏(0.0m)"
+        }
+      },
+      "mentorship_progression": {
+        "mentor": "Malcolm Brogdon",
+        "mentee": "Scottie Barnes",
+        "target_badges": [
+          "Dimer (十美分)",
+          "Floor General (组织核心)",
+          "Sniper (狙击手)"
+        ],
+        "growth_objective": "将巴恩斯打磨为兼具十美分视野与外线射程的新一代超级组织前锋"
+      }
+    }
+  }
+}
