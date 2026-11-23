@@ -1,0 +1,661 @@
+{
+  "protocol_version": "2.0",
+  "task_package_id": "TASK-BOS-CHAMPIONSHIP-DEFENSE-CALIBRATION-01",
+  "team_id": 5,
+  "team_abbr": "BOS",
+  "team_name": "Boston Celtics",
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "val_raw": 3,
+      "description": "战术体系: 3 (Perimeter 外线主导 / 防守反击)"
+    },
+    {
+      "field_name": "preferred_system",
+      "target_block": "COACHDATA",
+      "offset": 266,
+      "val_raw": 3,
+      "description": "偏好战术体系: 3 (Perimeter)"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "val_raw": 75,
+      "description": "战术执行倾向: 75% (坚决呼叫双探花单打与掩护)"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "val_raw": 9,
+      "description": "轮换人数: 9人精简季后赛轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "val_raw": 50,
+      "description": "替补使用率: 50 (主力出战36+分钟)"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "val_raw": 85,
+      "description": "全队协防倾向: 85% (从35大幅拉升，弱侧极速轮转)"
+    },
+    {
+      "field_name": "zone_usage",
+      "target_block": "COACHDATA",
+      "offset": 226,
+      "val_raw": 2,
+      "description": "区域联防频率: 2% (全员无限换防人盯人为主)"
+    }
+  ],
+  "freelance_writes": [
+    {
+      "slot": 1,
+      "type_name": "FOUR_OUT",
+      "type_id": 5,
+      "description": "首选自由跑位: 5 (一内四外空间拉开)"
+    },
+    {
+      "slot": 2,
+      "type_name": "TWENTY_ONE_DELAY",
+      "type_id": 28,
+      "description": "次选自由跑位: 28 (21 Delay 边线手递手)"
+    },
+    {
+      "slot": 3,
+      "type_name": "PACE",
+      "type_id": 21,
+      "description": "备选自由跑位: 21 (现代空间站位)"
+    },
+    {
+      "slot": 4,
+      "type_name": "FLOW",
+      "type_id": 18,
+      "description": "备选自由跑位: 18 (流动进攻)"
+    }
+  ],
+  "scoring_options": [
+    {
+      "option_slot": 1,
+      "player_name": "Jayson Tatum",
+      "player_id": 7504
+    },
+    {
+      "option_slot": 2,
+      "player_name": "Jaylen Brown",
+      "player_id": 7206
+    },
+    {
+      "option_slot": 3,
+      "player_name": "Marcus Smart",
+      "player_id": 4092
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Jayson Tatum",
+      "roster_index": 3,
+      "cyberface_id": 7504,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          6,
+          1,
+          14,
+          3
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 88,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 88 (绝对第一核心)"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 88,
+          "type": "uint8",
+          "description": "持球出手倾向: 88 (攻坚侵略性)"
+        },
+        {
+          "field": "dish_to_open_man",
+          "offset": 1176,
+          "val_raw": 78,
+          "type": "uint8",
+          "description": "空位分球倾向: 78 (吸夹分球底角)"
+        },
+        {
+          "field": "shot_three",
+          "offset": 1138,
+          "val_raw": 88,
+          "type": "uint8",
+          "description": "三分出手倾向: 88"
+        },
+        {
+          "field": "spot_up_three",
+          "offset": 1139,
+          "val_raw": 85,
+          "type": "uint8",
+          "description": "定点三分倾向: 85"
+        },
+        {
+          "field": "stepback_three",
+          "offset": 1148,
+          "val_raw": 92,
+          "type": "uint8",
+          "description": "招牌后撤步三分: 92"
+        },
+        {
+          "field": "drive",
+          "offset": 1155,
+          "val_raw": 85,
+          "type": "uint8",
+          "description": "突破攻筐倾向: 85"
+        },
+        {
+          "field": "contest_shot",
+          "offset": 1207,
+          "val_raw": 85,
+          "type": "uint8",
+          "description": "防守干扰投篮: 85"
+        }
+      ],
+      "badges": {
+        "Deadeye": 4,
+        "Sniper": 4,
+        "Chef": 3,
+        "Clamps": 4,
+        "Interceptor": 3,
+        "FearlessFinisher": 4
+      }
+    },
+    {
+      "player_name": "Jaylen Brown",
+      "roster_index": 2,
+      "cyberface_id": 7206,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          6,
+          1,
+          11,
+          13
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 72,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 72 (战术第二顺位)"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 86,
+          "type": "uint8",
+          "description": "持球终结倾向: 86 (坚决终结)"
+        },
+        {
+          "field": "dish_to_open_man",
+          "offset": 1176,
+          "val_raw": 48,
+          "type": "uint8",
+          "description": "空位分球倾向: 48 (终结属性)"
+        },
+        {
+          "field": "drive",
+          "offset": 1155,
+          "val_raw": 90,
+          "type": "uint8",
+          "description": "暴力突破倾向: 90"
+        },
+        {
+          "field": "shot_mid_range",
+          "offset": 1130,
+          "val_raw": 88,
+          "type": "uint8",
+          "description": "急停干拔中投: 88"
+        },
+        {
+          "field": "contest_shot",
+          "offset": 1207,
+          "val_raw": 85,
+          "type": "uint8",
+          "description": "防守干扰投篮: 85"
+        }
+      ],
+      "badges": {
+        "Posterizer": 4,
+        "LimitlessTakeoff": 4,
+        "Clamps": 4,
+        "DifficultShots": 4
+      }
+    },
+    {
+      "player_name": "Marcus Smart",
+      "roster_index": 1,
+      "cyberface_id": 4092,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          10,
+          14,
+          1
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 68,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 68 (从96大幅压低，让出开火权)"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 45,
+          "type": "uint8",
+          "description": "出手倾向: 45 (压低勉强出手)"
+        },
+        {
+          "field": "dish_to_open_man",
+          "offset": 1176,
+          "val_raw": 88,
+          "type": "uint8",
+          "description": "空位分球倾向: 88 (高效梳理球权)"
+        },
+        {
+          "field": "on_ball_steal",
+          "offset": 1206,
+          "val_raw": 96,
+          "type": "uint8",
+          "description": "持球抢断倾向: 96 (DPOY)"
+        },
+        {
+          "field": "pass_interception",
+          "offset": 1204,
+          "val_raw": 95,
+          "type": "uint8",
+          "description": "传球抢断倾向: 95"
+        },
+        {
+          "field": "contest_shot",
+          "offset": 1207,
+          "val_raw": 95,
+          "type": "uint8",
+          "description": "干扰投篮倾向: 95"
+        },
+        {
+          "field": "take_charge",
+          "offset": 1205,
+          "val_raw": 99,
+          "type": "uint8",
+          "description": "制造带球撞人: 99 (造犯规第一人)"
+        }
+      ],
+      "badges": {
+        "Clamps": 4,
+        "PickPocket": 4,
+        "Menace": 4,
+        "Dimer": 4,
+        "FloorGeneral": 3,
+        "Interceptor": 4
+      }
+    },
+    {
+      "player_name": "Al Horford",
+      "roster_index": 4,
+      "cyberface_id": 1412,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          9,
+          14,
+          7,
+          8
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 55,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 55"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 50,
+          "type": "uint8",
+          "description": "出手倾向: 50"
+        },
+        {
+          "field": "roll_vs_pop",
+          "offset": 1179,
+          "val_raw": 80,
+          "type": "uint8",
+          "description": "外弹倾向: 80 (从10修正为80，高频外弹三分拉空禁区)"
+        },
+        {
+          "field": "spot_up_three",
+          "offset": 1139,
+          "val_raw": 85,
+          "type": "uint8",
+          "description": "定点三分倾向: 85"
+        },
+        {
+          "field": "dish_to_open_man",
+          "offset": 1176,
+          "val_raw": 82,
+          "type": "uint8",
+          "description": "空位分球倾向: 82"
+        }
+      ],
+      "badges": {
+        "PickAndPopper": 4,
+        "CornerSpecialist": 3,
+        "PostLockdown": 4,
+        "BrickWall": 4
+      }
+    },
+    {
+      "player_name": "Robert Williams",
+      "roster_index": 5,
+      "cyberface_id": 7726,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          11,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 38,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 38 (纯吃饼)"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 40,
+          "type": "uint8",
+          "description": "出手倾向: 40 (空接暴扣)"
+        },
+        {
+          "field": "roll_vs_pop",
+          "offset": 1179,
+          "val_raw": 5,
+          "type": "uint8",
+          "description": "顺下倾向: 5 (从60降至5，纯顺下攻筐，绝不外飘)"
+        },
+        {
+          "field": "block_shot",
+          "offset": 1208,
+          "val_raw": 99,
+          "type": "uint8",
+          "description": "盖帽倾向: 99 (时间领主盖帽统治力)"
+        },
+        {
+          "field": "contest_shot",
+          "offset": 1207,
+          "val_raw": 95,
+          "type": "uint8",
+          "description": "干扰投篮倾向: 95"
+        }
+      ],
+      "badges": {
+        "RimProtector": 4,
+        "ChaseDownArtist": 4,
+        "Intimidator": 4,
+        "LobCityFinisher": 4
+      }
+    },
+    {
+      "player_name": "Derrick White",
+      "roster_index": 11,
+      "cyberface_id": 7536,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          14,
+          11,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 65,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 65 (二阵战术润滑油)"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 62,
+          "type": "uint8",
+          "description": "出手倾向: 62"
+        },
+        {
+          "field": "dish_to_open_man",
+          "offset": 1176,
+          "val_raw": 82,
+          "type": "uint8",
+          "description": "空位分球倾向: 82"
+        },
+        {
+          "field": "spot_up_three",
+          "offset": 1139,
+          "val_raw": 82,
+          "type": "uint8",
+          "description": "定点三分倾向: 82"
+        },
+        {
+          "field": "contest_shot",
+          "offset": 1207,
+          "val_raw": 85,
+          "type": "uint8",
+          "description": "防守干扰投篮: 85"
+        }
+      ],
+      "badges": {
+        "Clamps": 3,
+        "Interceptor": 3,
+        "Dimer": 3
+      }
+    },
+    {
+      "player_name": "Grant Williams",
+      "roster_index": 7,
+      "cyberface_id": 7841,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          14,
+          7,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 45,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 45"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 52,
+          "type": "uint8",
+          "description": "出手倾向: 52"
+        },
+        {
+          "field": "roll_vs_pop",
+          "offset": 1179,
+          "val_raw": 85,
+          "type": "uint8",
+          "description": "外弹倾向: 85 (从30升至85，底角重炮手)"
+        },
+        {
+          "field": "spot_up_three",
+          "offset": 1139,
+          "val_raw": 92,
+          "type": "uint8",
+          "description": "定点三分倾向: 92 (蝙蝠侠底角三分)"
+        }
+      ],
+      "badges": {
+        "CornerSpecialist": 4,
+        "CatchAndShoot": 4,
+        "PostLockdown": 3
+      }
+    },
+    {
+      "player_name": "Payton Pritchard",
+      "roster_index": 8,
+      "cyberface_id": 8015,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          14,
+          4,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 48,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 48"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 75,
+          "type": "uint8",
+          "description": "出手倾向: 75 (微波炉射手)"
+        },
+        {
+          "field": "shot_three",
+          "offset": 1138,
+          "val_raw": 92,
+          "type": "uint8",
+          "description": "三分出手倾向: 92"
+        }
+      ],
+      "badges": {
+        "Sniper": 4,
+        "LimitlessSpotUp": 3
+      }
+    },
+    {
+      "player_name": "Dennis Schroder",
+      "roster_index": 0,
+      "cyberface_id": 2703,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          1,
+          12,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 70,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 70 (从原版畸形96压制至70)"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 68,
+          "type": "uint8",
+          "description": "出手倾向: 68"
+        },
+        {
+          "field": "drive",
+          "offset": 1155,
+          "val_raw": 85,
+          "type": "uint8",
+          "description": "突破攻筐倾向: 85"
+        }
+      ],
+      "badges": {
+        "QuickFirstStep": 4
+      }
+    },
+    {
+      "player_name": "Enes Kanter",
+      "roster_index": 6,
+      "cyberface_id": 2125,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          8,
+          11,
+          7,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "offset": 1177,
+          "val_raw": 32,
+          "type": "uint8",
+          "description": "触球呼叫倾向: 32"
+        },
+        {
+          "field": "shot",
+          "offset": 1112,
+          "val_raw": 35,
+          "type": "uint8",
+          "description": "出手倾向: 35"
+        },
+        {
+          "field": "roll_vs_pop",
+          "offset": 1179,
+          "val_raw": 20,
+          "type": "uint8",
+          "description": "顺下倾向: 20"
+        }
+      ],
+      "badges": {
+        "Worm": 3,
+        "Box": 3
+      }
+    }
+  ]
+}
