@@ -1,0 +1,924 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "team_id": 0,
+  "team_abbr": "PHI",
+  "team_name": "Philadelphia 76ers",
+  "source_research_doc": "56_PHI_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+  "conflict_resolution": "STRICT_LATEST_RESEARCH_DOC_PRIORITY",
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 4,
+      "description": "active_system: 4"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 75,
+      "description": "run_play_tendency: 75"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 65,
+      "description": "help_defense: 65"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "description": "bench_depth: 9"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 65,
+      "description": "bench_utilization: 65"
+    },
+    {
+      "field_name": "zone_usage",
+      "target_block": "COACHDATA",
+      "offset": 226,
+      "type": "uint8",
+      "val_raw": 2,
+      "description": "zone_usage: 2"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Danny Green",
+      "roster_index": 0,
+      "cyberface_id": 1652,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          14,
+          11,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 35,
+          "description": "touches: 35"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 35,
+          "description": "dish_to_open_man: 35"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 95,
+          "description": "play_discipline: 95"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        }
+      ]
+    },
+    {
+      "player_name": "Tobias Harris",
+      "roster_index": 1,
+      "cyberface_id": 2149,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          14,
+          13,
+          6,
+          3
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 50,
+          "description": "touches: 50"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 50,
+          "description": "dish_to_open_man: 50"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 85,
+          "description": "play_discipline: 85"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 15,
+          "description": "roll_vs_pop: 15"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 86,
+          "description": "shot_tendency: 86"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 80,
+          "description": "shot_three: 80"
+        },
+        {
+          "field": "drive_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1155,
+          "type": "uint8",
+          "val_raw": 75,
+          "description": "drive_tendency: 75"
+        }
+      ]
+    },
+    {
+      "player_name": "Joel Embiid",
+      "roster_index": 2,
+      "cyberface_id": 4090,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          8,
+          1,
+          7,
+          13
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 88,
+          "description": "touches: 88"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 55,
+          "description": "dish_to_open_man: 55"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 75,
+          "description": "play_discipline: 75"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 30,
+          "description": "roll_vs_pop: 30"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "description": "shot_tendency: 92"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 45,
+          "description": "shot_three: 45"
+        },
+        {
+          "field": "block_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 65,
+          "description": "block_shot: 65"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 95,
+          "description": "contest_shot: 95"
+        }
+      ]
+    },
+    {
+      "player_name": "Matisse Thybulle",
+      "roster_index": 3,
+      "cyberface_id": 7839,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          11,
+          14,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 28,
+          "description": "touches: 28"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 25,
+          "description": "dish_to_open_man: 25"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 95,
+          "description": "play_discipline: 95"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 50,
+          "description": "shot_tendency: 50"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 75,
+          "description": "shot_three: 75"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 95,
+          "description": "on_ball_steal: 95"
+        },
+        {
+          "field": "pass_perception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1204,
+          "type": "uint8",
+          "val_raw": 96,
+          "description": "pass_perception: 96"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 98,
+          "description": "contest_shot: 98"
+        }
+      ]
+    },
+    {
+      "player_name": "Shake Milton",
+      "roster_index": 4,
+      "cyberface_id": 7753,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          13,
+          12,
+          1
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 60,
+          "description": "touches: 60"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 70,
+          "description": "dish_to_open_man: 70"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 80,
+          "description": "play_discipline: 80"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        }
+      ]
+    },
+    {
+      "player_name": "Tyrese Maxey",
+      "roster_index": 5,
+      "cyberface_id": 8011,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          14,
+          1,
+          12
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 62,
+          "description": "touches: 62"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 60,
+          "description": "dish_to_open_man: 60"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 75,
+          "description": "play_discipline: 75"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        }
+      ]
+    },
+    {
+      "player_name": "Furkan Korkmaz",
+      "roster_index": 6,
+      "cyberface_id": 7217,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          14,
+          12,
+          4,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 30,
+          "description": "touches: 30"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 35,
+          "description": "dish_to_open_man: 35"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 85,
+          "description": "play_discipline: 85"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        }
+      ]
+    },
+    {
+      "player_name": "Georges Niang",
+      "roster_index": 7,
+      "cyberface_id": 7250,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          14,
+          7,
+          12,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 55,
+          "description": "touches: 55"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 50,
+          "description": "dish_to_open_man: 50"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 95,
+          "description": "play_discipline: 95"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 85,
+          "description": "roll_vs_pop: 85"
+        }
+      ]
+    },
+    {
+      "player_name": "Isaiah Joe",
+      "roster_index": 8,
+      "cyberface_id": 9845,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          14,
+          11,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 30,
+          "description": "touches: 30"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 40,
+          "description": "dish_to_open_man: 40"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 85,
+          "description": "play_discipline: 85"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        }
+      ]
+    },
+    {
+      "player_name": "Paul Reed",
+      "roster_index": 9,
+      "cyberface_id": 9853,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          11,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 45,
+          "description": "touches: 45"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 45,
+          "description": "dish_to_open_man: 45"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 90,
+          "description": "play_discipline: 90"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 15,
+          "description": "roll_vs_pop: 15"
+        }
+      ]
+    },
+    {
+      "player_name": "Charles Bassey",
+      "roster_index": 10,
+      "cyberface_id": 9945,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          11,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 15,
+          "description": "touches: 15"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 15,
+          "description": "dish_to_open_man: 15"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 90,
+          "description": "play_discipline: 90"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 10,
+          "description": "roll_vs_pop: 10"
+        }
+      ]
+    },
+    {
+      "player_name": "Jaden Springer",
+      "roster_index": 11,
+      "cyberface_id": 9920,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          14,
+          11,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 15,
+          "description": "touches: 15"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 60,
+          "description": "dish_to_open_man: 60"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 80,
+          "description": "play_discipline: 80"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        }
+      ]
+    },
+    {
+      "player_name": "James Harden",
+      "roster_index": 12,
+      "cyberface_id": 1603,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          1,
+          14,
+          10
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 82,
+          "description": "touches: 82"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 88,
+          "description": "dish_to_open_man: 88"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 75,
+          "description": "play_discipline: 75"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        }
+      ]
+    },
+    {
+      "player_name": "Paul Millsap",
+      "roster_index": 13,
+      "cyberface_id": 1379,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          8,
+          11,
+          14,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 15,
+          "description": "touches: 15"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 35,
+          "description": "dish_to_open_man: 35"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 85,
+          "description": "play_discipline: 85"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 30,
+          "description": "roll_vs_pop: 30"
+        }
+      ]
+    },
+    {
+      "player_name": "Nicolas Batum",
+      "roster_index": 14,
+      "cyberface_id": 1530,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          14,
+          11,
+          12,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 45,
+          "description": "touches: 45"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 45,
+          "description": "dish_to_open_man: 45"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 90,
+          "description": "play_discipline: 90"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 20,
+          "description": "roll_vs_pop: 20"
+        }
+      ]
+    },
+    {
+      "player_name": "Grant Riller",
+      "roster_index": 21,
+      "cyberface_id": 9851,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          14,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 15,
+          "description": "touches: 15"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 65,
+          "description": "dish_to_open_man: 65"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 80,
+          "description": "play_discipline: 80"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "description": "roll_vs_pop: 0"
+        }
+      ]
+    }
+  ]
+}
