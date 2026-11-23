@@ -2836,8 +2836,15 @@
               "field_name": "active_system",
               "target_block": "COACHDATA",
               "offset": 267,
-              "val_raw": 0,
-              "description": "战术系统: 0"
+              "val_raw": 6,
+              "description": "战术系统: 6"
+            },
+            {
+              "field_name": "preferred_system",
+              "target_block": "COACHDATA",
+              "offset": 266,
+              "val_raw": 2,
+              "description": "偏好战术系统: 2"
             },
             {
               "field_name": "bench_depth",
@@ -2857,408 +2864,1047 @@
               "field_name": "run_play_tendency",
               "target_block": "COACHDATA",
               "offset": 224,
+              "val_raw": 75,
+              "description": "战术执行倾向: 75%"
+            },
+            {
+              "field_name": "help_defense",
+              "target_block": "COACHDATA",
+              "offset": 330,
               "val_raw": 80,
-              "description": "战术执行倾向: 80%"
+              "description": "全队协防倾向: 80%"
+            },
+            {
+              "field_name": "zone_usage",
+              "target_block": "COACHDATA",
+              "offset": 226,
+              "val_raw": 5,
+              "description": "区域联防频率: 5%"
             }
           ],
           "player_writes": [
             {
-              "player_name": "Giannis Antetokoun",
+              "player_name": "Giannis Antetokounmpo",
               "roster_index": 3,
-              "cyberface_id": 2701,
               "tactical_playbook": {
-                "is_play_initiator": 1,
+                "is_play_initiator": 0,
                 "play_types": [
                   1,
                   7,
                   8,
-                  4
+                  11
                 ]
               },
               "modifications": [
                 {
-                  "field": "intangibles",
-                  "offset": 1088,
-                  "val_raw": 222,
-                  "human_val": 99,
-                  "type": "uint8",
-                  "description": "无形资产设定: 99 (控制轮换地位与AI上场时间)"
-                },
-                {
                   "field": "touches",
                   "offset": 1177,
-                  "val_raw": 98,
-                  "type": "uint8",
-                  "description": "触球呼叫倾向: 98 (决定战术发起比率)"
-                },
-                {
-                  "field": "shot",
-                  "offset": 1112,
-                  "val_raw": 96,
-                  "type": "uint8",
-                  "description": "持球终结出手倾向: 96 (决定真实持球得分侵略性)"
-                },
-                {
-                  "field": "driving_layup",
-                  "offset": 1055,
-                  "val_raw": 219,
-                  "human_val": 98,
-                  "type": "uint8",
-                  "description": "关键攻防属性 driving_layup: 98"
-                },
-                {
-                  "field": "driving_dunk",
-                  "offset": 1078,
-                  "val_raw": 219,
-                  "human_val": 98,
-                  "type": "uint8",
-                  "description": "关键攻防属性 driving_dunk: 98"
-                },
-                {
-                  "field": "standing_dunk",
-                  "offset": 1077,
-                  "val_raw": 210,
-                  "human_val": 95,
-                  "type": "uint8",
-                  "description": "关键攻防属性 standing_dunk: 95"
-                },
-                {
-                  "field": "interior_def",
-                  "offset": 1069,
-                  "val_raw": 213,
-                  "human_val": 96,
-                  "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 96"
-                },
-                {
-                  "field": "block",
-                  "offset": 1073,
-                  "val_raw": 207,
-                  "human_val": 94,
-                  "type": "uint8",
-                  "description": "关键攻防属性 block: 94"
-                },
-                {
-                  "field": "perimeter_def",
-                  "offset": 1070,
-                  "val_raw": 189,
-                  "human_val": 88,
-                  "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 88"
-                },
-                {
-                  "field": "strength",
-                  "offset": 1083,
-                  "val_raw": 219,
-                  "human_val": 98,
-                  "type": "uint8",
-                  "description": "关键攻防属性 strength: 98"
-                },
-                {
-                  "field": "speed",
-                  "offset": 1079,
-                  "val_raw": 189,
-                  "human_val": 88,
-                  "type": "uint8",
-                  "description": "关键攻防属性 speed: 88"
-                },
-                {
-                  "field": "drive",
-                  "offset": 1155,
-                  "val_raw": 99,
-                  "type": "uint8",
-                  "description": "战术特征倾向 drive: 99"
-                },
-                {
-                  "field": "attack_strong_on_drive",
-                  "offset": 1175,
-                  "val_raw": 99,
-                  "type": "uint8",
-                  "description": "战术特征倾向 attack_strong_on_drive: 99"
-                },
-                {
-                  "field": "post_up",
-                  "offset": 1178,
                   "val_raw": 90,
                   "type": "uint8",
-                  "description": "战术特征倾向 post_up: 90"
+                  "description": "触球呼叫倾向: 90"
                 },
                 {
-                  "field": "block_shot",
-                  "offset": 1208,
-                  "val_raw": 92,
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 60,
                   "type": "uint8",
-                  "description": "战术特征倾向 block_shot: 92"
+                  "description": "分球意愿: 60"
                 },
                 {
-                  "field": "contest_shot",
-                  "offset": 1207,
-                  "val_raw": 95,
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 65,
                   "type": "uint8",
-                  "description": "战术特征倾向 contest_shot: 95"
+                  "description": "顺下外弹倾向: 65"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 60,
+                  "type": "uint8",
+                  "description": "战术纪律: 60"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 60,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 60"
                 }
-              ],
-              "badges": {
-                "Posterizer": 4,
-                "LimitlessTakeoff": 4,
-                "FastTwitch": 4,
-                "FearlessFinisher": 4,
-                "Intimidator": 4,
-                "RimProtector": 4,
-                "Clamps": 4,
-                "ChasedownArtist": 4,
-                "BackdownPunisher": 4,
-                "PostDropStepper": 4,
-                "Downhill": 4
-              }
+              ]
             },
             {
               "player_name": "Khris Middleton",
               "roster_index": 2,
-              "cyberface_id": 2482,
               "tactical_playbook": {
-                "is_play_initiator": 1,
+                "is_play_initiator": 0,
                 "play_types": [
-                  1,
-                  4,
                   13,
+                  4,
+                  1,
                   14
                 ]
               },
               "modifications": [
                 {
-                  "field": "intangibles",
-                  "offset": 1088,
-                  "val_raw": 207,
-                  "human_val": 94,
-                  "type": "uint8",
-                  "description": "无形资产设定: 94 (控制轮换地位与AI上场时间)"
-                },
-                {
                   "field": "touches",
                   "offset": 1177,
-                  "val_raw": 88,
+                  "val_raw": 80,
                   "type": "uint8",
-                  "description": "触球呼叫倾向: 88 (决定战术发起比率)"
+                  "description": "触球呼叫倾向: 80"
                 },
                 {
-                  "field": "shot",
-                  "offset": 1112,
-                  "val_raw": 90,
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 65,
                   "type": "uint8",
-                  "description": "持球终结出手倾向: 90 (决定真实持球得分侵略性)"
+                  "description": "分球意愿: 65"
                 },
                 {
-                  "field": "mid_range",
-                  "offset": 1061,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 10,
                   "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 94"
+                  "description": "顺下外弹倾向: 10"
                 },
                 {
-                  "field": "three_point",
-                  "offset": 1062,
-                  "val_raw": 195,
-                  "human_val": 90,
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 80,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 90"
+                  "description": "战术纪律: 80"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 85"
                 }
-              ],
-              "badges": {
-                "DifficultShots": 4,
-                "Deadeye": 4,
-                "Sniper": 4
-              }
+              ]
             },
             {
               "player_name": "Jrue Holiday",
               "roster_index": 0,
-              "cyberface_id": 1607,
               "tactical_playbook": {
                 "is_play_initiator": 1,
                 "play_types": [
                   4,
-                  8,
+                  14,
                   1,
-                  13
+                  12
                 ]
               },
               "modifications": [
                 {
-                  "field": "intangibles",
-                  "offset": 1088,
-                  "val_raw": 207,
-                  "human_val": 94,
-                  "type": "uint8",
-                  "description": "无形资产设定: 94 (控制轮换地位与AI上场时间)"
-                },
-                {
                   "field": "touches",
                   "offset": 1177,
-                  "val_raw": 86,
+                  "val_raw": 72,
                   "type": "uint8",
-                  "description": "触球呼叫倾向: 86 (决定战术发起比率)"
+                  "description": "触球呼叫倾向: 72"
                 },
                 {
-                  "field": "shot",
-                  "offset": 1112,
-                  "val_raw": 84,
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 75,
                   "type": "uint8",
-                  "description": "持球终结出手倾向: 84 (决定真实持球得分侵略性)"
+                  "description": "分球意愿: 75"
                 },
                 {
-                  "field": "perimeter_def",
-                  "offset": 1070,
-                  "val_raw": 219,
-                  "human_val": 98,
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 15,
                   "type": "uint8",
-                  "description": "关键攻防属性 perimeter_def: 98"
+                  "description": "顺下外弹倾向: 15"
                 },
                 {
-                  "field": "steal",
-                  "offset": 1074,
-                  "val_raw": 210,
-                  "human_val": 95,
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 85,
                   "type": "uint8",
-                  "description": "关键攻防属性 steal: 95"
+                  "description": "战术纪律: 85"
                 },
                 {
-                  "field": "lateral_quick",
-                  "offset": 1071,
-                  "val_raw": 213,
-                  "human_val": 96,
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 82,
                   "type": "uint8",
-                  "description": "关键攻防属性 lateral_quick: 96"
+                  "description": "三分出手倾向: 82"
                 }
-              ],
-              "badges": {
-                "Clamps": 4,
-                "Menace": 4,
-                "PickPocket": 4,
-                "Interceptor": 4
-              }
+              ]
             },
             {
-              "player_name": "Brook Lopez",
-              "roster_index": 4,
-              "cyberface_id": 1516,
+              "player_name": "Grayson Allen",
+              "roster_index": 11,
               "tactical_playbook": {
                 "is_play_initiator": 0,
                 "play_types": [
                   14,
-                  7,
+                  12,
                   0,
                   0
                 ]
               },
               "modifications": [
                 {
-                  "field": "intangibles",
-                  "offset": 1088,
-                  "val_raw": 195,
-                  "human_val": 90,
-                  "type": "uint8",
-                  "description": "无形资产设定: 90 (控制轮换地位与AI上场时间)"
-                },
-                {
                   "field": "touches",
                   "offset": 1177,
-                  "val_raw": 75,
+                  "val_raw": 42,
                   "type": "uint8",
-                  "description": "触球呼叫倾向: 75 (决定战术发起比率)"
+                  "description": "触球呼叫倾向: 42"
                 },
                 {
-                  "field": "shot",
-                  "offset": 1112,
-                  "val_raw": 78,
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 35,
                   "type": "uint8",
-                  "description": "持球终结出手倾向: 78 (决定真实持球得分侵略性)"
+                  "description": "分球意愿: 35"
                 },
                 {
-                  "field": "block",
-                  "offset": 1073,
-                  "val_raw": 207,
-                  "human_val": 94,
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 0,
                   "type": "uint8",
-                  "description": "关键攻防属性 block: 94"
+                  "description": "顺下外弹倾向: 0"
                 },
                 {
-                  "field": "interior_def",
-                  "offset": 1069,
-                  "val_raw": 201,
-                  "human_val": 92,
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 95,
                   "type": "uint8",
-                  "description": "关键攻防属性 interior_def: 92"
+                  "description": "战术纪律: 95"
                 },
                 {
-                  "field": "three_point",
-                  "offset": 1062,
-                  "val_raw": 171,
-                  "human_val": 82,
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 90,
                   "type": "uint8",
-                  "description": "关键攻防属性 three_point: 82"
+                  "description": "三分出手倾向: 90"
                 }
-              ],
-              "badges": {
-                "RimProtector": 4,
-                "Intimidator": 4
-              }
+              ]
             },
             {
-              "player_name": "Bobby Portis Jr.",
-              "roster_index": 6,
-              "cyberface_id": 4454,
+              "player_name": "Brook Lopez",
+              "roster_index": 4,
               "tactical_playbook": {
                 "is_play_initiator": 0,
                 "play_types": [
                   14,
+                  13,
                   8,
-                  7,
                   0
                 ]
               },
               "modifications": [
                 {
-                  "field": "intangibles",
-                  "offset": 1088,
-                  "val_raw": 183,
-                  "human_val": 86,
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 38,
                   "type": "uint8",
-                  "description": "无形资产设定: 86 (控制轮换地位与AI上场时间)"
+                  "description": "触球呼叫倾向: 38"
                 },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 25,
+                  "type": "uint8",
+                  "description": "分球意愿: 25"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 80,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 80"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术纪律: 95"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 85"
+                }
+              ]
+            },
+            {
+              "player_name": "Bobby Portis Jr.",
+              "roster_index": 6,
+              "tactical_playbook": {
+                "is_play_initiator": 0,
+                "play_types": [
+                  8,
+                  14,
+                  7,
+                  13
+                ]
+              },
+              "modifications": [
                 {
                   "field": "touches",
                   "offset": 1177,
+                  "val_raw": 75,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 75"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 40,
+                  "type": "uint8",
+                  "description": "分球意愿: 40"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 40,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 40"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
                   "val_raw": 80,
                   "type": "uint8",
-                  "description": "触球呼叫倾向: 80 (决定战术发起比率)"
+                  "description": "战术纪律: 80"
                 },
                 {
-                  "field": "shot",
-                  "offset": 1112,
-                  "val_raw": 82,
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 85,
                   "type": "uint8",
-                  "description": "持球终结出手倾向: 82 (决定真实持球得分侵略性)"
-                },
-                {
-                  "field": "three_point",
-                  "offset": 1062,
-                  "val_raw": 177,
-                  "human_val": 84,
-                  "type": "uint8",
-                  "description": "关键攻防属性 three_point: 84"
-                },
-                {
-                  "field": "mid_range",
-                  "offset": 1061,
-                  "val_raw": 177,
-                  "human_val": 84,
-                  "type": "uint8",
-                  "description": "关键攻防属性 mid_range: 84"
+                  "description": "三分出手倾向: 85"
                 }
-              ],
-              "badges": {}
+              ]
+            },
+            {
+              "player_name": "Donte DiVincenzo",
+              "roster_index": 1,
+              "tactical_playbook": {
+                "is_play_initiator": 1,
+                "play_types": [
+                  4,
+                  14,
+                  12,
+                  11
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 55,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 55"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 65,
+                  "type": "uint8",
+                  "description": "分球意愿: 65"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 30,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 30"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "战术纪律: 85"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 78,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 78"
+                }
+              ]
+            },
+            {
+              "player_name": "Pat Connaughton",
+              "roster_index": 5,
+              "tactical_playbook": {
+                "is_play_initiator": 0,
+                "play_types": [
+                  14,
+                  11,
+                  12,
+                  0
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 46,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 46"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 35,
+                  "type": "uint8",
+                  "description": "分球意愿: 35"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 5,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 5"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 95,
+                  "type": "uint8",
+                  "description": "战术纪律: 95"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 85"
+                }
+              ]
+            },
+            {
+              "player_name": "Jordan Nwora",
+              "roster_index": 9,
+              "tactical_playbook": {
+                "is_play_initiator": 0,
+                "play_types": [
+                  14,
+                  11,
+                  0,
+                  0
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 38,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 38"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 25,
+                  "type": "uint8",
+                  "description": "分球意愿: 25"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 0,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 0"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "战术纪律: 85"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 80,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 80"
+                }
+              ]
+            },
+            {
+              "player_name": "Rodney Hood",
+              "roster_index": 8,
+              "tactical_playbook": {
+                "is_play_initiator": 0,
+                "play_types": [
+                  14,
+                  13,
+                  1,
+                  0
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 32,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 32"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 35,
+                  "type": "uint8",
+                  "description": "分球意愿: 35"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 0,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 0"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "战术纪律: 85"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 75,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 75"
+                }
+              ]
+            },
+            {
+              "player_name": "P.J. Dozier",
+              "roster_index": 13,
+              "tactical_playbook": {
+                "is_play_initiator": 0,
+                "play_types": [
+                  14,
+                  4,
+                  11,
+                  0
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 30,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 30"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 35,
+                  "type": "uint8",
+                  "description": "分球意愿: 35"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 99,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 99"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "战术纪律: 85"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 70,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 70"
+                }
+              ]
+            },
+            {
+              "player_name": "Semi Ojeleye",
+              "roster_index": 7,
+              "tactical_playbook": {
+                "is_play_initiator": 0,
+                "play_types": [
+                  14,
+                  11,
+                  0,
+                  0
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 20,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 20"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 30,
+                  "type": "uint8",
+                  "description": "分球意愿: 30"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 10,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 10"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 90,
+                  "type": "uint8",
+                  "description": "战术纪律: 90"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 75,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 75"
+                }
+              ]
+            },
+            {
+              "player_name": "Tremont Waters",
+              "roster_index": 12,
+              "tactical_playbook": {
+                "is_play_initiator": 1,
+                "play_types": [
+                  4,
+                  1,
+                  0,
+                  0
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 18,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 18"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 65,
+                  "type": "uint8",
+                  "description": "分球意愿: 65"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 0,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 0"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 85,
+                  "type": "uint8",
+                  "description": "战术纪律: 85"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 75,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 75"
+                }
+              ]
+            },
+            {
+              "player_name": "Thanasis Antetokounmpo",
+              "roster_index": 10,
+              "tactical_playbook": {
+                "is_play_initiator": 0,
+                "play_types": [
+                  11,
+                  1,
+                  0,
+                  0
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 15,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 15"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 30,
+                  "type": "uint8",
+                  "description": "分球意愿: 30"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 30,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 30"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 60,
+                  "type": "uint8",
+                  "description": "战术纪律: 60"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 50,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 50"
+                }
+              ]
+            },
+            {
+              "player_name": "Justin Robinson",
+              "roster_index": 21,
+              "tactical_playbook": {
+                "is_play_initiator": 1,
+                "play_types": [
+                  4,
+                  12,
+                  0,
+                  0
+                ]
+              },
+              "modifications": [
+                {
+                  "field": "touches",
+                  "offset": 1177,
+                  "val_raw": 15,
+                  "type": "uint8",
+                  "description": "触球呼叫倾向: 15"
+                },
+                {
+                  "field": "dish_to_open_man",
+                  "offset": 1176,
+                  "val_raw": 65,
+                  "type": "uint8",
+                  "description": "分球意愿: 65"
+                },
+                {
+                  "field": "roll_vs_pop",
+                  "offset": 1184,
+                  "val_raw": 0,
+                  "type": "uint8",
+                  "description": "顺下外弹倾向: 0"
+                },
+                {
+                  "field": "play_discipline",
+                  "offset": 1181,
+                  "val_raw": 80,
+                  "type": "uint8",
+                  "description": "战术纪律: 80"
+                },
+                {
+                  "field": "shot_three",
+                  "offset": 1182,
+                  "val_raw": 75,
+                  "type": "uint8",
+                  "description": "三分出手倾向: 75"
+                }
+              ]
+            }
+          ],
+          "coaching_modifications": {
+            "active_system": 6,
+            "preferred_system": 2,
+            "help_defense": 80,
+            "run_play_tendency": 75,
+            "bench_depth": 9,
+            "bench_utilization": 50,
+            "poe_offense": 1,
+            "poe_offense_tempo": 8,
+            "poe_offense_transition": 12,
+            "poe_defense": 13,
+            "poe_defense_physicality": 18,
+            "poe_defense_rebound": 19,
+            "zone_usage": 5,
+            "tempo": 65
+          },
+          "player_modifications": [
+            {
+              "roster_slot": 3,
+              "player_name": "Giannis Antetokounmpo",
+              "role": "Starters PF / Greek Freak Paint Nuker, Transition Engine & DPOY Roamer",
+              "touches": 90,
+              "dish": 60,
+              "play_discipline": 60,
+              "roll_pop": 65,
+              "shot_three": 60,
+              "is_initiator": false,
+              "play_types": [
+                1,
+                7,
+                8,
+                11
+              ]
+            },
+            {
+              "roster_slot": 2,
+              "player_name": "Khris Middleton",
+              "role": "Starters SF / Mid-Range Pull-up Problem Solver & Isolation Closer",
+              "touches": 80,
+              "dish": 65,
+              "play_discipline": 80,
+              "roll_pop": 10,
+              "shot_three": 85,
+              "is_initiator": false,
+              "play_types": [
+                13,
+                4,
+                1,
+                14
+              ]
+            },
+            {
+              "roster_slot": 0,
+              "player_name": "Jrue Holiday",
+              "role": "Starters PG / Lead Floor General & Point-of-Attack DPOY Lock",
+              "touches": 72,
+              "dish": 75,
+              "play_discipline": 85,
+              "roll_pop": 15,
+              "shot_three": 82,
+              "is_initiator": true,
+              "play_types": [
+                4,
+                14,
+                1,
+                12
+              ]
+            },
+            {
+              "roster_slot": 11,
+              "player_name": "Grayson Allen",
+              "role": "Starters SG / Five-Out Right Wing Catch-and-Shoot Sniper",
+              "touches": 42,
+              "dish": 35,
+              "play_discipline": 95,
+              "roll_pop": 0,
+              "shot_three": 90,
+              "is_initiator": false,
+              "play_types": [
+                14,
+                12,
+                0,
+                0
+              ]
+            },
+            {
+              "roster_slot": 4,
+              "player_name": "Brook Lopez",
+              "role": "Starters C / Five-Out Stretch-5 Pop Sniper & Paint Drop Anchor",
+              "touches": 38,
+              "dish": 25,
+              "play_discipline": 95,
+              "roll_pop": 80,
+              "shot_three": 85,
+              "is_initiator": false,
+              "play_types": [
+                14,
+                13,
+                8,
+                0
+              ]
+            },
+            {
+              "roster_slot": 6,
+              "player_name": "Bobby Portis Jr.",
+              "role": "6th Man C/PF / Sixth Man Primary Scorer, Low Post Hub & Floor Spacer",
+              "touches": 75,
+              "dish": 40,
+              "play_discipline": 80,
+              "roll_pop": 40,
+              "shot_three": 85,
+              "is_initiator": false,
+              "play_types": [
+                8,
+                14,
+                7,
+                13
+              ]
+            },
+            {
+              "roster_slot": 1,
+              "player_name": "Donte DiVincenzo",
+              "role": "Bench Guard / Bench Primary Playmaker & Perimeter Disruptor",
+              "touches": 55,
+              "dish": 65,
+              "play_discipline": 85,
+              "roll_pop": 30,
+              "shot_three": 78,
+              "is_initiator": true,
+              "play_types": [
+                4,
+                14,
+                12,
+                11
+              ]
+            },
+            {
+              "roster_slot": 5,
+              "player_name": "Pat Connaughton",
+              "role": "Bench Wing / Gold 3&D Corner Specialist & Transition Finisher",
+              "touches": 46,
+              "dish": 35,
+              "play_discipline": 95,
+              "roll_pop": 5,
+              "shot_three": 85,
+              "is_initiator": false,
+              "play_types": [
+                14,
+                11,
+                12,
+                0
+              ]
+            },
+            {
+              "roster_slot": 9,
+              "player_name": "Jordan Nwora",
+              "role": "Bench Forward / Microwave Deep Shooter & Slasher",
+              "touches": 38,
+              "dish": 25,
+              "play_discipline": 85,
+              "roll_pop": 0,
+              "shot_three": 80,
+              "is_initiator": false,
+              "play_types": [
+                14,
+                11,
+                0,
+                0
+              ]
+            },
+            {
+              "roster_slot": 8,
+              "player_name": "Rodney Hood",
+              "role": "Bench Forward / Veteran Scoring Wing",
+              "touches": 32,
+              "dish": 35,
+              "play_discipline": 85,
+              "roll_pop": 0,
+              "shot_three": 75,
+              "is_initiator": false,
+              "play_types": [
+                14,
+                13,
+                1,
+                0
+              ]
+            },
+            {
+              "roster_slot": 13,
+              "player_name": "P.J. Dozier",
+              "role": "Bench Guard / Tall Defensive Wing Guard",
+              "touches": 30,
+              "dish": 35,
+              "play_discipline": 85,
+              "roll_pop": 99,
+              "shot_three": 70,
+              "is_initiator": false,
+              "play_types": [
+                14,
+                4,
+                11,
+                0
+              ]
+            },
+            {
+              "roster_slot": 7,
+              "player_name": "Semi Ojeleye",
+              "role": "Reserve Forward / Heavy Muscle 3&D Forward",
+              "touches": 20,
+              "dish": 30,
+              "play_discipline": 90,
+              "roll_pop": 10,
+              "shot_three": 75,
+              "is_initiator": false,
+              "play_types": [
+                14,
+                11,
+                0,
+                0
+              ]
+            },
+            {
+              "roster_slot": 12,
+              "player_name": "Tremont Waters",
+              "role": "Reserve PG / Quick Playmaker & Ball Handler",
+              "touches": 18,
+              "dish": 65,
+              "play_discipline": 85,
+              "roll_pop": 0,
+              "shot_three": 75,
+              "is_initiator": true,
+              "play_types": [
+                4,
+                1,
+                0,
+                0
+              ]
+            },
+            {
+              "roster_slot": 10,
+              "player_name": "Thanasis Antetokounmpo",
+              "role": "Reserve Forward / High-Energy Hustle Forward",
+              "touches": 15,
+              "dish": 30,
+              "play_discipline": 60,
+              "roll_pop": 30,
+              "shot_three": 50,
+              "is_initiator": false,
+              "play_types": [
+                11,
+                1,
+                0,
+                0
+              ]
+            },
+            {
+              "roster_slot": 21,
+              "player_name": "Justin Robinson",
+              "role": "Reserve Guard / Two-Way Third Guard",
+              "touches": 15,
+              "dish": 65,
+              "play_discipline": 80,
+              "roll_pop": 0,
+              "shot_three": 75,
+              "is_initiator": true,
+              "play_types": [
+                4,
+                12,
+                0,
+                0
+              ]
             }
           ]
         },
