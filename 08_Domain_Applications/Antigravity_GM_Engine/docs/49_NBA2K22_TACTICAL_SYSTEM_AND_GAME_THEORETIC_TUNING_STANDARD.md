@@ -31,8 +31,14 @@
    - 4.1 [引力模型与破局博弈 (Gravity & Counterplay)](#41-引力模型与破局博弈-gravity--counterplay)
    - 4.2 [首发五虎 vs 第 6-10 人第二阵容协同机制](#42-首发五虎-vs-第-6-10-人第二阵容协同机制-化解混编冲突)
    - 4.3 [针对性防守反制策略库](#43-针对性防守反制策略库)
-5. [智能体标准作业流程与自检清单 (Agent SOP & Checklist)](#五-智能体标准作业流程与自检清单-agent-sop--checklist)
-6. [附录：原生参数字典与速查表](#六-附录原生参数字典与速查表)
+   - 4.4 [攻防对抗的五大经典博弈矩阵与数学平衡](#44-攻防对抗的五大经典博弈矩阵与数学平衡-five-tactical-game-theoretic-dualities--equations)
+   - 4.5 [球队 1-10 人阵容搭配博弈推演标准范式](#45-球队-1-10-人阵容搭配博弈推演标准范式-universal-10-man-lineup-derivation-methodology)
+5. [NBA 经典建队逻辑与十大赢球哲学体系库 (BPTI 体系图谱)](#五-nba-经典建队逻辑与十大赢球哲学体系库-bpti-体系图谱与策略选择)
+   - 5.1 [三大宏观建队逻辑与争冠周期哲学](#51-三大宏观建队逻辑与争冠周期哲学)
+   - 5.2 [BPTI 十大经典攻防战术体系卡与博弈选择库](#52-bpti-十大经典攻防战术体系卡与博弈选择库)
+   - 5.3 [三十支球队历史底色与候选体系索引表](#53-三十支球队历史底色与候选体系索引表)
+6. [智能体标准作业流程与自检清单 (Agent SOP & Checklist)](#六-智能体标准作业流程与自检清单-agent-sop--checklist)
+7. [附录：原生参数字典与速查表](#七-附录原生参数字典与速查表)
 
 ---
 
@@ -389,9 +395,147 @@ $$\text{If } \text{touches} \ge 75 \implies \text{DISH\_TO\_OPEN\_MAN} \ge 75$$
 
 ---
 
+## 五、 NBA 经典建队逻辑与十大赢球哲学体系库 (BPTI 体系图谱与策略选择)
+
+高阶 GM 与教练组调优绝非盲目堆砌数值，而是为球队注入**明确的赢球哲学（Winning Philosophy）与战术灵魂**。本章深度提炼了仓库 BPTI（Basketball Principles & Tactical Intelligence）知识底座的核心体系卡，提供三大宏观建队逻辑与十大经典战术体系库，供智能体在调优不同球队时作为理论依据与选择矩阵。
+
+### 5.1 三大宏观建队逻辑与争冠周期哲学
+
+| 建队阶段 | 核心赢球哲学 | 阵容配置优先级 | 进攻与防守取舍 | 2K22 原生调优导向 |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. 争冠窗口期 (Win-Now / Contender)**<br>如勇士、雄鹿、凯尔特人 | **极致效率与针对性克制**：围绕 1~2 名顶级超巨引力打造战术闭环，战术高度针对季后赛硬仗与针对性点名。 | 核心超巨 + 高球商连接者 (Connector) + 3D 侧翼 + 蓝领护筐大闸 | 进攻追求每次回合得分期望 (PPP) 极大化；防守强调专属个人对位撕咬与弱侧极速轮转。 | 锁定高效 Playbook 战术；`RunPlayTendency` 60~75；`HelpDefense` 70~80；`dish_to_open_man` 严防停滞。 |
+| **2. 崛起与适应期 (Two-Way Adaptive)**<br>如灰熊、骑士、猛龙 | **运动能力、团队防守与多面手**：以防守带动转换，追求全员换防弹性（Switchable）与年轻活力。 | 运动型双向锋线 + 挡拆终结内线 + 冲击型后卫 | 防守端侵略性拉满，抢断反击；进攻端强调快攻转换早攻与二次进攻冲抢。 | `Tempo` 80~95；`POEDefense2=PLAY_PHYSICAL`；`POEOffense3=CRASH_OFFENSIVE_BOARDS`；`ExtendPressure=HALF_COURT`。 |
+| **3. 重建蛰伏期 (Rebuilding / Asset Growth)**<br>如雷霆初期、魔术、活塞 | **战术试错、核心喂球与文化塑造**：优先为年轻基石球员创造大量持球与挡拆决策场景，培养比赛阅读能力。 | 年轻核心发起人 + 空间射手拉开环境 + 深度轮换考察新人 | 战术结构相对简洁（Spread P&R 或 4-Out），允许试错失误，注重个人单挑与挡拆能力锻炼。 | `BenchDepth` 11~12；`BenchUtilization` 70~80；高集中度 `touches` 喂给年轻大核。 |
+
 ---
 
-## 五、 智能体标准作业流程与自检清单 (Agent SOP & Checklist)
+### 5.2 BPTI 十大经典攻防战术体系卡与博弈选择库
+
+每个体系均拥有清晰的**优势链条、角色门槛、自主权配置、对手反制与原生参数映射**：
+
+#### 1. 动态传切与空间流动体系 (Motion / Read-and-React)
+* **代表球队/教练**: 金州勇士 (Steve Kerr)、圣安东尼奥马刺 (Gregg Popovich 2014)
+* **赢球哲学**: **“球动人动，优势传递”**。通过高频无球双掩护、手递手（DHO）与空切，迫使防守在追防、挤过与协防中产生微小时间差，再由高球商中枢将优势传递到弱侧致命空位。
+* **优势链条**: 无球掩护/手递手起手 ➔ 防守追防产生半步迟疑 ➔ 射手吸引双人扑防 ➔ 分球短顺下或弧顶中枢 ➔ 弱侧 4 打 3 绝对空位出手机会。
+* **必备角色画像**: 顶级无球神射手 (`Screen 3PT`) + 高位组织发牌轴心 (`P&R Roll Man`, `dish_to_open_man>=90`, `Dimer` 徽章) + 灵动空切手 (`Cutter`)。
+* **对手反制与第二答案**:
+  * *对手反制*: 遇掩护无限换防 (`Switch All`)，封锁外线空位切出；
+  * *第二答案*: 立即利用身体优势展开低位点名坐打矮控卫，或弱侧反切禁区。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `2` (PACE_AND_SPACE) 或 `3` (PERIMETER)
+  * `Tempo`: `90 ~ 95` | `RunPlayTendency`: `60 ~ 70%`
+  * `FreelanceType`: `16` (WARRIORS) / `28` (TWENTY_ONE_DELAY)
+  * `POEOffense`: `2` (GET_SHOOTERS_OPEN) | `POEOffense3`: `12` (LIMIT_TRANSITION)
+
+#### 2. 高位扩散挡拆体系 (Spread Pick-and-Roll)
+* **代表球队/教练**: 达拉斯独行侠 (Luka Doncic)、休斯顿火箭 (Mike D'Antoni)
+* **赢球哲学**: **“绝对持球大核牵引，一内四外空间惩罚”**。由持球大核一人在高位撕裂防线，若大个沉退则抛投/干拔三分，若协防收缩则大对角传底角射手。
+* **优势链条**: 高位挡拆起手 ➔ 突破吸引中锋护筐与弱侧底角收缩 ➔ 持球人自主攻筐或手术刀出球 ➔ 底角空位三分或内线吃饼。
+* **必备角色画像**: 挡拆持球大核 (`P&R Ball Handler`, `touches>=85`, `Dimer`) + 强力挡拆吃饼中锋 (`P&R Roll Man`, `roll_vs_pop<=15`, `Lob City Finisher`) + 3 名定点底角射手 (`Spot Up 3PT`, `Corner Specialist`)。
+* **对手反制与第二答案**:
+  * *对手反制*: 高位双人强行夹击 (`Blitz`)，逼迫大核出球；
+  * *第二答案*: 顺下内线需具备一定短接应中转能力，或让副控在弧顶接过渡球重新发起二次挡拆。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `2` (PACE_AND_SPACE) | `Tempo`: `75 ~ 85`
+  * `FreelanceType`: `5` (FOUR_OUT) 或 `21` (PACE)
+  * `POEOffense`: `4` (PICK_AND_ROLL_OFFENSE)
+
+#### 3. 组织中锋与肘区轴心体系 (Point-Center / Elbow Hub)
+* **代表球队/教练**: 丹佛掘金 (Nikola Jokic / Michael Malone)、萨克拉门托国王 (Domantas Sabonis)
+* **赢球哲学**: **“将对方护筐中锋调离油漆区”**。中锋在罚球线肘区持球发牌，利用无死角传球视野与手递手掩护，让全队无球跑动成为致命杀器。
+* **优势链条**: 肘区中锋高位接球 ➔ 对方防守中锋被迫提到罚球线 ➔ 禁区空虚 ➔ 后卫无球后门空切（Backdoor Cut）或手递手跳投 ➔ 轻松上篮或空位跳投。
+* **必备角色画像**: 拥有传球视野的大中锋 (`Post Up High`, `Handoff Passer`, `dish_to_open_man>=90`, `Bullet Passer`, `Dimer`) + 敏锐空切后卫 (`Cutter`)。
+* **对手反制与第二答案**:
+  * *对手反制*: 防守中锋坚决不扑出，全员收缩禁区赌外线不进；
+  * *第二答案*: 中锋直接开启自主中投与低位背身单打，惩罚对手放投。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `0` (BALANCED) 或 `4` (POST)
+  * `FreelanceType`: `22` (POINT_FREELANCE) 或 `23` (PRINCETON_CHIN)
+  * `POEOffense`: `3` (FEED_THE_POST) 或 `2` (GET_SHOOTERS_OPEN)
+
+#### 4. 面框单打与中距离攻坚体系 (Isolation / Midrange Creation)
+* **代表球队/教练**: 布鲁克林篮网 (Kevin Durant, Kyrie Irving)、芝加哥公牛 (DeMar DeRozan)
+* **赢球哲学**: **“球星绝对个人能力打破战术僵局”**。当常规传切与挡拆被高强度季后赛防守锁死时，利用无解的单挑拔投能力在中距离惩罚任何单防。
+* **优势链条**: 战术清空一侧 ➔ 强侧 1 对 1 单挑 ➔ 变向/后撤步中距离强投命中 ➔ 迫使对手上包夹 ➔ 包夹后分球空位。
+* **必备角色画像**: 顶级单挑巨星 (`Isolation`, `Isolation Wing`, `SHOT_TENDENCY>=85`, `Deadeye`, `Difficult Shots`)。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `3` (PERIMETER) | `Tempo`: `60 ~ 70` (磨阵地)
+  * `RunPlayTendency`: `75 ~ 85%` (严格呼叫清空单打战术)
+  * `POEOffense`: `6` (RUN_OFFENSE_THROUGH_SCORER)
+
+#### 5. 空间三角与内外策应体系 (Triangle / Inside-Out)
+* **代表球队/教练**: 芝加哥公牛 (Phil Jackson / Jordan-Pippen)、洛杉矶湖人 (Kobe-Shaq)
+* **赢球哲学**: **“强侧形成三角站位，弱侧双人切入”**。强调空间几何距离保持 15~18 英尺，由低位统治者吸包夹出球，或侧翼持球人自主单打。
+* **优势链条**: 强侧侧翼、底角、低位三人成三角 ➔ 球入低位吸引包夹 ➔ 外线顺畅转移弱侧 ➔ 弱侧双人挡拆或空位跳投。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `5` (TRIANGLE)
+  * `FreelanceType`: `27` (TRIANGLE)
+  * `POEOffense`: `3` (FEED_THE_POST)
+
+#### 6. 高低位双塔攻坚体系 (Post / High-Low)
+* **代表球队/教练**: 密尔沃基雄鹿 (Giannis Antetokounmpo / Brook Lopez)、传统灰熊 (Gasol / Randolph)
+* **赢球哲学**: **“禁区绝对高度碾压与互补护筐”**。一名大个高位策应发牌拉开空间，另一名强力内线深位要位直接空接或单吃。
+* **优势链条**: 高位内线吊传低位深要位内线 ➔ 低位内线强攻造杀伤或抛投 ➔ 若遭夹击高位内线外弹命中三分。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `4` (POST) | `FreelanceType`: `13` (PHILLY_ELBOW) 或 `4` (WNBA_THREE_OUT)
+  * `POEOffense`: `3` (FEED_THE_POST)
+
+#### 7. 极致快攻与七秒早攻体系 (Transition / Early Offense)
+* **代表球队/教练**: 菲尼克斯太阳 (Steve Nash / D'Antoni)、夏洛特黄蜂 (LaMelo Ball)
+* **赢球哲学**: **“在对手防守落位前完成终结”**。抓后场篮板或抢断后 7 秒内全员疯狂奔袭前场，利用局部多打少投早期转换三分或攻筐。
+* **优势链条**: 后场篮板到手 ➔ 一传迅速穿越半场 ➔ 侧翼两名快马冲底角拉开 ➔ 持球人中路推反击抛投或分球空位转换追身三分。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `6` (SEVEN_SECONDS) | `Tempo`: `95 ~ 100`
+  * `POEOffense2`: `9` (SHOOT_AT_WILL) | `POEDefense3`: `21` (RUN_IN_TRANSITION)
+
+#### 8. 防守至上与护筐禁区堡垒体系 (Defense-First / Rim Protection)
+* **代表球队/教练**: 犹他爵士 (Rudy Gobert / Quin Snyder)、克利夫兰骑士 (Jarrett Allen, Evan Mobley)
+* **赢球哲学**: **“将所有进攻诱导至禁区巨兽面前封盖”**。外线防守人压迫对手逼向中路，在罚球线以下形成无解禁区屏障。
+* **优势链条**: 外线逼底线或逼中路 ➔ 突破者杀入油漆区遭遇 DPOY 巨兽威慑 ➔ 投篮命中率骤降或被封盖 ➔ 保护后场篮板展开反击。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `7` (DEFENSE) 或 `1` (GRIT_AND_GRIND)
+  * `POEDefense`: `13` (PROTECT_PAINT) | `HelpDefense`: `85 ~ 95`
+  * `ScreenDefenseHedge`: `DROP` (深沉退) | `ScreenDefenseOnBall`: `GO_OVER`
+
+#### 9. 全能换防与窒息撕咬体系 (Switchable Pressure Defense)
+* **代表球队/教练**: 波士顿凯尔特人 (Ime Udoka / Marcus Smart, Jayson Tatum)、迈阿密热火 (Erik Spoelstra / Bam Adebayo)
+* **赢球哲学**: **“全员 2 米左右身材无差别换防，窒息阻绝传球”**。消灭任何传切与挡拆产生的缝隙，逼迫对手打最低效的高难度单挑。
+* **优势链条**: 挡拆与无球掩护一律换防 ➔ 对手战术瞬间跑死 ➔ 进攻时间读秒勉强出手 ➔ 防守反击。
+* **2K22 原生参数绑定**:
+  * `SwitchRule`: `2` (SWITCH_ALL) 或 `3` (GUARDS_ONLY)
+  * `PressureOnball`: `TIGHT` 或 `SMOTHER` | `PressureOffball`: `DENY_BALL`
+  * `POEDefense2`: `18` (PLAY_PHYSICAL)
+
+#### 10. 多维自适应变奏体系 (Adaptive / Multiple Systems)
+* **代表球队/教练**: 多伦多猛龙 (Nick Nurse)、迈阿密热火 (Erik Spoelstra)
+* **赢球哲学**: **“不拘一格，根据对手强点即时变阵变奏”**。在单场比赛内根据比分与对手手感，在 2-3 联防、Box-and-One (一盯四联) 与全场领防间无缝切换，彻底打乱对手节奏。
+* **优势链条**: 识别对手单一大核 ➔ 实施局部针对性夹击与联防 ➔ 掐断传球路线 ➔ 逼迫对手角色球员进行非擅长处理。
+* **2K22 原生参数绑定**:
+  * `ActiveSystem`: `0` (BALANCED) | `ZoneUsage`: `30 ~ 50%` (高频联防变奏)
+  * `POEDefense`: 动态由对手决定 (`PROTECT_PAINT` vs `LIMIT_PERIMETER_SHOTS`)
+
+---
+
+### 5.3 三十支球队历史底色与候选体系索引表 (Franchise Identity & System Index)
+
+下表总结自仓库 BPTI `package_b_v1.json`，为智能体研究任一球队时提供第一参考底色：
+
+| 球队代码 | 球队中文名 | 历史文化底色 (Franchise Identity) | 主教练代表风格 | 推荐候选战术体系 | 核心防守策略推荐 |
+| :---: | :--- | :--- | :--- | :--- | :--- |
+| **GSW** | 金州勇士 | 移动、无私、传球与多点决策 | Steve Kerr (空间流动与掩护) | `MOTION_READ_REACT` / `SPREAD_PNR` | `SWITCH_ALL` + 格林弱侧自由人扫荡 |
+| **BOS** | 波士顿凯尔特人 | 铁血无差别换防、双锋线攻防一体 | Ime Udoka (窒息单防与身体对抗) | `SWITCHABLE_PRESSURE` / `PERIMETER` | `SWITCH_ALL` + 罗威底角弱侧游弋补盖 |
+| **MIA** | 迈阿密热火 | 坚韧文化、高强度身体对抗与联防变奏 | Erik Spoelstra (自适应与高纪律) | `ADAPTIVE_MULTIPLE` / `MOTION` | `PLAY_PHYSICAL` + 阿德巴约换防 + 2-3联防 |
+| **DEN** | 丹佛掘金 | 中锋策应大核、高位传切与后门空切 | Michael Malone (中轴进攻) | `POINT_CENTER_ELBOW_HUB` | 约基奇沉退，弱侧锋线提前 `TagOnRoll` |
+| **MIL** | 密尔沃基雄鹿 | 禁区巨兽轰炸、一星四射与铁血护筐 | Mike Budenholzer (沉退防守空间) | `POST_HIGH_LOW` / `SPREAD_PNR` | 大洛深沉退 (`DROP`) + 字母哥弱侧扫荡追帽 |
+| **DAL** | 达拉斯独行侠 | 极致持球大核牵引、挡拆单打与底角三分 | Jason Kidd (大核驱动) | `SPREAD_PICK_AND_ROLL` / `ISO` | 保护禁区，掩护绕后 (`GO_UNDER`) |
+| **PHX** | 菲尼克斯太阳 | 中距离教科书、挡拆蛇形运球与早攻 | Monty Williams (空间中投) | `SPREAD_PNR` / `ISOLATION_MIDRANGE` | 掩护冰封 (`ICE`) + 艾顿适度延误 |
+| **MEM** | 孟菲斯灰熊 | 铁血磨砺延续、年轻撕咬与二次进攻冲抢 | Taylor Jenkins (快攻冲击前板) | `TRANSITION_EARLY` / `GRIT_AND_GRIND` | `CRASH_OFFENSIVE_BOARDS` + 全场撕咬抢断 |
+| **PHI** | 费城76人 | 低位内线巨兽单打与高位挡拆双核 | Doc Rivers (内外结合) | `POST_HIGH_LOW` / `SPREAD_PNR` | 恩比德低位顶防 + 护筐 |
+| **LAL** | 洛杉矶湖人 | 球星单打攻坚、内线高度优势与空接 | Frank Vogel (防守至上双塔) | `TRIANGLE` / `POST_HIGH_LOW` | 浓眉扫荡护筐 + 限制快攻 |
+
+---
+
+## 六、 智能体标准作业流程与自检清单 (Agent SOP & Checklist)
 
 任何负责标定球队与球员的智能体，必须按以下 8 个阶段逐步推进：
 
@@ -415,7 +559,7 @@ flowchart LR
 
 ---
 
-## 六、 附录：原生参数字典与速查表
+## 七、 附录：原生参数字典与速查表
 
 ### 附录 A: PlayType 完整合法枚举表 (严格 0..14)
 | 枚举值 | 英文名称 | 中文含义 | 适用角色 |
