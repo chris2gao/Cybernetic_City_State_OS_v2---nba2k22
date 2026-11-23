@@ -85,17 +85,34 @@
 - `14`: MID_RANGE (中距离战术)
 - `15`: THREE_POINT (三分定点/无球跑位战术)
 
-### 维度 4：攻防重点与防守对位 (POE & Defensive Gameplan)
-目标结构体：比赛策略数据块 `GAMEPLAN`（位于主教练关联的比赛计划块中）
+### 维度 4：攻防重点、模拟侧重与防守对位 (POE & Simulated Gameplan Focus)
+目标结构体：比赛策略数据块 `GAMEPLAN`（步长 880 字节 / `0x370`）
 
-| 策略字段 | 偏移 (十进制) | 典型 ID | 枚举名称与含义 |
-| :--- | :---: | :---: | :--- |
-| **POE Offense (进攻重点)** | 382 (`0x17E`) | `3` | `1`=冲击篮筐, `2`=为射手跑位, `3`=打低位内线, `4`=挡拆进攻 |
-| **POE Offense Tempo (节奏)** | 383 (`0x17F`) | `7` | `7`=耐心阵地战 (Patient), `8`=中立, `9`=尽早出手反击 (Shoot at Will) |
-| **POE Offense Rebound (前板)** | 384 (`0x180`) | `12` | `10`=全力冲抢前板, `12`=退防限制快攻 (Limit Transition) |
-| **POE Defense (防守重点)** | 385 (`0x181`) | `13` | `13`=保护禁区 (Protect Paint), `15`=贴防外线三分 (Limit 3PT) |
-| **POE Defense Physicality (对抗)** | 386 (`0x182`) | `18` | `16`=保守防犯规, `18`=强硬身体对抗 (Play Physical) |
-| **POE Defense Rebound (后板)** | 387 (`0x183`) | `19` | `19`=保护防守篮板 (Crash Boards), `21`=快攻下反击 (Run Transition) |
+#### 1. REA Native 结构体精确定位寻址规程 (GAMEPLAN Memory Resolution)
+- **FRANCHISE 基址定位**：通过游戏全局 Getter `getter(6278620)`（即 `Process.mainModule.base + 0x5fcddc` 处 RVA 寻址指令）读取 64 位全局 Franchise 控制块基址；
+- **球队 Franchise 记录定位**：`record = FRANCHISE + 0x19cfd0 + i * 0x13e70`（`i ∈ [0, 35]`，根据 `uint16(record + 0x00) == team_id` 匹配目标球队）；
+- **GAMEPLAN 物理基址**：`gameplan_base = record + 0x7854`；
+- **归属双核验守卫**：核验 `uint16(gameplan_base + 0x02) == team_id`，杜绝串队写入。
+
+#### 2. 模拟侧重 12 字节连续安全写块字典 (0x178 ~ 0x183 / 376 ~ 387)
+该 12 字节区域直接控制 NBA 2K22 终极联盟/王朝模式中的“模拟侧重”核心中枢与 6 大 POE 攻防哲学：
+
+| 字段名称 | 偏移 (十进制) | 偏移 (十六进制) | 数据类型 | 取值范围 / 枚举 | 业务含义与说明 |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **Scoring Option 1** | 376 | `0x178` | `uint16` (小端序) | 真实球员 ID | 终结第一选择：绑定球队第一得分核心 (如 Embiid: 4090) |
+| **Scoring Option 2** | 378 | `0x17A` | `uint16` (小端序) | 真实球员 ID | 终结第二选择：绑定副攻手 (如 Harden: 1603) |
+| **Scoring Option 3** | 380 | `0x17C` | `uint16` (小端序) | 真实球员 ID | 终结第三选择：绑定第三得分点 (如 Maxey: 8011) |
+| **POE Offense (进攻重点)** | 382 | `0x17E` | `uint8` | `1 ~ 6` | `1`=冲击篮筐, `2`=为射手跑位, `3`=打低位内线, `4`=挡拆进攻 |
+| **POE Offense Tempo (进攻节奏)** | 383 | `0x17F` | `uint8` | `7 ~ 9` | `7`=耐心阵地战 (Patient), `8`=中立, `9`=尽早出手反击 (Shoot at Will) |
+| **POE Offense Rebound (前板策略)** | 384 | `0x180` | `uint8` | `10 ~ 12` | `10`=冲抢前板 (Crash), `12`=极速退防限制快攻 (Limit Transition) |
+| **POE Defense (防守重点)** | 385 | `0x181` | `uint8` | `13 ~ 15` | `13`=保护禁区 (Protect Paint), `15`=贴防外线三分 (Limit 3PT) |
+| **POE Defense Physicality (对抗策略)** | 386 | `0x182` | `uint8` | `16 ~ 18` | `16`=保守防犯规, `18`=强硬身体对抗 (Play Physical) |
+| **POE Defense Rebound (后板策略)** | 387 | `0x183` | `uint8` | `19 ~ 21` | `19`=全员保护防守篮板 (Crash Boards), `21`=抓板下反击 (Run Transition) |
+
+#### 3. COACHDATA 镜像位域同步 (可选高内聚守卫)
+在主教练结构体 `COACHDATA`（`team + 0xCE8`）偏移 316（`0x13C`）处的 `uint32` 打包字中，低位段同步存储了上述 6 大 POE（5 位每项）：
+`word = (poe_def) | (poe_def_phys << 5) | (poe_def_reb << 10) | (poe_off << 15) | (poe_off_tempo << 20) | (poe_off_reb << 25)`。
+写入 `GAMEPLAN` 后可同步回写该打包字，保证游戏内教练界面与后台模拟引擎 100% 状态一致。
 
 ### 维度 5：球员属性与战术倾向 (Attributes & Tendencies)
 目标结构体：球员结构体 `PLAYER_STRUCT`（1,264 字节）
@@ -271,6 +288,49 @@
         }
       ]
     }
+  ]
+}
+```
+
+### 单队模拟侧重规格书 JSON Schema 模板 (`SIMULATED_GAMEPLAN_FOCUS_MOD`)
+针对专属任务子目录下的单队模拟侧重独立文件（如 `00_PHI_sim_focus_mod.json`），采用以下紧凑纯差分标准：
+
+```json
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "spec_type": "SIMULATED_GAMEPLAN_FOCUS_MOD",
+  "team_id": 0,
+  "team_abbr": "PHI",
+  "team_name": "Philadelphia 76ers",
+  "source_research_doc": "56_PHI_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+  "target_menu": "教练设置 - 模拟侧重 (Simulated Focus / Gameplan Focus)",
+  "execution_target": "GAMEPLAN (stride 880, continuous offset range 376-387 / 0x178-0x183)",
+  "conflict_resolution": "STRICT_LATEST_RESEARCH_DOC_PRIORITY",
+  "simulated_focus_summary": {
+    "scoring_options": [
+      { "option_slot": 1, "player_name": "Joel Embiid", "player_id": 4090, "roster_slot": 2, "touch_proposal": 88 },
+      { "option_slot": 2, "player_name": "James Harden", "player_id": 1603, "roster_slot": 12, "touch_proposal": 82 },
+      { "option_slot": 3, "player_name": "Tyrese Maxey", "player_id": 8011, "roster_slot": 5, "touch_proposal": 62 }
+    ],
+    "poe_settings": {
+      "poe_offense": { "id": 3, "name": "FEED_THE_POST", "desc": "打低位内线" },
+      "poe_offense_tempo": { "id": 7, "name": "PATIENT_OFFENSE", "desc": "耐心阵地战" },
+      "poe_offense_rebound": { "id": 12, "name": "LIMIT_TRANSITION", "desc": "极速退防限制快攻" },
+      "poe_defense": { "id": 13, "name": "PROTECT_PAINT", "desc": "保护禁区油漆区" },
+      "poe_defense_physicality": { "id": 18, "name": "PLAY_PHYSICAL", "desc": "强硬身体对抗" },
+      "poe_defense_rebound": { "id": 19, "name": "CRASH_DEFENSIVE_BOARDS", "desc": "全员保护防守篮板" }
+    }
+  },
+  "writes": [
+    { "field_name": "scoring_option_1", "target_block": "GAMEPLAN", "offset": 376, "type": "uint16", "val_raw": 4090, "val_human": "Joel Embiid" },
+    { "field_name": "scoring_option_2", "target_block": "GAMEPLAN", "offset": 378, "type": "uint16", "val_raw": 1603, "val_human": "James Harden" },
+    { "field_name": "scoring_option_3", "target_block": "GAMEPLAN", "offset": 380, "type": "uint16", "val_raw": 8011, "val_human": "Tyrese Maxey" },
+    { "field_name": "poe_offense", "target_block": "GAMEPLAN", "offset": 382, "type": "uint8", "val_raw": 3, "val_human": "FEED_THE_POST" },
+    { "field_name": "poe_offense_tempo", "target_block": "GAMEPLAN", "offset": 383, "type": "uint8", "val_raw": 7, "val_human": "PATIENT_OFFENSE" },
+    { "field_name": "poe_offense_rebound", "target_block": "GAMEPLAN", "offset": 384, "type": "uint8", "val_raw": 12, "val_human": "LIMIT_TRANSITION" },
+    { "field_name": "poe_defense", "target_block": "GAMEPLAN", "offset": 385, "type": "uint8", "val_raw": 13, "val_human": "PROTECT_PAINT" },
+    { "field_name": "poe_defense_physicality", "target_block": "GAMEPLAN", "offset": 386, "type": "uint8", "val_raw": 18, "val_human": "PLAY_PHYSICAL" },
+    { "field_name": "poe_defense_rebound", "target_block": "GAMEPLAN", "offset": 387, "type": "uint8", "val_raw": 19, "val_human": "CRASH_DEFENSIVE_BOARDS" }
   ]
 }
 ```
