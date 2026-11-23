@@ -45,11 +45,22 @@ def run_sqlite_injection(db_path: str, spec_path: str, commit: bool = False) -> 
         shutil.copyfile(db_path, backup_path)
         print(f"[+] 安全前置快照已创建: {backup_path}")
 
-    with open(spec_path, "r", encoding="utf-8") as f:
-        spec = json.load(f)
+    if os.path.isdir(spec_path):
+        single_files = sorted([os.path.join(spec_path, f) for f in os.listdir(spec_path) if f.endswith("_native_mod.json")])
+        teams_list = []
+        for sf in single_files:
+            with open(sf, "r", encoding="utf-8") as f:
+                teams_list.append(json.load(f))
+        batches = [{"batch_id": "ALL_30_SINGLE_TEAMS", "division": "Full League Single Teams", "teams": teams_list}]
+        task_id = "CYCLE_02_30_TEAMS_SINGLE_EXECUTION"
+    else:
+        with open(spec_path, "r", encoding="utf-8") as f:
+            spec = json.load(f)
 
-    task_id = spec.get("task_package_id", "CYCLE_02_30_TEAMS_REALISM_REBALANCE")
-    batches = spec.get("batches", [])
+        task_id = spec.get("task_package_id", f"SINGLE_TEAM_{spec.get('team_abbr', 'CUSTOM')}_NATIVE_REBALANCE")
+        batches = spec.get("batches", [])
+        if not batches and "team_id" in spec:
+            batches = [{"batch_id": f"TEAM_{spec.get('team_abbr', spec['team_id'])}", "division": spec.get("team_name", "Single Team"), "teams": [spec]}]
 
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()

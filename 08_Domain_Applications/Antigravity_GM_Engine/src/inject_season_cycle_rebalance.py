@@ -57,13 +57,29 @@ def run_cycle_injection(spec_path: str, commit: bool = False) -> Dict[str, Any]:
     if not os.path.exists(spec_path):
         raise FileNotFoundError(f"未找到规格书: {spec_path}")
 
-    with open(spec_path, "r", encoding="utf-8") as f:
-        spec = json.load(f)
+    if os.path.isdir(spec_path):
+        single_files = sorted([os.path.join(spec_path, f) for f in os.listdir(spec_path) if f.endswith("_native_mod.json")])
+        teams_list = []
+        for sf in single_files:
+            with open(sf, "r", encoding="utf-8") as f:
+                teams_list.append(json.load(f))
+        batches = [{"batch_id": "ALL_30_SINGLE_TEAMS", "division": "Full League Single Teams", "teams": teams_list}]
+        task_id = "CYCLE_02_30_TEAMS_SINGLE_EXECUTION"
+        total_teams_spec = len(teams_list)
+        total_players_spec = sum(len(t.get("player_writes", [])) for t in teams_list)
+    else:
+        with open(spec_path, "r", encoding="utf-8") as f:
+            spec = json.load(f)
 
-    task_id = spec.get("task_package_id", "CYCLE_01_30_TEAMS_NATIVE_REBALANCE")
-    total_teams_spec = spec.get("total_teams", 30)
-    total_players_spec = spec.get("total_players", 464)
-    batches = spec.get("batches", [])
+        task_id = spec.get("task_package_id", f"SINGLE_TEAM_{spec.get('team_abbr', 'CUSTOM')}_NATIVE_REBALANCE")
+        batches = spec.get("batches", [])
+        if not batches and "team_id" in spec:
+            batches = [{"batch_id": f"TEAM_{spec.get('team_abbr', spec['team_id'])}", "division": spec.get("team_name", "Single Team"), "teams": [spec]}]
+            total_teams_spec = 1
+            total_players_spec = len(spec.get("player_writes", []))
+        else:
+            total_teams_spec = spec.get("total_teams", 30)
+            total_players_spec = spec.get("total_players", 464)
 
     print(f"[*] 任务标识: {task_id}")
     print(f"[*] 目标赛区数: {len(batches)} | 球队总数: {total_teams_spec} | 球员总数: {total_players_spec}")
