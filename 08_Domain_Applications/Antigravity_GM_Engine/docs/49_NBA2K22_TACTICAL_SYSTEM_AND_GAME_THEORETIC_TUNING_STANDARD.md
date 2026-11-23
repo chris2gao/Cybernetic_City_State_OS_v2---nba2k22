@@ -37,7 +37,10 @@
    - 5.1 [三大宏观建队逻辑与争冠周期哲学](#51-三大宏观建队逻辑与争冠周期哲学)
    - 5.2 [BPTI 十大经典攻防战术体系卡与博弈选择库](#52-bpti-十大经典攻防战术体系卡与博弈选择库)
    - 5.3 [三十支球队历史底色与候选体系索引表](#53-三十支球队历史底色与候选体系索引表)
-6. [智能体标准作业流程与自检清单 (Agent SOP & Checklist)](#六-智能体标准作业流程与自检清单-agent-sop--checklist)
+6. [智能体三阶标准化调优流程与自检清单 (Agent SOP & Checklist)](#六-智能体三阶标准化调优流程与自检清单-agent-sop--checklist)
+   - 6.1 [智能体三阶核心工作流规程 (Three-Stage Standardized Optimization Workflow)](#61-智能体三阶核心工作流规程-three-stage-standardized-optimization-workflow)
+   - 6.2 [八阶段具体实施细则与作业流转 (8-Step Execution Blueprint)](#62-八阶段具体实施细则与作业流转-8-step-execution-blueprint)
+   - 6.3 [智能体开工前自检表 (Mandatory Preflight Gate)](#63-智能体开工前自检表-mandatory-preflight-gate)
 7. [附录：原生参数字典与速查表](#七-附录原生参数字典与速查表)
 
 ---
@@ -535,27 +538,116 @@ $$\text{If } \text{touches} \ge 75 \implies \text{DISH\_TO\_OPEN\_MAN} \ge 75$$
 
 ---
 
-## 六、 智能体标准作业流程与自检清单 (Agent SOP & Checklist)
+## 六、 智能体三阶标准化调优流程与自检清单 (Agent SOP & Checklist)
 
-任何负责标定球队与球员的智能体，必须按以下 8 个阶段逐步推进：
+> [!IMPORTANT]
+> **全队战术标定第一铁律 (Absolute Sourcing & Methodology Discipline)**  
+> 任何智能体在针对 30 支 NBA 球队展开战术、能力、倾向、徽章或防守对位方案的研究时，**严禁凭空主观臆断或跳过原生数据采集**。模型每一次开启新球队研究任务，必须严格执行**“数据源读取 ➔ 博弈体系分析 ➔ 模型自主裁决完善”**的三阶标准化闭环规程。
+
+### 6.1 智能体三阶核心工作流规程 (Three-Stage Standardized Optimization Workflow)
+
+```mermaid
+flowchart TD
+    subgraph Stage1["【阶段一：读取最新采集数据】<br>Load Latest Sourced Data & Raw Reality"]
+        A1["连接 league_state.sqlite 数据库"] --> A2["提取 coaching_team_observations<br>(体系/节奏/联防/对位14块)"]
+        A1 --> A3["提取 player_source_details<br>(1264字节 raw_struct & details_json)"]
+        A3 --> A4["55+真实属性 | 98项原生徽章解码<br>核心倾向(Touches/Dish/RollPop) | PlayTypes 1..4 | Initiator位"]
+    end
+
+    subgraph Stage2["【阶段二：前置加载攻防文档与博弈机制分析】<br>Pre-Loaded Tactical Standard & Game-Theoretic Analysis"]
+        B1["对齐 49 号战术标准文档规范"] --> B2["匹配 BPTI 十大攻防体系图谱"]
+        B2 --> B3["五大核心失真审计：<br>1. 触球守恒与球权踩踏 (Starters 310-330 / Bench 250-280)<br>2. 战术发起人位域 (Initiator 0x16A bit 2 是否全0)<br>3. 战术类型错配 (DHO 12 / Roll 7 / Post 8 / 3PT 14)<br>4. 教练防守微观被清零 (18维对位全0 / 联防失真)<br>5. 对手核心博弈反制策略推演"]
+    end
+
+    subgraph Stage3["【阶段三：模型自主决策、调整完善与博弈优势闭环】<br>Autonomous Decision-Making, Strategic Refinement & Competitive Realization"]
+        C1["行使模型战术专业自主决策权"] --> C2["编制全维度调优提案文档 (5x_XXX_PROPOSAL.md)<br>(首发五虎与替补正交分工表 / 15人结构体对照表 / 18维微观防守对位矩阵)"]
+        C2 --> C3["镜像同步至 C:\\nba2k22\\exports\\ 目录"]
+        C3 --> C4["人类审阅批准 ➔ 编译生成执行就绪 JSON (xxx_tactical_execution_ready.json)<br>自动提交并推送远程 GitHub 仓库"]
+    end
+
+    Stage1 ==> Stage2 ==> Stage3
+```
+
+#### 阶段一：读取最新采集数据中的当前球队与球员信息 (Load Latest Sourced Data & Raw Reality)
+1. **真实数据源物理定位**:
+   * 数据库路径：`C:\nba2k22\saves\MyLEAGUE0005\league_state.sqlite`。
+   * 严禁使用未经验证的预设模板或泛化常识替代真实存盘切片。
+2. **教练端观测数据提取 (`coaching_team_observations`)**:
+   * `ActiveSystem` / `PreferredSystem` (当前与偏好体系)
+   * `Tempo` (进攻节奏) | `RunPlayTendency` (战术呼叫率) | `HelpDefense` (协防倾向) | `ZoneUsage` (联防频率)
+   * `POEOffense 1..3` / `POEDefense 1..3` (进攻与防守重点)
+   * `freelance_sets` (自由跑位战术槽位 1..4)
+   * `gameplans` (14 组个人微观对位防御设置块)
+3. **球员端结构体全维度提取 (`player_source_details`)**:
+   * 读取原生 1264 字节二进制数据 `raw_struct` 与解析镜像 `details_json`。
+   * **真实能力属性 (55+ Attributes)**: 三分 (3PT)、中投 (Mid)、上篮 (Layup)、扣篮 (Dunk)、近投 (Close)、外线防守 (Perimeter Def)、内线防守 (Interior Def)、横移速度 (Lateral Quickness)、奔跑速度 (Speed)、传球视野/智商/精度、抢断 (Steal)、盖帽 (Block)、强韧度 (Hustle)、造犯规 (Draw Foul)、挡拆防守智商 (PnR Def IQ)、协防智商 (Help Def IQ)。
+   * **原生徽章层级解码 (`native_badges`)**: 逐项提取全部 98 项原生徽章，精确区分其拥有状态（`owned` / `not_owned`）与最高生效等级（`BRONZE` / `SILVER` / `GOLD` / `HALL_OF_FAME`）。
+   * **底层行为倾向 (Tendencies)**: 投篮出手 (`shot` 0x458)、突破攻筐 (`drive` 0x483)、触球权 (`touches` 0x499)、空位分球 (`dish_to_open_man` 0x498)、顺下与外拆比例 (`roll_vs_pop` 0x49B)、战术纪律 (`play_discipline` 0x4A1)、三分倾向细分 (空位/定点/绕掩护/快攻干拔 0x472~0x47F)、防守倾向 (抢断/贴防干扰/盖帽 0x4B4~0x4B8)。
+   * **战术资格与发起人位域**: `PlayTypes 1..4` (0x168, 0x169) 以及 `0x16A` 第 2 位推进发起人标志位 (`is_play_initiator`)。
+
+---
+
+#### 阶段二：利用已前置加载的攻防文档和博弈策略机制进行分析 (Pre-Loaded Tactical Standard & Game-Theoretic Analysis)
+1. **规范标准对齐**:
+   * 调优模型必须严格对齐本规范《49_NBA2K22_TACTICAL_SYSTEM_AND_GAME_THEORETIC_TUNING_STANDARD.md》所确立的五层进攻面、18 维防守面对位矩阵、三大建队周期哲学与 BPTI 十大攻防体系卡。
+2. **五大核心失真系统性诊断**:
+   * **诊断 1：触球权守恒与球权踩踏审计**:
+     * 校验首发五虎触球权之和是否严重超标（如 GSW 434、BOS 438、MIA 428、MIL 438，远超 $[310, 330]$ 标准区间）。
+     * 校验第二阵容（6~10 人）是否存在球权恶性内耗（如普尔与克莱、希罗与奥拉迪波/戈登同时出战时的球权踩踏，替补触球和应收敛至 $[250, 280]$）。
+   * **诊断 2：战术推进发起人标志位审计**:
+     * 检查全队 `is_play_initiator` 是否存在原生全 0 缺失 Bug，必须明确首发主控与二阵容发动机（如库里、保罗、斯玛特、罗瑞、霍勒迪、普尔、希罗、迪文琴佐）的推进特权。
+   * **诊断 3：战术类型与真实技能武器库匹配审计**:
+     * 检查核心武器是否被阉割或错配（例如：阿德巴约/追梦格林是否缺少 DHO 手递手 12；字母哥是否误配后卫背身 10 而缺少低位背身 8；大洛/塔克等空间内线是否缺少三分 14 或被误设为大顺下 Roll 7）。
+   * **诊断 4：教练宏观与微观 18 维度防守体系审计**:
+     * 检查 14 组对位数据是否全部为 0；中锋挡拆防守是否沉退（Drop 1）或换防（Switch 4）错配；教练联防倾向（`ZoneUsage`）是否真实反映其战术哲学（如斯波 2-3 联防应升至 30%，布登霍尔泽人盯人沉退应保持在 5%）。
+   * **诊断 5：对手博弈克制推演 (Counterplay Modeling)**:
+     * 针对库里超远三分、字母哥禁区冲击、约基奇/恩比德高低位大核，推演本队如何通过微观 18 维度对位（挤掩护 Go Over、弱侧提前协防 Pre-Rotate、顺下贴身延误 Tag On Roll、中锋深沉退 Drop 或全员换防 Switch All）构建针对性锁死闭环。
+
+---
+
+#### 阶段三：根据以上信息，模型进行自主判断，进行调整和完善，让球队在攻防两端的细节充满优势和博弈 (Autonomous Decision-Making, Strategic Refinement & Competitive Realization)
+1. **行使模型专业自主决策权**:
+   * 基于阶段一的真实数据与阶段二的博弈推演，模型行使专业战术决策权，对全队 15 人结构体与教练体系进行精细化调整与重构，确保在攻防两端建立显著的博弈优势。
+2. **编制全维度战术与博弈提案文档 (`5x_XXX_PROPOSAL.md`)**:
+   * 编写完整的调优提案文档，涵盖：
+     * 现状审计与数据库实测诊断（列明 4 大核心 Bug 与数据实测）
+     * 球队战术哲学与博弈对抗定位（架构图、教练宏观体系、三大得分选择）
+     * 首发五虎与替补席正交分工方案（严格执行触球守恒与正交无内耗设计）
+     * 全队 15 人原生结构体精细化调优对照表（明确每位球员的新旧对比与博弈职责）
+     * 教练 18 维度微观防守对位矩阵（全队统一与核心球员针对性设置）
+     * 预期博弈模拟成效与对抗优势验证
+     * 原生底层四大安全门禁自检
+3. **镜像同步与交付审查**:
+   * 提案文档同步至 `08_Domain_Applications/Antigravity_GM_Engine/docs/` 与导出镜像目录 `C:\nba2k22\exports\`。
+   * 提交人类用户与独立审核模型审阅。
+4. **生成执行就绪规范与远程代码仓库同步**:
+   * 审阅认可后，编写并运行生成脚本，产出执行就绪规范 JSON（`xxx_tactical_execution_ready.json`）。
+   * 双向持久化至底层数据库目录与 `C:\nba2k22\exports\` 目录。
+   * 严格遵循交付铁律执行 `git commit` 与 `git push -u origin <branch>`，推送到远程 GitHub 仓库，完成闭环。
+
+---
+
+### 6.2 八阶段具体实施细则与作业流转 (8-Step Execution Blueprint)
 
 ```mermaid
 flowchart LR
-    S1["1. 资产数据盘点<br>(客观数据提取)"] --> S2["2. 攻防战术诊断<br>(短板与缺口分析)"]
+    S1["1. 资产数据盘点<br>(数据库实时提取)"] --> S2["2. 攻防战术诊断<br>(短板与缺口分析)"]
     S2 --> S3["3. 教练基准预案<br>(体系/节奏/POE/自由战术)"]
-    S3 --> S4["4. 首发五虎协同标定<br>(战术资格/球权梯次)"]
+    S3 --> S4["4. 首发五虎协同标定<br>(战术资格/球权守恒)"]
     S4 --> S5["5. 第二阵容正交标定<br>(6-10人防冲突互补)"]
-    S5 --> S6["6. 专属防守矩阵制定<br>(关键对手18维对位)"]
+    S5 --> S6["6. 专属防守矩阵制定<br>(14组18维微观对位)"]
     S6 --> S7["7. 四大安全门禁自检<br>(PlayType<=14等)"]
-    S7 --> S8["8. 交付执行与验证<br>(规格书与回执)"]
+    S7 --> S8["8. 交付执行与验证<br>(规格书编译与推送)"]
 ```
 
-### 智能体开工前自检表 (Mandatory Preflight Gate)
+---
+
+### 6.3 智能体开工前自检表 (Mandatory Preflight Gate)
 - [ ] **门禁 1 (PlayType 安全)**: 所有球员的 `PlayType 1..4` 严格落在 `0..14` 范围内，绝对未出现 `>= 15`。
 - [ ] **门禁 2 (位域隔离写入)**: `IsPlayInitiator` (byte 362 bit 2) 及教练各位域字段均采用按位读改写（Read-Modify-Write），未直接覆盖同字节临近位。
 - [ ] **门禁 3 (结构体边界与大小)**: `COACHDATA` 修改偏移量不超过 352 字节 (`0x160`)，`PLAYERDATA` 严格在 `0x4F0` 步长内。
-- [ ] **门禁 4 (球权冲突审计)**: 场上高 touches (>=75) 球员均配备 >=75 的 `dish_to_open_man`；多核心同场时，PlayType 实现了功能解耦。
-- [ ] **门禁 5 (防守闭环审计)**: 球队大闸（如格林、维金斯）不仅调整了防守倾向，而且在 `GAMEPLAN` 中绑定了对应的领防与协防对位位域。
+- [ ] **门禁 4 (球权冲突审计)**: 场上高 touches (>=75) 球员均配备 >=75 的 `dish_to_open_man`；多核心同场时，PlayType 实现了功能解耦；首发触球和 $\in [310, 330]$，替补触球和 $\in [250, 280]$。
+- [ ] **门禁 5 (防守闭环审计)**: 球队大闸不仅调整了防守倾向，而且在 `GAMEPLAN` 14 组对位中绑定了对应的领防、协防、沉退、换防与提前协防位域。
 
 ---
 
