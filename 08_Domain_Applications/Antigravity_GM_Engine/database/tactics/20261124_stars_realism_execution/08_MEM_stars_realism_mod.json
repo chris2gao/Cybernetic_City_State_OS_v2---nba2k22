@@ -7,7 +7,8 @@
   "source_research_docs": [
     "58_MEM_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
     "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md",
-    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md",
+    "94_2026_EVOLVING_STARS_REALISM_AND_GROWTH_CALIBRATION.md"
   ],
   "coaching_writes": [
     {
@@ -305,6 +306,84 @@
           "current_in_game_val": "GOLD_DEFAULT",
           "category": "BADGE",
           "decision_rationale": "【统治级徽章】紫卡: 护筐精英、追帽大师；金卡: 防守威慑、弹跳大师、挑战者"
+        }
+      ]
+    },
+    {
+      "player_name": "Desmond Bane",
+      "roster_index": 6,
+      "cyberface_id": 8019,
+      "position": "SF",
+      "target_minutes": 34.0,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          13,
+          4,
+          14,
+          7
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 195,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【重炮狙击手】潜力提升至 90 (Raw 195)，步入全明星分卫天花板"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【莫兰特最佳搭档】触球提升至 88，确立二当家进攻发起权"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【24+ 分输出】出手欲望提至 88"
+        },
+        {
+          "field": "shot_3pt",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1131,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【42%+ 三分机器】无球掩护与追身三分倾向拉满至 92"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 80,
+          "current_in_game_val": 20,
+          "category": "TENDENCY",
+          "decision_rationale": "【强壮肌肉突破】修正被低估的造犯规，提升至 80"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 28,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】设为 28，严格遵守 <= 50 红线"
         }
       ]
     }

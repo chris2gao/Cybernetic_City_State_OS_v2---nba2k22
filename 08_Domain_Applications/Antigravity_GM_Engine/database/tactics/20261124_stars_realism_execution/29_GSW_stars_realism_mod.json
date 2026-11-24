@@ -9,7 +9,8 @@
     "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md",
     "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
     "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md",
-    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md",
+    "94_2026_EVOLVING_STARS_REALISM_AND_GROWTH_CALIBRATION.md"
   ],
   "coaching_writes": [
     {
@@ -406,6 +407,152 @@
           "current_in_game_val": 68,
           "category": "TENDENCY",
           "decision_rationale": "【犯规安全锁】高侵略性但严控犯规，锁定 44"
+        }
+      ]
+    },
+    {
+      "player_name": "Jonathan Kuminga",
+      "roster_index": 10,
+      "cyberface_id": 8054,
+      "position": "SF",
+      "target_minutes": 28.0,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          8,
+          1,
+          4
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 189,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【攻筐野兽】潜力提升至 88 (Raw 189)，成长为勇士强力攻筐前锋"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 84,
+          "current_in_game_val": 50,
+          "category": "TENDENCY",
+          "decision_rationale": "【内线冲击】触球提升至 84，大量空切与转换攻筐"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 86,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【18+ 分攻坚】出手欲望提升至 86"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 86,
+          "current_in_game_val": 45,
+          "category": "TENDENCY",
+          "decision_rationale": "【身体强打造杀伤】造犯规倾向提升至 86"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 32,
+          "current_in_game_val": 35,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】设为 32，严格遵守 <= 50 红线"
+        }
+      ]
+    },
+    {
+      "player_name": "Anfernee Simons",
+      "roster_index": 13,
+      "cyberface_id": 7723,
+      "position": "PG",
+      "target_minutes": 30.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          13,
+          14,
+          1
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 192,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【微波炉狙击手】潜力提升至 89 (Raw 192)，晋升 23+ 分全能攻击后卫"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 48,
+          "category": "TENDENCY",
+          "decision_rationale": "【外线得分火枪】触球提升至 88"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【爆炸输出】出手欲望提至 90"
+        },
+        {
+          "field": "shot_3pt",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1131,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【超快干拔三分】急停与追身三分倾向提至 92"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 15,
+          "category": "TENDENCY",
+          "decision_rationale": "【突破造犯规】造犯规倾向提升至 82"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 26,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】设为 26，严格遵守 <= 50 红线"
         }
       ]
     }

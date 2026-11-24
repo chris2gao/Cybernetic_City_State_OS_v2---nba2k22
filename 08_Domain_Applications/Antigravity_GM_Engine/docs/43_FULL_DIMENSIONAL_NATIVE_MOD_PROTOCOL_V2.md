@@ -398,6 +398,82 @@ flowchart TD
    - 必须完全执行完当前文件并核验成功后，才能按照顺序开始执行第二个文件；
    - 当该目录下所有文件全部执行完毕后，执行全量自动化核验流水线，检查是否所有目标文件都已准确无误执行完成，并输出标准化执行回执。
 
+### 规则四：自解释型全维纯差分规格书标准规范 (Self-Documenting Native Mod Spec Format)
+为彻底解决“执行脚本需要结构化纯数值”与“人类及审核协调员需要清晰文字研判理由”之间的格式分裂，自 2026-11-24 起统一采用**“自解释型全维纯差分规格书（Self-Documenting Native Mod Spec）”**。执行模型与 REA 工具必须严格按照以下规范解析与执行：
+
+#### 1. 单队规格书结构定义 (JSON Schema)
+每个单队文件（如 `00_PHI_stars_realism_mod.json`）必须包含以下字段层级：
+```json
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "YYYYMMDD_<TASK_NAME>",
+  "team_id": 0,
+  "team_abbr": "PHI",
+  "team_name": "Philadelphia 76ers",
+  "source_research_docs": [
+    "56_PHI_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 4,
+      "current_in_game_val": 4,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】锁定 Post Centric (4) 低位单挑战术体系，最大化恩比德统治力"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Joel Embiid",
+      "roster_index": 2,
+      "cyberface_id": 4090,
+      "position": "C",
+      "target_minutes": 36.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [8, 9, 14, 7]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权核心】2022 得分王绝对第一进攻核心，触球拉满至 96"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### 2. REA 执行模型解析与操作指引 (Execution Engine Directives)
+执行模型在调用 REA Native 接口进行实际内存注入时，必须遵循以下执行逻辑：
+1. **字段过滤与纯数值提取**：
+   - REA 执行引擎在读取 `coaching_writes` 与 `player_writes[].modifications` 时，**仅提取并校验物理寻址三要素**：
+     - `target_block`（基址块标识：`COACHDATA` / `GAMEPLAN` / `PLAYER_STRUCT`）
+     - `offset`（结构体内字节相对偏移量）
+     - `type`（数据类型：`uint8` / `uint16` / `uint32` / `float32`）
+     - `val_raw`（最终必须写入的原生字节数值）
+   - **自解释描述字段**：`decision_rationale`、`current_in_game_val`、`category`、`field_name` 仅用于人机可读审计与执行后日志记录，执行注入时直接旁路忽略，绝不干扰原生指令调用。
+2. **球员定位与外观指针完整性校验 (CAS Guard)**：
+   - 执行模型通过 `team_id` 与 `roster_index` 定位球员内存结构体首地址；
+   - 注入前先读取 `PLAYER_STRUCT + 0x90`（外观指针）与生辰/面补 ID（`cyberface_id`），若与规格书声明的 `cyberface_id` 不符，**立即触发阻断保护**，防止错位改写其他球员。
+3. **战术四槽位注入标准 (Tactical Playbook)**：
+   - `is_play_initiator`：写入 `PLAYER_STRUCT + 0x16A`（uint8，0 或 1）；
+   - `play_types`：严格按 4 个槽位写入 `PLAYER_STRUCT + 0x168..0x169`，槽位值必须在 `0..15` 枚举范围内，零占位。
+4. **防守犯规安全红线校验**：
+   - 防守犯规倾向字段（`foul` / `foul_tendency`）在写入前强制做数值上限断言：`val_raw <= 50`。若出现超过 50 的值，执行模型拒绝写入并报警（注：进攻端造犯规 `draw_foul` 不受此红线限制，可根据造罚球能力设置 80~99）。
+5. **回读断言与执行回执**：
+   - 每个值写入后立即调用 ReadProcessMemory 原生回读，断言 `read_val == val_raw`。单队所有项目完成后生成分队执行回执。
+
 ---
 
 ## 六、 复杂多队/多球员开发任务的蜂群分叉克隆（Swarm Fork）架构与人类前置询问准则 (2026-11-24 增补)

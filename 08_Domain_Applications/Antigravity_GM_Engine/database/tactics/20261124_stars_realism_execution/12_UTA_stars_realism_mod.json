@@ -7,7 +7,8 @@
   "source_research_docs": [
     "60_UTA_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
     "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md",
-    "90_2022_STARS_CONSENSUS_TIER2_WINGS_BIGS.md"
+    "90_2022_STARS_CONSENSUS_TIER2_WINGS_BIGS.md",
+    "94_2026_EVOLVING_STARS_REALISM_AND_GROWTH_CALIBRATION.md"
   ],
   "coaching_writes": [
     {
@@ -312,6 +313,94 @@
           "current_in_game_val": 55,
           "category": "TENDENCY",
           "decision_rationale": "老将控犯规极佳，锁定 40 安全阈值"
+        }
+      ]
+    },
+    {
+      "player_name": "Cameron Thomas",
+      "roster_index": 14,
+      "cyberface_id": 8066,
+      "position": "SG",
+      "target_minutes": 28.0,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          1,
+          14,
+          4,
+          13
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 189,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【硬解得分机器】潜力提升至 88 (Raw 189)，解锁爆炸单打得分天花板"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 86,
+          "current_in_game_val": 20,
+          "category": "TENDENCY",
+          "decision_rationale": "【摆脱冰冻】修正原生仅 20 的荒谬触球，大幅提至 86"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【纯粹砍分手】连续 40+ 爆发力，出手欲望拉满至 94"
+        },
+        {
+          "field": "shot_mid_range",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1130,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【急停跳投杀招】招牌急停干拔中投倾向提至 92"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【造罚球杀器】提升造犯规倾向至 88"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 35,
+          "category": "TENDENCY",
+          "decision_rationale": "【专注终结】符合其独到单打得分手风格"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 28,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】设为 28，严格遵守 <= 50 红线"
         }
       ]
     }

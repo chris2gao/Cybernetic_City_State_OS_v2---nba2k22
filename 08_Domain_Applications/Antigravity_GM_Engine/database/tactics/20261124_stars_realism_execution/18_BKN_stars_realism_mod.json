@@ -7,7 +7,8 @@
   "source_research_docs": [
     "59_BKN_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
     "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md",
-    "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md"
+    "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md",
+    "94_2026_EVOLVING_STARS_REALISM_AND_GROWTH_CALIBRATION.md"
   ],
   "coaching_writes": [
     {
@@ -295,6 +296,84 @@
           "current_in_game_val": "DEFAULT",
           "category": "BADGES",
           "decision_rationale": "【核心紫卡/金卡】脚踝终结者 (HOF), 杂耍上篮 (HOF), 行云流水 (HOF), 空间创造者 (Gold), 抛投大师 (Gold)"
+        }
+      ]
+    },
+    {
+      "player_name": "Nicolas Claxton",
+      "roster_index": 7,
+      "cyberface_id": 7850,
+      "position": "C",
+      "target_minutes": 32.0,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          4,
+          8,
+          9
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 189,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【DPOY 候选】潜力提升至 88 (Raw 189)，解锁全能换防护筐内线天花板"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 46,
+          "category": "TENDENCY",
+          "decision_rationale": "【空接吃饼点】触球提升至 75，强化挡拆顺下参与度"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 45,
+          "category": "TENDENCY",
+          "decision_rationale": "【篮下终结】提升篮下吃饼出手欲望至 75"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【顺下攻筐】绝对顺下空接威胁"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 80,
+          "current_in_game_val": 40,
+          "category": "TENDENCY",
+          "decision_rationale": "【篮下造杀伤】造犯规倾向提升至 80"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 36,
+          "current_in_game_val": 9,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】设为 36，严格遵守 <= 50 红线"
         }
       ]
     }

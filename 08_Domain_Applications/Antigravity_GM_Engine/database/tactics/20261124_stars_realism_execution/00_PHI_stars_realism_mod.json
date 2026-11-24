@@ -8,7 +8,8 @@
     "56_PHI_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
     "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md",
     "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md",
-    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md",
+    "94_2026_EVOLVING_STARS_REALISM_AND_GROWTH_CALIBRATION.md"
   ],
   "coaching_writes": [
     {
@@ -424,6 +425,94 @@
           "current_in_game_val": "DEFAULT",
           "category": "BADGES",
           "decision_rationale": "【核心紫卡/金卡】截球大师 (HOF), 抄截大师 (HOF), 追帽大师 (Gold), 防守死锁 (Gold)"
+        }
+      ]
+    },
+    {
+      "player_name": "Tyrese Maxey",
+      "roster_index": 5,
+      "cyberface_id": 8011,
+      "position": "PG",
+      "target_minutes": 35.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          13,
+          1,
+          14
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 204,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【全明星蜕变】潜力提升至 93 (Raw 204)，晋升全明星首发级后卫"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 62,
+          "category": "TENDENCY",
+          "decision_rationale": "【外线主控】触球大幅提至 92，确立与恩比德搭档之后场大核地位"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【闪电攻坚】场均 26+ 分输出，出手欲望提至 90"
+        },
+        {
+          "field": "shot_3pt",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1131,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【超远干拔三分】追身超远三分开火倾向提升至 88"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 86,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【闪电杀伤】极速突破造犯规倾向提升至 86"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【挡拆连线】与恩比德高位挡拆顺下分球"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 26,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】设为 26，严格遵守 <= 50 红线"
         }
       ]
     }

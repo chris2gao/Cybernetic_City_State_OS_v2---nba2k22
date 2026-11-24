@@ -1,0 +1,163 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 2,
+  "team_abbr": "WAS",
+  "team_name": "Washington Wizards",
+  "source_research_docs": [
+    "76_WAS_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "94_2026_EVOLVING_STARS_REALISM_AND_GROWTH_CALIBRATION.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】锁定 Pace & Space (2) 空间突分体系"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行率】阵地战战术呼叫率设为 75"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 45,
+      "current_in_game_val": 1,
+      "category": "COACHING",
+      "decision_rationale": "【协防保护】修正底层异常极端值 1 至 45 正常协防保护"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换人数】9 人常规轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 65,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "【替补使用率】65"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 1,
+      "current_in_game_val": 1,
+      "category": "COACHING",
+      "decision_rationale": "【进攻侧重】PATIENT_OFFENSE (1) 阵地战耐心寻机"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "current_in_game_val": 13,
+      "category": "COACHING",
+      "decision_rationale": "【防守侧重】PROTECT_PAINT (13) 护筐第一"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Deni Avdija",
+      "roster_index": 1,
+      "cyberface_id": 7998,
+      "position": "SF",
+      "target_minutes": 32.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          1,
+          7,
+          13
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 189,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【成长引擎】突破底层限制，解锁全能控锋 88 真实评级天花板"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【组织控锋】提升触球倾向至 82，赋予由守转攻反击推进发起权"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 80,
+          "current_in_game_val": 58,
+          "category": "TENDENCY",
+          "decision_rationale": "【进攻决断】场均 16+ 分攻坚，出手欲望提至 80"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 20,
+          "category": "TENDENCY",
+          "decision_rationale": "【攻筐杀伤】6尺9身材强突篮下造犯规倾向提升至 82"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 72,
+          "category": "TENDENCY",
+          "decision_rationale": "【突分发牌】快攻与挡拆中精准分球空位射手"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 28,
+          "current_in_game_val": 2,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守纪律】防守犯规倾向设为 28，严格遵守 <= 50 红线"
+        }
+      ]
+    }
+  ]
+}

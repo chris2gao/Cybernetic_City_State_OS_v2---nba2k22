@@ -8,7 +8,8 @@
     "69_NOP_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
     "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
     "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md",
-    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md",
+    "94_2026_EVOLVING_STARS_REALISM_AND_GROWTH_CALIBRATION.md"
   ],
   "coaching_writes": [
     {
@@ -304,6 +305,84 @@
           "current_in_game_val": 68,
           "category": "TENDENCY",
           "decision_rationale": "【常规防守犯规安全锁】原版 68 严重超标，严压至 44 安全阈值"
+        }
+      ]
+    },
+    {
+      "player_name": "Trey Murphy",
+      "roster_index": 9,
+      "cyberface_id": 9909,
+      "position": "PF",
+      "target_minutes": 30.0,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          13,
+          7,
+          4,
+          1
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 189,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【核武 3D】潜力提升至 88 (Raw 189)，成长为顶级侧翼轰炸机"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 42,
+          "category": "TENDENCY",
+          "decision_rationale": "【外线主攻手】触球提至 82，赋予更多无球与追身机会"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 84,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【进攻决断】出手欲望提升至 84"
+        },
+        {
+          "field": "shot_3pt",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1131,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【超远射程】无解超远三分射击倾向拉满至 92"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 78,
+          "current_in_game_val": 50,
+          "category": "TENDENCY",
+          "decision_rationale": "【滑翔攻筐】提升冲击造犯规倾向至 78"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 26,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】设为 26，严格遵守 <= 50 红线"
         }
       ]
     }

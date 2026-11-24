@@ -7,7 +7,8 @@
   "source_research_docs": [
     "62_LAL_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
     "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md",
-    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md"
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
+    "94_2026_EVOLVING_STARS_REALISM_AND_GROWTH_CALIBRATION.md"
   ],
   "coaching_writes": [
     {
@@ -313,6 +314,84 @@
           "current_in_game_val": 195,
           "category": "ATTRIBUTE",
           "decision_rationale": "【禁飞区护筐屏障】内线防守评级提升至95 (Raw: 210)，撑起湖人防守体系"
+        }
+      ]
+    },
+    {
+      "player_name": "Austin Reaves",
+      "roster_index": 12,
+      "cyberface_id": 7720,
+      "position": "SG",
+      "target_minutes": 32.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          14,
+          1,
+          13
+        ]
+      },
+      "modifications": [
+        {
+          "field": "potential",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1089,
+          "type": "uint8",
+          "val_raw": 189,
+          "current_in_game_val": 1,
+          "category": "GROWTH",
+          "decision_rationale": "【逆袭传奇】潜力提升至 88 (Raw 189)，从落选秀成长为湖人第三巨头"
+        },
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 84,
+          "current_in_game_val": 45,
+          "category": "TENDENCY",
+          "decision_rationale": "【决胜阵容主控】触球提升至 84，末节关键球发起点"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 58,
+          "category": "TENDENCY",
+          "decision_rationale": "【进攻决断】提升出手欲望至 82"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 33,
+          "category": "TENDENCY",
+          "decision_rationale": "【造犯规大师】招牌造杀伤节奏，造犯规倾向提至 90"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【詹眉连线】挡拆中灵巧助攻戴维斯与詹姆斯"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 26,
+          "current_in_game_val": 8,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】设为 26，严格遵守 <= 50 红线"
         }
       ]
     }
