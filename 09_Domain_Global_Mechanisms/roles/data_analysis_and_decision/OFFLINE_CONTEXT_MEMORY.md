@@ -87,6 +87,7 @@
   - `Task 82`: 30 队洁净差分单队拆分执行包 (`C:\nba2k22\exports\single_team_execution\`)
   - `Task 83`: 30 队教练模拟侧重执行包 (`C:\nba2k22\exports\20261123_simulated_gameplan_focus_execution\`)
   - `Task 84`: 世界线全局设置执行包 (`C:\nba2k22\exports\20261123_worldline_settings_execution\`)
+  - `Task 87`: 30 队球员训练与倾向全维度执行包 (`C:\nba2k22\exports\20261124_training_tendency_execution\`)
 
 ---
 

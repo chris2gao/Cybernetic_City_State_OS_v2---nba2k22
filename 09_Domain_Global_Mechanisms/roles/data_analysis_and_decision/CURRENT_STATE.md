@@ -51,20 +51,24 @@
    - 修改明细: 永久性大伤降至 5、模拟严重度降至 40、模拟伤病频率 55、成长率 48、士气难度 35、士气影响 40
    - 任务包说明: `84_CYCLE_02_WORLDLINE_GLOBAL_SETTINGS_TASK_PACKAGE.md`
 
+4. **Task 87: 30 队球员训练模板与倾向全维度单队执行包**
+   - 目录: `C:\nba2k22\exports\20261124_training_tendency_execution\`
+   - 内容: 30 个独立单队 JSON（覆盖 310 位核心轮换球员，纯差分零占位）
+   - 调优亮点: 9 大训练模板纯模板化、老年轻微/年轻正常防伤负荷、战术重力放大法则、Touches/Dish解耦、Roll vs Pop动态平滑、常规犯规安全锁 <=45
+   - 任务包说明: `87_CYCLE_02_30_TEAMS_TRAINING_AND_TENDENCY_CALIBRATION_TASK_PACKAGE.md`
+
 ---
 
 ## 四、 待办事项与后续工作流 (Open Items)
 
 1. **执行模型调度与闭环回执审计**：
-   - 协助人类派发执行任务给执行模型，依次运行：
+   - 协助人类派发执行任务给执行模型，按依赖顺序依次执行：
      1. 全局世界线参数（Task 84）：`C:\nba2k22\exports\20261123_worldline_settings_execution\`
      2. 30 队战术与球员能力（Task 82）：`C:\nba2k22\exports\single_team_execution\`
-     3. 30 队模拟侧重（Task 83）：`C:\nba2k22\exports\20261123_simulated_gameplan_focus_execution\`
+     3. 30 队教练模拟侧重（Task 83）：`C:\nba2k22\exports\20261123_simulated_gameplan_focus_execution\`
+     4. 30 队球员训练与倾向（Task 87）：`C:\nba2k22\exports\20261124_training_tendency_execution\`
    - 执行完成后，收集并核对 `RECEIPT.json` 执行回执，断言 0 读写异常。
-2. **30 队训练模板与球员倾向专项研发任务 (Specialized Task)**：
-   - 依据各队最新战术档案（Doc 50 ~ Doc 79）及 Doc 85、Doc 86 规范，按每次 2 支球队（共 15 批）开展深度专项研究；
-   - 输出单队差分执行文件至 `C:\nba2k22\exports\YYYYMMDD_player_training_tendency_execution\`。
-3. **新赛季前瞻与选秀名单任务准备**：
+2. **新赛季前瞻与选秀名单任务准备**：
    - 监控赛季日历推进至新赛季首日（Day 1）与第 2 赛季休赛期；
    - 准备启动 1985 届历史选秀名单真实化完善任务。
 
