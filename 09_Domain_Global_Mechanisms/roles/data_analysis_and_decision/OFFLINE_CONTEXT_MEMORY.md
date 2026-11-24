@@ -87,3 +87,18 @@
   - `Task 82`: 30 队洁净差分单队拆分执行包 (`C:\nba2k22\exports\single_team_execution\`)
   - `Task 83`: 30 队教练模拟侧重执行包 (`C:\nba2k22\exports\20261123_simulated_gameplan_focus_execution\`)
   - `Task 84`: 世界线全局设置执行包 (`C:\nba2k22\exports\20261123_worldline_settings_execution\`)
+
+---
+
+## 记忆单元 7：球员全量 99 项倾向校准与战术重力放大法则 (Doc 85)
+
+- **人类六大指导准则**：
+  1. **区域投篮意愿与热区结果解耦（方案 B）**：14 项细分热区倾向反映的是场上位置的投篮意愿与战术决策，而热区图表是行为的统计结果，故倾向不与历史热区机械绑定，采用平滑均衡配置；
+  2. **运球动作门槛与年轻成长豁免机制**：防守中锋与老将蓝领（控球 < 60）除 No Move 设为 90~95 外，花式运球强锁 0~5 以防严重失误；但对具备控球潜力的成长发育期年轻球员实施成长豁免，保留其运球倾向以刺激其在终极联盟中的属性成长；
+  3. **单打评级阶梯与年龄成长红利法则**：倾向直接影响成长！年轻核心（≤24岁）赋予高单打倾向红利以兑现潜力；巅峰期老将严格遵循超巨、战术二单、角色球员三级阶梯；
+  4. **挡拆下顺与外弹的动态平滑标定**：`Roll vs Pop (0x49B)` 反向极性（0顺下，100外弹），严禁设置极端极性值（0或100），依据攻筐与投射能力在 15~85 动态标定；
+  5. **防守核心犯规天花板安全锁**：常规犯规 `Foul (0x4B9)` 全联盟硬顶天花板 45~50，杜绝日历模拟中主力内线 20 分钟 6 犯离场的系统性失真；恶犯 `Hard Foul` 基础 0~15，恶汉上限 35；
+  6. **战术重力放大器与战术执行几率法则**：`Shot Tendency (0x458)` 远超单纯终结，它是全队每回合是否呼叫该球员战术的发生几率调度器！通过放大战术核心（如约基奇、奥尼尔）的 Shot Tendency，迫使防守陷入包夹与轮转博弈，从而撕裂防线创造空位。
+- **固化权威标准**：
+  - [85_PLAYER_TENDENCIES_FULL_DIMENSIONAL_CALIBRATION_STANDARD.md](file:///e:/workspace/Cybernetic_City_State_OS_v2%20-%20nba2k22/08_Domain_Applications/Antigravity_GM_Engine/docs/85_PLAYER_TENDENCIES_FULL_DIMENSIONAL_CALIBRATION_STANDARD.md)
+- **哨兵球员校准基线**：哈利伯顿（纯控卫Touches高+Shot适中）、克莱（纯射手Touches适中+Shot高）、约基奇（Roll vs Pop 50均衡）、戈贝尔（运球受锁防失误+犯规≤48）。

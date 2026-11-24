@@ -28,6 +28,7 @@
 | **游戏世界规则** | `08_Domain_Applications/Antigravity_GM_Engine/docs/26_GAMEPLAY_ROLES_AND_WORLDLINE_RULES.md` | V2 | 双真实历史线、休赛期交易、赛季中锁定、Day 1战术研究、1984~2021选秀完善 |
 | **玩法核心政策** | `08_Domain_Applications/Antigravity_GM_Engine/config/gameplay_policy.json` | V5 (20261123) | `season_world_rules` 结构体，`last_class: 2021` |
 | **世界线注册表** | `08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/world.json` | V1 | 核心字段偏移字典 (`SLOT_TRADE` 基址 `0x0632B498`) |
+| **球员全量倾向规范** | `08_Domain_Applications/Antigravity_GM_Engine/docs/85_PLAYER_TENDENCIES_FULL_DIMENSIONAL_CALIBRATION_STANDARD.md` | V1 | 99项全量倾向、解耦热区、运球门槛与成长豁免、战术重力放大法则 |
 
 ---
 
@@ -73,7 +74,7 @@
    - 人类告知：“你的角色是数据分析和决策角色”；
    - 模型立即定位并加载本领域的 [`09_Domain_Global_Mechanisms/roles/data_analysis_and_decision/BOOTSTRAP_GUIDE.md`](BOOTSTRAP_GUIDE.md)。
 2. **Step 2（恢复记忆与账本）**：
-   - 阅读同目录下的 [`OFFLINE_CONTEXT_MEMORY.md`](OFFLINE_CONTEXT_MEMORY.md)（恢复 6 大核心记忆单元）；
+   - 阅读同目录下的 [`OFFLINE_CONTEXT_MEMORY.md`](OFFLINE_CONTEXT_MEMORY.md)（恢复 7 大核心记忆单元）；
    - 阅读本文件 [`CURRENT_STATE.md`](CURRENT_STATE.md)（对齐当前基线、已交付资产账本与待办事项）。
 3. **Step 3（输出回执，立即可用）**：
    - 输出标准的 `ROLE_INIT_RECEIPT` 回执，汇报当前基线与待办，无需人类重贴任何历史长文，即可立即进入分析、派单或审计状态！
