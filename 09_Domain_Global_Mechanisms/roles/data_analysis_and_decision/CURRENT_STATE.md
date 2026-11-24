@@ -22,7 +22,7 @@
 | 规范类别 | 权威文件路径 | 核心版本 / 状态 | 关键约束与要点 |
 | :--- | :--- | :---: | :--- |
 | **洁净原始存档** | `database/saves/restart_validation_20261016/league_state.sqlite` | PRISTINE | 交易完成后的纯净环境，杜绝历史错误数据污染 |
-| **接口协议标准** | `08_Domain_Applications/Antigravity_GM_Engine/docs/43_FULL_DIMENSIONAL_NATIVE_MOD_PROTOCOL_V2.md` | V2 (第5节) | REA 原生结构化调用、零占位纯差分、按队/全局单文件、单步闭环 |
+| **接口协议标准** | `08_Domain_Applications/Antigravity_GM_Engine/docs/43_FULL_DIMENSIONAL_NATIVE_MOD_PROTOCOL_V2.md` | V2 (第5、6节) | REA 原生结构化调用、零占位纯差分、Swarm Fork 上下文分叉克隆与人类前置询问铁律 |
 | **战术调优标准** | `08_Domain_Applications/Antigravity_GM_Engine/docs/49_NBA2K22_TACTICAL_SYSTEM_AND_GAME_THEORETIC_TUNING_STANDARD.md` | V2 (含门禁7) | 30 队战术画像、模拟侧重终结顺位审计 |
 | **模拟侧重底层规范** | `08_Domain_Applications/Antigravity_GM_Engine/research/rea_native_control/SIMULATED_GAMEPLAN_FOCUS_NATIVE_SPEC.md` | V1 | `GAMEPLAN` 连续 12 字节（前三终结选择 UID16 + 6大 POE 枚举 1..21） |
 | **游戏世界规则** | `08_Domain_Applications/Antigravity_GM_Engine/docs/26_GAMEPLAY_ROLES_AND_WORLDLINE_RULES.md` | V2 | 双真实历史线、休赛期交易、赛季中锁定、Day 1战术研究、1984~2021选秀完善 |
@@ -82,7 +82,7 @@
    - 人类告知：“你的角色是数据分析和决策角色”；
    - 模型立即定位并加载本领域的 [`09_Domain_Global_Mechanisms/roles/data_analysis_and_decision/BOOTSTRAP_GUIDE.md`](BOOTSTRAP_GUIDE.md)。
 2. **Step 2（恢复记忆与账本）**：
-   - 阅读同目录下的 [`OFFLINE_CONTEXT_MEMORY.md`](OFFLINE_CONTEXT_MEMORY.md)（恢复 8 大核心记忆单元）；
+   - 阅读同目录下的 [`OFFLINE_CONTEXT_MEMORY.md`](OFFLINE_CONTEXT_MEMORY.md)（恢复 9 大核心记忆单元）；
    - 阅读本文件 [`CURRENT_STATE.md`](CURRENT_STATE.md)（对齐当前基线、已交付资产账本与待办事项）。
 3. **Step 3（输出回执，立即可用）**：
    - 输出标准的 `ROLE_INIT_RECEIPT` 回执，汇报当前基线与待办，无需人类重贴任何历史长文，即可立即进入分析、派单或审计状态！
