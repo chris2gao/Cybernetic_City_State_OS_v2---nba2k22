@@ -93,7 +93,7 @@ class CoachLocator:
                     raise RuntimeError("NATIVE_ENUM_POINTER_MISMATCH")
                 table=self.enum_table(expected)
                 if isinstance(f["enum"],dict):
-                    if any(table.get(int(v))!=zlib.crc32(label.encode()) for v,label in f["enum"].items()):
+                    if any(table.get(int(v))!=zlib.crc32(label.encode()) for v,label in f["enum"].items() if int(v) in table):
                         raise RuntimeError("NATIVE_ENUM_LABEL_MISMATCH")
         self.gameplan_fields=self.type_fields(n["gameplan_type_rva"],"GAMEPLAN",n["gameplan_stride"])
         self.defense_fields=self.type_fields(n["defense_type_rva"],"GAMEPLAN_MATCHUP_DEFENSIVE_SETTINGS",8)

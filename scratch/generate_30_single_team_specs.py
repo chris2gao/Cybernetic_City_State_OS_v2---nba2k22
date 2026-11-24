@@ -140,36 +140,43 @@ def parse_coaching_exact(doc_path):
         # Find target value after arrow or colon
         arrow = re.search(r'\\rightarrow|→|->|提升至|降至', ls)
         target_part = ls[arrow.end():] if arrow else ls
+        has_arrow = bool(arrow)
         
         # active system
-        m_sys = re.search(r'(?:ActiveSystem|Active System|战术体系).*?(?:ID:\s*`?|主推\s*`?|->\s*`?|\*\*)(\d+)', ls, re.I)
-        if m_sys and 'active_system' not in coaching:
-            coaching['active_system'] = int(m_sys.group(1))
+        if any(k in ls.lower() for k in ['activesystem', 'active system', '战术体系']):
+            if has_arrow or 'active_system' not in coaching:
+                m = re.search(r'\b\d+\b', target_part)
+                if m: coaching['active_system'] = int(m.group())
             
         # run play tendency
-        if any(k in ls.lower() for k in ['runplaytendency', 'run play tendency', '战术执行率', '战术跑位率']) and 'run_play_tendency' not in coaching:
-            m = re.search(r'\b\d+\b', target_part)
-            if m: coaching['run_play_tendency'] = int(m.group())
+        if any(k in ls.lower() for k in ['runplaytendency', 'run play tendency', '战术执行率', '战术跑位率']):
+            if has_arrow or 'run_play_tendency' not in coaching:
+                m = re.search(r'\b\d+\b', target_part)
+                if m: coaching['run_play_tendency'] = int(m.group())
             
         # help defense
-        if any(k in ls.lower() for k in ['helpdefense', 'help defense', '协防智商']) and 'help_defense' not in coaching:
-            m = re.search(r'\b\d+\b', target_part)
-            if m: coaching['help_defense'] = int(m.group())
+        if any(k in ls.lower() for k in ['helpdefense', 'help defense', '协防智商']):
+            if has_arrow or 'help_defense' not in coaching:
+                m = re.search(r'\b\d+\b', target_part)
+                if m: coaching['help_defense'] = int(m.group())
             
         # bench depth
-        if any(k in ls.lower() for k in ['benchdepth', 'bench depth', '轮换深度']) and 'bench_depth' not in coaching:
-            m = re.search(r'\b\d+\b', target_part)
-            if m: coaching['bench_depth'] = int(m.group())
+        if any(k in ls.lower() for k in ['benchdepth', 'bench depth', '轮换深度']):
+            if has_arrow or 'bench_depth' not in coaching:
+                m = re.search(r'\b\d+\b', target_part)
+                if m: coaching['bench_depth'] = int(m.group())
             
         # bench utilization
-        if any(k in ls.lower() for k in ['benchutilization', 'bench utilization', '替补使用率', '轮换使用率']) and 'bench_utilization' not in coaching:
-            m = re.search(r'\b\d+\b', target_part)
-            if m: coaching['bench_utilization'] = int(m.group())
+        if any(k in ls.lower() for k in ['benchutilization', 'bench utilization', '替补使用率', '轮换使用率']):
+            if has_arrow or 'bench_utilization' not in coaching:
+                m = re.search(r'\b\d+\b', target_part)
+                if m: coaching['bench_utilization'] = int(m.group())
             
         # zone usage
-        if any(k in ls.lower() for k in ['zoneusage', 'zone usage', '联防频率']) and 'zone_usage' not in coaching:
-            m = re.search(r'\b\d+\b', target_part)
-            if m: coaching['zone_usage'] = int(m.group())
+        if any(k in ls.lower() for k in ['zoneusage', 'zone usage', '联防频率']):
+            if has_arrow or 'zone_usage' not in coaching:
+                m = re.search(r'\b\d+\b', target_part)
+                if m: coaching['zone_usage'] = int(m.group())
             
     return coaching
 
