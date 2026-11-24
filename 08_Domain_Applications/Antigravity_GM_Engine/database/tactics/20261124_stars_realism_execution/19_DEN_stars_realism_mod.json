@@ -1,0 +1,193 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 19,
+  "team_abbr": "DEN",
+  "team_name": "Denver Nuggets",
+  "source_research_docs": [
+    "57_DEN_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "马龙教练 Pace & Space / Motion 动态传切发牌体系，最大化约基奇高位策应视野"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 70,
+      "category": "COACHING",
+      "decision_rationale": "提高阵地战术调用频率至 75，确保约基奇手递手与弱侧空切战术执行"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "戈登与锋线快速弱侧协防轮转保护约基奇下线"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "9人常规季后赛轮换结构"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 50,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "替补使用率纠偏为 50，保障约基奇场均 35+ 分钟绝对统御时间"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Nikola Jokic",
+      "roster_index": 3,
+      "cyberface_id": 4170,
+      "position": "C",
+      "target_minutes": 36.5,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          8,
+          9,
+          13,
+          7
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【进攻体系宇宙母体】触球提升至 99，全联盟唯一以五号位作为绝对组织第一发起的超级中枢"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【场均27.1分蝉联MVP】保持 92 顶级终结倾向，兼顾个人高效得分与串联"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 50,
+          "current_in_game_val": 35,
+          "category": "TENDENCY",
+          "decision_rationale": "【Doc 88核心哨兵】原版 35 过度偏向纯顺下，调整为 50（下顺/外弹各半），还原其短顺下抛投结合部与弧顶三分双重威慑"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 98,
+          "category": "TENDENCY",
+          "decision_rationale": "历史第一传球手感，空位分球秒传直达弱侧底角"
+        },
+        {
+          "field": "post_up",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1160,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "低位慢节奏持球单挑碾压，单手托球观望全场"
+        },
+        {
+          "field": "floater",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1150,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "不跳抛投推射命中率极高，禁区前沿杀招"
+        },
+        {
+          "field": "post_hook",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1155,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "低位翻身柔和手感近距离小勾手"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "弧顶与外弹空位三分回应倾向"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【常规犯规安全锁】原版 65 易致模拟陷入犯规泥潭，压制至 45 安全阈值"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1050,
+          "type": "uint8",
+          "val_raw": 213,
+          "current_in_game_val": 180,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "力量 Rating 提升至 96 (raw 213)，沉重下盘低位顶防与背打不可撼动"
+        },
+        {
+          "field": "pass_vision",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1065,
+          "type": "uint8",
+          "val_raw": 222,
+          "current_in_game_val": 195,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "传球视野 Rating 99 (raw 222)，全场四分卫长传视野天花板"
+        }
+      ]
+    }
+  ]
+}

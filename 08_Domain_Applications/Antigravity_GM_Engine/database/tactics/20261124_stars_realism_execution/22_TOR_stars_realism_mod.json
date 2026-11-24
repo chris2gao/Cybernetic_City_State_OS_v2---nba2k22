@@ -1,0 +1,383 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "season_id": "2021-2022",
+  "team_id": 22,
+  "team_abbr": "TOR",
+  "team_name": "Toronto Raptors",
+  "head_coach": "Nick Nurse",
+  "tactical_identity": "东部铁血绞肉机 / 全员长臂五锋无位置换防 / 极致快攻转换与高压迫断球",
+  "trade_status_note": "【重大交易事实发现】帕斯卡尔·西亚卡姆 (Pascal Siakam) 在当前在游存档中已交易至印第安纳步行者 (Team 20, Roster Slot 3)，其全维调优由 IND 规格书精准承接；猛龙队本地聚焦范弗利特、阿奴诺比与年度最佳新秀巴恩斯三大核心。",
+  "source_research_docs": [
+    "64_TOR_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
+    "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md",
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "desc": "Pace & Space / Perimeter Centric",
+      "decision_rationale": "【现代战术体系】纳斯体系外线空间拉开，为锋线突破与范乔丹远投创造通道"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 70,
+      "current_in_game_val": 70,
+      "desc": "战术执行频率",
+      "decision_rationale": "【快速决断】强调攻防转换第一时间推快攻，落入阵地后执行手递手与内线错位战术"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 90,
+      "current_in_game_val": 1,
+      "desc": "协防强度",
+      "decision_rationale": "【全息协防纠偏】原版数据中 help_defense 仅给荒谬的 1（完全不协防）！猛龙全员长臂夹击逼抢是其建队灵魂，必须断然修正至 90！"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "desc": "轮换深度: 9人",
+      "decision_rationale": "【核心紧凑轮换】范弗利特、特伦特、阿奴诺比、巴恩斯、阿丘瓦、布歇主力班底"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 45,
+      "current_in_game_val": 65,
+      "desc": "替补出场时间分配比",
+      "decision_rationale": "【纳斯主力死艹模式】纳斯招牌高主力出场时间，范弗利特场均出场 37.9 分钟联盟第一，将替补使用比由 65 下压至 45"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Fred VanVleet",
+      "roster_index": 1,
+      "cyberface_id": 7288,
+      "position": "PG",
+      "target_minutes": 38.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          2,
+          4,
+          15,
+          12
+        ],
+        "play_type_descriptions": [
+          "Slot 1: Isolation Point (2, 控卫单打) - 弧顶变向与慢节奏杀入腹地拆炸弹",
+          "Slot 2: P&R Ball Handler (4, 挡拆持球) - 高位挡拆急停超远三分与分球底角",
+          "Slot 3: Three Point (15, 三分战术) - 转换追身干拔与无球跑位绕掩护干拔",
+          "Slot 4: Handoff Receiver (12, 手递手接球) - 与巴恩斯/阿丘瓦高位手递手借掩护投射"
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 84,
+          "category": "TENDENCY",
+          "decision_rationale": "【全明星单核大核】2022 全明星赛季当家主脑，原版 84 触球不足以体现战术绝对支配地位，升至 92"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【关键时刻大心脏】末节强投三分与突击抛投，出手倾向维持 88"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1138,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【超远高难度三分】场均 3.7 记三分，定点与干拔结合"
+        },
+        {
+          "field": "transition_pull_up_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1151,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【快攻追身三分】反击转换中标志性追身拔葱三分"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【鬼手切球】下盘极低，极擅长在突破者收球瞬间掏球截断，场均 1.7 抢断"
+        },
+        {
+          "field": "pass_interception_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1204,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球预判】破坏对手分球路线"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【死锁防守】虽身材矮小但防守极其顽强对抗极硬"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1209,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】高出场时间核心严防犯规困扰，安全锁定在 42"
+        }
+      ]
+    },
+    {
+      "player_name": "OG Anunoby",
+      "roster_index": 2,
+      "cyberface_id": 7515,
+      "position": "SF/PF",
+      "target_minutes": 36.0,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          15,
+          11,
+          8,
+          14
+        ],
+        "play_type_descriptions": [
+          "Slot 1: Three Point (15, 三分战术) - 底角抽烟埋伏定点冷血三分 (3PT 40%+)",
+          "Slot 2: Cutter (11, 空切) - 范乔丹突破时沿底线空切重扣",
+          "Slot 3: Post-Up Low (8, 低位背身) - 错位坐打矮小后卫翻身跳步终结",
+          "Slot 4: Mid-Range (14, 中距离) - 面框两步干拔中投"
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 78,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【全能锋线球权】原版 60 触球严重低估，阿奴诺比具备强行面框攻筐与低位强打，触球提至 78"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结兼顾分享】场均 17.1 分，出手欲望维持在稳定的 82"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1138,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【精英定点三分】底角三分绝杀与定点惩罚"
+        },
+        {
+          "field": "drive_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1155,
+          "type": "uint8",
+          "val_raw": 80,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【坦克突破】重型身材强行突刺油漆区"
+        },
+        {
+          "field": "attack_strong",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【对抗硬上】力量 90 带来超强抗撞击终结能力"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守死锁】长臂领防，顶防杜兰特与字母哥"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 98,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守威慑】长臂遮天蔽日干扰投篮"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1209,
+          "type": "uint8",
+          "val_raw": 44,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】压低常规犯规至 44，确保关键防守人不会因小动作犯规离场"
+        }
+      ]
+    },
+    {
+      "player_name": "Scottie Barnes",
+      "roster_index": 3,
+      "cyberface_id": 8060,
+      "position": "SF/PF",
+      "target_minutes": 35.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          8,
+          11,
+          4
+        ],
+        "play_type_descriptions": [
+          "Slot 1: Isolation (1, 单打) - 面框错位大步突破与假动作单挑",
+          "Slot 2: Post-Up Low (8, 低位背身) - 翻身跳步与近距离小抛投碾压",
+          "Slot 3: Cutter (11, 空切) - 弱侧游弋空切接球直接攻筐",
+          "Slot 4: P&R Ball Handler (4, 挡拆持球) - 203cm 高大组织前锋高位挡拆发牌"
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 86,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【年度最佳新秀 ROY】全能组织核心，原版 78 触球提升至 86，给予更多持球推进权利"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【全面开花】场均 15.3 分 7.5 板 3.5 助攻，终结欲望平稳提升至 82"
+        },
+        {
+          "field": "post_up_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【低位错位硬凿】极具辨识度的背身硬凿矮小防守人"
+        },
+        {
+          "field": "floater_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1123,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【柔和手感】罚球线前沿抛投小跳步终结"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【组织视野】吸引包夹后极速分球弱侧底角射手"
+        },
+        {
+          "field": "putback_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1118,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【二次进攻怪兽】前场进攻篮板极其敏锐，补篮倾向升至 85"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守干扰】防守覆盖 1~5 号位"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1209,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】原版 68 下调至 45，保障新秀赛季稳定出场时间"
+        }
+      ]
+    }
+  ]
+}

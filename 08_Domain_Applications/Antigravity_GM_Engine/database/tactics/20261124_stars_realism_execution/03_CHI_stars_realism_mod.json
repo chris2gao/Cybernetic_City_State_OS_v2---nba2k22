@@ -1,0 +1,283 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 3,
+  "team_abbr": "CHI",
+  "team_name": "Chicago Bulls",
+  "source_research_docs": [
+    "63_CHI_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "90_2022_STARS_CONSENSUS_TIER2_WINGS_BIGS.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】维持多诺万 Pace & Space / Mid-range & Motion 复合战车体系"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行率】维持 75，公牛赖以生存的高频阵地手递手与中距离掩护"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【协防强度】由 75 提升至 80，弥补武切维奇移动劣势，侧翼快速轮转关门"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 1,
+      "current_in_game_val": 1,
+      "category": "COACHING",
+      "decision_rationale": "【进攻侧重】锁定 ATTACK_THE_BASKET_AND_MIDRANGE (1)，最大化德罗赞与拉文双杀招"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 15,
+      "current_in_game_val": 15,
+      "category": "COACHING",
+      "decision_rationale": "【防守侧重】锁定 PHYSICAL_DEFENSE (15)，强化外线对抗施压"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "DeMar DeRozan",
+      "roster_index": 1,
+      "cyberface_id": 1605,
+      "position": "SG/SF",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          14,
+          8,
+          1,
+          4
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】中距离单打战术(14) + 低位翻身背打(8) + 侧翼单挑(1) + 挡拆持球(4)，彻底还原当代中投活化石的纯正打法，杜绝任何底线定点三分乱跑",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权回归】由 86 提升至 90，确立全队第一单挑终结大核与阵地战解题点"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手总权重】由 92 提升至 95，2022 全明星首发二阵，背靠背压哨绝杀担当"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 20,
+          "current_in_game_val": 20,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分极度克制】锁定在 20，极少出手非必要三分，绝大部分回合以中投及突破解决战斗"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守安全锁】由 60 压制至 42，防守端规避犯规风险"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 78,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【面对包夹分球】中距离遭遇双人合围时迅速甩角给拉文或武切维奇空位三分"
+        }
+      ]
+    },
+    {
+      "player_name": "Zach LaVine",
+      "roster_index": 0,
+      "cyberface_id": 4101,
+      "position": "SG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          1,
+          15,
+          11
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】高位挡拆持球(4) + 弧顶单挑(1) + 跑位三分(15) + 弱侧空切(11)，与德罗赞完美形成内外双枪互补",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 86,
+          "current_in_game_val": 84,
+          "category": "TENDENCY",
+          "decision_rationale": "【副攻球权】微调至 86，与德罗赞构成合理球权分工，杜绝持球踩踏"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结意愿】维持 92 高出手权重，快攻反击闪电暴扣与冷血急停三分"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分威胁】锁定 90，全联盟顶级高难度持球干拔三分准星"
+        },
+        {
+          "field": "driving_dunk",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1115,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【滑翔扣篮】提升至 95，标志性两届扣篮王飞天攻筐"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 62,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守安全锁】严格锁定 42，保障主力外线出场时间"
+        }
+      ]
+    },
+    {
+      "player_name": "Alex Caruso",
+      "roster_index": 5,
+      "cyberface_id": 7570,
+      "position": "SG/PG",
+      "target_team_id": 20,
+      "save_context_note": "【跨队寻址卫兵】2021-22 赛季公牛后防核心卡鲁索，在当前 MyLEAGUE0005 存档因 Cycle 01 交易身处步行者 (Team ID 20, Roster Index 5, Cyberface 7570)；本处出具其真实防守大师级标定，供 REA 执行器精确寻址",
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          11,
+          1,
+          15,
+          0
+        ]
+      },
+      "playbook_rationale": "【防守奇兵定位】空切吃饼(11) + 转换反击攻筐(1) + 定点底角三分(15) + 无(0)，完全克制阵地战持球，专注防守扫荡",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 68,
+          "current_in_game_val": 46,
+          "category": "TENDENCY",
+          "decision_rationale": "【触球权重】提升至 68，给予足够快攻反击推进与下线接应权"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 58,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结克制】维持 58，绝不挤占主力得分手出手机会"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 96,
+          "category": "TENDENCY",
+          "decision_rationale": "【贴身断球】保持 96，历史级后场领防逼抢与切球大师"
+        },
+        {
+          "field": "pass_interception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1204,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球截断】提升至 96，预判传球路线飞身扑抢截球"
+        },
+        {
+          "field": "take_charge",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1205,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【造带球撞人】大幅提升至 95，舍身堵枪眼制造进攻犯规标杆"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守安全锁】压制在 42，高侵略性但干净防守，防 6 犯毕业"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,319 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 6,
+  "team_abbr": "LAC",
+  "team_name": "LA Clippers",
+  "source_research_docs": [
+    "61_LAC_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "90_2022_STARS_CONSENSUS_TIER2_WINGS_BIGS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "desc": "Pace & Space / Dual Wings ISO",
+      "decision_rationale": "维持以空间拉开、双向侧翼单打与中距离硬解为核心的战术体系"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 75,
+      "desc": "run_play_tendency: 75",
+      "decision_rationale": "维持75半场战术调用频率，保障伦纳德与乔治高位掩护中投战术执行"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 75,
+      "desc": "help_defense: 80",
+      "decision_rationale": "【协防提升】由75微调至80，最大化发挥全锋线五小阵容换防扫荡与死亡缠绕协防截断"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "desc": "bench_depth: 9",
+      "decision_rationale": "维持9人核心轮换结构"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 65,
+      "current_in_game_val": 65,
+      "desc": "bench_utilization: 65",
+      "decision_rationale": "维持替补使用率配置"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 14,
+      "current_in_game_val": 14,
+      "desc": "PHYSICAL_DEFENSE",
+      "decision_rationale": "防守侧重身体强硬对抗，利用顶级侧翼尺寸与力量进行高压逼抢"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 1,
+      "current_in_game_val": 1,
+      "desc": "PATIENT_OFFENSE",
+      "decision_rationale": "进攻侧重耐心寻觅错位，主打伦纳德与乔治的中距离干拔单挑硬解"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Kawhi Leonard",
+      "roster_index": 2,
+      "cyberface_id": 2143,
+      "position": "SF",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          14,
+          8,
+          4
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【终极硬解球权】由86提升至92，确立快船阵地战第一错位单挑核心顺位"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【效率机器欲望】维持94，极高投篮把握度，中距离后仰与低位硬解无解终结"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【包夹分球提升】由70微调至75，面对侧翼重重包夹沉着分球给外线空位投手"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【持球大核锋线】顺下外弹倾向锁定为0"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分投射克制】由85微调至82，以中距离干拔与低位背身单打为主打武器"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【招牌死亡缠绕】巨掌精准掏球，对持球人构成顶级抢断威胁"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 98,
+          "category": "TENDENCY",
+          "decision_rationale": "【顶级外防干扰】维持96超强投篮干扰态度"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1209,
+          "type": "uint8",
+          "val_raw": 40,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【历史级防守纪律】由55压制至40安全阈值，抢断极其干净绝不盲目下手，防模拟犯规"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1083,
+          "type": "uint8",
+          "val_raw": 189,
+          "current_in_game_val": 175,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【重型装甲车对抗】力量评级从83提至88 (Raw: 189)，下盘扎实抗撞顶级"
+        },
+        {
+          "field": "perimeter_def",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1070,
+          "type": "uint8",
+          "val_raw": 213,
+          "current_in_game_val": 200,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【外线死亡死锁】外线单防评级提升至96 (Raw: 213)，历史最强单防侧翼模板"
+        }
+      ]
+    },
+    {
+      "player_name": "Paul George",
+      "roster_index": 1,
+      "cyberface_id": 1810,
+      "position": "SF/SG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          4,
+          15,
+          14
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 84,
+          "category": "TENDENCY",
+          "decision_rationale": "【持球双核掌控】由84提升至90，兼具高位挡拆持球发起与全场推转换重任"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【得分主力顺位】维持92主力分卫终结火力"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 78,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【突分组织提升】由70提升至78，挡拆突刺后分球外线射手"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【持球外线】顺下外弹倾向锁定为0"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【丝滑干拔三分】维持92三分高频出手，招牌急停干拔与底角跑动三分"
+        },
+        {
+          "field": "pass_interception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1205,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球路线截断】由82提升至90，长臂幽灵预判截断快攻反击"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【贴防掏球】维持88高压领防掏球"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【外线防守干扰】由86提升至90，侧翼防守扬手干扰积极性"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1209,
+          "type": "uint8",
+          "val_raw": 44,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】由60下调至44安全阈值，避免外线手部微小犯规累积"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1083,
+          "type": "uint8",
+          "val_raw": 165,
+          "current_in_game_val": 150,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【侧翼对抗力量】力量评级提升至80 (Raw: 165)，保证突破撞击后稳定性"
+        }
+      ]
+    }
+  ]
+}

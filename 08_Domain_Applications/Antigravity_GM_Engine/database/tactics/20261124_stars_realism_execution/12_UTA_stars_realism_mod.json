@@ -1,0 +1,319 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 12,
+  "team_abbr": "UTA",
+  "team_name": "Utah Jazz",
+  "source_research_docs": [
+    "60_UTA_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md",
+    "90_2022_STARS_CONSENSUS_TIER2_WINGS_BIGS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 7,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "斯奈德经典高位重度挡拆体系 (Pick & Roll Heavy 7)，围绕后卫突投与中锋顺下"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "战术纪律提升至 80，严格执行挡拆与弱侧底角射手传导"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 85,
+      "current_in_game_val": 70,
+      "category": "COACHING",
+      "decision_rationale": "戈贝尔禁区一夫当关护筐协防与外线贴身防三分"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "9人经典轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 55,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "克拉克森第六人上场时间分配与主力负荷平衡"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Donovan Mitchell",
+      "roster_index": 13,
+      "cyberface_id": 7510,
+      "position": "SG",
+      "cross_team_note": "2022 犹他爵士绝对进攻第一箭头（现存档中已交易至 CLE Slot 13，以 2022 巅峰爵士球星标准深度调优）",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          1,
+          15,
+          2
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【2022爵士当家大核】场均 26 分第一箭头，触球由 86 提升至 94 确立主攻"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "顶级无解单打与挡拆干拔跳投，出手倾向 95"
+        },
+        {
+          "field": "driving_layup",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1145,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "极速第一步突破攻筐挑篮"
+        },
+        {
+          "field": "driving_dunk",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1146,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "扣篮大赛冠军级实战战斧暴扣倾向"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "高位借掩护急停干拔超远三分"
+        },
+        {
+          "field": "stepback_jumper",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1165,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "变向后撤步跳投杀招"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "挡拆遭遇包夹时分球空位弱侧射手"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 44,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【常规犯规安全锁】锁定 44 安全阈值"
+        },
+        {
+          "field": "speed",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1040,
+          "type": "uint8",
+          "val_raw": 219,
+          "current_in_game_val": 205,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "速度 Rating 提升至 95 (raw 219)，重型后卫顶级爆发第一步"
+        }
+      ]
+    },
+    {
+      "player_name": "Rudy Gobert",
+      "roster_index": 12,
+      "cyberface_id": 2713,
+      "position": "C",
+      "cross_team_note": "2022 犹他爵士防守基石与三届最佳防守球员（现存档中已交易至 MIN Slot 12，以 2022 巅峰爵士标准深度调优）",
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          11,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 58,
+          "current_in_game_val": 36,
+          "category": "TENDENCY",
+          "decision_rationale": "【Doc 88核心哨兵】触球锁定 58，纯下顺与二次进攻终结，绝不盲目背打"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 55,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【Doc 88核心哨兵】出手克制 55，专注高效吃饼与前场篮板补扣"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【纯顺下终结】挡拆后 100% 坚决顺下攻筐空接，外弹倾向为 0"
+        },
+        {
+          "field": "block_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1205,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "三届 DPOY 禁飞区擎天柱，垂直起跳护筐封盖"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "全联盟最顶尖干扰投篮防守威慑"
+        },
+        {
+          "field": "take_charge",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1215,
+          "type": "uint8",
+          "val_raw": 30,
+          "current_in_game_val": 20,
+          "category": "TENDENCY",
+          "decision_rationale": "靠臂展与体型站位垂直干扰，极少倒地造撞人"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 48,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【Doc 88核心哨兵安全锁】原版 70 严重失真导致模拟 6 犯毕业，严格压制至 48 安全线"
+        },
+        {
+          "field": "interior_def",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1045,
+          "type": "uint8",
+          "val_raw": 222,
+          "current_in_game_val": 210,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "内线防守 Rating 99 (raw 222)，禁区定海神针"
+        }
+      ]
+    },
+    {
+      "player_name": "Mike Conley",
+      "roster_index": 0,
+      "cyberface_id": 1413,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          14,
+          12,
+          13
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "爵士阵地老将主控，疏导球权与发起挡拆"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "高助失比，稳健分球空位队友"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 40,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "老将控犯规极佳，锁定 40 安全阈值"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,225 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 25,
+  "team_abbr": "SAS",
+  "team_name": "San Antonio Spurs",
+  "head_coach": "Gregg Popovich",
+  "tactical_identity": "Good-to-Great / Popovich Team Motion & Passing Lane Disruptor",
+  "trade_status_note": "【历史真实与存档交易对应】德章泰·穆雷 (Dejounte Murray) 是 2021-2022 赛季马刺队的入选全明星当家领袖与抢断王。虽然在 MyLEAGUE0005 存档中其已被交易至老鹰队 (ATL, Roster Index 13, Cyberface 7222)，但其 2022 真实球风调优规格书仍由本 SAS 规格书权威制定。本文件既包含穆雷在当前存档寻址位置 (ATL Roster Index 13 / CF 7222) 的完整纯差分写入指令，亦同步规范马刺队波波维奇教练控制块与在阵指挥官朗佐·鲍尔的组织优化。",
+  "source_research_docs": [
+    "74_SAS_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】采用 Balanced / Team Motion 体系，严格贯彻波波维奇 Good-to-Great 团队传切哲学"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 85,
+      "current_in_game_val": 85,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行纪律】设定 85 顶格纪律性，杜绝单打蛮干，全员流动分享球"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 80,
+      "category": "COACHING",
+      "decision_rationale": "【协防强度】80 强化弱侧协防轮转与保护油漆区"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换深度】9 人常规轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 50,
+      "current_in_game_val": 95,
+      "category": "COACHING",
+      "decision_rationale": "【替补利用率纠偏】原版 95 严重畸高导致主力出场时间极端碎化，修正为 50 稳定核心阵容决胜时间"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Dejounte Murray",
+      "roster_index": 13,
+      "cyberface_id": 7222,
+      "position": "PG",
+      "target_team_in_save": "ATL (Team ID 09, Slot 13)",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          2,
+          4,
+          14,
+          1
+        ],
+        "play_types_desc": "Slot 1: Isolation Point (2), Slot 2: P&R Ball Handler (4), Slot 3: Mid-Range (14), Slot 4: Isolation (1)"
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【绝对组织大核】作为 2022 全明星与三双机器提升至 95，掌控球队半场阵地战与转换攻防中枢"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结意愿】提升至 88，与 95 触球形成兼具攻传的大核平衡，承担关键时刻跳投硬解"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球分享】场均 9.2 次助攻，提升至 92 还原顶级组织传控视野与无私出球"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【历史级抢断王】提升至 98，还原 2022 联盟抢断王（场均 2.0 次抢断）神级掏球破坏力"
+        },
+        {
+          "field": "pass_interception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1205,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【长臂幽灵截断】提升至 95，利用 6 尺 10 寸长臂在传球路线上频频抢断打出反击"
+        },
+        {
+          "field": "shot_mid_range",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1130,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【中距离单打】提升至 90，还原其招牌罚球线急停跳投与干拔跳投"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 62,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】原版 62 极易导致 6 犯毕业，压制至 42 安全阈值"
+        },
+        {
+          "field": "signature_badges",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1221,
+          "type": "bitfield",
+          "val_raw": 3,
+          "current_in_game_val": 0,
+          "category": "BADGES",
+          "decision_rationale": "【核心统治徽章】赋予金卡：抄截大师 (Pickpocket)、拦截者 (Interceptor)、十美分 (Dimer)、组织核心 (Floor General)、防守死锁 (Clamps)"
+        }
+      ]
+    },
+    {
+      "player_name": "Lonzo Ball",
+      "roster_index": 10,
+      "cyberface_id": 7501,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          15,
+          2,
+          12
+        ],
+        "play_types_desc": "Slot 1: P&R Ball Handler (4), Slot 2: Three Point (15), Slot 3: Isolation Point (2), Slot 4: Handoff Receiver (12)"
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 96,
+          "category": "TENDENCY",
+          "decision_rationale": "【马刺在阵大脑】波波维奇体系第一组织控卫，掌控全队节奏"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【团队传球分享】由 70 大幅提升至 95，完美契合 Good-to-Great 无私传切哲学"
+        },
+        {
+          "field": "pass_interception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1205,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【外线长臂防守】提升至 92，利用高大身材封锁外线传球路线"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 40,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】锁定 40 防止陷入犯规麻烦"
+        }
+      ]
+    }
+  ]
+}

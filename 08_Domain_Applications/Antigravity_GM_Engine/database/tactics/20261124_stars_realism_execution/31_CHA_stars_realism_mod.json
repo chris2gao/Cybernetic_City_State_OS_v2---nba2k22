@@ -1,0 +1,193 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 31,
+  "team_abbr": "CHA",
+  "team_name": "Charlotte Hornets",
+  "source_research_docs": [
+    "75_CHA_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 8,
+      "current_in_game_val": 8,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】采用 Seven Seconds or Less / Fast Break 跑轰体系，契合拉梅洛·鲍尔推进节奏"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 60,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行纪律】下调至 60，给拉梅洛·鲍尔留出更多即兴反击长传与推转换空间"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 55,
+      "current_in_game_val": 35,
+      "category": "COACHING",
+      "decision_rationale": "【协防强度】从 35 提升至 55，避免外线被单挑轻易打穿"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换深度】9 人常规轮换，保障拉梅洛·鲍尔场均出战 34+ 分钟"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 50,
+      "current_in_game_val": 50,
+      "category": "COACHING",
+      "decision_rationale": "【替补利用率】50 平衡主力与替补火力"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "LaMelo Ball",
+      "roster_index": 0,
+      "cyberface_id": 7953,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          15,
+          2,
+          12
+        ],
+        "play_types_desc": "Slot 1: P&R Ball Handler (4), Slot 2: Three Point (15), Slot 3: Isolation Point (2), Slot 4: Handoff Receiver (12)"
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【跑轰指挥官】触球拉升至 98，全权掌控黄蜂转换快攻与半场组织推进"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【传射平衡】出手控制在 88，确立传球第一兼具得分爆发力的魔术师指挥打法"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【无私空位分球】分球提升至 95，天马行空寻找空位射手与顺下内线"
+        },
+        {
+          "field": "flashy_pass",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1170,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【华丽传球】花式传球拉满至 98，还原不看人击地、背后妙传与长传彩虹"
+        },
+        {
+          "field": "alley_oop_pass",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1171,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【空接连线】空接传球提升至 96，频密连线布里奇斯与普拉姆利暴扣"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【超远与追身三分】三分出手提升至 92，还原其不讲理干拔与快速推胸跳投"
+        },
+        {
+          "field": "floater",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1158,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【灵动抛投】禁区近筐抛投提升至 90，规避激烈对抗完成高打板终结"
+        },
+        {
+          "field": "pass_interception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1204,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球路线截断】长臂幽灵抢断提升至 95，场均 1.6 抢断领跑东部控卫"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【持球抢断】保持 88 高压下手逼抢"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 48,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】锁定 48 安全上限杜绝模拟 6 犯毕业"
+        },
+        {
+          "field": "signature_badges",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1221,
+          "type": "bitfield",
+          "val_raw": 4,
+          "current_in_game_val": 0,
+          "category": "BADGES",
+          "decision_rationale": "【核心统治徽章】赋予紫卡：十美分 (Dimer)、特快专递 (Special Delivery)、子弹传球 (Bullet Passer)；金卡：穿针引线 (Needle Threader)、组织核心 (Floor General)、超远射程 (Limitless Spot-Up)、截球大师 (Interceptor)"
+        }
+      ]
+    }
+  ]
+}

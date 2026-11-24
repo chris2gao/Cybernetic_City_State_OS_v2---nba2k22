@@ -1,0 +1,163 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 24,
+  "team_abbr": "OKC",
+  "team_name": "Oklahoma City Thunder",
+  "source_research_docs": [
+    "73_OKC_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】戴格诺特 Pace & Space / 5-Out 突分体系，最大化 SGA 单挑突破与慢节奏分球空间"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 65,
+      "current_in_game_val": 70,
+      "category": "COACHING",
+      "decision_rationale": "【战术纪律】由 70 微调至 65，给予 SGA 极高的持球突破推进与蛇形挡拆自由度"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "【青年军协防提升】由 65 提升至 75，强化全队轮转补位与长臂截断"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 1,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【进攻侧重】设置 ATTACK_THE_BASKET (1)，彻底释放全联盟突破次数第一的内线杀伤"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 14,
+      "current_in_game_val": 15,
+      "category": "COACHING",
+      "decision_rationale": "【防守侧重】设置 NO_THREES (14)，长臂扑抢外线三分"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Shai Gilgeous-Alexander",
+      "roster_index": 0,
+      "cyberface_id": 7710,
+      "position": "PG/SG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          4,
+          2,
+          14
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】原版四槽为 [1, 4, 5, 14]（含无意义槽位5），更正为单打(1) + 挡拆持球(4) + 控卫单打(2) + 中距离单打战术(14)，is_play_initiator: 1；完美还原全联盟场均突破第一（23.9次）之蛇形走位、慢三步反节奏上篮与造犯规大师特质",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【绝对球权大核】由 88 提升至 96，确立全队第一战术发起者与阵地战组织核心地位"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手总倾向】由 85 提升至 92，场均 24.5 分强硬攻坚箭头"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【突破分球意识】原版 68 严重偏低，大幅拔高至 92，还原突破吸包夹后精准甩角空位"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 25,
+          "current_in_game_val": 25,
+          "category": "TENDENCY",
+          "decision_rationale": "【挡拆配合】维持 25，多借掩护下坡突击"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分倾向】适度由 65 调优至 75，以撤步炸弹三分与空位回应为主，不作为第一武器"
+        },
+        {
+          "field": "driving_layup",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1113,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【突破上篮欲望】由 85 拔高至 98，全联盟突破上篮与慢三步挑篮第一人"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 62,
+          "category": "TENDENCY",
+          "decision_rationale": "【常规犯规安全锁】原版 62 下调至 45，长臂干扰不盲目下手，防 6 犯毕业"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1070,
+          "type": "uint8",
+          "val_raw": 72,
+          "current_in_game_val": 56,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【对抗力量修正】原版力量仅 56 严重偏瘦，修正至 72，还原其突破倚人减速上篮的核心对抗韧劲"
+        }
+      ]
+    }
+  ]
+}

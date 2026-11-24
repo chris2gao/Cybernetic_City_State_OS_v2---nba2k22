@@ -1,0 +1,268 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 26,
+  "team_abbr": "PHX",
+  "team_name": "Phoenix Suns",
+  "source_research_docs": [
+    "54_PHX_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md",
+    "90_2022_STARS_CONSENSUS_TIER2_WINGS_BIGS.md",
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 7,
+      "current_in_game_val": 7,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】Pick & Roll (7) 高位挡拆战术体系，完美契合保罗与布克"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 85,
+      "current_in_game_val": 80,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行率】保罗掌舵的 64 胜太阳，阵地战严谨战术呼叫率提升至 85"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【协防保护】稳健轮转，大桥外线锁死+艾顿内线沉退"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换人数】9 人季后赛轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 55,
+      "current_in_game_val": 50,
+      "category": "COACHING",
+      "decision_rationale": "【替补使用率】55，释放佩恩与麦基冲击波"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 7,
+      "current_in_game_val": 0,
+      "category": "COACHING",
+      "decision_rationale": "【进攻侧重】PICK_AND_ROLL (7) 挡拆主导"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "current_in_game_val": 0,
+      "category": "COACHING",
+      "decision_rationale": "【防守侧重】PROTECT_PAINT (13) 护筐第一"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Chris Paul",
+      "roster_index": 0,
+      "cyberface_id": 1259,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          2,
+          4,
+          14,
+          1
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【控卫之神大核】太阳半场阵地战绝对球权大脑，触球拉满至 96"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 78,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球第一克制】前三节梳理全队，出手欲望压至 78"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【历史级挡拆传球】高位挡拆喂饼艾顿与底角射手，分球拉满至 98"
+        },
+        {
+          "field": "shot_mid_range",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1130,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【挡拆军训中投】招牌右路挡拆急停罚球线跳投（季后赛14中14神迹）"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 62,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】常规防守犯规控制在 45"
+        }
+      ]
+    },
+    {
+      "player_name": "Devin Booker",
+      "roster_index": 1,
+      "cyberface_id": 4387,
+      "position": "SG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          14,
+          4,
+          1,
+          15
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 86,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【分卫核心】全队第一得分箭头，触球设为 86"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【正统古典分卫】一阵分卫得分王级别强攻欲望，出手提升至 94"
+        },
+        {
+          "field": "shot_mid_range",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1130,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【肘区教科书中投】当代最纯正中距离大师，急停跳投拉满至 96"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 44,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】常规犯规控制在 44"
+        }
+      ]
+    },
+    {
+      "player_name": "Mikal Bridges",
+      "roster_index": 2,
+      "cyberface_id": 7709,
+      "position": "SF",
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          15,
+          11,
+          14,
+          7
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 74,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【顶级3D大闸】触球适度，主攻无球底角与空切"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 78,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【高效终结】出手欲望 78，稳健把握机会"
+        },
+        {
+          "field": "pass_interception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1204,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【幽灵拦截者】2022 DPOY 投票第二，传球路线截断拉满至 95"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【铁人干净防守】全季不犯规铁人，常规犯规压至 42 安全阈值"
+        }
+      ]
+    }
+  ]
+}

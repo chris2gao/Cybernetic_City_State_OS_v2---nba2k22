@@ -1,0 +1,330 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 1,
+  "team_abbr": "MIL",
+  "team_name": "Milwaukee Bucks",
+  "source_research_docs": [
+    "53_MIL_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 6,
+      "current_in_game_val": 6,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】维持布登霍尔泽招牌 Pace & Space / Five-Out 空间体系，最大化字母哥攻筐通道"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 70,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行率】微调至 70，给字母哥快攻推反击与霍勒迪自由单挑留出充分机动空间"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 85,
+      "current_in_game_val": 80,
+      "category": "COACHING",
+      "decision_rationale": "【防守协同】提升至 85，强化字母哥弱侧游弋扫荡与大洛佩斯沉退保护"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "current_in_game_val": 15,
+      "category": "COACHING",
+      "decision_rationale": "【防守重心】锁定 PROTECT_PAINT (13)，构筑雄鹿联盟第一禁飞区铁壁"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【进攻重心】锁定 ATTACK_THE_BASKET (2)，字母哥领衔全场下坡冲击"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Giannis Antetokounmpo",
+      "roster_index": 3,
+      "cyberface_id": 2701,
+      "position": "PF/C",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          11,
+          8,
+          4
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】原版 is_play_initiator 错误设为 0，必须激活为 1（防守篮板后自带反击火车头推进）；四槽重构为单打(1) + 空切吃饼(11) + 低位硬凿(8) + 挡拆发起(4)，彻底废除纯站桩打法",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权中枢】由 90 上调至 98，确立全队第一战术核心与进攻推进发动机地位"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手总权重】由 88 提升至 96，还原 2022 季后赛场均 33.9 分之绝对攻坚箭头"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 15,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【掩护顺下纠偏】原版 65 严重失真导致大量外弹三分，强力修正为 15（85% 顺下暴力攻筐），彻底激活禁区空接与下顺杀伤"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 35,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分克制】由 60 压低至 35，杜绝比赛模拟中字母哥频繁盲目在外线干拔三分"
+        },
+        {
+          "field": "driving_layup",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1113,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【突破上篮】拉满至 99，还原历史级欧洲步变向与禁区强硬上篮"
+        },
+        {
+          "field": "driving_dunk",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1115,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【行进间扣篮】拉满至 99，暴力下坡隔人暴扣招牌杀招"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 48,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守安全锁】原版 68 导致模拟常态化 6 犯毕业，严格受控锁定在 48 安全阈值"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【干扰投篮】提升至 96，长臂怪兽全天候外扑遮蔽防守"
+        },
+        {
+          "field": "block_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【封盖欲望】提升至 96，还原总决赛 G4 封盖艾顿级别的统治级追帽与协防排球大帽"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1070,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 88,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【身体力量】由 88 修正至 95，还原其顶防一切内线中锋与碾压突刺的重装对抗力"
+        }
+      ]
+    },
+    {
+      "player_name": "Jrue Holiday",
+      "roster_index": 0,
+      "cyberface_id": 1607,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          2,
+          4,
+          8,
+          15
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】确立控卫单打(2) + 挡拆发起(4) + 坐打小后卫(8) + 三分拉开(15)，精准契合冠军主控功能",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 72,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权回归】由 72 提升至 90，确保阵地战战术梳理与后场推进第一主控权"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 84,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结克制】维持 84，既能硬解防线，又不过度蚕食字母哥与米德尔顿出手权"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【贴身断球】拉满至 98，联盟第一后卫领防撕咬死锁，关键时刻绝杀掏球"
+        },
+        {
+          "field": "pass_interception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1204,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球截断】由 82 提升至 95，后场幽灵抢断破坏传球路线"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守安全锁】压制至 45，防守大师下盘极稳且下手极干净，绝不盲目赔上犯规"
+        },
+        {
+          "field": "take_charge",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1205,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 50,
+          "category": "TENDENCY",
+          "decision_rationale": "【造进攻犯规】提升至 75，顶级防守横移站位造带球撞人"
+        }
+      ]
+    },
+    {
+      "player_name": "Khris Middleton",
+      "roster_index": 2,
+      "cyberface_id": 2482,
+      "position": "SF",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          14,
+          4,
+          1,
+          15
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】原版 is_play_initiator 错误设为 0，必须激活为 1（米德尔顿实战拥有大量高位持球单打与末节单挑硬解权）；四槽重构为中距离(14) + 挡拆持球(4) + 单打(1) + 三分(15)",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 84,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权配置】由 80 微调至 84，雄鹿二当家外线第一主攻箭头"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手总权重】保持 88，末节关键先生与翻身中投强投硬解"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分倾向】保持 85，冷血追身干拔与定点三分回应"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【挡拆分球】由 65 提升至 75，面对包夹精准给空切字母哥或外线射手喂饼"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 40,
+          "current_in_game_val": 58,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守安全锁】严格锁定在 40 安全线，避免陷入犯规泥潭"
+        }
+      ]
+    }
+  ]
+}

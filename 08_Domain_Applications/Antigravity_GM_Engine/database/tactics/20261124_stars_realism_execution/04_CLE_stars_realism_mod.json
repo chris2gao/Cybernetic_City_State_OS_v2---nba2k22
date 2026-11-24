@@ -1,0 +1,299 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 4,
+  "team_abbr": "CLE",
+  "team_name": "Cleveland Cavaliers",
+  "source_research_docs": [
+    "67_CLE_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 7,
+      "current_in_game_val": 7,
+      "desc": "Pick & Roll Heavy / Balanced Twin Towers",
+      "decision_rationale": "维持以高位挡拆与双塔高低位战术为核心的体系配置"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 75,
+      "desc": "run_play_tendency: 80",
+      "decision_rationale": "【战术执行】由75微调至80，提高半场阵地战术呼叫频率，增加加兰高位挡拆与手递手调用"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 85,
+      "current_in_game_val": 80,
+      "desc": "help_defense: 85",
+      "decision_rationale": "【禁飞区协防】由80微调至85，最大化发挥阿伦与莫布利双塔禁区游弋扫荡与遮天蔽日协防"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "desc": "bench_depth: 9",
+      "decision_rationale": "维持9人核心轮换结构"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 65,
+      "current_in_game_val": 65,
+      "desc": "bench_utilization: 65",
+      "decision_rationale": "维持替补使用率配置"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "current_in_game_val": 13,
+      "desc": "PROTECT_PAINT",
+      "decision_rationale": "防守重点收缩禁区，依托阿伦与双塔护筐保护篮板"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 4,
+      "current_in_game_val": 4,
+      "desc": "PICK_AND_ROLL",
+      "decision_rationale": "进攻侧重主打高位挡拆发起"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Darius Garland",
+      "roster_index": 0,
+      "cyberface_id": 7824,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          2,
+          15,
+          12
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【核心球权】原版82严重低估骑士全明星首发大核地位，提升至96确立全队第一战术掌控者"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【传射平衡】场均21.7分8.6助攻，适度提升终结欲，保持高位挡拆攻击性"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【顶级喂饼】由85拉升至96，挡拆中极强分球意愿，精确输送空接与底角三分"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【急停三分】38.3%三分命中率，借双掩护干拔三分与转换抢射"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【后卫基准】纯控卫顺下外弹倾向锁定为0"
+        },
+        {
+          "field": "drive_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1155,
+          "type": "uint8",
+          "val_raw": 86,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【灵动突破】极快第一步突入禁区抛投及撕裂防线"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【战术纪律】保持严谨的半场挡拆发起战术执行力"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【积极防守】外线扬手干扰投篮态度"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1209,
+          "type": "uint8",
+          "val_raw": 35,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】原版60严重偏高，下调至35安全阈值，杜绝外线手部轻微犯规"
+        }
+      ]
+    },
+    {
+      "player_name": "Jarrett Allen",
+      "roster_index": 2,
+      "cyberface_id": 7517,
+      "position": "C",
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          11,
+          8,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 70,
+          "current_in_game_val": 42,
+          "category": "TENDENCY",
+          "decision_rationale": "【挡拆触球】原版42严重压制吃饼中锋，提升至70确保高频顺下空接、二次篮板与近距离小勾手"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【高效吃饼】67.7%历史级终结命中率，顺下得球后强起暴扣"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 5,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【纯顺下空切】全联盟最纯粹的顺下攻筐中锋（5），严禁外弹"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 35,
+          "category": "TENDENCY",
+          "decision_rationale": "【短顺下策应】罚球线接球短顺下分球给底角空位射手"
+        },
+        {
+          "field": "block_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【禁飞区火锅】场均1.3盖帽全明星防守内线，由85拉升至95还原护筐擎天柱"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 98,
+          "category": "TENDENCY",
+          "decision_rationale": "【干扰投篮】高举长臂干扰一切禁区抛投与攻筐"
+        },
+        {
+          "field": "play_discipline",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1181,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 99,
+          "category": "TENDENCY",
+          "decision_rationale": "【战术纪律】完美恪守掩护挂人与路线顺下"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 0,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【零三分投射】完全杜绝非理性外线出手"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1209,
+          "type": "uint8",
+          "val_raw": 44,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】原版65导致模拟经常6犯离场，严格压制至44安全阈值"
+        }
+      ]
+    }
+  ]
+}

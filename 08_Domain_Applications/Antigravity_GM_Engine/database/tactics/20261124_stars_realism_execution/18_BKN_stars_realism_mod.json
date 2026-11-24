@@ -1,0 +1,302 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 18,
+  "team_abbr": "BKN",
+  "team_name": "Brooklyn Nets",
+  "source_research_docs": [
+    "59_BKN_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md",
+    "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】Pace & Space (2) 空间单挑拉开体系"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 60,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行率】调控为 60，赋予杜兰特与欧文充分的阵地单打自适应灵活性"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 65,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "【协防保护】适度协防，依赖无限换防"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换深度】9 人常规轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 65,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "【替补使用率】65"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 1,
+      "current_in_game_val": 0,
+      "category": "COACHING",
+      "decision_rationale": "【进攻侧重】GET_BALL_TO_STARS (1) 绝对巨星单挑优先"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 11,
+      "current_in_game_val": 0,
+      "category": "COACHING",
+      "decision_rationale": "【防守侧重】LIMIT_TRANSITION (11) 限制退防失分"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Kevin Durant",
+      "roster_index": 2,
+      "cyberface_id": 1411,
+      "position": "SF",
+      "target_minutes": 37.5,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          14,
+          9,
+          15
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【死神持球】绝对第一终结手与战术重心，触球提至 98"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 96,
+          "category": "TENDENCY",
+          "decision_rationale": "【得分独占欲】错位无视防守强投干拔，出手欲望 98"
+        },
+        {
+          "field": "shot_mid_range",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1130,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【历史第一中投】急停跳投中距离倾向顶格 99"
+        },
+        {
+          "field": "post_up",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1178,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【高位背打】罚球线背身翻身后仰单挑杀招"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】锁定 42（<=50），控制常规犯规"
+        },
+        {
+          "field": "mid_range",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1061,
+          "type": "uint8",
+          "val_raw": 222,
+          "current_in_game_val": 205,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【中投评级】满分 99 (raw 222) 中投能力，180 俱乐部"
+        },
+        {
+          "field": "three_point",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1062,
+          "type": "uint8",
+          "val_raw": 201,
+          "current_in_game_val": 190,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【三分评级】38.3% 季后赛三分命中率 (92 rating, raw 201)"
+        },
+        {
+          "field": "offensive_consistency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1086,
+          "type": "uint8",
+          "val_raw": 222,
+          "current_in_game_val": 205,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【死神进攻稳定性】顶格 99 (raw 222)"
+        },
+        {
+          "field": "badges_configuration",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1221,
+          "type": "special",
+          "val_raw": "HOF:Deadeye,Sniper,DifficultShots,Blinders;GOLD:GreenMachine,SpaceCreator",
+          "current_in_game_val": "DEFAULT",
+          "category": "BADGES",
+          "decision_rationale": "【核心紫卡/金卡】死亡之眼 (HOF), 神射手 (HOF), 高难度投篮 (HOF), 遮空蔽日 (HOF), 绿色机器 (Gold), 空间创造者 (Gold)"
+        }
+      ]
+    },
+    {
+      "player_name": "Kyrie Irving",
+      "roster_index": 0,
+      "cyberface_id": 2122,
+      "position": "PG",
+      "target_minutes": 36.5,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          2,
+          1,
+          4,
+          15
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【运控大核】触球调优至 94，与杜兰特双星辉映"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【单打万花筒】场均 27.4 分单场 60 分杀招，出手欲望 94"
+        },
+        {
+          "field": "driving_layup",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1120,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【双手打板拉杆】NBA 历史第一禁区拉杆与打板上篮倾向"
+        },
+        {
+          "field": "floater",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1128,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【高打板抛投】灵动小抛投倾向提升至 94"
+        },
+        {
+          "field": "stepback_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1142,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【晃动后撤步】大幅度晃动急停后撤步跳投"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 40,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】锁定 40（<=50），控制常规犯规"
+        },
+        {
+          "field": "ball_control",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1064,
+          "type": "uint8",
+          "val_raw": 222,
+          "current_in_game_val": 215,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【历史第一控球手感】控球属性顶格 99 (raw 222)"
+        },
+        {
+          "field": "speed_with_ball",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1080,
+          "type": "uint8",
+          "val_raw": 210,
+          "current_in_game_val": 195,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【控球移动速度】持球极速提升至 95 (raw 210)"
+        },
+        {
+          "field": "badges_configuration",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1221,
+          "type": "special",
+          "val_raw": "HOF:AnkleBreaker,Acrobat,TightHandles;GOLD:SpaceCreator,TearDropper",
+          "current_in_game_val": "DEFAULT",
+          "category": "BADGES",
+          "decision_rationale": "【核心紫卡/金卡】脚踝终结者 (HOF), 杂耍上篮 (HOF), 行云流水 (HOF), 空间创造者 (Gold), 抛投大师 (Gold)"
+        }
+      ]
+    }
+  ]
+}

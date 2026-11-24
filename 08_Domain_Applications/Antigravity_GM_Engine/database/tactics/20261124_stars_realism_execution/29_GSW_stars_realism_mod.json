@@ -1,0 +1,413 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 29,
+  "team_abbr": "GSW",
+  "team_name": "Golden State Warriors",
+  "source_research_docs": [
+    "50_GSW_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
+    "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md",
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】锁定 Pace & Space (2) 传切空间体系，激活全队无球流动"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 70,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行率】提升至 70，确保科尔传切战术高频运转"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 80,
+      "category": "COACHING",
+      "decision_rationale": "【协防保护】高协防意识，追梦指挥全队轮转补位"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 10,
+      "current_in_game_val": 10,
+      "category": "COACHING",
+      "decision_rationale": "【轮换深度】10 人常规夺冠深轮换（普尔、佩顿、波特、一哥深度参与）"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 55,
+      "current_in_game_val": 50,
+      "category": "COACHING",
+      "decision_rationale": "【替补使用率】提升至 55，释放普尔第六人第一攻击波"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 0,
+      "category": "COACHING",
+      "decision_rationale": "【进攻侧重】PACE_SPACE (2) 动态传切拉开"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "current_in_game_val": 0,
+      "category": "COACHING",
+      "decision_rationale": "【防守侧重】PROTECT_PAINT (13) 卢尼沉退+追梦扫荡保护油漆区"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Stephen Curry",
+      "roster_index": 0,
+      "cyberface_id": 1612,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          11,
+          12,
+          15,
+          4
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【绝对引力大核】2022 FMVP 夺冠第一战术轴心，触球拉满至 98"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【关键硬解终结】总决赛单场 43 分强攻，出手欲望提升至 96"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【包夹秒出球】超远三分遭包夹瞬间极速出球制造 4 打 3"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1131,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【历史第一射手】超远定点与干拔三分全联盟最高 99"
+        },
+        {
+          "field": "floater",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1140,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【抛投大师】突破至罚球线迎着大中锋的高弧度打板抛投"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1055,
+          "type": "uint8",
+          "val_raw": 150,
+          "current_in_game_val": 87,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【增肌对抗纠偏】2K 原生力量仅给 54 属严重失真！2022 夺冠增肌顶防双探花，力量修正至 75 (Raw 150)"
+        },
+        {
+          "field": "stamina",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1070,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 96,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【永动机耐力】季后赛全场折返跑第一体能，耐力顶格 99"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 58,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】防止比赛模拟中过多受阻犯规，控制在安全阈值 42"
+        }
+      ]
+    },
+    {
+      "player_name": "Klay Thompson",
+      "roster_index": 1,
+      "cyberface_id": 2137,
+      "position": "SG",
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          15,
+          12,
+          11,
+          14
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 78,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【无球刺客哨兵】触球下调至 78，禁止多余持球运控，还原纯无球跑位"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结欲望哨兵】出手提升至 92，接球即投绝不犹豫"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1131,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【历史级三分】借双掩护卷切出来的三分拔葱"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 40,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】常规防守犯规压至 40"
+        }
+      ]
+    },
+    {
+      "player_name": "Draymond Green",
+      "roster_index": 3,
+      "cyberface_id": 2478,
+      "position": "PF",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          13,
+          7,
+          8,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【发牌中枢大核】弧顶持球指挥与手递手做球，触球大幅提至 85"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 55,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【极致出手克制】出手欲望下压至 55，严防盲目干拔投篮"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【顶级组织发牌】捕捉库里与克莱空切传切瞬间直塞"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 48,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】原版 75 极易 6 犯，强行压至 48 安全红线"
+        }
+      ]
+    },
+    {
+      "player_name": "Jordan Poole",
+      "roster_index": 8,
+      "cyberface_id": 7847,
+      "position": "SG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          15,
+          1,
+          2
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 76,
+          "category": "TENDENCY",
+          "decision_rationale": "【第六人爆破】第二阵容绝对球权发起者"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【乱战超强终结】季后赛第一步超快突破与拔葱三分"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 58,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】防守常规犯规控制在 42"
+        }
+      ]
+    },
+    {
+      "player_name": "Gary Payton II",
+      "roster_index": 12,
+      "cyberface_id": 7412,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          11,
+          1,
+          15,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 62,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【吃饼与领防】触球克制，主打底角三分与扣篮吃饼"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 55,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手克制】绝不浪投，仅把握高命中率空切与空位"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1205,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【死亡领防断球】总决赛主防领头人，下手掏球倾向提升至 96"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1055,
+          "type": "uint8",
+          "val_raw": 165,
+          "current_in_game_val": 120,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【后卫怪力对抗】后卫罕见的极强核心力量，下盘顶防，修正至 80 (Raw 165)"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 44,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】高侵略性但严控犯规，锁定 44"
+        }
+      ]
+    }
+  ]
+}

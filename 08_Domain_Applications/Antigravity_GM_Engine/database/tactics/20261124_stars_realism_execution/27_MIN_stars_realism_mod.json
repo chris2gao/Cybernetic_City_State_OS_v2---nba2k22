@@ -1,0 +1,250 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 27,
+  "team_abbr": "MIN",
+  "team_name": "Minnesota Timberwolves",
+  "source_research_docs": [
+    "66_MIN_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
+    "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】芬奇教练 Pace & Space 现代空间体系，充分发挥唐斯历史级外线投射射程"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 70,
+      "category": "COACHING",
+      "decision_rationale": "【战术调用】战术执行率维持在 75，平衡半场阵地双核战术与爱德华兹的推反击快攻冲筐"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "【协防强化】协防倾向由 65 提升至 80，弥补唐斯单防移动短板，强化侧翼爱德华兹与麦丹的收缩协防"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换深度】9人常规轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 50,
+      "current_in_game_val": 50,
+      "category": "COACHING",
+      "decision_rationale": "【替补使用率】50% 健康轮换"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Karl-Antho Towns",
+      "roster_index": 3,
+      "cyberface_id": 4472,
+      "position": "C",
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          15,
+          8,
+          1
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权权重】触球提至 88，确立森林狼前场核心进攻支柱与高位外弹威胁"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结出手】出手欲提升至 90，场均 24.6 分全明星大前锋/中锋第一主攻手"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1245,
+          "type": "uint8",
+          "val_raw": 65,
+          "current_in_game_val": 35,
+          "category": "TENDENCY",
+          "decision_rationale": "【顺下外弹纠偏】由原版 35（过度内切）大幅调整为 65（偏向外弹三分），彻底释放油漆区突破空间，还原全明星三分大赛冠军的大个子投射特质"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1120,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分欲望】三分出手倾向由 70 提升至 85，还原 41.0% 超高命中率的大个子外线大炮"
+        },
+        {
+          "field": "driving_layup",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1115,
+          "type": "uint8",
+          "val_raw": 82,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【面框突破】面框大步流过人突破上篮提升至 82，还原其接球虚晃后直接大跨步攻筐"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 48,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【常规犯规安全锁】原版 68 导致模拟中极易犯规过载，严格压制至 48 安全阈值"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1056,
+          "type": "uint8",
+          "val_raw": 175,
+          "current_in_game_val": 155,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【对抗力量】力量 Rating 由 76 提升至 84 (Raw 175)，强化低位单打与卡位对抗"
+        }
+      ]
+    },
+    {
+      "player_name": "Anthony Edwards",
+      "roster_index": 1,
+      "cyberface_id": 7954,
+      "position": "SG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          4,
+          15,
+          11
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【外线大核】触球提至 88，确立外线持球突刺第一发起点"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结出手】出手欲提升至 92，场均 21.3 分季后赛首秀狂砍 36 分的绝对进攻箭头"
+        },
+        {
+          "field": "driving_dunk",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1117,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【暴力隔扣】突破扣篮倾向拉满至 96，还原美式暴力美学隔扣"
+        },
+        {
+          "field": "flashy_dunk",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1118,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【战斧花式扣篮】花式暴扣拉满至 95"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1120,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【强投三分】场均命中 3.0 记三分，急停干拔强投三分倾向提至 90"
+        },
+        {
+          "field": "vertical",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1058,
+          "type": "uint8",
+          "val_raw": 210,
+          "current_in_game_val": 190,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【顶级弹跳】弹跳 Rating 提升至 95 (Raw 210)，还原历史级后卫滞空弹跳"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1056,
+          "type": "uint8",
+          "val_raw": 175,
+          "current_in_game_val": 148,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【强壮后卫】力量 Rating 由 72 提升至 82 (Raw 175)，重型得分后卫体魄"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 44,
+          "current_in_game_val": 58,
+          "category": "TENDENCY",
+          "decision_rationale": "【常规犯规安全锁】由 58 压制至 44"
+        }
+      ]
+    }
+  ]
+}

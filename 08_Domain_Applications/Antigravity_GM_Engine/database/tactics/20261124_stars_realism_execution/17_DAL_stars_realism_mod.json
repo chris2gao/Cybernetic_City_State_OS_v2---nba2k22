@@ -1,0 +1,193 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 17,
+  "team_abbr": "DAL",
+  "team_name": "Dallas Mavericks",
+  "source_research_docs": [
+    "55_DAL_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "88_2022_STARS_CONSENSUS_TIER1_SUPERSTARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】基德 Pace & Space (一星四射空间体系)，极度适配东契奇高位挡拆发牌"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 85,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【战术调用】提升阵地战术调用率至 85，确保高频执行东契奇高位持球挡拆与错位单挑点名"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 70,
+      "category": "COACHING",
+      "decision_rationale": "【协防纪律】保持基德西决时期的纪律性协防与弱侧底角快速轮转收缩"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换深度】9人主力轮换 (丁威迪、布洛克、电风扇、克莱伯、鲍威尔等)"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 50,
+      "current_in_game_val": 50,
+      "category": "COACHING",
+      "decision_rationale": "【替补出场比】50保持首发高出场时间，东契奇场均出战36.8分钟"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【进攻重点】SPACE_THE_FLOOR (极致空间拉开站位，严禁内线扎堆拥堵)"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 15,
+      "current_in_game_val": 15,
+      "category": "COACHING",
+      "decision_rationale": "【防守重点】NO_THREES (严防对手三分投射，优先扑防外线定点)"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Luka Doncic",
+      "roster_index": 0,
+      "cyberface_id": 7702,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          2,
+          4,
+          8
+        ],
+        "decision_rationale": "【战术四槽重构】Slot 1: 单打(1)顶弧错位单挑; Slot 2: 控卫单打(2)减速控场; Slot 3: 挡拆持球(4)挂人下坡; Slot 4: 低位背身(8)标志性坐打小后卫"
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权统御】触球拉满至 99，还原 2022 全联盟最高回合占有率单核太阳系大脑"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【绝对主攻】出手欲提至 98，全队无可争议的 Scoring Option 1 决胜硬解人"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球大师】分球倾向由 85 大幅提升至 98，还原其遭遇夹击极速分球底角射手的无解传控"
+        },
+        {
+          "field": "stepback_jumper",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1196,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【招牌杀招】后撤步跳投倾向提升至 98，还原东契奇标志性节奏后撤步三分"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【超远投射】三分出手倾向 92，西决高频顶人干拔"
+        },
+        {
+          "field": "post_up",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1188,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【背身坐打】背身单打倾向由 65 提至 90，还原将保罗、布克顶进油漆区翻身打板的经典打法"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】常规犯规从 68 严格压低至 45，彻底消除模拟 6 犯毕业"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1085,
+          "type": "uint8",
+          "val_raw": 175,
+          "current_in_game_val": 150,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【重型控卫身材】力量提升至 Rating 85 (Raw 175)，还原其推土机抗撞与下盘低位强吃"
+        },
+        {
+          "field": "badges_patch",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1300,
+          "type": "bytes",
+          "val_raw": "HOF_PLAYMAKING_SHOOTING_CORE",
+          "current_in_game_val": "GOLD_DEFAULT",
+          "category": "BADGE",
+          "decision_rationale": "【统治级徽章】紫卡: 空间创造者、急停跳投、子弹传球、十美分、组织核心、穿针引线、控球大师"
+        }
+      ]
+    }
+  ]
+}

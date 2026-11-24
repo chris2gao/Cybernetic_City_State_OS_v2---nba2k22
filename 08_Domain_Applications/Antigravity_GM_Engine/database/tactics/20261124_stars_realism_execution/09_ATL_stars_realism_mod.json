@@ -1,0 +1,262 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 9,
+  "team_abbr": "ATL",
+  "team_name": "Atlanta Hawks",
+  "source_research_docs": [
+    "65_ATL_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md",
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 7,
+      "current_in_game_val": 2,
+      "category": "COACHING_SYSTEM",
+      "decision_rationale": "【体系对齐】切换为 Pick & Roll Heavy 高位重度挡拆体系，100% 释放特雷·杨挡拆喂饼与超远强投引力"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 75,
+      "category": "COACHING_TACTICS",
+      "decision_rationale": "【战术纪律】强化麦克米兰挡拆战术调用率至 80"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 78,
+      "current_in_game_val": 75,
+      "category": "COACHING_DEFENSE",
+      "decision_rationale": "【禁区保护】卡佩拉蹲坑协防，外线漏人时中锋上提补位"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING_ROTATION",
+      "decision_rationale": "【轮换深度】维持 9 人稳定轮换阵容"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 60,
+      "current_in_game_val": 65,
+      "category": "COACHING_ROTATION",
+      "decision_rationale": "【特雷·杨出场时间保障】略微降低替补时间，确保特雷·杨 35+ 分钟主控时间"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Trae Young",
+      "roster_index": 0,
+      "cyberface_id": 7706,
+      "position": "PG",
+      "target_minutes": 36.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          4,
+          2,
+          15,
+          11
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【太阳系大核】全联盟总得分与总助攻双料第一，原版 86 严重失真，提升至 99 确立绝对掌控地位"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【第一得分箭头】场均 28.4 分，超远干拔三分与灵动抛投"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【助攻王连线】挡拆高吊空接与弱侧甩角大师，场均 9.7 助攻"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【超远威胁】35 尺无解 Logo 拔葱三分"
+        },
+        {
+          "field": "floater",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1162,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【全联盟抛投第一】禁区面对大中锋招牌高弧度灵动抛投，原版 75 严重低估"
+        },
+        {
+          "field": "alley_oop_pass",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1195,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【空接投喂】与卡佩拉、科林斯的高空连线欲望拉满"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1198,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【造犯规技巧】借掩护后急停造追尾与突破靠人，场均 7.3 次罚球"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 38,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】防守端极少盲目下手送犯规，严格锁在 38"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1072,
+          "type": "uint8",
+          "val_raw": 69,
+          "current_in_game_val": 85,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【体格还原】Rating 修正为 48，身材单薄，对抗与顶防弱点符合实战"
+        }
+      ]
+    },
+    {
+      "player_name": "Clint Capela",
+      "roster_index": 4,
+      "cyberface_id": 4115,
+      "position": "C",
+      "target_minutes": 30.0,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          7,
+          11,
+          0,
+          0
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 58,
+          "current_in_game_val": 40,
+          "category": "TENDENCY",
+          "decision_rationale": "【挡拆吃饼】特雷·杨高位挡拆最佳搭档，顺下吃饼与前场篮板二次进攻"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 55,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【纯终结者】绝无单打球权，专注于空接暴扣与篮下吃饼"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "current_in_game_val": 0,
+          "category": "TENDENCY",
+          "decision_rationale": "【纯顺下内切】100% 顺下攻筐，绝不外弹三分"
+        },
+        {
+          "field": "block_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【禁区守护神】老鹰护筐唯一生命线，垂直起跳封盖"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 98,
+          "category": "TENDENCY",
+          "decision_rationale": "【干扰投篮】遮天蔽日护筐威慑"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】传统护筐内线严控犯规，防止比赛模拟 6 犯早退"
+        },
+        {
+          "field": "def_rebound",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1060,
+          "type": "uint8",
+          "val_raw": 210,
+          "current_in_game_val": 190,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【篮板神塔】Rating 提升至 95，场均 11.9 篮板，卡位收割后场篮板"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 28,
+  "team_abbr": "POR",
+  "team_name": "Portland Trail Blazers",
+  "source_research_docs": [
+    "70_POR_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "89_2022_STARS_CONSENSUS_TIER2_GUARDS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 7,
+      "current_in_game_val": 7,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】比卢普斯 Pick & Roll 重度挡拆战术体系，完美契合利拉德超远射程与挡拆下坡"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 70,
+      "category": "COACHING",
+      "decision_rationale": "【战术调用】战术执行率提升至 80，确保频繁通过努尔基奇高位挂掩护为利拉德创造出手机会"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 65,
+      "category": "COACHING",
+      "decision_rationale": "【协防保护】协防倾向由 65 调整至 75，强化侧翼护航"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换深度】9人常规轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 50,
+      "current_in_game_val": 50,
+      "category": "COACHING",
+      "decision_rationale": "【替补使用率】50% 负荷管理"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Damian Lillard",
+      "roster_index": 0,
+      "cyberface_id": 2449,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          2,
+          4,
+          15,
+          1
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权统御】触球提升至 96，开拓者绝对第一持球大核与场上最高球权所有者"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【得分箭头】实测 71 场场均 28.5 分，决胜时刻 Dame Time 无解强投第一人"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1120,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 90,
+          "category": "TENDENCY",
+          "decision_rationale": "【超远三分引力】三分出手倾向拉满至 99，还原 35 尺超远干拔拔葱与挡拆直接强拔"
+        },
+        {
+          "field": "stepback_jumper",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1135,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【后撤步杀招】后撤步跳投倾向由 75 提升至 95，招牌错位后撤步中远投"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【挡拆分球】场均 6.5 助攻，遭遇夹击后分球空位队友倾向提至 92"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1142,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【造杀伤造犯规】造犯规倾向提升至 94，利用节奏变化和防守下压制造罚球"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 40,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【常规犯规安全锁】压制至 40"
+        },
+        {
+          "field": "3pt_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1070,
+          "type": "uint8",
+          "val_raw": 210,
+          "current_in_game_val": 204,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【历史级超远三分】三分 Rating 由 93 进一步拉满至 95 (Raw 210)"
+        }
+      ]
+    }
+  ]
+}

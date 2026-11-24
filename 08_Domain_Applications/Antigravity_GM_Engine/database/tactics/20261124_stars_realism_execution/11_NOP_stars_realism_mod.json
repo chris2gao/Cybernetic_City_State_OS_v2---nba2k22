@@ -1,0 +1,311 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 11,
+  "team_abbr": "NOP",
+  "team_name": "New Orleans Pelicans",
+  "source_research_docs": [
+    "69_NOP_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
+    "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md",
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】维持威利·格林 Pace & Space / Motion 动态进攻体系，为锡安与英格拉姆清空中路与强侧攻筐通道"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 72,
+      "category": "COACHING",
+      "decision_rationale": "【战术纪律】由 72 微调提升至 75，加强阵地战中距离强拔与肘区背身战术呼叫频次"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 78,
+      "current_in_game_val": 70,
+      "category": "COACHING",
+      "decision_rationale": "【协防保护】提升至 78，依托赫伯特·琼斯的外线长臂封锁与弱侧协防大闸构筑弹性换防"
+    },
+    {
+      "field_name": "poe_offense",
+      "target_block": "GAMEPLAN",
+      "offset": 382,
+      "type": "uint8",
+      "val_raw": 3,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【进攻侧重】设置 FEED_THE_POST (3)，极大化利用锡安低位与英格拉姆罚球线肘区错位单挑优势"
+    },
+    {
+      "field_name": "poe_defense",
+      "target_block": "GAMEPLAN",
+      "offset": 385,
+      "type": "uint8",
+      "val_raw": 13,
+      "current_in_game_val": 15,
+      "category": "COACHING",
+      "decision_rationale": "【防守侧重】设置 PROTECT_PAINT (13)，收缩油漆区禁飞区，外线依赖琼斯单防限制对手箭头"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Brandon Ingram",
+      "roster_index": 1,
+      "cyberface_id": 7201,
+      "position": "SF/PF",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          14,
+          4,
+          8
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】原版四槽杂乱，修正为单打(1) + 中距离单打战术(14) + 挡拆持球(4) + 低位背身(8)，激活 is_play_initiator: 1；完美还原季后赛场均27分首轮硬解太阳之杜兰特式长臂无解中投干拔与高位发牌",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【战术球权】由 82 提升至 88，确立阵地战关键时刻第一持球强攻与组织分配核心"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 84,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手总权重】由 84 提升至 92，还原高频急停干拔中距离终结"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【分球意识】由 75 提升至 88，还原其季后赛面对包夹场均 6.2 助攻的卓越策应视野"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 75,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分倾向】保持 75 合理阈值，主攻中长两分，适度空位定点三分"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 58,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】原版 58 过高，下调至 42 安全阈值，杜绝模拟过早陷入犯规麻烦"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1070,
+          "type": "uint8",
+          "val_raw": 70,
+          "current_in_game_val": 58,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【核心力量修正】原版力量仅 58 严重偏软，上调至 70，还原其季后赛面框持球抗撞与低位后仰对抗下盘"
+        }
+      ]
+    },
+    {
+      "player_name": "Zion Williamson",
+      "roster_index": 2,
+      "cyberface_id": 7820,
+      "position": "PF",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          8,
+          7,
+          11
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】原版 is_play_initiator 为 0 错误，修正为 1（激活 Point Zion 抓篮板直接后场推快攻起飞特权）；四槽锁定单打(1) + 低位硬凿(8) + 挡拆顺下吃饼(7) + 空切冲筐(11)",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 84,
+          "category": "TENDENCY",
+          "decision_rationale": "【触球权重】由 84 提升至 92，确立禁区第一破坏引擎"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手总倾向】由 86 提升至 94，还原历史级禁区命中率破坏者（内线 60%+ 终结）"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 10,
+          "current_in_game_val": 20,
+          "category": "TENDENCY",
+          "decision_rationale": "【顺下偏向】下调至 10（90% 纯顺下攻筐），绝不外弹三分，完全释放禁区空接暴扣威胁"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 15,
+          "current_in_game_val": 15,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分克制】维持 15 极低倾向，严禁在三分线外无谓漂移浪费球权"
+        },
+        {
+          "field": "driving_dunk",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1115,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【突破扣篮】由 85 顶格提升至 99，还原飞天坦克隔扣标志性球风"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 64,
+          "category": "TENDENCY",
+          "decision_rationale": "【常规犯规安全锁】原版 64 严重过高，强制压制至 42，杜绝 6 犯下场"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1070,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 92,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【怪兽级下盘力量】由 92 顶格上调至 98，还原联盟历史上抗撞推土机第一人"
+        }
+      ]
+    },
+    {
+      "player_name": "Herbert Jones",
+      "roster_index": 10,
+      "cyberface_id": 9927,
+      "position": "SF/PF",
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          11,
+          15,
+          12,
+          0
+        ]
+      },
+      "playbook_rationale": "【战术四槽重构】原版配置挡拆持球(4)失真，修正为空切切入(11) + 定点三分(15) + 手递手做球(12) + 无(0)，is_play_initiator: 0；定位为顶级长臂 3D 刺客与无球空切防守大闸",
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 65,
+          "current_in_game_val": 34,
+          "category": "TENDENCY",
+          "decision_rationale": "【触球权重】由原版畸低的 34 适度修正至 65，确保无球空切与反击推进战术参与度"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 62,
+          "current_in_game_val": 45,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手总倾向】由 45 提升至 62，确保底角空位三分果断出手惩罚防守"
+        },
+        {
+          "field": "pass_interception",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1204,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【传球截断倾向】由 78 大幅拔高至 95，还原其最佳新秀防守一阵之“长臂蜘蛛网幽灵抢断”神技"
+        },
+        {
+          "field": "on_ball_steal",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1206,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 74,
+          "category": "TENDENCY",
+          "decision_rationale": "【领防掏球】由 74 提升至 92，单防保罗、布克等外线核心贴身下手断球"
+        },
+        {
+          "field": "contest_shot",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1207,
+          "type": "uint8",
+          "val_raw": 94,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【干扰投篮积极性】由 82 提升至 94，利用 7 尺长臂扑防外线三分与中投"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1208,
+          "type": "uint8",
+          "val_raw": 44,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【常规防守犯规安全锁】原版 68 严重超标，严压至 44 安全阈值"
+        }
+      ]
+    }
+  ]
+}

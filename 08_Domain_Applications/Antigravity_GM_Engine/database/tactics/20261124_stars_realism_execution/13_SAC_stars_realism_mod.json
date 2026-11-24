@@ -1,0 +1,195 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 13,
+  "team_abbr": "SAC",
+  "team_name": "Sacramento Kings",
+  "head_coach": "Luke Walton",
+  "tactical_identity": "Seven Seconds or Less / Fox Supersonic Transition & Sabonis High DHO Hub",
+  "source_research_docs": [
+    "73_SAC_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "92_2022_STARS_CONSENSUS_TIER4_RISING_STARS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 2,
+      "category": "COACHING",
+      "decision_rationale": "【战术体系】采用 Balanced / Pace & Space 体系，为福克斯超音速极速突分与萨博尼斯高位手递手拉开半场空间"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 70,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【战术执行纪律】由 75 微调为 70，既保证萨博尼斯高位阵地战跑位，又释放福克斯全场抓反击的超快第一步"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 75,
+      "current_in_game_val": 75,
+      "category": "COACHING",
+      "decision_rationale": "【协防强度】75 保持侧翼紧逼与内线收缩平衡"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING",
+      "decision_rationale": "【轮换深度】9 人核心轮换，保障福克斯场均出战 35+ 分钟主控地位"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 50,
+      "current_in_game_val": 50,
+      "category": "COACHING",
+      "decision_rationale": "【替补利用率】50 确保首发与替补米切尔衔接段平稳过渡"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "De'Aaron Fox",
+      "roster_index": 0,
+      "cyberface_id": 7503,
+      "position": "PG",
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          2,
+          4,
+          1,
+          14
+        ],
+        "play_types_desc": "Slot 1: Isolation Point (2), Slot 2: P&R Ball Handler (4), Slot 3: Isolation (1), Slot 4: Mid-Range (14)"
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权核心】原版 86 偏低，作为国王全场极速反击发动机提升至 95，主导由守转攻极速推进与挡拆发起"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 92,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结意愿】保持 92，兼具杀伤得分与串联分球，确立国王末节关键硬解第一顺位"
+        },
+        {
+          "field": "drive_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1155,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 98,
+          "category": "TENDENCY",
+          "decision_rationale": "【突破渗透】保持 98 全联盟第一极速推进突破欲望，第一步直接过人撕裂防线"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 0,
+          "current_in_game_val": 61,
+          "category": "TENDENCY",
+          "decision_rationale": "【下顺外弹纠偏】原版 61 严重失真（导致超快控卫挡拆后竟然往外弹要球），彻底纠偏为 0（纯下坡攻筐突破，绝不外弹）"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 75,
+          "category": "TENDENCY",
+          "decision_rationale": "【分球分享】由 75 提升至 85，突破吸引防守收缩后精准分球给底角射手与顺下的萨博尼斯"
+        },
+        {
+          "field": "shot_mid_range",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1130,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【末节中投杀招】由 78 提升至 92，还原其 2022 末节关键先生招牌急停跳投杀招"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 65,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【三分克制】保持 65 适度克制，以突破杀伤和急停中投为主武器，不盲目浪投"
+        },
+        {
+          "field": "attack_strong",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 95,
+          "category": "TENDENCY",
+          "decision_rationale": "【强攻篮下】96 突破不畏惧对抗，空中折叠强行攻筐造犯规"
+        },
+        {
+          "field": "speed",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1080,
+          "type": "uint8",
+          "val_raw": 219,
+          "current_in_game_val": 216,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【绝对极速】Rating 98 (Raw: 219)，全联盟推进速度第一档"
+        },
+        {
+          "field": "foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 58,
+          "category": "TENDENCY",
+          "decision_rationale": "【防守犯规安全锁】锁定 42 防止比赛模拟陷入犯规泥潭"
+        },
+        {
+          "field": "signature_badges",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1221,
+          "type": "bitfield",
+          "val_raw": 3,
+          "current_in_game_val": 0,
+          "category": "BADGES",
+          "decision_rationale": "【核心统治徽章】赋予金卡：第一步大师 (Quick First Step)、下快攻 (Downhill)、急停跳投 (Stop & Pop)、对抗终结者 (Fearless Finisher)、杂耍上篮 (Acrobat)"
+        }
+      ]
+    }
+  ]
+}

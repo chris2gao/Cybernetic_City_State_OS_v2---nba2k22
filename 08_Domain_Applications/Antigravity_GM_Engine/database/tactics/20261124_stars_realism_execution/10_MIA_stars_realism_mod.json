@@ -1,0 +1,341 @@
+{
+  "protocol_version": "v2.0_full_dimensional_native_mod",
+  "task_package_id": "20261124_STARS_REALISM_REBALANCE",
+  "team_id": 10,
+  "team_abbr": "MIA",
+  "team_name": "Miami Heat",
+  "source_research_docs": [
+    "52_MIA_FULL_DIMENSIONAL_TACTICAL_AND_GAME_THEORETIC_PROPOSAL.md",
+    "90_2022_STARS_CONSENSUS_TIER2_WINGS_BIGS.md",
+    "91_2022_STARS_CONSENSUS_TIER3_ALLSTARS.md",
+    "93_2022_STARS_CONSENSUS_DEFENSIVE_TITANS.md"
+  ],
+  "coaching_writes": [
+    {
+      "field_name": "active_system",
+      "target_block": "COACHDATA",
+      "offset": 267,
+      "type": "uint8",
+      "val_raw": 2,
+      "current_in_game_val": 7,
+      "category": "COACHING_SYSTEM",
+      "decision_rationale": "【体系对齐】切换为 Pace & Space / Motion 动态传切，全面激活阿德巴约弧顶手递手与巴特勒侧翼硬名单打"
+    },
+    {
+      "field_name": "run_play_tendency",
+      "target_block": "COACHDATA",
+      "offset": 224,
+      "type": "uint8",
+      "val_raw": 80,
+      "current_in_game_val": 75,
+      "category": "COACHING_TACTICS",
+      "decision_rationale": "【战术纪律】提升阵地战术调用率至 80，严密执行斯波教练的动态无球掩护体系"
+    },
+    {
+      "field_name": "help_defense",
+      "target_block": "COACHDATA",
+      "offset": 330,
+      "type": "uint8",
+      "val_raw": 88,
+      "current_in_game_val": 80,
+      "category": "COACHING_DEFENSE",
+      "decision_rationale": "【无限换防与协防】强化热火文化窒息防守，阿德巴约与巴特勒弱侧协同扑防"
+    },
+    {
+      "field_name": "bench_depth",
+      "target_block": "COACHDATA",
+      "offset": 222,
+      "type": "uint8",
+      "val_raw": 9,
+      "current_in_game_val": 9,
+      "category": "COACHING_ROTATION",
+      "decision_rationale": "【季后赛轮换】锁定 9 人深度核心轮换"
+    },
+    {
+      "field_name": "bench_utilization",
+      "target_block": "COACHDATA",
+      "offset": 312,
+      "type": "uint8",
+      "val_raw": 55,
+      "current_in_game_val": 50,
+      "category": "COACHING_ROTATION",
+      "decision_rationale": "【主力负荷平衡】合理利用希罗与斯特鲁斯替补火力"
+    }
+  ],
+  "player_writes": [
+    {
+      "player_name": "Jimmy Butler",
+      "roster_index": 1,
+      "cyberface_id": 2165,
+      "position": "SF",
+      "target_minutes": 37.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          1,
+          8,
+          4,
+          11
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 84,
+          "category": "TENDENCY",
+          "decision_rationale": "【球权升级】热火绝对攻坚大核，原版 84 严重偏低，提升至 92 确立决胜时刻硬解地位"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 88,
+          "category": "TENDENCY",
+          "decision_rationale": "【终结欲望】东决狂轰 47 分战神模式，第一主攻点出手欲望拉满"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 85,
+          "current_in_game_val": 68,
+          "category": "TENDENCY",
+          "decision_rationale": "【包夹分球】遭遇高位包夹时精准连线底角塔克或阿德巴约短顺下"
+        },
+        {
+          "field": "drive_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1155,
+          "type": "uint8",
+          "val_raw": 95,
+          "current_in_game_val": 85,
+          "category": "TENDENCY",
+          "decision_rationale": "【杀伤突破】招牌低重心肉搏突刺，制造禁区混乱"
+        },
+        {
+          "field": "attack_strong",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1175,
+          "type": "uint8",
+          "val_raw": 96,
+          "current_in_game_val": 82,
+          "category": "TENDENCY",
+          "decision_rationale": "【强硬上篮】挂人强起对抗终结，无惧护筐中锋"
+        },
+        {
+          "field": "draw_foul",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1198,
+          "type": "uint8",
+          "val_raw": 98,
+          "current_in_game_val": 86,
+          "category": "TENDENCY",
+          "decision_rationale": "【造犯规天花板】季后赛场均 8.0 次罚球，顶级假动作节奏点飞防守"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】防守侵略性极高但下手极准，锁定在 45 消除模拟 6 犯隐患"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1072,
+          "type": "uint8",
+          "val_raw": 183,
+          "current_in_game_val": 165,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【核心力量】Rating 提升至 86，支撑顶防字母哥与塔图姆的重型身体"
+        },
+        {
+          "field": "stamina",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1076,
+          "type": "uint8",
+          "val_raw": 99,
+          "current_in_game_val": 95,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【铁人耐力】季后赛场均出战 40+ 分钟不衰竭"
+        }
+      ]
+    },
+    {
+      "player_name": "Bam Adebayo",
+      "roster_index": 3,
+      "cyberface_id": 7519,
+      "position": "C",
+      "target_minutes": 35.0,
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [
+          13,
+          7,
+          8,
+          11
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 90,
+          "current_in_game_val": 78,
+          "category": "TENDENCY",
+          "decision_rationale": "【策应中枢】高位手递手与弧顶发牌核心，触球提至 90 保障球队进攻运转"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 78,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【出手克制】无私团队型策应轴心，不贪功盲目强投"
+        },
+        {
+          "field": "roll_vs_pop",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1184,
+          "type": "uint8",
+          "val_raw": 20,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【短顺下纠偏】原版 70 严重失真将其作为外弹射手，调整为 20 专注顺下吃饼与短顺下抛投"
+        },
+        {
+          "field": "dish_to_open_man",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1176,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 72,
+          "category": "TENDENCY",
+          "decision_rationale": "【短顺下策应】挡拆短顺下吸引协防后立刻精准塞底角空位"
+        },
+        {
+          "field": "floater",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1162,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 65,
+          "category": "TENDENCY",
+          "decision_rationale": "【招牌抛投】罚球线接球后单脚起跳柔和小抛投杀招"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 42,
+          "current_in_game_val": 64,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】现代换防干净利落，严格锁定在 42"
+        },
+        {
+          "field": "perimeter_defense",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1058,
+          "type": "uint8",
+          "val_raw": 183,
+          "current_in_game_val": 160,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【无限换防神塔】Rating 提升至 86，全联盟唯一能从 1 号位逼停顶级小后卫至三分线外的中锋"
+        }
+      ]
+    },
+    {
+      "player_name": "P.J. Tucker",
+      "roster_index": 2,
+      "cyberface_id": 2513,
+      "position": "PF",
+      "target_minutes": 28.0,
+      "tactical_playbook": {
+        "is_play_initiator": 0,
+        "play_types": [
+          15,
+          11,
+          8,
+          13
+        ]
+      },
+      "modifications": [
+        {
+          "field": "touches",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1177,
+          "type": "uint8",
+          "val_raw": 45,
+          "current_in_game_val": 35,
+          "category": "TENDENCY",
+          "decision_rationale": "【战术辅助】底角埋伏与弱侧掩护接应"
+        },
+        {
+          "field": "shot_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1112,
+          "type": "uint8",
+          "val_raw": 48,
+          "current_in_game_val": 55,
+          "category": "TENDENCY",
+          "decision_rationale": "【极度克制】无绝对空位绝不出手，底角抽烟专家"
+        },
+        {
+          "field": "shot_three",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1182,
+          "type": "uint8",
+          "val_raw": 88,
+          "current_in_game_val": 80,
+          "category": "TENDENCY",
+          "decision_rationale": "【底角之王】2022 赛季三分命中率 41.5%，专精底角定点接球即投"
+        },
+        {
+          "field": "take_charge",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1215,
+          "type": "uint8",
+          "val_raw": 92,
+          "current_in_game_val": 60,
+          "category": "TENDENCY",
+          "decision_rationale": "【舍身造撞人】热火防守硬汉图腾，倒地堵枪眼制造进攻犯规"
+        },
+        {
+          "field": "foul_tendency",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1289,
+          "type": "uint8",
+          "val_raw": 46,
+          "current_in_game_val": 70,
+          "category": "TENDENCY",
+          "decision_rationale": "【犯规安全锁】防守对抗凶狠但严控犯规，防止模拟 6 犯毕业"
+        },
+        {
+          "field": "strength",
+          "target_block": "PLAYER_STRUCT",
+          "offset": 1072,
+          "type": "uint8",
+          "val_raw": 207,
+          "current_in_game_val": 185,
+          "category": "ATTRIBUTE",
+          "decision_rationale": "【矮壮肉盾】Rating 提升至 94，超低重心下盘巨石，顶防字母哥与恩比德"
+        }
+      ]
+    }
+  ]
+}
