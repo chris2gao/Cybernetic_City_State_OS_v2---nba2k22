@@ -463,16 +463,33 @@ flowchart TD
      - `type`（数据类型：`uint8` / `uint16` / `uint32` / `float32`）
      - `val_raw`（最终必须写入的原生字节数值）
    - **自解释描述字段**：`decision_rationale`、`current_in_game_val`、`category`、`field_name` 仅用于人机可读审计与执行后日志记录，执行注入时直接旁路忽略，绝不干扰原生指令调用。
-2. **球员定位与外观指针完整性校验 (CAS Guard)**：
-   - 执行模型通过 `team_id` 与 `roster_index` 定位球员内存结构体首地址；
-   - 注入前先读取 `PLAYER_STRUCT + 0x90`（外观指针）与生辰/面补 ID（`cyberface_id`），若与规格书声明的 `cyberface_id` 不符，**立即触发阻断保护**，防止错位改写其他球员。
-3. **战术四槽位注入标准 (Tactical Playbook)**：
-   - `is_play_initiator`：写入 `PLAYER_STRUCT + 0x16A`（uint8，0 或 1）；
-   - `play_types`：严格按 4 个槽位写入 `PLAYER_STRUCT + 0x168..0x169`，槽位值必须在 `0..15` 枚举范围内，零占位。
-4. **防守犯规安全红线校验**：
-   - 防守犯规倾向字段（`foul` / `foul_tendency`）在写入前强制做数值上限断言：`val_raw <= 50`。若出现超过 50 的值，执行模型拒绝写入并报警（注：进攻端造犯规 `draw_foul` 不受此红线限制，可根据造罚球能力设置 80~99）。
-5. **回读断言与执行回执**：
-   - 每个值写入后立即调用 ReadProcessMemory 原生回读，断言 `read_val == val_raw`。单队所有项目完成后生成分队执行回执。
+2. **目标结构体基址解析规则 (Target Block Memory Resolution)**：
+   - `COACHDATA`：`team_address + 0xCE8`。有效偏移：222 (`bench_depth`), 224 (`run_play_tendency`), 267 (`active_system`), 312 (`bench_utilization`), 330 (`help_defense`)。
+   - `GAMEPLAN`：`loc.managers[team_id] + 0x7854`（通过全局 Franchise 结构体动态校验匹配）。有效偏移：382 (`poe_offense`), 385 (`poe_defense`)。
+   - `PLAYER_STRUCT`：球员内存结构体首地址。有效偏移：1061~1289（攻防属性、潜力与倾向）。
+3. **动态存档名册寻址与外观指针校验 (Live Roster Resolution & 0x90 CAS Guard)**：
+   - 在已加载存档（如 `MyLEAGUE0005`）中，严禁仅按主界面静态球员池寻址，必须通过球队当前激活名册指针数组遍历：`player_ptr = team_address + slot * 8` (`slot ∈ [0, 15]`)；
+   - 提取该球员指针后，校验其 `0x90` 外观指针是否非零且合法（`appearance_ptr != 0`）；
+   - 通过 `PLAYER_STRUCT + 0x6C`（`cyberface_id`）与 `PLAYER_STRUCT + 0x2F8`（`native_player_id`）及英文名字进行双重断言匹配；若不匹配立即阻断，杜绝错位写入。
+4. **战术四槽位与发起点精细注入位域规则 (Tactical Playbook Bitmask)**：
+   - `is_play_initiator`：写入 `PLAYER_STRUCT + 362`（`0x16A`）的第 2 位（bit 2 / mask `0x04`）：
+     `val_362 = (read_uint8(p_addr + 362) & ~0x04) | ((initiator_val & 1) << 2)`
+   - `play_types`：4 个战术槽位按半字节（nibbles）编码压入两个连续字节：
+     - Byte 360 (`0x168`): `(slot_0 & 0x0F) | ((slot_1 & 0x0F) << 4)`
+     - Byte 361 (`0x169`): `(slot_2 & 0x0F) | ((slot_3 & 0x0F) << 4)`
+     - 4 个槽位值必须处于 `0..15` 纯数字枚举范围内，零占位。
+5. **2026 成长潜力与防守犯规安全红线校验**：
+   - **成长潜力 (Potential, Offset 1089)**：2K22 内存中评分缩放公式为：$val\_raw = (rating - 25) \times 3$。例如：
+     - 97 顶格超巨 (如布伦森) $\rightarrow val\_raw = 216$
+     - 93 核心基石 (如申京、马克西) $\rightarrow val\_raw = 204$
+     - 91 全明星领袖 (如瓦格纳) $\rightarrow val\_raw = 198$
+     - 90 核心主力 (如贝恩、格林) $\rightarrow val\_raw = 195$
+     - 88 优质新星 (如阿夫迪亚、怀特、托马斯、克拉克斯顿等) $\rightarrow val\_raw = 189$
+   - **防守犯规倾向红线 (Foul Tendency <= 50)**：防守犯规倾向字段（`foul` / `foul_tendency`，Offset 1289）写入前强制执行断言：`val_raw <= 50`。超过 50 强制阻断拒绝写入（例如将申京未调校前的 78 犯规暴力压降至 34，彻底杜绝实机模拟 6 犯下场）。
+6. **严格单队顺序批处理与即时 CAS 回读核验 (Sequential Execution & CAS)**：
+   - 必须按球队编号顺序（`00_PHI` 至 `31_CHA` 共 30 队）单文件顺序执行，执行完一队并完全核验成功后，方可进入下一队；
+   - 每个写操作必须紧随 `ReadProcessMemory` 原生回读断言（`read_val == val_raw`）；
+   - 单队执行完成输出分队执行回执至 `receipts/{team}_receipt.json`，全部完成后输出 master 汇总回执。
 
 ---
 
@@ -491,7 +508,10 @@ flowchart TD
    - 由大模型发挥顶尖的篮球战术与博弈定性判断能力，精准提取训练模板与倾向差分；
    - 直接输出严格符合本协议第 5 节的独立单队 JSON 至专属目录（如 `C:\nba2k22\exports\YYYYMMDD_<task>_execution\`），**纯差分零占位，严禁任何 dummy/65535 覆盖**；
 4. **主协调员统一闭环验收**：
-   - 各 Worker 交付后，Coordinator 运行自动化脚本对所有文件进行语法、零占位与哨兵抽验（如哈利伯顿、约基奇、克莱、戈贝尔），出具总回执。
+   - 各 Worker 交付后，Coordinator 运行自动化脚本对所有文件进行语法、零占位与哨兵抽验（如哈利伯顿、约基奇、克莱、戈贝尔），出具总回执；
+5. **并发上限铁律（每次最多运行 5 个带上下文 Subagent）**：
+   - 为避免资源冲突与长上下文拥堵，**系统每次最多只能同时激活 5 个带上下文分叉克隆的 Subagent (Worker)**；
+   - 任务切片总数超过 5 个时必须分批次有序调度（如 Batch 1: Worker 1~5，结算后再运行 Batch 2: Worker 6~10，最后 Batch 3: Worker 11），严禁超额并发。
 
 ### 2. 人类前置询问铁律（Human Gate Before Activation）
 1. **激活触发阈值**：
