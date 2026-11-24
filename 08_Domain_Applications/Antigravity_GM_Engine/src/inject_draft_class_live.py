@@ -336,6 +336,23 @@ def run_draft_injection_pipeline(
                         item.get("overall_pick", 1), new_raw, slot_id
                     ))
 
+            # D. 双槽位同步 (Dual-Mapping Vault Mirror for Official Stars)
+            # 2K22 官方预置新秀具有活动选秀池 (591~595) 与 历史底库常驻母本 (3191~3195) 双槽位。
+            # 终极联盟选秀编辑/球探界面底层直读 3191~3195，双端必须同步写入母本槽位。
+            if is_official and slot_id in range(591, 596):
+                vault_slot = slot_id + 2600
+                vault_addr = base_addr + vault_slot * STRIDE
+                vault_orig = mem.read_bytes(vault_addr, STRIDE)
+                if vault_orig:
+                    vault_new_raw = patch_raw_struct(vault_orig, item, draft_year)
+                    mem.write_bytes(vault_addr, vault_new_raw)
+                    if cur:
+                        cur.execute("""
+                            UPDATE player_pool
+                            SET draft_year = ?, raw_struct = ?
+                            WHERE slot_id = ?
+                        """, (draft_year, vault_new_raw, vault_slot))
+
         if is_official:
             official_calibrated_count += 1
         else:
