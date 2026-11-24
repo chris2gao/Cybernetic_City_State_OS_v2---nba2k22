@@ -1,113 +1,139 @@
-# NBA 2K22 历史选秀名单 REA Native 批量注入标准接口协议 (v1.0)
-# (Draft Class REA Native Batch Modification Interface Protocol Specification)
+# NBA 2K22 历史选秀名单 REA Native 批量注入标准接口协议 (v2.2 全维真实化与槽位定位规范)
+# (Draft Class REA Native Batch Modification Interface Protocol Specification v2.2)
 
-> **协议标识 (Protocol ID)**: `SPEC-DRAFT-CLASS-NATIVE-MOD-V1`  
+> **协议标识 (Protocol ID)**: `SPEC-DRAFT-CLASS-NATIVE-MOD-V2.2`  
 > **适用版本**: NBA 2K22 (Steam PC x64) | 引擎底层: `NBA2K22.exe`  
-> **适用业务**: 任意历史年份选秀名单（1984、1992、1996、2003 等）的全量 60 槽位工业化重构与 Native 批量热注入  
+> **适用业务**: 任意历史年份选秀名单（1984、1985、1992、1996、2003 等）的全量 60 槽位工业化重构、缺失传奇补齐、以及**全名单效力 $\ge 7$ 年球星的新秀全维真实化（能力/潜力/倾向/徽章/战术动作）**与 Native 批量热注入。  
 > **对接角色**:  
-> - **输入方 (数据提供)**: `role-planner` / `decision_architecture` (选秀数值建模与原型采样模型)  
-> - **执行方 (批量注入)**: `role-developer` / `batch_executor` (REA Native / 内存直写执行模型)  
+> - **规划与决策方**: `role-planner` / `data_analysis_and_decision` (数据分析、真实化建模与差分规格制定)  
+> - **执行与核验方**: `role-developer` / `batch_executor` (REA Native / 内存直写与 CAS 回读校验)  
 
 ---
 
-## 一、 协议核心设计原则与两大铁律 (Constitutional Principles)
+## 一、 协议核心设计原则与六大宪法守则 (Constitutional Principles)
 
-为确保全量 60 名新秀在实机运行内存与底层存档数据库中 100% 稳定生效，且杜绝任何闪退、身材畸形与原生球星损坏，所有年份选秀数据包必须无条件遵循以下原则：
+为确保全量 60 名新秀在实机运行内存与底层存档数据库中 100% 稳定生效，杜绝任何闪退、身材畸形，彻底解决**“选秀年份偏移错误”、“活动槽位寻址错位”与“皮包骨匿名泥人”**问题，所有年份选秀数据包必须无条件遵循以下六大守则：
 
-### 1. 原生官方球星绝对保护铁律 (Official Star Preservation)
-- 2K 官方已经在该年份选秀名单中内置的真实球星（例如 1984 届的乔丹、奥拉朱旺、斯托克顿；1996 届的科比、艾弗森、纳什、雷·阿伦等），**必须标记为 `OFFICIAL_PRESERVED` 并完全禁止篡改其身份、骨骼与原生签名动作**。
-- 禁止按选秀真实顺位强行重排球员槽位！选秀顺位由游戏休赛期选秀大会各队 AI 依据需求自主抽取。
+### 1. 选秀池活动槽位寻址与排重原则 (Active Draft Pool Slots vs. Historical Vault)
+在 2K22 底层架构中，选秀池与历史球星名宿库采用**分段寻址机制**（步长 `0x4F0` = 1,264 字节）：
+- **活动选秀池固定物理槽位 (`Slot 590 ~ 649`)**：
+  - 在 MyLEAGUE 模式中，当前赛季正在进行的选秀名单（如 1984 届）固定映射在全局球员池数组的 **`Slot 590 ~ 649`（共 60 个槽位）**；
+  - 游戏 UI 中的“球探 (Scouting) - 选秀名单”只读取此活动槽位区间；
+  - **历史传奇常驻底库 (`Slot 3190 ~ 3250`)** 是 2K22 原生只读的全局名宿模板库（如 Slot 3191 是乔丹模板，Slot 3195 是斯托克顿模板），但**不是活动选秀池**！执行模型严禁误将选秀名单写入 3190+ 槽位，必须定位并写入 `Slot 590 ~ 649`。
 
-### 2. 泥人体型契合映射与 0x90 外观指针绝不篡改 (Preserve 0x90 Appearance Pointer)
-- 缺失球员（如巴克利、雷吉·米勒、拉希德·华莱士等）只能替换官方内置的随机“泥人槽位”；
-- 映射时必须依据该泥人槽位原生的**位置（Position）、身高（Height）、体重（Weight）**就近对齐；
-- 写入 1,264 字节结构体时，**绝对保留偏移 `0x90` 处的 64 位独立外观数据块指针 (`APPEARANCEDATA`)**，从根源杜绝骨骼拉伸、面部塌陷与游戏崩溃。
+### 2. 选秀年份物理偏移量绝对校验守则 (Draft Year Offset `0x179` Hard Rule)
+- 2K22 球员结构体中，选秀年份的唯一物理偏移量为 **`0x179`**（单字节 `uint8`，存储相对于 1900 年的偏移，即 $1984 - 1900 = 84 = \text{0x54}$）；
+- **严禁写入 `0x0FA`**：`0x0FA` 为无关属性字节，写入不仅会破坏原有属性，而且会导致 `0x179` 处的年份依然停留在 2023（`123`），造成游戏引擎在加载 1984 选秀名单时直接在底层将球员过滤剔除；
+- 执行端在 CAS 回读验证时，必须硬性断言：`1900 + mem.read_bytes(slot_addr + 0x179, 1)[0] == target_draft_year`！
 
-### 3. 泥人残留技能等级徽章按位纯净化 (Residual Level Badge Purging)
-- 泥人槽位底层往往随机生成大量无意义技能徽章。执行端在写入目标新秀徽章前，必须先将 `0x4BB ~ 0x4E2` 范围内的 80 个技能等级徽章（`kind: LEVEL`，每徽章占 3 位）**全部按位清零**，再写入目标配置，杜绝垃圾数据干扰。
+### 3. 官方自带球星“身份骨骼绝对保护 + 数值倾向真实化重塑”双轨准则
+- **解除只读限制**：2K 官方已经在该年份选秀名单中内置的真实球星（例如 1984 届的乔丹、奥拉朱旺、斯托克顿；1996 届的科比、艾弗森等），**正式解除原纯只读锁定**！
+- **身份与骨骼绝对保护（红线）**：必须保留官方原生球星的真实姓名、面补 ID、`0x90` 独立外观堆指针（`APPEARANCEDATA`）；**严禁按选秀顺位强行重排球员槽位**（选秀顺位由游戏休赛期选秀大会各队 AI 依据实时需求自主抽取）。
+- **全维数值真实化**：针对官方自带球星普遍存在的“套用巅峰属性、三分虚高、犯规率过高、无战术发起权”等时代失真，必须依据其真实新秀赛季客观档案，对其攻防属性、战术倾向（99 维）、技能等级徽章及战术手册（`tactical_playbook`）进行精准真实化重塑。
 
-### 4. 双端一致性原子落盘 (Dual-End Atomic Persistence)
-- 数据包必须同时提交至：
-  1. **实时运行内存 (`NBA2K22.exe` RAM)**：即时在游戏球探页面呈现真实姓名、面补与能力。
-  2. **存档数据库 (`player_pool.sqlite`)**：更新 `raw_struct` 二进制块及关系列，确保存档重新加载后永久保留。
+### 4. 杜绝“皮包骨错位”：泥人槽位全量身份与全维真实化合并交付铁律
+- 原始存档中 `Slot 596 ~ 649` 初始状态为随机生成的匿名泥人（Face ID = 1）；
+- **严禁只打差分数值补丁而不写身份字段**！若只写入属性倾向差分，球员在游戏中依然叫泥人名字、长着泥人面孔；
+- 交付给执行端的选秀规格书，必须是将**“泥人全量身份置换（姓名、面补 ID、0x179 年份、位置、159 字节动作包、等级徽章纯净化）”**与**“老将真实感数值倾向差分”**完全融合的**统一主规格书**（如 `1984_draft_enhancement_spec.json`）。
+
+### 5. 《新时代架空三分投射校准准则》与《跨时代攻防真实能力归一化标准》
+- **新时代架空三分投射**：以真实中距离跳投（Mid-Range）与罚球命中率（FT%）作为纯投射手感锚点，推导合理新秀三分能力；
+  - 乔丹（84.5% FT）标定 72 三分、倾向 25；斯托克顿（38.4% 历史三分+84%+ FT）标定 75 三分、倾向 30；帕金斯（80.6% FT）标定 70 三分、倾向 35；
+  - 新秀阶段严格控制在 70~75 区间保成长；纯内线与非射手（大梦、索普、威利斯、凯奇、麦考密克、格雷）三分倾向彻底清零。
+- **跨时代攻防归一化**：
+  - 消除 80 年代规则与节奏噪音，转换为 Per-36 分钟折算并还原真实防守压迫感与身体天赋（如罗伯特森抢断 95、死亡缠绕金）；
+  - **常规犯规安全锁（Foul <= 45）**：全员 100% 压制至 40~45，彻底消除 6 犯毕业失真；
+  - **战术核心重力与发起权**：按战术地位赋予 `touches`（乔丹 95、斯托克顿 85、大梦 88、巴克利 82），后场核心配置 `is_play_initiator: 1` 与专属 4 槽位 `play_types`。
+
+### 6. 双端原子落盘与 SQLite 全量字段同步 (Dual-End Atomic Commit)
+- 数据包必须同时提交至**实时运行内存 (`NBA2K22.exe` RAM)** 与 **存档数据库 (`player_pool.sqlite`)**；
+- 必须同步更新 SQLite 表中的 `first_name`, `last_name`, `full_name`, `cyberface_id`, `draft_year`, `position`, `potential`, `raw_struct`，防止 MyLEAGUE 日程推进或菜单切换触发读盘覆写回滚。
 
 ---
 
-## 二、 标准数据包 JSON 格式规范 (Machine-Ready JSON Schema)
+## 二、 槽位定位对照速查表 (1984 届标杆案例)
 
-上游模型需按照以下结构生成单一、纯净、机器可读的 JSON 规格书（命名规范：`<YEAR>_draft_enhancement_spec.json`）：
+| 槽位区间 | 槽位性质 | 预设初始状态 | 注入与真实化处理准则 | 校验要求 |
+| :---: | :---: | :---: | :--- | :--- |
+| **`Slot 590 ~ 595`** | **官方自带球星区** | 2K 官方原生名宿 (奥拉朱旺、乔丹、帕金斯、索普、威利斯、斯托克顿) | **双轨处理**：保留原生姓名、原生面补 ID、`0x90` 外观指针；覆写 `0x179` 选秀年份(84)、全维攻防属性、新时代架空三分、犯规安全锁、战术发起权与徽章。 | `rb_face == orig_face`<br>`rb_yr == 1984`<br>`rb_foul <= 45` |
+| **`Slot 596 ~ 649`** | **历史传奇补齐区** | 游戏引擎随机泥人 (Face ID = 1, 选秀年份 2023) | **全量重构+真实化**：覆写 UTF-16LE 姓名、官方真实面补 ID、`0x179` 选秀年份(84)、真实位置、`0x90` 指针保留、159 字节技术动作包、等级徽章按位纯净化并写入目标徽章、全维攻防倾向。 | `rb_name == spec_name`<br>`rb_face == spec_face`<br>`rb_yr == 1984`<br>`rb_foul <= 45` |
+| **`Slot 3190 ~ 3250`**| **历史名宿模板库** | 2K22 全局名宿只读模板 (非活动选秀池) | **只读审计区**：严禁作为选秀名单修改目标写入。 | 只读，不覆写 |
+
+---
+
+## 三、 标准化合并规格书 JSON Schema (Machine-Ready Master Spec)
+
+执行模型在执行选秀任务时，必须优先加载全量合并主规格书（`C:\nba2k22\exports\<YEAR>_draft_enhancement_spec.json`）：
 
 ```json
 {
-  "protocol_version": "v1.0_draft_native_batch_mod",
-  "draft_year": 1996,
+  "protocol_version": "v2.2_full_dimensional_realism_reconstructed",
+  "draft_year": 1984,
   "target_career": "MyLEAGUE0005",
   "total_slots": 60,
   "slot_range": [590, 649],
-  "official_preserved_slots": [590, 591, 592, 593, 594, 595],
   "prospects": [
     {
       "slot_id": 591,
-      "full_name": "Allen Iverson",
-      "first_name": "Allen",
-      "last_name": "Iverson",
-      "position": 0,
-      "position_name": "PG",
-      "face_id": 165,
-      "face_class": "CLASS_A_OFFICIAL",
-      "is_official_preserved": true,
-      "note": "官方已内置真实新秀，执行模型跳过结构体重写，仅做只读核验"
+      "first_name": "Michael",
+      "last_name": "Jordan",
+      "full_name": "Michael Jordan",
+      "position": 1,
+      "position_name": "SG",
+      "face_id": 1759,
+      "draft_year": 1984,
+      "is_official_preserved": false,
+      "potential": 99,
+      "attributes": {
+        "mid_range": 92,
+        "three_point": 72,
+        "driving_layup": 94,
+        "driving_dunk": 95,
+        "free_throw": 85,
+        "speed": 94,
+        "pass_iq": 80,
+        "pass_vision": 78,
+        "steal": 88
+      },
+      "tendencies": {
+        "shot": 92,
+        "shot_mid_range": 95,
+        "shot_three": 25,
+        "touches": 95,
+        "foul": 42
+      },
+      "tactical_playbook": {
+        "is_play_initiator": 1,
+        "play_types": [1, 3, 4, 11]
+      }
     },
     {
       "slot_id": 623,
-      "full_name": "Missing Star Name",
-      "first_name": "First",
-      "last_name": "Last",
+      "first_name": "Charles",
+      "last_name": "Barkley",
+      "full_name": "Charles Barkley",
       "position": 3,
       "position_name": "PF",
       "face_id": 2001,
-      "face_class": "CLASS_B_RETRO_GENERIC",
+      "draft_year": 1984,
       "is_official_preserved": false,
-      "height_cm": 203,
-      "weight_lbs": 240,
-      "ovr": 82,
       "potential": 97,
-      "potential_raw": 216,
-      
+      "animation_block_hex": "...",
+      "personality_hex": "...",
       "attributes": {
-        "shot_close": 90, "mid_range": 72, "three_point": 45, "free_throw": 75,
-        "driving_layup": 86, "standing_dunk": 82, "driving_dunk": 88,
-        "post_hook": 78, "post_fadeaway": 80, "post_moves": 86,
-        "off_rebound": 94, "def_rebound": 95, "interior_def": 82, "perimeter_def": 74,
-        "block": 74, "steal": 76, "lateral_quick": 76, "speed": 82, "speed_with_ball": 78,
-        "acceleration": 84, "strength": 96, "vertical": 88, "stamina": 92, "hustle": 95,
-        "shot_iq": 82, "pass_perception": 75, "ball_control": 78, "pass_accuracy": 76,
-        "pass_iq": 80, "pass_vision": 75, "hands": 88, "draw_foul": 88
+        "three_point": 48,
+        "off_rebound": 94,
+        "def_rebound": 95,
+        "strength": 96
       },
-
       "tendencies": {
-        "shot": 85, "driving_layup": 85, "standing_dunk": 80, "driving_dunk": 88,
-        "flashy_dunk": 75, "alley_oop": 70, "putback": 92, "crash": 95,
-        "shot_under_basket": 90, "shot_close": 88, "shot_mid_range": 68, "shot_three": 20,
-        "drive": 86, "attack_strong_on_drive": 92, "dish_to_open_man": 72, "touches": 88,
-        "post_up": 84, "roll_vs_pop": 20, "play_discipline": 65, "pass_interception": 75,
-        "on_ball_steal": 76, "contest_shot": 84, "block_shot": 72, "foul": 78, "hard_foul": 85
+        "touches": 82,
+        "foul": 45
       },
-
       "badges": {
-        "ReboundChaser": 3,
-        "Box": 3,
-        "BackdownPunisher": 3,
-        "FearlessFinisher": 2,
-        "AlphaDog": 1,
-        "Enforcer": 1,
-        "Expressive": 1
-      },
-
-      "signature_id": 31882795,
-      "prototype_reference": "Zion Williamson (0x01E67E2B)",
-      "animation_block_hex": "01000300... (共 159 字节完整动作结构十六进制字符串)",
-      "personality_hex": "02612c4c6402880c0610"
+        "ReboundChaser": 2,
+        "Box": 2
+      }
     }
   ]
 }
@@ -115,121 +141,12 @@
 
 ---
 
-## 三、 球员底层结构体（1,264 字节，步长 `0x4F0`）全量二进制偏移字典
+## 四、 执行模型必须遵守的防错核验法则 (Zero-Error Defense Rules)
 
-以下为 2K22 原生球员池每个槽位内部的严格物理偏移地址，执行端注入与校验均以此为准：
-
-| 模块名称 | 偏移地址 (十六进制) | 偏移 (十进制) | 字段大小与数据类型 | 编码与换算规则 |
-| :--- | :---: | :---: | :---: | :--- |
-| **Last Name (姓氏)** | `0x000` | 0 | 40 字节 (UTF-16LE) | 定长 40 字节，`\x00` 填充截断 |
-| **First Name (名字)** | `0x028` | 40 | 40 字节 (UTF-16LE) | 定长 40 字节，`\x00` 填充截断 |
-| **Cyberface ID (面补)** | `0x06C` | 108 | `uint16` (2 字节小端) | 官方或外挂真实面补 ID |
-| **Appearance Pointer (体型)** | `0x090` | 144 | `uint64` (8 字节指针) | **【严禁触碰】保留原槽位堆指针** |
-| **Signature ID (专属动画)** | `0x0E8` | 232 | `uint32` (4 字节小端) | 赛场球星被动动画原型包 ID |
-| **Potential (潜在能力)** | `0x0EB` | 235 | `uint8` (1 字节) | 人类评分 `[25, 99]` |
-| **Position (场上位置)** | `0x0F9` | 249 | 低 3 位 (`& 0x07`) | `0`=PG, `1`=SG, `2`=SF, `3`=PF, `4`=C |
-| **Draft Year (选秀年份)** | `0x0FA` | 250 | `uint8` (1 字节) | 实际年份 - 1900（如 1984 存 `84`） |
-| **Animation Block (动作包)** | `0x380 ~ 0x41E` | 896 ~ 1054 | **159 字节连续结构** | 真实采样的跳投、上篮、扣篮、运球包 |
-| **Attributes Block (攻防属性)** | `0x41F ~ 0x455` | 1055 ~ 1109 | 单字节 (`uint8`) | **换算公式**: $\text{Raw} = \lfloor(\text{Rating}-25)\times 3\rfloor$ |
-| **Potential Raw (潜力底层)** | `0x441` | 1089 | `uint8` (1 字节) | 潜力的单字节换算值：$(POT-25)\times 3$ |
-| **Tendencies Block (战术倾向)** | `0x458 ~ 0x4BA` | 1112 ~ 1210 | 单字节 (`uint8`) | 直写整数 `0 ~ 100` |
-| **Personality Bits (性格位域)** | `0x4BB ~ 0x4C4` | 1211 ~ 1220 | 10 字节位域 | 领头羊、极具表现力、好胜心、硬汉 |
-| **Badge Bitfields (技能徽章)** | `0x4C5 ~ 0x4E2` | 1221 ~ 1250 | 30 字节位域 | 每 3 位存放一个徽章等级 (`0`=无, `1`=铜, `2`=银, `3`=金, `4`=紫) |
-
----
-
-## 四、 29 项核心属性与 29 项核心倾向精确偏移映射表
-
-### 1. 属性偏移对照 (`0x41F ~ 0x455`)
-- `driving_layup`: `0x41F` (1055)
-- `post_fadeaway`: `0x420` (1056)
-- `post_hook`: `0x421` (1057)
-- `post_moves`: `0x422` (1058)
-- `draw_foul`: `0x423` (1059)
-- `shot_close`: `0x424` (1060)
-- `mid_range`: `0x425` (1061)
-- `three_point`: `0x426` (1062)
-- `free_throw`: `0x427` (1063)
-- `ball_control`: `0x428` (1064)
-- `pass_iq`: `0x429` (1065)
-- `pass_accuracy`: `0x42A` (1066)
-- `off_rebound`: `0x42B` (1067)
-- `def_rebound`: `0x42C` (1068)
-- `interior_def`: `0x42D` (1069)
-- `perimeter_def`: `0x42E` (1070)
-- `lateral_quick`: `0x42F` (1071)
-- `pass_perception`: `0x430` (1072)
-- `block`: `0x431` (1073)
-- `steal`: `0x432` (1074)
-- `standing_dunk`: `0x435` (1077)
-- `driving_dunk`: `0x436` (1078)
-- `speed`: `0x437` (1079)
-- `speed_with_ball`: `0x438` (1080)
-- `acceleration`: `0x439` (1081)
-- `vertical`: `0x43A` (1082)
-- `strength`: `0x43B` (1083)
-- `stamina`: `0x43C` (1084)
-- `hustle`: `0x43D` (1085)
-- `shot_iq`: `0x43E` (1086)
-- `intangibles`: `0x440` (1088)
-- `potential_raw`: `0x441` (1089)
-- `pass_vision`: `0x453` (1107)
-- `hands`: `0x455` (1109)
-
-### 2. 倾向偏移对照 (`0x458 ~ 0x4BA`)
-- `shot`: `0x458` (1112)
-- `driving_layup`: `0x459` (1113)
-- `standing_dunk`: `0x45A` (1114)
-- `driving_dunk`: `0x45B` (1115)
-- `flashy_dunk`: `0x45C` (1116)
-- `alley_oop`: `0x45D` (1117)
-- `putback`: `0x45E` (1118)
-- `crash`: `0x45F` (1119)
-- `shot_under_basket`: `0x465` (1125)
-- `shot_close`: `0x466` (1126)
-- `shot_mid_range`: `0x46A` (1130)
-- `shot_three`: `0x472` (1138)
-- `drive`: `0x483` (1155)
-- `attack_strong_on_drive`: `0x497` (1175)
-- `dish_to_open_man`: `0x498` (1176)
-- `touches`: `0x499` (1177)
-- `post_up`: `0x49A` (1178)
-- `roll_vs_pop`: `0x49B` (1179)
-- `play_discipline`: `0x4A1` (1185)
-- `pass_interception`: `0x4B4` (1204)
-- `on_ball_steal`: `0x4B6` (1206)
-- `contest_shot`: `0x4B7` (1207)
-- `block_shot`: `0x4B8` (1208)
-- `foul`: `0x4B9` (1209)
-- `hard_foul`: `0x4BA` (1210)
-
----
-
-## 五、 执行模型自动化操作流水线与验收标准 (Definition of Done)
-
-执行模型拿到满足本协议的 JSON 规格书后，执行标准的 4 步无缝流水线：
-
-```mermaid
-flowchart TD
-    A["加载 Draft Spec JSON 规格书"] --> B["动态校准锁定实机基址 Base_Addr"]
-    B --> C["Preflight 安全检查 (存档快照备份)"]
-    C --> D{"槽位遍历 (Slot 590~649)"}
-    D -- "is_official_preserved == True" --> E["只读核验，跳过修改 (保护乔丹/科比等原生球星)"]
-    D -- "缺失球员 (泥人槽位)" --> F["读取内存原始块，保留 0x90 外观堆指针"]
-    F --> G["重写姓名、面补、潜力、攻防属性、倾向、签名动画与159B动作包"]
-    G --> H["按位清空残留技能徽章，写入真实等级徽章位域"]
-    H --> I["内存热写入 (WriteProcessMemory) + SQLite 持久化 (player_pool.sqlite)"]
-    I --> J["CAS 逐字节回读核验 (ReadProcessMemory)"]
-    E --> K["汇总验证证据与差异列表"]
-    J --> K
-    K --> L["输出标准回执 JSON: YEAR_DRAFT_BATCH_MOD_RECEIPT.json"]
-```
-
-### 验收交付回执格式 (`<YEAR>_DRAFT_BATCH_MOD_RECEIPT.json`)
-执行模型在执行完毕后，自动在 `C:\nba2k22\exports\` 生成包含以下证据字段的闭环回执：
-1. `mode`: `"LIVE_INJECTION_COMMITTED"`
-2. `total_prospects`: 60
-3. `preserved_official_stars`: 包含姓名与槽位
-4. `modified_prospects_count`: 缺失球员实际重构数
-5. `mismatches_count`: `0`（100% 成功）
-6. `cas_verification`: 关键球星回读核验数据块（首发/核心的姓名、面补、年份、属性、徽章）
+1. **绝对偏移量基准**：选秀年份偏移量代码中必须且只能引用 `OFF_DRAFT_YEAR = 0x179`；
+2. **槽位面补与身份哨兵**：若检测到 `Slot 596 ~ 649` 处于泥人状态（Face ID = 1），必须执行全量身份写入，严禁单向跳过姓名面补只写属性；
+3. **CAS 双端核验通过标准**：
+   - 60 / 60 槽位核验通过；
+   - 60 / 60 槽位内存与数据库 `0x179` 均等于目标选秀年份（如 1984）；
+   - 60 / 60 槽位 `foul <= 50`；
+   - 0 读写异常。
