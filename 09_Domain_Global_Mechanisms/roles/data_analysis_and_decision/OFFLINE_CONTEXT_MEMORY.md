@@ -102,3 +102,20 @@
 - **固化权威标准**：
   - [85_PLAYER_TENDENCIES_FULL_DIMENSIONAL_CALIBRATION_STANDARD.md](file:///e:/workspace/Cybernetic_City_State_OS_v2%20-%20nba2k22/08_Domain_Applications/Antigravity_GM_Engine/docs/85_PLAYER_TENDENCIES_FULL_DIMENSIONAL_CALIBRATION_STANDARD.md)
 - **哨兵球员校准基线**：哈利伯顿（纯控卫Touches高+Shot适中）、克莱（纯射手Touches适中+Shot高）、约基奇（Roll vs Pop 50均衡）、戈贝尔（运球受锁防失误+犯规≤48）。
+
+---
+
+## 记忆单元 8：球员训练模板选择与负荷管理防伤法则 (Doc 86)
+
+- **核心原则与机制依据**：
+  1. **纯模板化决策，不碰 38 项子数值**：底层偏移 `0x318` 位域打包存储 `position` (0..4) 与 `player_type` (0..8 九大技术模板)。游戏引擎内部会自动联动 38 项训练点数预设。坚决不微调子项，仅锁定模板，极大降低决策复杂度并杜绝越界错误；
+  2. **年轻正常、老年轻微的保守防伤强度**：训练强度与累积疲劳直接挂钩，高疲劳是日历模拟发生严重大伤的主因。由于 GM 每个赛季仅设置 1~3 次，实施保守负荷管理：
+     - 年轻发育期球员（≤24/25岁）：`intensity = 3 (Medium / 正常)`，兼顾点数积累与身体安全；
+     - 巅峰定型老将（≥26/28岁）：`intensity = 2 (Low / 轻微)`，杜绝过度疲劳，消除大伤隐患；
+     - 易伤/康复期球员：`intensity = 1 (Very Low / 极低)`，`injury_recovery = 1`；
+  3. **独立覆盖开关**：单调强度的球员强制设置 `is_intensity_overriden = 1`；
+  4. **团队级背靠背休息**：激活 `rest_before_b2b = 1` 与 `rest_after_b2b = 1` 建立全队防伤保护网。
+- **固化权威标准**：
+  - [86_PLAYER_TRAINING_TEMPLATES_AND_LOAD_MANAGEMENT_STANDARD.md](file:///e:/workspace/Cybernetic_City_State_OS_v2%20-%20nba2k22/08_Domain_Applications/Antigravity_GM_Engine/docs/86_PLAYER_TRAINING_TEMPLATES_AND_LOAD_MANAGEMENT_STANDARD.md)
+- **球队研究常态化要求**：
+  - 训练模板与全量 99 项倾向正式并入“球队/球员研究标准任务”，每次研究必须给出该队核心轮换球员（先发5人+主要轮换3~5人）的最佳训练模板与倾向差分。
