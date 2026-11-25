@@ -62,6 +62,11 @@
    - 研究报告目录: `08_Domain_Applications/Antigravity_GM_Engine/docs/season_2022_2023_tactical_proposals/` (30 份 `.md` + `README.md`)
    - 执行包目录: `C:\nba2k22\exports\20261125_season2_day1_tactical_execution\` (30 份单队 `.json`，420 项教练写入，314 名核心轮换，1,390 项纯差分修改，经 `audit_season2_30_teams.py` 100% PASS)
 
+6. **Peak Age Calibration (Doc 95): 现役全联盟 30 队巅峰开始/结束年龄校准执行包**
+   - 标准化规范: `08_Domain_Applications/Antigravity_GM_Engine/docs/95_PLAYER_PEAK_AGE_CALIBRATION_STANDARD_AND_SOP.md`
+   - 可复用引擎: `08_Domain_Applications/Antigravity_GM_Engine/solvers/calibrate_peak_ages.py` (`ACTIVE_LEAGUE` / `SINGLE_TEAM`)
+   - 执行包目录: `C:\nba2k22\exports\20261125_active_league_peak_age_execution\` (30 份单队 `.json`，扫描 504 人、纯差分校准 304 人，经 `audit_peak_age_30_teams.py` 100% PASS)
+
 ---
 
 ## 四、 待办事项与后续工作流 (Open Items)
