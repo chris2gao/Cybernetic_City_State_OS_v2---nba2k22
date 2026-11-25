@@ -65,7 +65,10 @@
 6. **Peak Age Calibration (Doc 95): 现役全联盟 30 队巅峰开始/结束年龄校准执行包**
    - 标准化规范: `08_Domain_Applications/Antigravity_GM_Engine/docs/95_PLAYER_PEAK_AGE_CALIBRATION_STANDARD_AND_SOP.md`
    - 可复用引擎: `08_Domain_Applications/Antigravity_GM_Engine/solvers/calibrate_peak_ages.py` (`ACTIVE_LEAGUE` / `SINGLE_TEAM`)
-   - 执行包目录: `C:\nba2k22\exports\20261125_active_league_peak_age_execution\` (30 份单队 `.json`，扫描 504 人、纯差分校准 304 人，经 `audit_peak_age_30_teams.py` 100% PASS)
+   - 执行包目录: `C:\nba2k22\exports\20261125_active_league_peak_age_execution\` (30 份单队 `.json`，扫描 504 人、纯差分校准 305 人，经 `audit_peak_age_30_teams.py` 100% PASS)
+
+7. **Season 2 Progression Compensation: 现代线 36 位重点球员（含哈利伯顿）缺失成长与徽章补偿包**
+   - 执行包目录: `C:\nba2k22\exports\20261125_season2_modern_progression_compensation_execution\` (26 份单队 `.json`，36 人，140 项属性 + 241 项技能徽章，经 `audit_compensation_specs.py` 100% PASS)
 
 ---
 
