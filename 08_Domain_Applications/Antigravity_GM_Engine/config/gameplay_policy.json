@@ -1,17 +1,27 @@
 {
   "schema_version": 1,
-  "policy_id": "PLAYER_RULES_20261123_V5",
+  "policy_id": "PLAYER_RULES_20261124_V6",
   "source": "PLAYER_EXPLICIT_INSTRUCTIONS",
   "game": "NBA2K22",
   "initial_season": "2021-2022",
   "season_world_rules": {
-    "status": "ACTIVE_20261123",
+    "status": "ACTIVE_20261124",
     "dual_timeline_trades": {
       "execution_phase": "OFFSEASON_ONLY",
-      "active_players_timeline": "2022_TO_2026_HISTORICAL_MOVEMENTS",
-      "historical_rookies_timeline": "1984_TO_2021_SUBSEQUENT_CAREER_MOVEMENTS",
+      "modern_historical_timeline": {
+        "scope": "2021_22_INITIAL_ROSTER_EXCLUDING_1984_PLUS_ROOKIES",
+        "window": "FULL_NEXT_SEASON_PRE_COMPLETION",
+        "end_offseason_year": 2027
+      },
+      "era_historical_timeline": {
+        "scope": "1984_TO_2021_DRAFTED_ROOKIES_ONLY",
+        "anchor_first_season": "1984-1985",
+        "window": "FULL_NEXT_ERA_SEASON_PRE_COMPLETION"
+      },
       "in_season_roster_freeze": true,
-      "ai_free_agent_signing": "GAME_AI_AUTONOMOUS_ALLOWED"
+      "ai_free_agent_signing": "GAME_AI_AUTONOMOUS_ALLOWED",
+      "fa_contract_rule": "COMPARABLE_INGAME_SALARY_WITH_HISTORICAL_YEARS",
+      "non_fa_contract_rule": "KEEP_ORIGINAL_CONTRACT_VIA_TRADE"
     },
     "season_day_1_tactical_research": {
       "trigger": "SEASON_DAY_1",

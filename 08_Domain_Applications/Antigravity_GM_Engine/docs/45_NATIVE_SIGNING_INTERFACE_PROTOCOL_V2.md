@@ -34,12 +34,15 @@
 
 ### 1. 已认证 REA Native 动作清单
 
-| 业务动作 | REA Action ID | Runtime Handler | 原生 RVA | 前置游戏阶段硬门禁 |
+| 业务动作 | REA Action ID | Runtime Handler | 原生 RVA | 前置游戏阶段与实测状态 |
 | :--- | :--- | :--- | :---: | :--- |
-| **提交自由球员报价** | `CONTRACT_SUBMIT_FREE_AGENT_OFFER` | `sign.offer_fa_phase` (`runtime/sign_fa_offer.js`) | `0x12BD4C0` | `Period == 22 (FA_SIGNING)` 且 `Rules + 0x208 == 1` |
+| **直接强制签约成交** *(休赛期默认推荐)* | `SIGN_FREE_AGENT_DIRECT_PROCESS` | `sign.process` (`Status=6 ACCEPTED -> 8 SIGNED`) | `0x12BDE70` | `Period == 22 (FA_SIGNING)`；**2026-11-24 实机 104/104 全部签约落袋通过** |
+| **提交自由球员报价** | `CONTRACT_SUBMIT_FREE_AGENT_OFFER` | `sign.offer_fa_phase` (`runtime/sign_fa_offer.js`) | `0x12BD4C0` | `Period == 22 (FA_SIGNING)` 且 `Rules + 0x208 == 1`（受工资帽拦截） |
 | **撤回待处理报价** | `CONTRACT_WITHDRAW_PENDING_OFFER` | `sign.offer_withdraw` (`runtime/sign_withdraw_offer.js`) | - | 目标记录处于 `OFFERED` 状态 |
 | **读取球队报价池** | `READ_TEAM_SIGNING_OFFERS` | `read.signing_offers` (`runtime/read_signing_offers.js`) | - | 只读双扫描一致性快照 |
 | **读取球员当前合同** | `READ_PLAYER_CONTRACT` | `read.player_contract` (`runtime/read_player_contract.js`) | - | 只读 17 项物理合同字段 |
+
+> **直接强制签约（`sign.process`）调用契约**：构造 44 字节私有 `Proposal`（`PlayerId`, `TeamId`, `Wage`, `ForcedWage[6]`, `Years`, `Type=2 FREE_AGENT`, `Status=6 ACCEPTED`, `NegLevel=3`, `OptionType`, `NoTradeClause`），直接调用 `sign.process(proposal, ptr(0), 0, 0x6fea8977, 0x72a)`，成功后 `Status` 跃迁为 `8 (SIGNED)` 并直接入驻目标球队名册。
 
 ### 2. `CONTRACT_SUBMIT_FREE_AGENT_OFFER` 强类型参数契约
 
