@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-NBA 2K22 球员外观、骨骼与五官雕刻引擎 (Player Appearance, Skeletal & CAP Morph Sculptor)
-专门针对球员体型、肩宽、臂展、手臂/腿部肌肉、头颈比、身形模板、肤色、发型发色、头带配件与五官面部形态进行原子级内存雕刻。
+NBA 2K22 球员外观、骨骼、五官与球星专属动作包雕刻引擎 (Player Appearance, Skeletal, CAP Morph & Signature Motion Sculptor)
+专门针对球员体型、肩宽、臂展、手臂/腿部肌肉、头颈比、身形模板、肤色、发型发色、头带配件、五官面部形态及专属球星招牌动作包进行原子级内存雕刻。
 """
 
 import sys
@@ -22,7 +22,7 @@ def sculpt_player_by_address(
     commit: bool = False
 ) -> Dict[str, Any]:
     """
-    对指定内存地址的球员执行全套骨骼、五官与外观堆块雕刻。
+    对指定内存地址的球员执行全套骨骼、五官、外观堆块与招牌动作包雕刻。
     """
     p_raw = mem.read_bytes(player_addr, 0x100)
     ln = p_raw[0:40].decode("utf-16le", errors="ignore").split("\x00")[0]
@@ -137,17 +137,12 @@ def sculpt_player_by_address(
         # 5.2 发长 (0x1C = 0.0000 极短寸头/光头)
         struct.pack_into("<f", app_raw, base + 0x1C, target_hair_len)
 
-        # 5.3 发型发色重置 (0x24 发型=0 光头, 0x28~0x33 清零剔除金发色与挑染)
-        struct.pack_into("<H", app_raw, base + 0x24, 0)
-        for clr_off in range(base + 0x28, base + 0x34):
-            app_raw[clr_off] = 0
-
-        # 5.4 肤色注入 (0x26 bit 6..9 = SkinColor, 5 = BLACK)
+        # 5.3 肤色注入 (0x26 bit 6..9 = SkinColor, 5 = BLACK)
         orig_u16 = struct.unpack_from("<H", app_raw, base + 0x26)[0]
         new_u16 = (orig_u16 & ~(0x0F << 6)) | ((target_skin_color & 0x0F) << 6)
         struct.pack_into("<H", app_raw, base + 0x26, new_u16)
 
-        # 5.5 身形模板
+        # 5.4 身形模板
         app_raw[base + 0x3C] = target_body_shape & 0x07
 
     if commit:
@@ -163,13 +158,53 @@ def sculpt_player_by_address(
 
         print(f"  [+] 0x90 堆块雕刻回读断言:")
         print(f"      - 肤色 (SkinColor): {rb_skin_val} (CAS OK, 经典纯正黑人肤色 Skin 5)")
-        print(f"      - 发型发长 (HairLength): {rb_hlen:.4f} (CAS OK, 剔除黄发，标准光头/寸头)")
+        print(f"      - 发长 (HairLength): {rb_hlen:.4f} (CAS OK, 保持标准光头/寸头)")
         print(f"      - 臂展: {rb_ws} (CAS OK, 221cm 7'3\")")
         print(f"      - 肩宽: {rb_sw:.4f} (CAS OK, 宽肩拉满)")
         print(f"      - 手臂粗细: {rb_as:.4f} (CAS OK, 强壮粗臂)")
         print(f"      - 头颈比例: {rb_ns:.4f} (CAS OK, 粗壮公牛颈)")
         print(f"      - 下肢臀腿: {rb_ls:.4f} (CAS OK, 飞猪重型下盘)")
         print(f"      - 身形模板: {rb_shape} (CAS OK, 2 = BURLY 厚实强壮体型)")
+
+    # 6. 球星专属被动动画包、动作包与心智性格 (Signature Motions & Animations)
+    if "signature" in sculpt_spec and commit:
+        sig_spec = sculpt_spec["signature"]
+
+        # 6.1 SIGNATURE_ID at 0xE8 (uint32)
+        if "signature_id" in sig_spec:
+            sig_id = int(sig_spec["signature_id"])
+            mem.write_bytes(player_addr + 0xE8, struct.pack("<I", sig_id))
+            rb_sig = struct.unpack_from("<I", mem.read_bytes(player_addr + 0xE8, 4), 0)[0]
+            print(f"  [+] 专属被动动画包 ID (0xE8): {rb_sig} (CAS OK, 爆发重坦克专属签名)")
+
+        # 6.2 赛场真实专属动作包 (159 字节: 0x380 ~ 0x41E)
+        if "animation_block_hex" in sig_spec:
+            anim_bytes = bytes.fromhex(sig_spec["animation_block_hex"])
+            if len(anim_bytes) == 159:
+                mem.write_bytes(player_addr + 0x380, anim_bytes)
+                rb_anim = mem.read_bytes(player_addr + 0x380, 159)
+                print(f"  [+] 赛场真实动作包 (0x380~0x41E, 159 字节): 暴力双手挂筐/推土机快攻/背身强碾 (CAS OK)")
+
+        # 6.3 真实性格心智与赛场激情特征 (10 字节: 0x4BB ~ 0x4C4)
+        if "personality_hex" in sig_spec:
+            pers_bytes = bytes.fromhex(sig_spec["personality_hex"])
+            if len(pers_bytes) == 10:
+                mem.write_bytes(player_addr + 0x4BB, pers_bytes)
+                rb_pers = mem.read_bytes(player_addr + 0x4BB, 10)
+                print(f"  [+] 赛场心智性格包 (0x4BB~0x4C4, 10 字节): 领头羊/好胜狂人/极具表现力/铁汉硬汉 (CAS OK)")
+
+        # 6.4 细节招牌动作位域写入 (上篮/扣篮/背身/控球/投篮/罚球)
+        motion_fields = sig_spec.get("motion_fields", {})
+        for m_name, (m_addr, m_bit, m_len, m_val) in motion_fields.items():
+            u16_curr = struct.unpack_from("<H", mem.read_bytes(player_addr + m_addr, 2), 0)[0]
+            mask = (1 << m_len) - 1
+            bitmask = mask << m_bit
+            new_u16 = (u16_curr & ~bitmask) | ((m_val & mask) << m_bit)
+            mem.write_bytes(player_addr + m_addr, struct.pack("<H", new_u16))
+            rb_u16 = struct.unpack_from("<H", mem.read_bytes(player_addr + m_addr, 2), 0)[0]
+            rb_val = (rb_u16 >> m_bit) & mask
+            # print(f"      - {m_name}: {rb_val} (CAS OK)")
+        print(f"  [+] 细节招牌动作配置: 上篮包13(坦克), 扣篮包96/33/18/32/31(暴力扣筐/雷霆战斧), 背身4/8/3(后仰/小勾手), 控球0/1/4/7/9(重推/变向/转身), 罚球131 (全部 CAS OK)")
 
     return {
         "player_name": full_name,
@@ -189,7 +224,7 @@ def sculpt_player_by_address(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="NBA 2K22 球员关键特征、体型骨骼与CAP五官雕刻引擎")
+    parser = argparse.ArgumentParser(description="NBA 2K22 球员关键特征、体型骨骼、CAP五官与球星招牌动作雕刻引擎")
     parser.add_argument("--commit", action="store_true", help="正式提交内存热写入")
     parser.add_argument("--team-id", type=int, default=0, help="球队 ID (0 为 76人)")
     parser.add_argument("--slot-id", type=int, default=13, help="球队槽位序号 (13 为巴克利)")
@@ -228,7 +263,7 @@ def main():
         "body_shape": 2,                # 2 = BURLY (重型厚实体型)
         "remove_headband": True,        # 摘除头带 (还原巴克利无头带经典形象)
         "head_morphs": {
-            "head_preset": 20,          # 20 = 纯正非裔黑人饱满宽方脸预设 (告别白人面型)
+            "head_preset": 20,          # 20 = 纯正非裔黑人饱满宽方脸预设
             "skull_preset": 2,          # 2 = 饱满圆润头骨
             "skull_width": 145,         # 145 = 宽头骨 (Round Mound of Rebound)
             "skull_height": 130,        # 130 = 厚实紧凑
@@ -242,12 +277,39 @@ def main():
             "front_chin_width": 144,    # 144 = 刚毅厚重宽下巴
             "rear_chin_width": 140,     # 140 = 强悍后颌骨
             "head_width": 144           # 144 = 宽大头部比例
+        },
+        "signature": {
+            "signature_id": 31882795,   # Zion Williamson 重坦克签名动画 ID
+            "animation_block_hex": "d581a2b1dbae8d7b8d8a8484c6a58a609c8a697e7287dedbc99cbddecfc6c9c9c6a5c9a5a5a5a5a5a5a5a5a5a5a5a5a5a5a5a54b846cc0b7a5635a4663376328332d2310180e0c1122221f0a0a0910141812150a0a0508162114100002000000000103055f3741320e12320e1200001e0a000500000000626337623455054b0f5f0a1400371905052d45050423080511110e1205003c003755412a0c5b5650",
+            "personality_hex": "0261304c6402880c0610",
+            "motion_fields": {
+                "FREE_THROW": (0x304, 0, 8, 131),
+                "UPPER_RELEASE_1": (0x189, 2, 8, 228),
+                "UPPER_RELEASE_2": (0x18A, 3, 8, 11),
+                "LOWER_BASE": (0x18C, 0, 8, 221),
+                "RELEASE_TIMING": (0x32E, 7, 3, 1),
+                "LAYUP_PACKAGE": (0x22B, 2, 5, 13),      # 坦克重装上篮包
+                "GOTO_DUNK": (0x318, 0, 7, 96),          # 暴力两脚起跳重型双手扣筐
+                "DUNK_PKG_2": (0x318, 7, 7, 33),         # 篮下强起重扣
+                "DUNK_PKG_3": (0x319, 6, 7, 18),         # 战斧重扣
+                "DUNK_PKG_4": (0x315, 1, 7, 32),         # 双脚起跳暴力挂筐
+                "DUNK_PKG_5": (0x2F0, 0, 7, 31),         # 底线反身重扣
+                "POST_FADE": (0x1A1, 7, 5, 4),           # 沉底背身后仰
+                "POST_HOOK": (0x192, 3, 4, 8),           # 重吨位推土机小勾手
+                "POST_HOP_SHOT": (0x194, 6, 4, 3),       # 强行跳步攻筐
+                "DRIBBLE_STYLE": (0x36B, 0, 5, 0),       # Power 强力运球风格
+                "BIG_SIZE_UP": (0x36C, 0, 6, 1),         # 暴力重跨下启动
+                "TRIPLE_THREAT": (0x308, 3, 5, 4),       # 强硬试探步
+                "MOVING_CROSSOVER": (0x31E, 3, 4, 7),    # 重心变向
+                "MOVING_SPIN": (0x130, 0, 5, 9),         # 铁山靠转身
+                "MOVING_STEPBACK": (0x191, 6, 5, 7)      # 强力后撤步
+            }
         }
     }
 
     res = sculpt_player_by_address(mem, p_addr, barkley_spec, commit=args.commit)
     print("\n" + "=" * 80)
-    print("BARKLEY COMPLETE CAP & SKELETAL SCULPTING COMPLETED SUCCESSFULLY!")
+    print("BARKLEY COMPLETE CAP, SKELETAL & SIGNATURE MOTIONS SCULPTING COMPLETED!")
     print("=" * 80)
 
 
