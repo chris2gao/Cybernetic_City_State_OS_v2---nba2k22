@@ -39,9 +39,11 @@ OFF_LAST_NAME = 0x000     # 40 字节 UTF-16LE
 OFF_FIRST_NAME = 0x028    # 40 字节 UTF-16LE
 OFF_FACE_ID = 0x06C       # uint16 (2 字节小端)
 OFF_PEAK_AGE = 0x072      # uint16 (bits 0..3: reserved, bits 4..9: peak_start, bits 10..15: peak_end)
-OFF_APPEARANCE = 0x090    # uint64 (8 字节外观指针，严禁篡改)
+OFF_HEAD_MORPH = 0x088    # uint64 (头部微变形堆指针，三不动基石之一，绝对保护)
+OFF_APPEARANCE = 0x090    # uint64 (8 字节外观指针，三不动基石之二，绝对保护，严禁篡改)
 OFF_SIGNATURE_ID = 0x0E8  # uint32 (4 字节小端，签名动画)
 OFF_POTENTIAL = 0x0EB     # uint8 (人类评分 25~99)
+OFF_UNIQUE_ID = 0x0F4     # uint32 (运行时唯一球员 ID，三不动基石之三，日历模拟核心基石，严禁清零)
 OFF_POSITION = 0x0F9      # uint8 (低 3 位: 0=PG, 1=SG, 2=SF, 3=PF, 4=C)
 OFF_DRAFT_YEAR = 0x179    # uint8 (年份 - 1900, 权威真实偏移量!)
 OFF_DRAFT_PICK = 0x312    # uint16
@@ -114,13 +116,20 @@ def auto_detect_db_path(given_path: Optional[str] = None) -> str:
 
 def patch_raw_struct(orig_raw: bytes, spec: Dict[str, Any], draft_year: int = 1985) -> bytes:
     raw_ba = bytearray(orig_raw) if (orig_raw and len(orig_raw) >= STRIDE) else bytearray(STRIDE)
-    is_preserved = spec.get("is_official_preserved", False)
 
-    # 严格保护 0x88 / 0x90 指针与 0xF4 唯一球员 ID
+    # 严格保护“底层三不动基石”：0x88 (HeadMorph), 0x90 (Appearance), 0xF4 (UniqueId)
     if orig_raw and len(orig_raw) >= 0xF8:
-        pf4_orig = struct.unpack_from("<I", orig_raw, 0xF4)[0]
+        p88_orig = struct.unpack_from("<Q", orig_raw, OFF_HEAD_MORPH)[0]
+        p90_orig = struct.unpack_from("<Q", orig_raw, OFF_APPEARANCE)[0]
+        pf4_orig = struct.unpack_from("<I", orig_raw, OFF_UNIQUE_ID)[0]
+        if p88_orig > 0:
+            struct.pack_into("<Q", raw_ba, OFF_HEAD_MORPH, p88_orig)
+        if p90_orig > 0:
+            struct.pack_into("<Q", raw_ba, OFF_APPEARANCE, p90_orig)
         if pf4_orig > 0:
-            struct.pack_into("<I", raw_ba, 0xF4, pf4_orig)
+            struct.pack_into("<I", raw_ba, OFF_UNIQUE_ID, pf4_orig)
+
+    is_preserved = spec.get("is_official_preserved", False)
 
     # 1. 选秀年份锁定 0x179
     raw_ba[OFF_DRAFT_YEAR] = (draft_year - 1900) & 0xFF
@@ -325,6 +334,16 @@ def run_injection(spec_path: str, db_path: str, commit: bool = False) -> Dict[st
                           rb_face == expected_face and rb_yr == draft_year and 
                           rb_foul <= 45 and rb_pot_raw == expected_pot_raw)
 
+            # 底层三不动基石 CAS 回读核验 (0x88, 0x90, 0xF4)
+            rb_f4 = struct.unpack_from("<I", readback, OFF_UNIQUE_ID)[0]
+            rb_88 = struct.unpack_from("<Q", readback, OFF_HEAD_MORPH)[0]
+            rb_90 = struct.unpack_from("<Q", readback, OFF_APPEARANCE)[0]
+            orig_f4 = struct.unpack_from("<I", orig_raw, OFF_UNIQUE_ID)[0]
+            orig_88 = struct.unpack_from("<Q", orig_raw, OFF_HEAD_MORPH)[0]
+            orig_90 = struct.unpack_from("<Q", orig_raw, OFF_APPEARANCE)[0]
+
+            anchor_match = (rb_f4 != 0 and rb_f4 == orig_f4 and rb_88 == orig_88 and rb_90 == orig_90)
+
             # 巅峰年龄 CAS 回读校验
             rb_u16 = struct.unpack_from("<H", readback, OFF_PEAK_AGE)[0]
             rb_ps = (rb_u16 >> 4) & 0x3F
@@ -350,12 +369,12 @@ def run_injection(spec_path: str, db_path: str, commit: bool = False) -> Dict[st
                     if not sculpt_pass:
                         extra_match = False
 
-            if base_match and extra_match and peak_match:
+            if base_match and extra_match and peak_match and anchor_match:
                 verified_slots.append(slot_id)
             else:
                 mismatches.append(
-                    f"Slot {slot_id} CAS mismatch: exp ({expected_fn} {expected_ln}, face {expected_face}, yr {draft_year}, foul<=45, peak {exp_ps}..{exp_pe}), "
-                    f"got ({rb_fn} {rb_ln}, face {rb_face}, yr {rb_yr}, foul {rb_foul}, peak {rb_ps}..{rb_pe}, low4 {hex(rb_low4)})"
+                    f"Slot {slot_id} CAS mismatch: exp ({expected_fn} {expected_ln}, face {expected_face}, yr {draft_year}, foul<=45, peak {exp_ps}..{exp_pe}, f4={orig_f4}), "
+                    f"got ({rb_fn} {rb_ln}, face {rb_face}, yr {rb_yr}, foul {rb_foul}, peak {rb_ps}..{rb_pe}, low4 {hex(rb_low4)}, f4={rb_f4}, anchor_ok={anchor_match})"
                 )
 
         injected_slots.append({

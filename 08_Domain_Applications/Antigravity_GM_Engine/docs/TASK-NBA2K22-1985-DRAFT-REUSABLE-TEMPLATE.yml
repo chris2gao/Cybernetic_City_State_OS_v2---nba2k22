@@ -1,0 +1,46 @@
+task_id: "TASK-NBA2K22-1985-DRAFT-REUSABLE-TEMPLATE"
+protocol_version: "SPEC-DRAFT-CLASS-MEM-INJECT-V1.0"
+sop_reference: "SOP-DRAFT-CLASS-MEMORY-INJECTION-V1.0"
+target_draft_year: 1985
+total_prospects: 60
+objective: "在新开任意 MyLEAGUE 存档并载入官方 1985 历史选秀名单后，一键执行 60 名新秀的全维真实化热注入（含 9 名官方保护球星、51 名泥人身份置换、159 字节动作包克隆、0x90 骨骼身材雕刻、攻防属性/倾向/徽章及双端持久化）。"
+
+architecture_rules:
+  official_star_protection:
+    rule: "官方原生球星（尤因、马龙、穆林、杜马斯、奥克利等 9 人）实行零破坏保护，仅注入真实攻防属性、战术倾向与安全犯规锁，绝对禁止篡改原生姓名、面补 ID 与 0x90 堆指针。"
+  mudman_reconstruction:
+    rule: "51 名随机泥人槽位全维置换为历史真实名宿（萨博尼斯、波尔、韦伯、蒂斯代尔、埃利等），注入真实面补、选秀年份 (0x179=85)、真实攻防评分、80 项技能等级徽章纯净化。"
+  motion_and_signature_cloning:
+    rule: "从内存原生球星库中提取现实最契合的动作原型（约基奇传球脚步、莫兰特弹跳扣篮、波尔津吉斯高点推射等），将 159 字节技术动作包 (0x380) 与 24 位签名动画 ID (0x0E8) 热注入至泥人槽位。"
+  skeletal_sculpting_morph:
+    rule: "通过 PlayerSculptor 引擎解引用 0x90 APPEARANCEDATA 堆指针，写入波尔 259cm 超长臂展、巴克利/萨博尼斯厚实宽肩底盘及专属体型模板，绝不损坏网格与骨架。"
+  peak_age_calibration:
+    rule: "依据 Doc 95 标准决策树校准全员 0x072 (uint16) 巅峰年龄（PEAKSTART/PEAKEND），彻底杜绝原生 27 岁早衰截断；写入时强制执行 old_u16 & 0x000F 保留低 4 位标志，严格满足 21 <= PS < PE <= 42 且 PE - PS >= 4。"
+  three_immutable_anchors_protection:
+    rule: "严格保护底层三不动基石（0x88 HeadMorph, 0x90 Appearance, 0xF4 UniqueId）。装配器强制保留原槽位 0xF4 运行时唯一 ID，彻底杜绝日历模拟赛程推演时的空指针闪退 (CTD)。"
+  double_ended_atomic_persistence:
+    rule: "同时向实机运行内存 (NBA2K22.exe RAM) 和 SQLite 数据库 (player_pool.sqlite) 写入，写前自动触发 .bak_<timestamp> 备份，写后执行 100% CAS 即时回读验证。"
+
+assets:
+  master_specification: "C:\\nba2k22\\exports\\1985_draft_enhancement_spec.json"
+  one_click_executor: "C:\\nba2k22\\exports\\inject_1985_draft_to_live_game.py"
+  gm_engine_source: "E:\\workspace\\Cybernetic_City_State_OS_v2 - nba2k22\\08_Domain_Applications\\Antigravity_GM_Engine\\src\\inject_1985_draft_to_live_game.py"
+  player_sculptor_module: "E:\\workspace\\Cybernetic_City_State_OS_v2 - nba2k22\\08_Domain_Applications\\Antigravity_GM_Engine\\src\\player_sculptor.py"
+  scout_survey_baseline: "C:\\nba2k22\\exports\\1985_draft_scout_array_survey.json"
+  last_execution_receipt: "C:\\nba2k22\\exports\\1985_DRAFT_BATCH_MOD_RECEIPT.json"
+
+execution_instructions:
+  prerequisite:
+    1: "启动游戏 NBA2K22.exe，进入 MyLEAGUE 存档（无论是当前存档还是新开存档）。"
+    2: "在游戏内【选秀球探 (Scout Draft Class)】界面载入 2K 官方 1985 届历史选秀名单。"
+  dry_run_command: "python C:\\nba2k22\\exports\\inject_1985_draft_to_live_game.py --dry-run"
+  commit_command: "python C:\\nba2k22\\exports\\inject_1985_draft_to_live_game.py --commit"
+  custom_db_command: "python C:\\nba2k22\\exports\\inject_1985_draft_to_live_game.py --db-path '<path_to_player_pool.sqlite>' --commit"
+
+acceptance_criteria:
+  - "verified_count == 60"
+  - "mismatches == []"
+  - "CAS 校验全员 draft_year == 1985, foul <= 45, 泥人 face/name/sig/sculpt 100% 吻合"
+  - "CAS 校验全员 0x072 peak_start/peak_end 100% 吻合且保留低 4 位标志"
+  - "CAS 校验全员 0xF4 UniqueId 均非零 (rb_f4 != 0 且 rb_f4 == orig_f4)，0x88 与 0x90 堆指针完好"
+  - "双端持久化事务提交成功，无内存越界与崩溃异常"
