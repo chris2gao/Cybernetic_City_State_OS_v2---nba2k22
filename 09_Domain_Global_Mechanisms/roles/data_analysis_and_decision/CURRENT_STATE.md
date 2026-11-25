@@ -57,6 +57,11 @@
    - 调优亮点: 9 大训练模板纯模板化、老年轻微/年轻正常防伤负荷、战术重力放大法则、Touches/Dish解耦、Roll vs Pop动态平滑、常规犯规安全锁 <=45
    - 任务包说明: `87_CYCLE_02_30_TEAMS_TRAINING_AND_TENDENCY_CALIBRATION_TASK_PACKAGE.md`
 
+5. **Season 2 (2022-2023 Day 1): 新赛季全联盟 30 队全维度战术研究与纯差分执行包**
+   - 实机基线: `2022-2023_M01_NOV` (504 名现役球员，含休赛期交易签约与 1984 届新秀)
+   - 研究报告目录: `08_Domain_Applications/Antigravity_GM_Engine/docs/season_2022_2023_tactical_proposals/` (30 份 `.md` + `README.md`)
+   - 执行包目录: `C:\nba2k22\exports\20261125_season2_day1_tactical_execution\` (30 份单队 `.json`，420 项教练写入，314 名核心轮换，1,390 项纯差分修改，经 `audit_season2_30_teams.py` 100% PASS)
+
 ---
 
 ## 四、 待办事项与后续工作流 (Open Items)
