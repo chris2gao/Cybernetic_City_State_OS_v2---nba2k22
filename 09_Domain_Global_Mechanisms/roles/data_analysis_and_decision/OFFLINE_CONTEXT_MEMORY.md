@@ -146,3 +146,19 @@
 - **人类前置询问铁律（Human Consent Gate）**：
   - **触发条件**：凡任务涉及 **多支球队（≥3 支）** 或 **多名球员（≥15 名核心轮换）** 的批量研究、倾向校准或训练重塑；
   - **铁律要求**：**模型绝不允许擅自静默开跑，必须首先在主窗口发起正式询问**，说明批次规划、分片 Worker 数量与交付目录，在获得人类明确许可（“可以启动 / 赞同 / 跑一次”）后，方可启动分叉克隆模式。
+
+---
+
+## 记忆单元 10：球员巅峰年龄（Peak Start / Peak End）成长曲线机制与可复用专项规范 (Doc 95)
+
+- **引擎核心机制**：
+  - `age < PEAKSTART`：能力值与符合解锁条件的徽章每年快速增长；
+  - `PEAKSTART <= age <= PEAKEND`：能力值进入平台期维持稳定；
+  - `age > PEAKEND`：身体素质与综合能力开始大幅下滑。
+- **底层物理定位**：`PLAYER_STRUCT + 114 (0x72)` `uint16` 位域，**必须 Read-Modify-Write 保留低 4 位 (`& 0x000F`)**，`PEAKSTART` 占 `bits 4..9`，`PEAKEND` 占 `bits 10..15`。
+- **跨模型复用核心判断法则**（无论范围是全联盟现役、单支球队还是某届历史选秀名单）：
+  1. **只看现实历史相对年龄曲线，不被重映射的游戏出生年份误导**；
+  2. **`PEAKSTART` 由爆发时间决定**：出道即巅峰 (`23~24`)、常规成长 (`25~26`)、晚熟/后期爆发 (`27~29`，且对未爆发的年轻/中生代球员必须大于其当前游戏年龄)；
+  3. **`PEAKEND` 由续航与伤病决定**：历史常青超巨 (`35~39`)、长巅峰全明星 (`32~34`)、标准健康轮换 (`30~31`，修复原生 `<=27` 截断)、重大伤病/早衰型 (`27~29`)；
+  4. **强制边界**：`21 <= PEAKSTART < PEAKEND <= 42` 且 `PEAKEND - PEAKSTART >= 4`。
+- **权威规范**：[95_PLAYER_PEAK_AGE_CALIBRATION_STANDARD_AND_SOP.md](file:///e:/workspace/Cybernetic_City_State_OS_v2%20-%20nba2k22/08_Domain_Applications/Antigravity_GM_Engine/docs/95_PLAYER_PEAK_AGE_CALIBRATION_STANDARD_AND_SOP.md)
