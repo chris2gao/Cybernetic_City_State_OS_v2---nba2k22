@@ -110,14 +110,17 @@ def patch_player_struct(orig_raw: bytes, spec: Dict[str, Any], draft_year: int =
     else:
         raw_ba = bytearray(STRIDE)
 
-    # 严格保护原有的 0x88 和 0x90 堆指针
-    if orig_raw and len(orig_raw) >= 0x98:
+    # 严格保护原有的 0x88, 0x90 堆指针以及 0xF4 运行时唯一球员 ID
+    if orig_raw and len(orig_raw) >= 0xF8:
         p88_orig = struct.unpack_from("<Q", orig_raw, OFF_HEAD_MORPH)[0]
         p90_orig = struct.unpack_from("<Q", orig_raw, OFF_APPEARANCE)[0]
+        pf4_orig = struct.unpack_from("<I", orig_raw, 0xF4)[0]
         if p88_orig > 0:
             struct.pack_into("<Q", raw_ba, OFF_HEAD_MORPH, p88_orig)
         if p90_orig > 0:
             struct.pack_into("<Q", raw_ba, OFF_APPEARANCE, p90_orig)
+        if pf4_orig > 0:
+            struct.pack_into("<I", raw_ba, 0xF4, pf4_orig)
 
     slot_id = spec.get("slot_id", 0)
     full_name = spec.get("full_name", "")
