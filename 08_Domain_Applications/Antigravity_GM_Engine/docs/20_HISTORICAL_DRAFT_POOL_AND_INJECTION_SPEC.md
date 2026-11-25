@@ -34,6 +34,7 @@
 | **选秀轮次 (Draft Round)**| `0x316` | 高 4 bits | **$\text{Round} = (\text{raw}[0x316] \gg 4) \ \& \ 0x0F$** | 乔丹: 首轮(1)；约基奇: 次轮(2) |
 | **选秀顺位 (Draft Pick)** | `0x312` | uint16 位域 | **$\text{Pick} = (\text{u16}[0x312] \gg 6) \ \& \ 0x3F$** | 詹皇: 1；杜兰特: 2；乔丹: 3；库里: 7 |
 | **主打位置 (Position)** | `0xF9` | 低 3 bits | **$\text{Pos} = \text{raw}[0xF9] \ \& \ 0x07$** | `0=PG, 1=SG, 2=SF, 3=PF, 4=C` |
+| **球员唯一 ID (Unique ID)** | `0xF4` | uint16/uint32 | **`struct.unpack_from('<I', raw, 0xF4)[0]`** | 运行时唯一标识。**绝对保护红线**：全局哈希表主键，严禁清零，否则日历模拟闪退 |
 | **球员潜力 (Potential)** | `0xEB` | uint8 (1B) | `raw[0xEB]`（有效区间 50 ~ 99） | 乔丹: `98`, 詹姆斯: `99`, 科比: `98` |
 | **完整结构体 (BLOB)** | `0x00~0x4F0` | Binary 1264B | **原汁原味整块切片保存至 SQLite `raw_struct`** | 保留 100% 投篮动作、徽章、热区与护具 |
 

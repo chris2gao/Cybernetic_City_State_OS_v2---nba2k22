@@ -96,6 +96,9 @@
 | `0x60` | `CURRENT_TEAM` | uint8 | 当前所在球队 ID（0~29 现役，255 为自由球员） |
 | `0xA8` | `CONTRACT_TEAM` | uint8 | 合同所属球队 ID |
 | `0x6C` | `FACE_ID` | uint16 | 3D 面部面补 ID (Cyberface ID) |
+| `0x88` | `HEAD_MORPH_PTR` | uint64 (8B) | **头部雕刻与微变形堆指针**（绝对保护，写入时必须原样保留，禁止清零） |
+| `0x90` | `APPEARANCE_PTR` | uint64 (8B) | **独立外观与骨骼体型堆指针**（绝对保护，写入时必须原样保留；单人步长 `0x40`/64 字节） |
+| `0xF4` | `UNIQUE_ID` | uint16/uint32 | **球员运行时唯一逻辑 ID (Native Player UID)**<br>★ **致命关键字段**：游戏引擎在读档时于 `[rdi + 0x220]` 构建全局哈希查找表。日历模拟、比赛轮换和数据统计均基于该 UID 寻址。<br>★ **绝对零度保护红线**：严禁覆盖或清零为 `0x0000`！一旦为 0，日历模拟推进至该球员时因哈希空指针解引用直接引发 CTD（Crash To Desktop）闪退！ |
 | `0xF9` | `POSITION` | uint8 (3 bits) | 0: PG, 1: SG, 2: SF, 3: PF, 4: C |
 | `0xFA` | `SEC_POSITION` | uint8 (3 bits) | 次要位置 (0~4) |
 | `0xE8` | `SIGNATURE_ID` | uint32 | **球星赛场专属被动互动动画包 ID** |
