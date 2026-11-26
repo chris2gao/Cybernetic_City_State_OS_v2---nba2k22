@@ -447,81 +447,225 @@
         "slot": "SLOT_SLIDERS",
         "offset": "0x37C",
         "type": "float",
-        "min": 0.0,
-        "max": 1.0,
-        "default": 0.4,
-        "name_zh": "持球速度最低项 (USER)",
-        "unit": "0.0~1.0 (UI 0~100)"
+        "default": 0.42,
+        "name_zh": "持球速度最低项 (USER)"
       },
       "speed_with_ball_min_cpu": {
         "slot": "SLOT_SLIDERS",
         "offset": "0x380",
         "type": "float",
-        "min": 0.0,
-        "max": 1.0,
-        "default": 0.4,
-        "name_zh": "持球速度最低项 (CPU)",
-        "unit": "0.0~1.0 (UI 0~100)"
+        "default": 0.42,
+        "name_zh": "持球速度最低项 (CPU)"
       },
       "speed_with_ball_max_user": {
         "slot": "SLOT_SLIDERS",
         "offset": "0x374",
         "type": "float",
-        "min": 0.0,
-        "max": 1.0,
-        "default": 0.7,
-        "name_zh": "持球速度最高项 (USER)",
-        "unit": "0.0~1.0 (UI 0~100)"
+        "default": 0.9,
+        "name_zh": "持球速度最高项 (USER)"
       },
       "speed_with_ball_max_cpu": {
         "slot": "SLOT_SLIDERS",
         "offset": "0x378",
         "type": "float",
-        "min": 0.0,
-        "max": 1.0,
-        "default": 0.7,
-        "name_zh": "持球速度最高项 (CPU)",
-        "unit": "0.0~1.0 (UI 0~100)"
+        "default": 0.9,
+        "name_zh": "持球速度最高项 (CPU)"
       },
       "acceleration_with_ball_min_user": {
         "slot": "SLOT_SLIDERS",
         "offset": "0x39C",
         "type": "float",
-        "min": 0.0,
-        "max": 1.0,
-        "default": 0.4,
-        "name_zh": "控球加速度最低项 (USER)",
-        "unit": "0.0~1.0 (UI 0~100)"
+        "default": 0.38,
+        "name_zh": "控球加速度最低项 (USER)"
       },
       "acceleration_with_ball_min_cpu": {
         "slot": "SLOT_SLIDERS",
         "offset": "0x3A0",
         "type": "float",
-        "min": 0.0,
-        "max": 1.0,
-        "default": 0.4,
-        "name_zh": "控球加速度最低项 (CPU)",
-        "unit": "0.0~1.0 (UI 0~100)"
+        "default": 0.38,
+        "name_zh": "控球加速度最低项 (CPU)"
       },
       "speed_without_ball_min_user": {
         "slot": "SLOT_SLIDERS",
         "offset": "0x36C",
         "type": "float",
-        "min": 0.0,
-        "max": 1.0,
-        "default": 0.35,
-        "name_zh": "无球速度最低项 (USER)",
-        "unit": "0.0~1.0 (UI 0~100)"
+        "default": 0.44,
+        "name_zh": "无球速度最低项 (USER)"
       },
       "speed_without_ball_min_cpu": {
         "slot": "SLOT_SLIDERS",
         "offset": "0x370",
         "type": "float",
-        "min": 0.0,
-        "max": 1.0,
-        "default": 0.35,
-        "name_zh": "无球速度最低项 (CPU)",
-        "unit": "0.0~1.0 (UI 0~100)"
+        "default": 0.44,
+        "name_zh": "无球速度最低项 (CPU)"
+      },
+      "speed_without_ball_max_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x364",
+        "type": "float",
+        "default": 0.92,
+        "name_zh": "无球速度最高项 (USER)"
+      },
+      "speed_without_ball_max_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x368",
+        "type": "float",
+        "default": 0.92,
+        "name_zh": "无球速度最高项 (CPU)"
+      },
+      "acceleration_without_ball_max_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x384",
+        "type": "float",
+        "default": 0.84,
+        "name_zh": "无球加速度最高项 (USER)"
+      },
+      "acceleration_without_ball_max_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x388",
+        "type": "float",
+        "default": 0.84,
+        "name_zh": "无球加速度最高项 (CPU)"
+      },
+      "acceleration_without_ball_min_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x38C",
+        "type": "float",
+        "default": 0.4,
+        "name_zh": "无球加速度最低项 (USER)"
+      },
+      "acceleration_without_ball_min_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x390",
+        "type": "float",
+        "default": 0.4,
+        "name_zh": "无球加速度最低项 (CPU)"
+      },
+      "acceleration_with_ball_max_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x394",
+        "type": "float",
+        "default": 0.8,
+        "name_zh": "控球加速度最高项 (USER)"
+      },
+      "acceleration_with_ball_max_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x398",
+        "type": "float",
+        "default": 0.8,
+        "name_zh": "控球加速度最高项 (CPU)"
+      },
+      "player_speed_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x1C",
+        "type": "float",
+        "default": 0.5,
+        "name_zh": "球员速度属性权重 (USER)"
+      },
+      "player_speed_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x20",
+        "type": "float",
+        "default": 0.5,
+        "name_zh": "球员速度属性权重 (CPU)"
+      },
+      "player_strength_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x5C",
+        "type": "float",
+        "default": 0.8,
+        "name_zh": "球员力量属性权重 (USER)"
+      },
+      "player_strength_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x60",
+        "type": "float",
+        "default": 0.8,
+        "name_zh": "球员力量属性权重 (CPU)"
+      },
+      "player_quickness_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x64",
+        "type": "float",
+        "default": 0.46,
+        "name_zh": "球员加速度属性权重 (USER)"
+      },
+      "player_quickness_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x68",
+        "type": "float",
+        "default": 0.46,
+        "name_zh": "球员加速度属性权重 (CPU)"
+      },
+      "player_vertical_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x9C",
+        "type": "float",
+        "default": 0.42,
+        "name_zh": "球员弹跳属性权重 (USER)"
+      },
+      "player_vertical_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0xA0",
+        "type": "float",
+        "default": 0.42,
+        "name_zh": "球员弹跳属性权重 (CPU)"
+      },
+      "bodyup_sensitivity_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x134",
+        "type": "float",
+        "default": 0.76,
+        "name_zh": "身体对抗敏感度 (USER)"
+      },
+      "bodyup_sensitivity_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x138",
+        "type": "float",
+        "default": 0.76,
+        "name_zh": "身体对抗敏感度 (CPU)"
+      },
+      "driving_contact_frequency_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x224",
+        "type": "float",
+        "default": 0.9,
+        "name_zh": "突破对抗投篮频率 (USER)"
+      },
+      "driving_contact_frequency_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x228",
+        "type": "float",
+        "default": 0.95,
+        "name_zh": "突破对抗投篮频率 (CPU)"
+      },
+      "inside_contact_frequency_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x22C",
+        "type": "float",
+        "default": 0.9,
+        "name_zh": "内线对抗投篮频率 (USER)"
+      },
+      "inside_contact_frequency_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x230",
+        "type": "float",
+        "default": 0.95,
+        "name_zh": "内线对抗投篮频率 (CPU)"
+      },
+      "defensive_assist_user": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x2D4",
+        "type": "float",
+        "default": 0.05,
+        "name_zh": "强力防守辅助强度 (USER)"
+      },
+      "defensive_assist_cpu": {
+        "slot": "SLOT_SLIDERS",
+        "offset": "0x2D8",
+        "type": "float",
+        "default": 0.05,
+        "name_zh": "强力防守辅助强度 (CPU)"
       }
     }
   }
