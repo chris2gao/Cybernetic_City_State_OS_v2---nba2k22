@@ -172,24 +172,28 @@
 
 ---
 
-## 5. 球员 PlayType 1–4 与纪律性联动配置表
+> **实机修正记录（2026-11-26 已注入并 UI 核验通过）**：已将所有 `PlayType 15` 修正为 `14 (3 PT)`，并剔除 `5OUT BIG TOP` 等 Freelance 内部隐藏动作，精简为 **36 条常规/替补 UI 可见战术（26 Regular + 10 Bench，含 3 条单打、4 条外弹三分）+ 6 条末段 `END` 战术（共 42 条）**，游戏内已全部正常显示。
 
-> 本表直接纠正了原版 5 名射手缺少 `15(3 PT)`、哈利伯顿次槽错设为中投的严重问题：
+---
+
+## 5. 球员 PlayType 1–4 与纪律性联动配置表（已通过 REA Native 实机写入）
+
+> 本表已采用 2K22 实测真值 **`14 = 三分 (3 PT)`**（纠正原版 5 名射手缺少三分及之前误填 `15` 的问题）：
 
 | 球员 | 位置 | PlayType 1 (主) | PlayType 2 (主) | PlayType 3 (辅) | PlayType 4 (辅) | Initiator | 战术纪律建议 |
 | :--- | :---: | :--- | :--- | :--- | :--- | :---: | :--- |
-| **Tyrese Haliburton** | PG | `4 (P&R Handler)` | `5 (P&R Point)` | `15 (3 PT)` | `1 (Isolation)` | `True` | `85+`（高球商发牌） |
+| **Tyrese Haliburton** | PG | `4 (P&R Handler)` | `5 (P&R Point)` | **`14 (3 PT)`** | `1 (Isolation)` | `True` | `85+`（高球商发牌） |
 | **Pascal Siakam** | PF | `1 (Isolation)` | `10 (Guard/Wing Post)` | `8 (Post Low)` | `9 (Post High)` | `True` | `78`（保留单打自由度） |
-| **Buddy Hield** | SG | **`15 (3 PT)`** | `12 (Handoff Rec)` | `6 (P&R Wing)` | `11 (Cutter)` | `False` | `85`（严格跑无球掩护） |
-| **Aaron Nesmith** | SF | **`15 (3 PT)`** | `11 (Cutter)` | `12 (Handoff Rec)` | `0 (None)` | `False` | `80` |
-| **Myles Turner** | C | `7 (P&R Roll Man)` | **`15 (3 PT)`** | `14 (Mid Range)` | `13 (Handoff Pass)` | `False` | `82` |
-| **T.J. McConnell** | PG | `5 (P&R Point)` | `4 (P&R Handler)` | `14 (Mid Range)` | `11 (Cutter)` | `True` | `85` |
-| **Dillon Brooks** | SG/SF | `10 (Guard Post)` | `14 (Mid Range)` | `15 (3 PT)` | `6 (P&R Wing)` | `False` | `72` |
+| **Buddy Hield** | SG | **`14 (3 PT)`** | `12 (Handoff Rec)` | `6 (P&R Wing)` | `11 (Cutter)` | `False` | `85`（严格跑无球掩护） |
+| **Aaron Nesmith** | SF | **`14 (3 PT)`** | `11 (Cutter)` | `12 (Handoff Rec)` | `0 (None)` | `False` | `80` |
+| **Myles Turner** | C | `7 (P&R Roll Man)` | **`14 (3 PT)`** | `8 (Post Low)` | `13 (Handoff Pass)` | `False` | `82` |
+| **T.J. McConnell** | PG | `5 (P&R Point)` | `4 (P&R Handler)` | `11 (Cutter)` | `0 (None)` | `True` | `85` |
+| **Dillon Brooks** | SG/SF | `10 (Guard Post)` | **`14 (3 PT)`** | `6 (P&R Wing)` | `1 (Isolation)` | `False` | `72` |
 | **DeMarcus Cousins** | C | `8 (Post Low)` | `9 (Post High)` | `13 (Handoff Pass)` | `7 (P&R Roll Man)` | `False` | `70` |
-| **Daniel Theis** | PF/C | `7 (P&R Roll Man)` | `14 (Mid Range)` | `11 (Cutter)` | `13 (Handoff Pass)` | `False` | `80` |
-| **Maxi Kleber** | PF | **`15 (3 PT)`** | `7 (P&R Roll Man)` | `11 (Cutter)` | `0 (None)` | `False` | `82` |
-| **Kent Bazemore** | SF | **`15 (3 PT)`** | `11 (Cutter)` | `12 (Handoff Rec)` | `0 (None)` | `False` | `78` |
-| **Oshae Brissett** | PF | **`15 (3 PT)`** | `11 (Cutter)` | `0 (None)` | `0 (None)` | `False` | `75` |
+| **Daniel Theis** | PF/C | `7 (P&R Roll Man)` | `14 (Mid/3PT)` | `11 (Cutter)` | `13 (Handoff Pass)` | `False` | `80` |
+| **Maxi Kleber** | PF | **`14 (3 PT)`** | `7 (P&R Roll Man)` | `11 (Cutter)` | `0 (None)` | `False` | `82` |
+| **Kent Bazemore** | SF | **`14 (3 PT)`** | `11 (Cutter)` | `12 (Handoff Rec)` | `0 (None)` | `False` | `78` |
+| **Oshae Brissett** | PF | **`14 (3 PT)`** | `11 (Cutter)` | `0 (None)` | `0 (None)` | `False` | `75` |
 
 ---
 
