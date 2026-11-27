@@ -77,6 +77,9 @@ def main():
     coach_writes = 0
     if not args.dry_run:
         for fname, val in all_targets.items():
+            if fname not in prof["fields"]:
+                assert val == 0, f"{team} Coach unknown non-zero field {fname}={val}"
+                continue
             fspec = prof["fields"][fname]
             off = fspec["offset"]
             sbytes = fspec["storage_bytes"]
