@@ -2,7 +2,7 @@
 
 > **文档标识**: `STATE-ROLE-DATA-ANALYSIS-DECISION-CURRENT`  
 > **所属角色**: `data_analysis_and_decision` (数据分析与决策角色)  
-> **更新时间**: 2026-11-24  
+> **更新时间**: 2026-11-26  
 > **当前状态**: `WORKBENCH_ACTIVE_SYNCHRONIZED`  
 > **核心作用**: 实时记录当前工作台活动基线、已发布交付物账本、未决事项与新窗口交接步骤。
 
@@ -41,6 +41,7 @@
    - 目录: `C:\nba2k22\exports\single_team_execution\`
    - 内容: 30 个独立单队 JSON（如 `00_PHI_tactical_mod.json` .. `31_CHA_tactical_mod.json`）
    - 任务包说明: `82_CYCLE_02_30_TEAMS_CLEAN_DELTA_SINGLE_TEAM_EXECUTION_TASK_PACKAGE.md`
+   - 合规校准: 已彻底排除 `ActiveSystem=8 (NO_SYSTEM)` 哨兵值阻断异常，修正 HOU 与 CHA 的战术体系为 `2 (Pace & Space)`，并修复 WAS/ORL/SAS 协防与轮换参数，经 OS Loop 3,031 项数值审计 100% PASS。
 2. **Task 83: 30 队教练设置“模拟侧重”单队执行包**
    - 目录: `C:\nba2k22\exports\20261123_simulated_gameplan_focus_execution\`
    - 内容: 30 个独立单队 JSON（如 `00_PHI_sim_focus_mod.json` .. `31_CHA_sim_focus_mod.json`）
@@ -95,7 +96,7 @@
    - 人类告知：“你的角色是数据分析和决策角色”；
    - 模型立即定位并加载本领域的 [`09_Domain_Global_Mechanisms/roles/data_analysis_and_decision/BOOTSTRAP_GUIDE.md`](BOOTSTRAP_GUIDE.md)。
 2. **Step 2（恢复记忆与账本）**：
-   - 阅读同目录下的 [`OFFLINE_CONTEXT_MEMORY.md`](OFFLINE_CONTEXT_MEMORY.md)（恢复 9 大核心记忆单元）；
+   - 阅读同目录下的 [`OFFLINE_CONTEXT_MEMORY.md`](OFFLINE_CONTEXT_MEMORY.md)（恢复 11 大核心记忆单元）；
    - 阅读本文件 [`CURRENT_STATE.md`](CURRENT_STATE.md)（对齐当前基线、已交付资产账本与待办事项）。
 3. **Step 3（输出回执，立即可用）**：
    - 输出标准的 `ROLE_INIT_RECEIPT` 回执，汇报当前基线与待办，无需人类重贴任何历史长文，即可立即进入分析、派单或审计状态！

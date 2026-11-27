@@ -53,7 +53,7 @@
 ### Layer 4: 离线上下文记忆与前置交付索引 (Memory & Continuity)
 恢复历史工作台状态，保障多任务连续性：
 1. [09_Domain_Global_Mechanisms/roles/data_analysis_and_decision/OFFLINE_CONTEXT_MEMORY.md](file:///e:/workspace/Cybernetic_City_State_OS_v2%20-%20nba2k22/09_Domain_Global_Mechanisms/roles/data_analysis_and_decision/OFFLINE_CONTEXT_MEMORY.md)：
-   - **必读重点**：5 大核心记忆单元（哈利伯顿焦点球员事故反思与洁净基线、150人冲突最新研究优先级裁决、模拟侧重12字节逆向、协议三大铁律、世界规则边界）。
+   - **必读重点**：11 大核心记忆单元（哈利伯顿焦点球员事故反思与洁净基线、150人冲突最新研究优先级裁决、模拟侧重12字节逆向、协议三大铁律、世界规则边界、战术重力放大法则、防伤负荷管理、Swarm Fork分叉克隆与并发上限、巅峰年龄成长曲线、战术体系哨兵值阻断与箭头优先级提取铁律）。
 2. [09_Domain_Global_Mechanisms/roles/data_analysis_and_decision/CURRENT_STATE.md](file:///e:/workspace/Cybernetic_City_State_OS_v2%20-%20nba2k22/09_Domain_Global_Mechanisms/roles/data_analysis_and_decision/CURRENT_STATE.md)：
    - **必读重点**：当前活动基线版本、最新已完成任务（Task 80~84）交付物清单与待办工作。
 
@@ -102,7 +102,7 @@ layers_loaded:
 validators:
   - validate_skills.py: 0
   - verify_context_structure.py: 0
-offline_memory_status: SYNCHRONIZED (5 Memory Units loaded)
+offline_memory_status: SYNCHRONIZED (11 Memory Units loaded)
 workbench_status: READY_FOR_DISPATCH_OR_ANALYSIS
 gaps: none
 ```

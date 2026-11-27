@@ -2,7 +2,7 @@
 
 > **文档标识**: `MEMORY-ROLE-DATA-ANALYSIS-DECISION-V1`  
 > **机制归属**: City-State OS 离线任务连续性机制 (`01_os/03_mechanisms/context_management/prms/TASK_CONTINUITY.md`)  
-> **更新时间**: 2026-11-24  
+> **更新时间**: 2026-11-26  
 > **核心作用**: 跨会话、跨窗口持久化保留本角色在历次重大任务中沉淀的高价值经验、事故教训、业务裁决与事实资产，确保新窗口无需依赖滚动聊天记录即可瞬间恢复“老兵”记忆。
 
 ---
@@ -162,3 +162,19 @@
   3. **`PEAKEND` 由续航与伤病决定**：历史常青超巨 (`35~39`)、长巅峰全明星 (`32~34`)、标准健康轮换 (`30~31`，修复原生 `<=27` 截断)、重大伤病/早衰型 (`27~29`)；
   4. **强制边界**：`21 <= PEAKSTART < PEAKEND <= 42` 且 `PEAKEND - PEAKSTART >= 4`。
 - **权威规范**：[95_PLAYER_PEAK_AGE_CALIBRATION_STANDARD_AND_SOP.md](file:///e:/workspace/Cybernetic_City_State_OS_v2%20-%20nba2k22/08_Domain_Applications/Antigravity_GM_Engine/docs/95_PLAYER_PEAK_AGE_CALIBRATION_STANDARD_AND_SOP.md)
+
+---
+
+## 记忆单元 11：主教练战术体系哨兵值阻断（ActiveSystem=8 NO_SYSTEM 事件）与调优数值箭头优先级提取铁律
+
+- **历史背景与事故触发**：
+  实机执行端/采集模型在校验单队执行包时检测到休斯顿火箭队主教练战术体系被设定为 `ActiveSystem = 8`，触发了采集模型的数值异常与哨兵阻断拦截。
+- **2K22 底层机制与哨兵值本质**：
+  在 2K22 `COACHDATA`（偏移 267）中，主教练战术体系合法枚举严格为 `0` ~ `7`（`0`: Balanced, `1`: Triangle, `2`: Pace & Space, `3`: Perimeter Centric, `4`: Seven Seconds, `5`: Defense, `6`: Pick & Roll, `7`: Post Centric/Grit & Grind）。数值 `8` 底层为 `NO_SYSTEM`（空占位/未分配哨兵值），游戏内引擎无法寻路，必然引发逻辑崩溃或哨兵告警。
+- **根因分析与代码生成器缺陷**：
+  1. 查验各队最新战术方案（如 Doc 79 第 3.2 节、Doc 75 第 4.2 节），人类与分析师明确为塞拉斯（火箭）和博雷戈（黄蜂）设定的是 `2 (Pace & Space)`；
+  2. 但在规格自动化生成脚本中，解析 Markdown 语法 `$\rightarrow$ **\`2` 时因反引号与星号嵌套导致正则提取落空，回退到了历史有瑕疵的基线 spec，误填入 `8`；同时导致部分教练的协防/轮换参数误读了前文的现状诊断数值。
+- **永久固化的业务准则与安全加固**：
+  1. **禁止全联盟任何队伍出现 `ActiveSystem = 8 (NO_SYSTEM)`**：所有 30 队战术体系必须严格属于 `0..7` 合法枚举，生成及审计脚本必须增加合法区间断言 `0 <= active_system <= 7`；
+  2. **数值解析严格遵循“调优箭头指令优先（Arrow Priority）”法则**：当研究报告文本中存在 `A -> B`、`$\rightarrow$`、`提升至`、`降至` 等明确校准语义时，必须优先以箭头右侧的目标值（Calibrated Value）为唯一权威，严禁被前文诊断现状数值覆盖；
+  3. **双重同步校验**：本地数据库与 `C:\nba2k22\exports\single_team_execution\` 保持绝对镜像一致，任何修改必须经由 OS Loop 闭环审计脚本（0 mismatches）验证后方可提交。
