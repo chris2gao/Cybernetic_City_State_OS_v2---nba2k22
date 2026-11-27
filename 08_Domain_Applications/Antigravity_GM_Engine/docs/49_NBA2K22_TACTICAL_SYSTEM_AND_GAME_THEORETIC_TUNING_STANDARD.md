@@ -560,8 +560,9 @@ $$\text{If } \text{touches} \ge 75 \implies \text{DISH\_TO\_OPEN\_MAN} \ge 75$$
 ## 六、 智能体三阶标准化调优流程与自检清单 (Agent SOP & Checklist)
 
 > [!IMPORTANT]
-> **全队战术标定第一铁律 (Absolute Sourcing & Methodology Discipline)**  
-> 任何智能体在针对 30 支 NBA 球队展开战术、能力、倾向、徽章或防守对位方案的研究时，**严禁凭空主观臆断或跳过原生数据采集**。模型每一次开启新球队研究任务，必须严格执行**“数据源读取 ➔ 博弈体系分析 ➔ 模型自主裁决完善”**的三阶标准化闭环规程。
+> **全队战术标定第一铁律与上游战术报告直承原则 (Absolute Sourcing & Playbook Report Inheritance)**  
+> 1. **上游战术报告直承原则（2026-11-26 生效）**：每个赛季开始时优先执行《年度球队战术体系与手册设计标准化任务》（文档 97，SOP-ANNUAL-TEAM-TACTICAL-DESIGN-V1）。若当前赛季各队战术设计报告（`docs/tactical_designs_<SEASON>/<TEAM>_<SEASON>_TACTICAL_DESIGN_REPORT.md`）已存在，**后续所有球队研究任务严禁开展重复从零分析，直接以该报告为权威原始基准**，直接针对性派生模拟侧重、球员训练模板、99项战术倾向与全局设置！  
+> 2. **数据源读取严谨性**：若该队报告尚未生成，才执行“数据源读取 ➔ 博弈体系分析 ➔ 模型自主裁决完善”的从零三阶标准化闭环规程。严禁凭空主观臆断。
 
 ### 6.1 智能体三阶核心工作流规程 (Three-Stage Standardized Optimization Workflow)
 

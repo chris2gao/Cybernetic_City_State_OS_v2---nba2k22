@@ -25,14 +25,18 @@
     },
     "season_day_1_tactical_research": {
       "trigger": "SEASON_DAY_1",
+      "upstream_baseline_task": "ANNUAL_TEAM_TACTICAL_PLAYBOOK_DESIGN_SOP_V1",
+      "upstream_baseline_docs": "08_Domain_Applications/Antigravity_GM_Engine/docs/tactical_designs_2022_2023/",
+      "workflow_rule": "DERIVE_FROM_UPSTREAM_PLAYBOOK_REPORTS_WITHOUT_REDUNDANT_ANALYSIS",
       "teams_per_task": 2,
       "total_tasks": 15,
       "total_teams": 30,
       "dimensions": [
-        "offensive_system",
-        "defensive_matrix",
-        "winning_philosophy",
-        "simulated_gameplan_focus"
+        "tactical_playbook_and_playtypes",
+        "simulated_gameplan_focus",
+        "training_templates_and_load_management",
+        "tendencies_and_tactical_gravity",
+        "rotation_intangibles_and_global_settings"
       ]
     },
     "draft_class_enhancement": {

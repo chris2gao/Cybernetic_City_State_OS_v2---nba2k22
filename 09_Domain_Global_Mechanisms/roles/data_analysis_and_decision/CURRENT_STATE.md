@@ -30,6 +30,7 @@
 | **世界线注册表** | `08_Domain_Applications/Antigravity_GM_Engine/config/state_io_native/world.json` | V1 | 核心字段偏移字典 (`SLOT_TRADE` 基址 `0x0632B498`) |
 | **球员全量倾向规范** | `08_Domain_Applications/Antigravity_GM_Engine/docs/85_PLAYER_TENDENCIES_FULL_DIMENSIONAL_CALIBRATION_STANDARD.md` | V1 | 99项全量倾向、解耦热区、运球门槛与成长豁免、战术重力放大法则 |
 | **球员训练防伤规范** | `08_Domain_Applications/Antigravity_GM_Engine/docs/86_PLAYER_TRAINING_TEMPLATES_AND_LOAD_MANAGEMENT_STANDARD.md` | V1 | 9大技术模板、纯模板化决策、年轻正常老年轻微保守负荷管理 |
+| **年度战术手册标准化规范** | `08_Domain_Applications/Antigravity_GM_Engine/docs/97_TEAM_PLAYBOOK_AND_TACTICAL_DESIGN_TASK_SOP.md` | V1 (含Preflight) | 赛季揭幕日优先执行，产出30队战力分析与战术基准报告，下游任务直承免重复分析 |
 
 ---
 
@@ -71,18 +72,31 @@
 7. **Season 2 Progression Compensation: 现代线 36 位重点球员（含哈利伯顿）缺失成长与徽章补偿包**
    - 执行包目录: `C:\nba2k22\exports\20261125_season2_modern_progression_compensation_execution\` (26 份单队 `.json`，36 人，140 项属性 + 241 项技能徽章，经 `audit_compensation_specs.py` 100% PASS)
 
+8. **Task 88: Season 2 全联盟 30 队年度战术手册与体系设计执行包（Doc 96/97 标准化产物）**
+   - 战术设计报告目录: `08_Domain_Applications/Antigravity_GM_Engine/docs/tactical_designs_2022_2023/` (30 份单队完整报告，覆盖战力诊断、核心阵容轮换、攻防优势面、68槽手册装配、主教练宏观与球员 PlayType 1..4)
+   - 确定性编译执行包目录: `C:\nba2k22\exports\20261126_all30_tactical_design_phase2\` (30 份 `<TEAM>_spec.json` 与 30 份 `<TEAM>_frida_payload.json` + `manifest.json`，共 61 个文件全部就绪)
+   - 核心合规点: 30 队独占 `PlaybookID (0..29)` 预检门禁、严守 UI 可见池（1,300条）、`Regular+Bench <= 42` 可见上限、真值 `PlayType 14=3PT`（排除无效 15）。
+   - **权威地位**：作为后续所有球队研究任务（模拟侧重、训练模板、99 倾向、全局世界线设置）的第一原始信息源。
+
 ---
 
 ## 四、 待办事项与后续工作流 (Open Items)
 
-1. **执行模型调度与闭环回执审计**：
+1. **球队研究任务轻量化流转落地（直承战术手册报告）**：
+   - 落实人类 2026-11-26 最新战略决策：后续球队研究任务严禁开展重复从零分析；
+   - 统一以 `docs/tactical_designs_2022_2023/` 下的 30 队单队战术设计报告为原始信息基准，直接针对性派生：
+     1. 模拟侧重（Scoring Options 1~3 与 6 项 POE，Task 83 模式）；
+     2. 球员训练模板与防伤负荷（Doc 86 模式）；
+     3. 球员全量 99 项倾向与战术重力放大（Doc 85 模式）；
+     4. 全局世界线参数（Task 84 模式）。
+2. **执行模型调度与闭环回执审计**：
    - 协助人类派发执行任务给执行模型，按依赖顺序依次执行：
      1. 全局世界线参数（Task 84）：`C:\nba2k22\exports\20261123_worldline_settings_execution\`
-     2. 30 队战术与球员能力（Task 82）：`C:\nba2k22\exports\single_team_execution\`
+     2. 30 队战术手册与体系（Task 88）：`C:\nba2k22\exports\20261126_all30_tactical_design_phase2\`
      3. 30 队教练模拟侧重（Task 83）：`C:\nba2k22\exports\20261123_simulated_gameplan_focus_execution\`
      4. 30 队球员训练与倾向（Task 87）：`C:\nba2k22\exports\20261124_training_tendency_execution\`
    - 执行完成后，收集并核对 `RECEIPT.json` 执行回执，断言 0 读写异常。
-2. **新赛季前瞻与选秀名单任务准备**：
+3. **新赛季前瞻与选秀名单任务准备**：
    - 监控赛季日历推进至新赛季首日（Day 1）与第 2 赛季休赛期；
    - 准备启动 1985 届历史选秀名单真实化完善任务。
 
@@ -96,7 +110,7 @@
    - 人类告知：“你的角色是数据分析和决策角色”；
    - 模型立即定位并加载本领域的 [`09_Domain_Global_Mechanisms/roles/data_analysis_and_decision/BOOTSTRAP_GUIDE.md`](BOOTSTRAP_GUIDE.md)。
 2. **Step 2（恢复记忆与账本）**：
-   - 阅读同目录下的 [`OFFLINE_CONTEXT_MEMORY.md`](OFFLINE_CONTEXT_MEMORY.md)（恢复 11 大核心记忆单元）；
+   - 阅读同目录下的 [`OFFLINE_CONTEXT_MEMORY.md`](OFFLINE_CONTEXT_MEMORY.md)（恢复 12 大核心记忆单元）；
    - 阅读本文件 [`CURRENT_STATE.md`](CURRENT_STATE.md)（对齐当前基线、已交付资产账本与待办事项）。
 3. **Step 3（输出回执，立即可用）**：
    - 输出标准的 `ROLE_INIT_RECEIPT` 回执，汇报当前基线与待办，无需人类重贴任何历史长文，即可立即进入分析、派单或审计状态！

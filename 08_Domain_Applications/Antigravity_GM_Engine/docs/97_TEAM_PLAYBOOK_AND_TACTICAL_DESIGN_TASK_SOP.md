@@ -2,8 +2,8 @@
 
 > **文档标识 (Document ID)**: `SOP-ANNUAL-TEAM-TACTICAL-DESIGN-V1`  
 > **上游知识底座**: [96_NBA2K22_PLAYBOOK_COMPLETE_UNDERSTANDING_AND_DESIGN_GUIDE.md](96_NBA2K22_PLAYBOOK_COMPLETE_UNDERSTANDING_AND_DESIGN_GUIDE.md) | [native_plays_complete_catalog_v1.json](../web_gm/knowledge/plays/native_plays_complete_catalog_v1.json)  
-> **下游联动**: 球队轮换时间微调、无形资产校准、教练 POE 与游戏内存热注入（`SOP-SEASON-CYCLE-TACTICAL-REBALANCE-V1`）  
-> **适用时机**: 每年新赛季阵容确定后（交易完成 / 选秀与自由市场落定后），常规执行一次；或某支球队发生核心阵容大变动时单独触发。
+> **下游联动与权威地位**: **全联盟新赛季第一权威原始信息源（Upstream Source of Truth）**。本任务产出的 30 队战术设计报告直接作为后续所有球队研究任务（模拟侧重、全局设置、球员训练模板、99项倾向与战术重力、轮换无形资产微调）的唯一输入基准；后续任务免除重复从零分析。  
+> **适用时机**: 每年新赛季阵容确定后（揭幕日 Day 1 优先触发执行），常规执行一次；或某支球队发生核心阵容大变动时单独触发。
 
 ---
 
