@@ -7,6 +7,18 @@
 
 ---
 
+## 零、任务前置条件（Preflight — 每次任务开始前必须首先执行）
+
+1. **全联盟主教练专属战术手册独占校验与修正**：
+   - 在启动任何球队战术设计或内存写入之前，**必须首先运行** [preflight_enforce_exclusive_playbooks.py](../src/preflight_enforce_exclusive_playbooks.py) 检查全部 30 支 NBA 球队主教练的 `PlaybookID`：
+     ```powershell
+     python 08_Domain_Applications/Antigravity_GM_Engine/src/preflight_enforce_exclusive_playbooks.py
+     ```
+   - **原因**：原版名单中部分球队主教练（如 `CHA`、`MEM`、`ORL`、`WAS`）默认指向共用的 `Standard Playbook (enum_id=30)`，或错指他队手册（如 `MIN` 错指 `Grizzlies Playbook (6)`）。若不先行绑定本队专属手册（`0–29` 严格 1 对 1 独占），后续写入会互相覆盖。
+   - 确认 30/30 球队均绑定本队专属 `PlaybookID` 且 CAS 回读通过后，再进入 Phase 1 与 Phase 2。
+
+---
+
 ## 一、核心设计哲学与两阶段分离架构
 
 ### 1.1 为什么必须“思考决策”与“格式编译”两阶段分离？
@@ -62,7 +74,7 @@
   - **Regular 常规槽（`0–29`）**：放首发主力与双核联动的核心高胜率战术（如 26–30 条）。
   - **Bench 替补槽（`30–49`）**：专门放**第六人/替补得分手的 1–5 个专属战术** + **衔阶段与纯替补的高容错简洁战术**（如 8–12 条，未使用的空槽保持 `0`）。
 * **Endgame 末段槽（`50–59`，6–8 槽）**：专门放带 `END` 后缀的末段关键球/绝杀战术（如 `ISO 1 FIST END`、`FIST 5 END`、`PUNCH 32 FIST END`）。注意：**`END` 末段战术在常规手册 UI 列表中默认隐藏不显示，由系统在最后时刻自动调用，不占主列表名额**。
-* **Favorite 收藏槽（`60–67`，8 槽）**：保留原版快捷分类入口（如 `ISOLATION`、`POSTUP` 等），不覆盖。
+* **Favorite 收藏槽（`60–67`，8 槽）**：写入本队最高频的 8 条核心快捷战术。
 
 ### Step 5：参数联动收尾（`PlayType` & 倾向建议）
 1. 为全队核心轮换球员给出精确的 **`PlayType 1–4`** 配置方案（1/2 槽主用）。**重要实机校准：在 NBA 2K22 中，`14` 才是真正的“三分/外线投篮 (3 PT)”，切勿误填 `15`（`15` 在游戏 UI 中显示为空/无效）！**
@@ -83,7 +95,13 @@
 
 ---
 
-## 四、推广策略：先单队试点，再决定全联盟 30 队方案
+## 四、Phase 2 标准化编译与顺序 REA Native 注入规范
 
-1. **试点验证（Pilot Run）**：先选取 **1 支代表性球队**（如双探花驱动的 `BOS`，或体系流 `GSW`，或大核流 `DAL`）完整跑一次 Phase 1 任务，实测单队任务的 **Token 消耗、耗时与战术决策质量**。
-2. **全联盟扩展评估**：根据试点成本，决定其余球队是**全联盟 30 队逐一精雕**，还是**焦点强队精雕 + 其余球队标准化批量生成**。
+1. **全联盟确定性编译**：
+   运行 [compile_all_30_tactics_phase2.py](../src/compile_all_30_tactics_phase2.py)，校验 30 队报告无重名、无非法战术、无 `PlayType 15` 脏数据，并生成 `manifest.json` 与 30 份 `<TEAM>_spec.json`。
+2. **单队顺序注入与 CAS 校验**：
+   严格按球队顺序逐一执行（先完成前一步 Preflight）：
+   - 运行 `python 08_Domain_Applications/Antigravity_GM_Engine/src/execute_team_phase2_non_frida.py --team <TEAM>`（完成 68 槽 Playbook CRC、教练设置/POE/独占 `PlaybookID`、球员 `Initiator` 写入与 CAS 回读，并生成 `<TEAM>_frida_payload.json`）；
+   - 调用 REA MCP `rea:instrument_with_frida` 对 `<TEAM>_frida_payload.json` 内全部球员执行游戏原生 `PLAYER_SET_PLAY_TYPES_1_TO_4`（RVA `0xf1e370` / `0xf1e390` / `0xf1e3b0` / `0xf1e3d0`）注入并完成 `PLAYER+0x168` CAS 回读校验。
+3. **蜂群批处理建议**：
+   Phase 1 可使用 Swarm（每批 5 队、冷启动读取 `scratch/swarm_inputs/<TEAM>_m02_dec.json` 与 `ui_usable_plays_by_cat.json`）；Phase 2 统一由单个具备写/MCP 权限的 Subagent 按顺序逐队执行。
