@@ -560,9 +560,9 @@ $$\text{If } \text{touches} \ge 75 \implies \text{DISH\_TO\_OPEN\_MAN} \ge 75$$
 ## 六、 智能体三阶标准化调优流程与自检清单 (Agent SOP & Checklist)
 
 > [!IMPORTANT]
-> **全队战术标定第一铁律与上游战术报告直承原则 (Absolute Sourcing & Playbook Report Inheritance)**  
-> 1. **上游战术报告直承原则（2026-11-26 生效）**：每个赛季开始时优先执行《年度球队战术体系与手册设计标准化任务》（文档 97，SOP-ANNUAL-TEAM-TACTICAL-DESIGN-V1）。若当前赛季各队战术设计报告（`docs/tactical_designs_<SEASON>/<TEAM>_<SEASON>_TACTICAL_DESIGN_REPORT.md`）已存在，**后续所有球队研究任务严禁开展重复从零分析，直接以该报告为权威原始基准**，直接针对性派生模拟侧重、球员训练模板、99项战术倾向与全局设置！  
-> 2. **数据源读取严谨性**：若该队报告尚未生成，才执行“数据源读取 ➔ 博弈体系分析 ➔ 模型自主裁决完善”的从零三阶标准化闭环规程。严禁凭空主观臆断。
+> **全队战术标定第一铁律与上游战术报告赛季动态绑定原则 (Absolute Sourcing & Season-Dynamic Playbook Inheritance)**  
+> 1. **上游战术报告当季动态绑定原则（2026-11-26 生效）**：每个赛季揭幕日优先执行《年度球队战术体系与手册设计标准化任务》（文档 97，SOP-ANNUAL-TEAM-TACTICAL-DESIGN-V1）。**所有以该单队战术设计报告作为分析依据的后续任务（模拟侧重、训练模板、99项战术倾向与战术重力、轮换无形资产与全局设置等），必须严格以任务开始时所在的当前活动赛季（Current Active Season）为准，动态索引该赛季专属的报告目录（`docs/tactical_designs_<SEASON>/`，如当前 2022-23 赛季为 `tactical_designs_2022_2023/`，新赛季自动切换为新目录），严禁固定读取某一个历史赛季的报告！这些报告仅在当季有效，新赛季揭幕会自动生成全新报告。若当季战术报告已存在，后续所有任务严禁开展重复从零分析，直接以当季报告为权威原始基准进行针对性派生！**  
+> 2. **数据源读取严谨性**：若当季该队战术报告尚未生成，才执行“数据源读取 ➔ 博弈体系分析 ➔ 模型自主裁决完善”的从零三阶标准化闭环规程。严禁凭空主观臆断。
 
 ### 6.1 智能体三阶核心工作流规程 (Three-Stage Standardized Optimization Workflow)
 

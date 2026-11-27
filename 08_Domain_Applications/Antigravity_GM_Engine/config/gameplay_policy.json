@@ -26,7 +26,8 @@
     "season_day_1_tactical_research": {
       "trigger": "SEASON_DAY_1",
       "upstream_baseline_task": "ANNUAL_TEAM_TACTICAL_PLAYBOOK_DESIGN_SOP_V1",
-      "upstream_baseline_docs": "08_Domain_Applications/Antigravity_GM_Engine/docs/tactical_designs_2022_2023/",
+      "upstream_baseline_path_pattern": "08_Domain_Applications/Antigravity_GM_Engine/docs/tactical_designs_{season_years}/",
+      "validity_scope": "CURRENT_SEASON_ONLY__ROTATES_ANNUALLY",
       "workflow_rule": "DERIVE_FROM_UPSTREAM_PLAYBOOK_REPORTS_WITHOUT_REDUNDANT_ANALYSIS",
       "teams_per_task": 2,
       "total_tasks": 15,
