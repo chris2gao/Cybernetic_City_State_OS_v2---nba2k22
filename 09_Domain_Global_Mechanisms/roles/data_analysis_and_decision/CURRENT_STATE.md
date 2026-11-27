@@ -73,9 +73,14 @@
    - 执行包目录: `C:\nba2k22\exports\20261125_season2_modern_progression_compensation_execution\` (26 份单队 `.json`，36 人，140 项属性 + 241 项技能徽章，经 `audit_compensation_specs.py` 100% PASS)
 
 8. **Task 88: Season 2 全联盟 30 队年度战术手册与体系设计执行包（Doc 96/97 标准化产物）**
+   - **实机运行状态**: **【已完成实机全量注入生效并持久化存盘 - 100% INJECTED & VERIFIED】**
    - 战术设计报告目录: `08_Domain_Applications/Antigravity_GM_Engine/docs/tactical_designs_2022_2023/` (30 份单队完整报告，覆盖战力诊断、核心阵容轮换、攻防优势面、68槽手册装配、主教练宏观与球员 PlayType 1..4)
-   - 确定性编译执行包目录: `C:\nba2k22\exports\20261126_all30_tactical_design_phase2\` (30 份 `<TEAM>_spec.json` 与 30 份 `<TEAM>_frida_payload.json` + `manifest.json`，共 61 个文件全部就绪)
-   - 核心合规点: 30 队独占 `PlaybookID (0..29)` 预检门禁、严守 UI 可见池（1,300条）、`Regular+Bench <= 42` 可见上限、真值 `PlayType 14=3PT`（排除无效 15）。
+   - 确定性编译执行包目录: `C:\nba2k22\exports\20261126_all30_tactical_design_phase2\` (30 份 `<TEAM>_spec.json` 与 30 份 `<TEAM>_frida_payload.json` + `manifest.json`，共 61 个文件)
+   - 实机落地生效明细:
+     - 30 队独占 `PlaybookID (0..29)` 预检门禁已全部绑定写入并 CAS 校验；
+     - 30 队 68 槽 Playbook CRC、教练偏好战术系统、POE 重点、球员推进发起人 (`is_play_initiator`) 全部实机写入通过；
+     - 原生 `PLAYER_SET_PLAY_TYPES_1_TO_4` 全部执行完成，核心射手真值 `PlayType 14=3PT`（彻底杜绝无效 15）已在游戏中完全生效；
+     - 实机 MyLEAGUE 存档已完成日历推进与持久化存盘，正式成为新赛季活动战术基线。
    - **权威地位**：作为后续所有球队研究任务（模拟侧重、训练模板、99 倾向、全局世界线设置）的第一原始信息源。
 
 ---
@@ -90,11 +95,12 @@
      3. 球员全量 99 项倾向与战术重力放大（Doc 85 模式）；
      4. 全局世界线参数（Task 84 模式）。
 2. **执行模型调度与闭环回执审计**：
-   - 协助人类派发执行任务给执行模型，按依赖顺序依次执行：
+   - 战术手册与体系（Task 88）已确认注入完毕并存盘；
+   - 协助人类根据世界线推进节奏，按依赖顺序调度执行剩余已就绪或待派生执行包：
      1. 全局世界线参数（Task 84）：`C:\nba2k22\exports\20261123_worldline_settings_execution\`
-     2. 30 队战术手册与体系（Task 88）：`C:\nba2k22\exports\20261126_all30_tactical_design_phase2\`
-     3. 30 队教练模拟侧重（Task 83）：`C:\nba2k22\exports\20261123_simulated_gameplan_focus_execution\`
-     4. 30 队球员训练与倾向（Task 87）：`C:\nba2k22\exports\20261124_training_tendency_execution\`
+     2. 30 队教练模拟侧重（Task 83）：`C:\nba2k22\exports\20261123_simulated_gameplan_focus_execution\`
+     3. 30 队球员训练与倾向（Task 87）：`C:\nba2k22\exports\20261124_training_tendency_execution\`
+   - 执行完成后，收集并核对 `RECEIPT.json` 执行回执，断言 0 读写异常。
    - 执行完成后，收集并核对 `RECEIPT.json` 执行回执，断言 0 读写异常。
 3. **新赛季前瞻与选秀名单任务准备**：
    - 监控赛季日历推进至新赛季首日（Day 1）与第 2 赛季休赛期；
