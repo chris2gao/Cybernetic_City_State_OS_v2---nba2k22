@@ -83,6 +83,21 @@
      - 实机 MyLEAGUE 存档已完成日历推进与持久化存盘，正式成为新赛季活动战术基线。
    - **权威地位**：作为后续所有球队研究任务（模拟侧重、训练模板、99 倾向、全局世界线设置）的第一原始信息源。
 
+9. **Task 89: 6 大出场时间异常球队无形资产（Intangibles）逆向重标定实机注入（Option A 执行落地）**
+   - **实机运行状态**: **【已完成实机全量热写入生效并持久化存盘 - 100% INJECTED & VERIFIED】**
+   - **治理对象**: 纽约尼克斯 (NYK 控卫踩踏), 波士顿凯尔特人 (BOS 4号位防守失血), 华盛顿奇才 (WAS 替补过滥), 底特律活塞 (DET 三塔拥堵), 菲尼克斯太阳 (PHX 替补中投陷阱), 洛杉矶快船 (LAC 双核时间稀释)。
+   - **注入成果**:
+     - 6 队全部 100 名球员结构体 0x90 外观堆指针隔离校验 100% PASS；
+     - 无形资产数值全部限定于 `[25, 99]` 安全区间；
+     - 100 名球员内存热写入经 CAS 立即回读对比，一致率 100% (0 读写异常)；
+     - 本地 `league_state.sqlite` 数据库最新快照同步完成双写持久化；
+     - 实机存档自动备份至 `C:\nba2k22\saves\MyLEAGUE0005\`。
+   - **交付产物**:
+     - 规格书: `database/tactics/calibrated_rotations_2022_2023/INTANGIBLES_ROTATION_CALIBRATION_SPEC.json`
+     - 注入脚本: `src/inject_problem_teams_intangibles.py`
+     - 执行回执: `database/tactics/calibrated_rotations_2022_2023/INTANGIBLES_INJECTION_RECEIPT.json`
+     - 验收报告: `docs/tactical_audits_2022_2023/INTANGIBLES_INJECTION_VERIFICATION_RECEIPT.md`
+
 ---
 
 ## 四、 待办事项与后续工作流 (Open Items)
