@@ -18,6 +18,13 @@
    - **原因**：原版名单中部分球队主教练（如 `CHA`、`MEM`、`ORL`、`WAS`）默认指向共用的 `Standard Playbook (enum_id=30)`，或错指他队手册（如 `MIN` 错指 `Grizzlies Playbook (6)`）。若不先行绑定本队专属手册（`0–29` 严格 1 对 1 独占），后续写入会互相覆盖。
    - 确认 30/30 球队均绑定本队专属 `PlaybookID` 且 CAS 回读通过后，再进入 Phase 1 与 Phase 2。
 
+2. **全联盟 30 队清单前置与后置完整性门禁 (30-Team Manifest Preflight & Post-Check Gate)**：
+   - **执行要求**：在启动年度批量设计任务与完成 Phase 2 发布前，必须强制运行 30 队清单完整性自动化校验脚本：
+     ```powershell
+     python 08_Domain_Applications/Antigravity_GM_Engine/src/verify_30_teams_tactical_manifest.py --season <SEASON>
+     ```
+   - **核心约束**：严格验证 `docs/tactical_designs_<SEASON>/` 必须存在完整的 30 支球队报告（例如严禁先导测试队如 `IND` 脱落于根目录或其他零散目录），且 30 份报告命名格式严格合规、内容章节完整。未达到 30/30 齐套严禁宣告任务完成。
+
 ---
 
 ## 一、核心设计哲学与两阶段分离架构
@@ -46,6 +53,10 @@
    - **内线低位统治流**（低位吸夹击辐射外围，如 76 人）
    - **防守反击/平民拼抢流**（青年军/无超巨阵容，主打转换、空接与简洁挡拆）
 3. 给出匹配的 **教练首选进攻体系 (`PreferredSystem`)** 与 **`Freelance 1–4` 优先级**。
+4. **有效三分空间指数与战术分类配比门禁 (Effective Spacing Score Gate)**：
+   - 凡主建队路线或体系声明为 `Pace & Space`、`Seven Seconds` 或 `Perimeter Centric` 的球队，战术手册中三分战术（Cat 14）+ 挡拆外弹三分战术（Cat 4）占比合计必须 **>= 35%**；
+   - 首发五人必须满足“至少 3 名真实三分能力值 >= 78 且真实命中率 >= 36% 的有效外线射手”；
+   - 针对火箭、活塞等传统双塔或严重缺乏外线射手的球队，**严禁盲目配置五外快轰**，改设 `Post Centric` 或 `Triangle` 体系，以空切（Cutter）与高低位策应替代盲目浪投，规避中投陷阱。
 
 ### Step 2：第一批战术筛选 —— 核心球员个人战术池（Player-Level Pool）
 1. **选人**：从轮换中挑出真正需要专门设计战术的进攻点（通常 **3–6 人**，纯蓝领 3D/护筐中锋不单独占名额，只作为空间/掩护/空接配合点）。
@@ -68,18 +79,26 @@
      - 教练宏观 **防守 POE 1–3**
      - **联防使用率 (`ZoneUsage`)** 与 **协防强度 (`HelpDefense`)**
      - 核心轮换球员的 **个人防守定位与防守倾向调整方向**（谁领防、谁扫荡、谁沉退护筐）。
+4. **阵容轮换出场时间上限与防守保护约束（Positional Guardrails & Protection Table）**：
+   - 为防止实机仿真引擎发生严重的“多后卫踩踏”或“防守漏洞被过度均摊”，报告中必须显式输出《核心出场时间与防守保护约束表》：
+     - **后场控卫/分卫 (PG+SG) 合计分钟上限**：严格限制 `<= 96 分钟`（严禁如尼克斯 139.6 分钟、奇才 111.4 分钟均分时间导致三后卫/四后卫侏儒阵容）；
+     - **防守薄弱球员出场时间上限**：外防/横移 < 65 的球员（如加里纳利、安东尼）出场时间严格限制 `<= 18 分钟`；
+     - **核心高威慑射手出场时间底线保护**：3PT >= 82 的射手（如戴斯蒙德·贝恩）出场时间设定 `>= 30 分钟` 底线保护；
+     - **直接作为下游任务输入**：此表直接作为下游轮换与无形资产反算任务的刚性边界，不得随意突破。
 
 ### Step 4：终极决策 —— 战术手册装填（Capacity Decision）
 将【第一批个人战术池】与【第二批阵容联动池】合并去重，按以下实机验证容量规则裁剪填入（**所有战术名必须 100% 精确匹配 `native_plays_complete_catalog_v1.json` 且 `in_ui_playbook_pool == true`**）：
 * **UI 可见主列表（`Regular 0–29` + `Bench 30–49`，建议总计 `36–42` 条，不超过 42 条可见上限）**：
   - **Regular 常规槽（`0–29`）**：放首发主力与双核联动的核心高胜率战术（如 26–30 条）。
   - **Bench 替补槽（`30–49`）**：专门放**第六人/替补得分手的 1–5 个专属战术** + **衔阶段与纯替补的高容错简洁战术**（如 8–12 条，未使用的空槽保持 `0`）。
+  - **核心单点伤停容灾备用套件 (Fallback Contingency Protocol)**：在替补槽的 `Slots 36–39`（共 4 槽）强制保留为全队通用容灾战术（如 `CUT 5 OUT`、`21 DELAY GIVE`、`FLOPPY`），不绑定特定大核姓名，确保主力中锋/组织大核伤停时系统不崩溃为盲目单打。
 * **Endgame 末段槽（`50–59`，6–8 槽）**：专门放带 `END` 后缀的末段关键球/绝杀战术（如 `ISO 1 FIST END`、`FIST 5 END`、`PUNCH 32 FIST END`）。注意：**`END` 末段战术在常规手册 UI 列表中默认隐藏不显示，由系统在最后时刻自动调用，不占主列表名额**。
 * **Favorite 收藏槽（`60–67`，8 槽）**：写入本队最高频的 8 条核心快捷战术。
 
 ### Step 5：参数联动收尾（`PlayType` & 倾向建议）
 1. 为全队核心轮换球员给出精确的 **`PlayType 1–4`** 配置方案（1/2 槽主用）。**重要实机校准：在 NBA 2K22 中，`14` 才是真正的“三分/外线投篮 (3 PT)”，切勿误填 `15`（`15` 在游戏 UI 中显示为空/无效）！**
-2. 给出教练 `RunPlayTendency`（执行战术频率）与核心球员 `Play Discipline`（战术纪律）建议，以及后续对轮换出场时间/无形资产的微调指引。
+2. 给出教练 `RunPlayTendency`（执行战术频率）与核心球员 `Play Discipline`（战术纪律）建议。**注意：`RunPlayTendency` 建议控制在 `65–80` 之间，严禁设为 `90+` 导致战术僵化停滞，亦不可设为 `<=55` 沦为无头单打**。
+3. 给出下游对轮换出场时间/无形资产（Intangibles）逆向求解的微调指引。
 
 ---
 
@@ -87,12 +106,12 @@
 
 每次单队任务的输出报告必须严格包含以下 6 个标准章节，其中第 4、5 节使用标准 Markdown 表格，以便 Phase 2 编译脚本直接解析：
 
-1. `## 1. 球队风格诊断与建队思路`（含主建队路线、进攻体系、Freelance 1–4、整体进攻 POE 1–3）
+1. `## 1. 球队风格诊断与建队思路`（含主建队路线、进攻体系、Freelance 1–4、整体进攻 POE 1–3、有效三分空间指数评估）
 2. `## 2. 第一批筛选：核心球员个人战术池`（每人 1–5 个战术 + 选中理由）
-3. `## 3. 第二批筛选：轮换阵容时段与攻防优势面`（3–4 套 5 人阵容的进攻联动战术 + 阵容级防守体系 & 教练防守 POE 1–3 / Zone / HelpDef）
-4. `## 4. 68 槽战术手册终极装填清单`（分 Regular 0–29、Bench 30–49、Endgame 50–59、Favorite 60–67 四张表，列明：`槽位 | 战术精确英文名 | 所属12大类 | 主要触发球员/目的`）
+3. `## 3. 第二批筛选：轮换阵容时段与攻防优势面`（3–4 套 5 人阵容的进攻联动战术 + 阵容级防守体系 & 教练防守 POE 1–3 / Zone / HelpDef + **《核心出场时间与阵容防守保护约束表》**）
+4. `## 4. 68 槽战术手册终极装填清单`（分 Regular 0–29、Bench 30–49 含 Slots 36–39 通用容灾套件、Endgame 50–59、Favorite 60–67 四张表，列明：`槽位 | 战术精确英文名 | 所属12大类 | 主要触发球员/目的`）
 5. `## 5. 球员 PlayType 1–4 与纪律性联动配置表`（列明：`球员 | 位置 | PlayType 1 | PlayType 2 | PlayType 3 | PlayType 4 | Initiator | 战术纪律建议`）
-6. `## 6. 下游轮换/无形资产联动微调建议`（可选：指出哪些配合效果极佳的双人/三人组值得在轮换时间上绑定）
+6. `## 6. 下游轮换/无形资产联动微调建议`（强制输出：针对后场控卫踩踏与防守漏洞球员的无形资产 Intangibles 逆向调整目标出场时间表）
 
 ---
 
@@ -104,5 +123,10 @@
    严格按球队顺序逐一执行（先完成前一步 Preflight）：
    - 运行 `python 08_Domain_Applications/Antigravity_GM_Engine/src/execute_team_phase2_non_frida.py --team <TEAM>`（完成 68 槽 Playbook CRC、教练设置/POE/独占 `PlaybookID`、球员 `Initiator` 写入与 CAS 回读，并生成 `<TEAM>_frida_payload.json`）；
    - 调用 REA MCP `rea:instrument_with_frida` 对 `<TEAM>_frida_payload.json` 内全部球员执行游戏原生 `PLAYER_SET_PLAY_TYPES_1_TO_4`（RVA `0xf1e370` / `0xf1e390` / `0xf1e3b0` / `0xf1e3d0`）注入并完成 `PLAYER+0x168` CAS 回读校验。
-3. **蜂群批处理建议**：
+3. **实机内存全量读回比对门禁 (Read-Back Verification Gate)**：
+   - 内存写入完成后，必须运行 `verify_injected_memory_state.py`，从游戏实时进程内存中重新读回：
+     - `ActiveSystem`、`RunPlayTendency`、`HelpDefense`、`BenchUtilization`
+     - `POEOffense 1–3`、`POEDefense 1–3`、`FreelanceType 1–4`
+   - 严格比对读回值与设计报告的差异率。**若发现任何一项保持为 0 或未生效（如魔术队停留为 0 的情况），立即阻断并触发重新写入，严禁假成功空跑！**
+4. **蜂群批处理建议**：
    Phase 1 可使用 Swarm（每批 5 队、冷启动读取 `scratch/swarm_inputs/<TEAM>_m02_dec.json` 与 `ui_usable_plays_by_cat.json`）；Phase 2 统一由单个具备写/MCP 权限的 Subagent 按顺序逐队执行。
